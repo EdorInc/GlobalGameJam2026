@@ -10,7 +10,9 @@ public class Grab : MonoBehaviour
     [SerializeField]
     private float maxForce = 100;
     [SerializeField]
-    private float forceGrow = 10;
+    private float forceGrow = 100;
+    [SerializeField]
+    private float holdDistance = 3;
 
     private GameObject grabbedObject;
     private float currentForce;
@@ -24,7 +26,6 @@ public class Grab : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = transform.position - transform.forward * Time.deltaTime;
         if (charging)
         {
             Charge();
@@ -35,12 +36,15 @@ public class Grab : MonoBehaviour
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, transform.position + 10 * transform.forward, out hit, mask))
+        if (Physics.Raycast(transform.position, transform.position + holdDistance * transform.forward, out hit, mask))
         {
-            Debug.DrawLine(transform.position, transform.position + 10 * transform.forward);
+            Debug.DrawLine(transform.position, transform.position + holdDistance * transform.forward);
             Debug.Log("Hola");
             grabbedObject = hit.transform.gameObject;
             grabbedObject.transform.parent = transform;
+            Rigidbody rbCube = grabbedObject.GetComponent<Rigidbody>();
+            rbCube.useGravity = false;
+
         }
     }
 
@@ -52,18 +56,21 @@ public class Grab : MonoBehaviour
     public void ThrowObject()
     {
         Rigidbody rbCube = grabbedObject.GetComponent<Rigidbody>();
-
+        Debug.Log("Throw");
         if (rbCube != null) 
         {
             charging = false;
+            rbCube.useGravity = true;
             grabbedObject.transform.parent = grabbedObject.GetComponent<GrabableObject>().GetBaseParent();
-            rbCube.AddForce(transform.forward * currentForce);
+            rbCube.AddForce(transform.forward * currentForce + Vector3.up * currentForce,ForceMode.Impulse);
         }
     }
 
     private void Charge()
     {
-        Mathf.Lerp(currentForce, maxForce, Time.deltaTime * forceGrow);
+        Debug.Log(currentForce);
+        currentForce = Mathf.Lerp(currentForce, maxForce, Time.deltaTime * forceGrow);
+        Debug.Log(currentForce);
     }
 
 }

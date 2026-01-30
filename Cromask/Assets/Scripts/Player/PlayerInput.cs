@@ -42,7 +42,7 @@ public class PlayerInput : MonoBehaviour
         {
             grabComponent.StartCharge();
         }
-        else if (ctx.canceled)
+        else if (!ctx.performed)
         {
             grabComponent.ThrowObject();
         }

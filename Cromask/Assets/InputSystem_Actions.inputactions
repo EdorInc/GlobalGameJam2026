@@ -507,7 +507,7 @@
                     "name": "",
                     "id": "b453edf4-b3dc-4f79-8ae0-ec7575fad337",
                     "path": "<Gamepad>/rightTrigger",
-                    "interactions": "Hold",
+                    "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "Throw",
