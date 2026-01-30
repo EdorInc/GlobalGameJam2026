@@ -9,6 +9,13 @@ public class ReferenceManager : MonoBehaviour
     [SerializeField]
     private GameObject playerTwoReference;
 
+    [SerializeField]
+    private Camera playerOneCamera;
+
+
+    [SerializeField]
+    private Camera playerTwoCamera;
+
     private static ReferenceManager _instance;
 
     public static ReferenceManager Instance
@@ -38,4 +45,6 @@ public class ReferenceManager : MonoBehaviour
     }
     public GameObject GetPlayerOne() => playerOneReference;
     public GameObject GetPlayerTwo() => playerTwoReference;
+    public Camera GetPlayerOneCamera() => playerOneCamera;
+    public Camera GetPlayerTwoCamera() => playerTwoCamera;
 }
