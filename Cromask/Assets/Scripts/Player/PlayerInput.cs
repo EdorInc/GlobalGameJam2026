@@ -17,14 +17,7 @@ public class PlayerInput : MonoBehaviour
 
     public void OnMove(CallbackContext ctx)
     {
-        if (ctx.started) 
-        {
-            playerController.OnMove(ctx.ReadValue<Vector2>());
-        }
-        else if (ctx.canceled) 
-        {
-            playerController.OnMove(Vector2.zero);
-        }
+        playerController.OnMove(ctx.ReadValue<Vector2>());
     }
 
     public void OnGrab(CallbackContext ctx)
