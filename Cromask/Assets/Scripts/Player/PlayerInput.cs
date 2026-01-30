@@ -5,6 +5,8 @@ public class PlayerInput : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private PlayerController playerController;
+    [SerializeField]
+    private Grab grabComponent;
 
     private void Awake()
     {
@@ -17,14 +19,34 @@ public class PlayerInput : MonoBehaviour
 
     public void OnMove(CallbackContext ctx)
     {
-        playerController.OnMove(ctx.ReadValue<Vector2>());
+        if (ctx.performed)
+        {
+            playerController.OnMove(ctx.ReadValue<Vector2>());
+        }
+        else if (ctx.canceled)
+        {
+            playerController.OnMove(Vector2.zero);
+        }
     }
 
     public void OnGrab(CallbackContext ctx)
     {
-        if (ctx.started) { }
-        // playerInteraction.OnGrab();
-        else if (ctx.canceled) { }
-            // playerInteraction.OnRelease();
+        if (ctx.started)
+        {
+            grabComponent.GrabObject();
+        }
     }
+    public void OnThrow(CallbackContext ctx)
+    {
+        if (ctx.started)
+        {
+            grabComponent.StartCharge();
+        }
+        else if (ctx.canceled)
+        {
+            grabComponent.ThrowObject();
+        }
+    }
+
+
 }
