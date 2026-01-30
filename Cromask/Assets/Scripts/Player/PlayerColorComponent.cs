@@ -7,13 +7,13 @@ public class PlayerColorComponent : MonoBehaviour
     private ObjectColor playerColor = ObjectColor.Red;
     void Start()
     {
-        
+        AudioManager.Instance.PlayMusic(AudioType.Music);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+       
     }
 
     public ObjectColor GetPlayerColor() => playerColor;
