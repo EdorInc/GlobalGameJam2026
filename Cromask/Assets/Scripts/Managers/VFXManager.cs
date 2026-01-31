@@ -7,7 +7,10 @@ public enum VFXType
 {
     Explosion,
     Sparkle,
-    Smoke
+    Smoke,
+    EquipRedMask,
+    EquipBlueMask,
+    EquipGreenMask
 }
 
 public class VFXManager : MonoBehaviour
@@ -93,5 +96,21 @@ public class VFXManager : MonoBehaviour
         );
 
         Destroy(instance, vfx.lifetime);
+    }
+
+    public GameObject PlayPermanentVFX(VFXType type, Vector3 position, Quaternion rotation = default)
+    {
+        if (!vfxDictionary.TryGetValue(type, out VFXAsset vfx))
+        {
+            Debug.LogWarning($"VFX {type} not found");
+            return null;
+        }
+
+        GameObject instance = Instantiate(
+            vfx.prefab,
+            position,
+            rotation == default ? Quaternion.identity : rotation
+        );
+        return instance;
     }
 }

@@ -132,13 +132,9 @@ public class GrabAction : MonoBehaviour
 
     public void ThrowObject()
     {
-        grabbedObject.GetComponent<Rigidbody>().isKinematic = false;
-
-        if (grabbedObject == null)
-        {
-            return;
-        }
+        if (!grabbedObject) return;
         Rigidbody rbCube = grabbedObject.GetComponent<Rigidbody>();
+        rbCube.isKinematic = false;
         if (rbCube != null) 
         {
             Debug.Log("Thrown: " + grabbedObject.name);
