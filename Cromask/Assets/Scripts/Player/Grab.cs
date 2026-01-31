@@ -1,10 +1,15 @@
 ﻿using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 using static UnityEngine.InputSystem.InputAction;
 
 public class GrabAction : MonoBehaviour
 {
     [SerializeField]
     private LayerMask mask;
+    [SerializeField]
+    private LayerMask maskWithRed;
+    [SerializeField] 
+    bool useRedMask = false;
     [SerializeField]
     private float minForceFowards = 0;
     [SerializeField]
@@ -35,12 +40,31 @@ public class GrabAction : MonoBehaviour
         line = GetComponent<LineRenderer>();
     }
 
+    private MaskManager maskManager;
+
+    private Mask lastEquipedMask;
+
+    void Start()
+    {
+        maskManager = GetComponent<MaskManager>();
+
+        lastEquipedMask = maskManager.GetCurrentMask();
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (charging)
         {
             Charge();
+        }
+
+        Mask currentMask = maskManager.GetCurrentMask();
+
+        if (currentMask != lastEquipedMask)
+        {
+            lastEquipedMask = currentMask;
+            useRedMask = currentMask == Mask.Red;
         }
     }
 
@@ -50,8 +74,9 @@ public class GrabAction : MonoBehaviour
 
         RaycastHit hit;
 
+        LayerMask maskToDetect = useRedMask ? maskWithRed : mask;
 
-        if (!Physics.Raycast(transform.position, transform.forward, out hit, holdDistance, mask))
+        if (!Physics.Raycast(transform.position, transform.forward, out hit, holdDistance, maskToDetect))
         {
             Debug.Log("Nothing detected in front.");
             return;
@@ -62,9 +87,11 @@ public class GrabAction : MonoBehaviour
         grabbedObject = hit.collider.gameObject;
 
         Rigidbody rb = grabbedObject.GetComponent<Rigidbody>();
+
         if (rb == null)
         {
             Debug.LogError("Object has no Rigidbody");
+            grabbedObject = null;
             grabbedObject = null;
             return;
         }

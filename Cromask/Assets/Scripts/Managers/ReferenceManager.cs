@@ -12,7 +12,6 @@ public class ReferenceManager : MonoBehaviour
     [SerializeField]
     private Camera playerOneCamera;
 
-
     [SerializeField]
     private Camera playerTwoCamera;
 
@@ -47,4 +46,9 @@ public class ReferenceManager : MonoBehaviour
     public GameObject GetPlayerTwo() => playerTwoReference;
     public Camera GetPlayerOneCamera() => playerOneCamera;
     public Camera GetPlayerTwoCamera() => playerTwoCamera;
+    public MaskManager GetPlayerOneMask() =>
+    playerOneReference != null ? playerOneReference.GetComponent<MaskManager>() : null;
+
+    public MaskManager GetPlayerTwoMask() =>
+        playerTwoReference != null ? playerTwoReference.GetComponent<MaskManager>() : null;
 }

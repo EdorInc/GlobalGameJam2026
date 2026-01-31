@@ -425,6 +425,10 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 8
+  maskWithRed:
+    serializedVersion: 2
+    m_Bits: 72
+  useRedMask: 0
   minForceFowards: 0
   minForceUp: 0
   maxForceFoward: 8
