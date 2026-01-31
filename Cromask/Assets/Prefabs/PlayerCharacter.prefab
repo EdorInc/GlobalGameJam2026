@@ -294,8 +294,35 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8576669691709291928, guid: 6a829a95e3c4f0b44b076232890c2353, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 834325861090003164}
   m_SourcePrefab: {fileID: 100100000, guid: 6a829a95e3c4f0b44b076232890c2353, type: 3}
+--- !u!1 &7212212383507200354 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8576669691709291928, guid: 6a829a95e3c4f0b44b076232890c2353, type: 3}
+  m_PrefabInstance: {fileID: 1373773085876831482}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &834325861090003164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7212212383507200354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27549c42a2e977d48b7650acfb0dc7b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Respawn
+  groundCheckMargin: 2
+  numRayChecks: 4
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  rayDistance: 5
+  showDebugRays: 1
 --- !u!4 &9057826836675520178 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7972289242277945928, guid: 6a829a95e3c4f0b44b076232890c2353, type: 3}
