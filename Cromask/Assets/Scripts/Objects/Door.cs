@@ -4,7 +4,6 @@ public class Door : MonoBehaviour
 {
     [Header("Door Settings")]
     [SerializeField] private PressurePlate[] requiredPlates;
-    [SerializeField] private float openedHeight = 4f; // Qué tan abajo debe bajar la puerta
     [SerializeField] private float moveSpeed = 2f;
 
     private Vector3 closedPosition;
@@ -14,6 +13,7 @@ public class Door : MonoBehaviour
 
     void Start()
     {
+        float openedHeight = transform.localScale.y;
         closedPosition = transform.position;
         openedPosition = closedPosition - Vector3.up * openedHeight;
 
