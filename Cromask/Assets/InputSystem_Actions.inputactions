@@ -201,10 +201,10 @@
                 {
                     "name": "",
                     "id": "777c61bf-df95-4d00-b3a0-fa74662883e7",
-                    "path": "",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Gamepad",
                     "action": "Equip/Unequip",
                     "isComposite": false,
                     "isPartOfComposite": false
