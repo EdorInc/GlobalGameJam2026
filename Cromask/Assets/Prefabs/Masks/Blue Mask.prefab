@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6631159925313650895}
   - component: {fileID: 5984295940148904993}
   - component: {fileID: 7452227068187292434}
-  - component: {fileID: 8471762755054276333}
+  - component: {fileID: 7608039473621164726}
   m_Layer: 3
   m_Name: Blue Mask
   m_TagString: Untagged
@@ -174,7 +174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EquipableObject
   maskType: 2
   particleGenerationPosition: {fileID: 6174986662019572510}
---- !u!114 &8471762755054276333
+--- !u!114 &7608039473621164726
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -183,9 +183,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 5427830977785388861}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b209f04af7d02fe4584aeed58242af8d, type: 3}
+  m_Script: {fileID: 11500000, guid: a04535d90d6014d4db4f044be8329211, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Reset
+  m_EditorClassIdentifier: Assembly-CSharp::ResetMask
+  groundCheckMargin: 2
+  numRayChecks: 4
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  rayDistance: 5
+  respawnHeight: 10
 --- !u!1 &5438123601059027112
 GameObject:
   m_ObjectHideFlags: 0
