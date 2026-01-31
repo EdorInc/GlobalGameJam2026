@@ -1585,6 +1585,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4319082907260829484, guid: b3a75b3abb3b99e49babf94fee858832, type: 3}
+      propertyPath: m_NormalizedViewPortRect.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558893654703802061, guid: b3a75b3abb3b99e49babf94fee858832, type: 3}
+      propertyPath: timeStep
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558893654703802061, guid: b3a75b3abb3b99e49babf94fee858832, type: 3}
+      propertyPath: resolution
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 4558893654703802061, guid: b3a75b3abb3b99e49babf94fee858832, type: 3}
       propertyPath: mask.m_Bits
       value: 8
@@ -1660,6 +1672,26 @@ PrefabInstance:
     - target: {fileID: 8695479141954474250, guid: b3a75b3abb3b99e49babf94fee858832, type: 3}
       propertyPath: m_LocalPosition.z
       value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8914539100006415675, guid: b3a75b3abb3b99e49babf94fee858832, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8914539100006415675, guid: b3a75b3abb3b99e49babf94fee858832, type: 3}
+      propertyPath: m_Parameters.shadowBias
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8914539100006415675, guid: b3a75b3abb3b99e49babf94fee858832, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: cf9231cd2433d7b4f9317bf2865f0024, type: 2}
+    - target: {fileID: 8914539100006415675, guid: b3a75b3abb3b99e49babf94fee858832, type: 3}
+      propertyPath: m_Parameters.textureScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8914539100006415675, guid: b3a75b3abb3b99e49babf94fee858832, type: 3}
+      propertyPath: m_Parameters.textureScale.y
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 9057826836675520178, guid: b3a75b3abb3b99e49babf94fee858832, type: 3}
       propertyPath: m_LocalPosition.x
