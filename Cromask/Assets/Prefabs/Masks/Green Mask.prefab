@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5984295940148904993}
   - component: {fileID: 7452227068187292434}
   m_Layer: 3
-  m_Name: Mask
+  m_Name: Green Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,7 +70,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 548e297eab749134f9ed6183d00faf54, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -154,6 +154,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ca9316a28715e84497edbe54dc2358f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GrabableObject
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  groundCheckDistance: 0.6
 --- !u!114 &7452227068187292434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,3 +170,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01e9bfc090e97bf4da74227038576f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EquipableObject
+  maskType: 3

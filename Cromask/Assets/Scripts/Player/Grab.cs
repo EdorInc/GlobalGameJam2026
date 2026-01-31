@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
-public class Grab : MonoBehaviour
+public class GrabAction : MonoBehaviour
 {
     [SerializeField]
     private LayerMask mask;
@@ -29,7 +29,7 @@ public class Grab : MonoBehaviour
     private float currentForceUp;
     private bool charging = false;
     private LineRenderer line;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     private void Awake()
     {
         line = GetComponent<LineRenderer>();
@@ -50,11 +50,10 @@ public class Grab : MonoBehaviour
 
         RaycastHit hit;
 
-        Debug.DrawRay(transform.position, transform.forward * holdDistance, Color.red,5);
 
         if (!Physics.Raycast(transform.position, transform.forward, out hit, holdDistance, mask))
         {
-            Debug.Log("Nothing hit");
+            Debug.Log("Nothing detected in front.");
             return;
         }
 
@@ -76,7 +75,6 @@ public class Grab : MonoBehaviour
         rb.useGravity = false;
     }
 
-
     public void StartCharge()
     {
         if (!charging)
@@ -91,6 +89,8 @@ public class Grab : MonoBehaviour
         Rigidbody rbCube = grabbedObject.GetComponent<Rigidbody>();
         if (rbCube != null) 
         {
+            Debug.Log("Thrown: " + grabbedObject.name);
+
             charging = false;
             rbCube.useGravity = true;
             grabbedObject.transform.parent = grabbedObject.GetComponent<GrabableObject>().GetBaseParent();

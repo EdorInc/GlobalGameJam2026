@@ -6,14 +6,14 @@ public class MyPlayerInput : MonoBehaviour
 {
     [Header("References")]
     private PlayerController playerController;
-    private Grab grabComponent;
-    private EquipableManager equipableManager;
+    private GrabAction grabComponent;
+    private EquipAction equipableManager;
     private RegisterController registerController;
     private void Awake()
     {
         playerController = GetComponent<PlayerController>();
-        grabComponent = GetComponent<Grab>();
-        equipableManager = GetComponent<EquipableManager>();
+        grabComponent = GetComponent<GrabAction>();
+        equipableManager = GetComponent<EquipAction>();
         registerController = GetComponent<RegisterController>();
     }
 

@@ -125,14 +125,13 @@ GameObject:
   - component: {fileID: 2439392146716403498}
   - component: {fileID: 1969365219257747675}
   - component: {fileID: 7225989960421602752}
-  - component: {fileID: 4225862006048757829}
   - component: {fileID: 484927700941272014}
-  - component: {fileID: 3194440579157672503}
+  - component: {fileID: 4225862006048757829}
   - component: {fileID: 6339925765209441009}
+  - component: {fileID: 3194440579157672503}
   - component: {fileID: 5381414202750036173}
   - component: {fileID: 7540803975786281409}
   - component: {fileID: 3199057291552848063}
-  - component: {fileID: 56654921852710923}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -252,18 +251,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 3
   rotationSpeed: 40
---- !u!114 &4225862006048757829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8576669691709291928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13da1b53deaee9a4fa7d64adbc77adaf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
 --- !u!114 &484927700941272014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -398,6 +385,31 @@ MonoBehaviour:
   m_DefaultActionMap: 
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &4225862006048757829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8576669691709291928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13da1b53deaee9a4fa7d64adbc77adaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
+--- !u!114 &6339925765209441009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8576669691709291928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f481ef8489433746bea6bdaf5b71779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskManager
+  currentMask: 0
 --- !u!114 &3194440579157672503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -422,19 +434,6 @@ MonoBehaviour:
   holdPosition: {x: 0, y: 0, z: 1.2}
   resolution: 40
   timeStep: 0.3
---- !u!114 &6339925765209441009
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8576669691709291928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f481ef8489433746bea6bdaf5b71779, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MaskManager
-  currentMask: 0
 --- !u!114 &5381414202750036173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -569,16 +568,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70a4eb426ec78024ea22bc33f951f30a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RegisterController
---- !u!114 &56654921852710923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8576669691709291928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f481ef8489433746bea6bdaf5b71779, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MaskManager
-  currentMask: 0

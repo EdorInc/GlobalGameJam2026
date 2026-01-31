@@ -1,10 +1,17 @@
 using UnityEngine;
 
-public class EquipableManager : MonoBehaviour
+public class EquipAction : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private GameObject equipedObject;
+    private MaskManager maskManager;
+
+    void Start()
+    {
+        maskManager = GetComponent<MaskManager>();
+    }
+
     public void ChangeState()
     {
         if (equipedObject != null)
@@ -18,7 +25,7 @@ public class EquipableManager : MonoBehaviour
     }
     private void Equip()
     {
-        Grab grabScrip = GetComponent<Grab>();
+        GrabAction grabScrip = GetComponent<GrabAction>();
         if (grabScrip == null)
         {
             return;
@@ -31,13 +38,19 @@ public class EquipableManager : MonoBehaviour
         {
             return;
         }
-        equipObjectScript.Equip();
+
+        Mask equipedMask = equipObjectScript.Equip();
+
+        maskManager.ApplyMask(equipedMask);
     }
 
     private GameObject UnEquip()
     {
         equipedObject.GetComponent<EquipableObject>().UnEquip();
         equipedObject = null;
+
+        maskManager.ApplyMask(Mask.Unmasked);
+
         return equipedObject;
     }
 }

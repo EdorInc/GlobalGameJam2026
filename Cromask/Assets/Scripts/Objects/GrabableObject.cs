@@ -27,8 +27,6 @@ public class GrabableObject : MonoBehaviour
     }
     private void CheckGround()
     {
-        Debug.DrawRay(transform.position, Vector3.down, Color.red, 5);
-
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, groundCheckDistance, groundLayer))
         {
             Rigidbody.isKinematic = true; 

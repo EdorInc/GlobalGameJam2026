@@ -26,7 +26,10 @@ public class MaskManager : MonoBehaviour
         controller = GetComponent<CharacterController>();
 
         if (controller == null)
+        {
+            Debug.LogError("No CharacterController found on MaskManager's GameObject.");
             return;
+        }
 
         defaultInclude = controller.includeLayers;
         defaultExclude = controller.excludeLayers;
@@ -36,13 +39,17 @@ public class MaskManager : MonoBehaviour
 
     void OnValidate()
     {
-        ApplyMask(currentMask);
+        if (controller != null)
+            ApplyMask(currentMask);
     }
 
-    private void ApplyMask(Mask mask)
+    public void ApplyMask(Mask mask)
     {
         if (controller == null)
+        {
+            Debug.LogWarning("No CharacterController found on MaskManager's GameObject.");
             return;
+        }
 
         controller.includeLayers = defaultInclude;
         controller.excludeLayers = defaultExclude;
