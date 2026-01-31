@@ -213,6 +213,7 @@ Transform:
   - {fileID: 1861569140}
   - {fileID: 1087330893}
   - {fileID: 1578469194}
+  - {fileID: 1741287385}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &66726008
@@ -1868,7 +1869,7 @@ GameObject:
   - component: {fileID: 407520256}
   - component: {fileID: 407520255}
   m_Layer: 10
-  m_Name: Pared (22)
+  m_Name: Block2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1887,7 +1888,7 @@ Transform:
   m_LocalScale: {x: 10, y: 3, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 962307054}
+  m_Father: {fileID: 1741287385}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &407520255
 BoxCollider:
@@ -1935,7 +1936,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ae746e944f7ceae45a380ec9f0e02572, type: 2}
+  - {fileID: 2100000, guid: 1f93903e58e4dd54b830216fbc3e290c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3027,9 +3028,6 @@ Transform:
   - {fileID: 208517142}
   - {fileID: 990762482}
   - {fileID: 208697394}
-  - {fileID: 1727936232}
-  - {fileID: 1071477777}
-  - {fileID: 407520254}
   - {fileID: 277090703}
   - {fileID: 1081810023}
   - {fileID: 954383468}
@@ -3485,7 +3483,7 @@ GameObject:
   - component: {fileID: 1071477779}
   - component: {fileID: 1071477778}
   m_Layer: 10
-  m_Name: Pared (21)
+  m_Name: Block3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3504,7 +3502,7 @@ Transform:
   m_LocalScale: {x: 10, y: 3, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 962307054}
+  m_Father: {fileID: 1741287385}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1071477778
 BoxCollider:
@@ -3552,7 +3550,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ae746e944f7ceae45a380ec9f0e02572, type: 2}
+  - {fileID: 2100000, guid: 1f93903e58e4dd54b830216fbc3e290c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4013,7 +4011,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 888648217667665424, guid: e3d76dea1318f9846af6628e3e604928, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 888648217667665424, guid: e3d76dea1318f9846af6628e3e604928, type: 3}
       propertyPath: m_LocalRotation.x
@@ -4021,7 +4019,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 888648217667665424, guid: e3d76dea1318f9846af6628e3e604928, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 888648217667665424, guid: e3d76dea1318f9846af6628e3e604928, type: 3}
       propertyPath: m_LocalRotation.z
@@ -4033,7 +4031,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 888648217667665424, guid: e3d76dea1318f9846af6628e3e604928, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 888648217667665424, guid: e3d76dea1318f9846af6628e3e604928, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -4266,7 +4264,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   maxDistanceOffset: 0.05
+  useSphereCast: 0
+  sphereRadius: 0.15
   transparentAlpha: 0.3
+  colorPropertyName: _BaseColor
 --- !u!1 &1405952953
 GameObject:
   m_ObjectHideFlags: 0
@@ -5298,7 +5299,7 @@ GameObject:
   - component: {fileID: 1727936234}
   - component: {fileID: 1727936233}
   m_Layer: 10
-  m_Name: Pared (20)
+  m_Name: Block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5317,7 +5318,7 @@ Transform:
   m_LocalScale: {x: 5, y: 3, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 962307054}
+  m_Father: {fileID: 1741287385}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1727936233
 BoxCollider:
@@ -5365,7 +5366,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ae746e944f7ceae45a380ec9f0e02572, type: 2}
+  - {fileID: 2100000, guid: 1f93903e58e4dd54b830216fbc3e290c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5397,6 +5398,40 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1727936231}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1741287384
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1741287385}
+  m_Layer: 0
+  m_Name: Blocks
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1741287385
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1741287384}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1071477777}
+  - {fileID: 407520254}
+  - {fileID: 1727936232}
+  m_Father: {fileID: 65464951}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1768267190 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7212212383507200354, guid: b3a75b3abb3b99e49babf94fee858832, type: 3}
@@ -6036,7 +6071,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3561721492513336940, guid: 59ba2b83808321e4cbfd6fedf5ce108f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.39
+      value: -1.7900001
       objectReference: {fileID: 0}
     - target: {fileID: 6430369765051557263, guid: 59ba2b83808321e4cbfd6fedf5ce108f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6441,7 +6476,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   maxDistanceOffset: 0.05
+  useSphereCast: 0
+  sphereRadius: 0.15
   transparentAlpha: 0.3
+  colorPropertyName: _BaseColor
 --- !u!1001 &2070550324
 PrefabInstance:
   m_ObjectHideFlags: 0
