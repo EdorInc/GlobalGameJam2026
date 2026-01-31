@@ -28,7 +28,6 @@ public class EquipableObject : MonoBehaviour
                 particleSystem = VFXManager.Instance.PlayPermanentVFX(VFXType.EquipGreenMask, particleGenerationPosition.position);
                 break;
         }
-       
 
         particleSystem.transform.parent = this.transform;
 

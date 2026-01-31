@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ReferenceManager : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class ReferenceManager : MonoBehaviour
 
     [SerializeField]
     private Camera playerTwoCamera;
+
+    private Gamepad playerOneGamepad;
+    private Gamepad playerTwoGamepad;
 
     private static ReferenceManager _instance;
 
@@ -43,6 +47,23 @@ public class ReferenceManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        PlayerInput playerOneInput = playerOneReference.GetComponent<PlayerInput>();
+        if(playerOneInput.devices.Count > 0)
+        {
+            Gamepad gamepad = playerOneReference.GetComponent<PlayerInput>().devices[0] as Gamepad;
+            playerOneGamepad = gamepad;
+        }
+
+        PlayerInput playerTwoInput = playerTwoReference.GetComponent<PlayerInput>();
+        if (playerTwoInput.devices.Count > 0)
+        {
+            Gamepad gamepad = playerTwoReference.GetComponent<PlayerInput>().devices[0] as Gamepad;
+            playerTwoGamepad = gamepad;
+        }
+
+    }
     public GameObject GetPlayerOne() => playerOneReference;
     public GameObject GetPlayerTwo() => playerTwoReference;
     public Camera GetPlayerOneCamera() => playerOneCamera;
@@ -52,4 +73,7 @@ public class ReferenceManager : MonoBehaviour
 
     public MaskManager GetPlayerTwoMask() =>
         playerTwoReference != null ? playerTwoReference.GetComponent<MaskManager>() : null;
+
+    public Gamepad GetPlayerOneGamepad() => playerOneGamepad;
+    public Gamepad GetPlayerTwoGamepad() => playerTwoGamepad;
 }

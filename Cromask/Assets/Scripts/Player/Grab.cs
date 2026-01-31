@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.InputSystem;
 using static UnityEngine.GraphicsBuffer;
 using static UnityEngine.InputSystem.InputAction;
 
@@ -44,6 +46,14 @@ public class GrabAction : MonoBehaviour
     private MaskManager maskManager;
     private Mask lastEquipedMask;
 
+    [Header("Vibration")]
+    [SerializeField]
+    float lowVibrationIntensity = 0.1f;
+    [SerializeField]
+    float highVibrationIntensity = 0.1f;
+    [SerializeField]
+    float vibrationDuration = 0.01f;
+
     private void Awake()
     {
         line = GetComponent<LineRenderer>();
@@ -57,12 +67,35 @@ public class GrabAction : MonoBehaviour
         Clear();
     }
 
+    private void GrabVibrateController(float low, float high, float duration)
+    {
+        if (this.gameObject == ReferenceManager.Instance.GetPlayerOne())
+        {
+            Gamepad gamepad = ReferenceManager.Instance.GetPlayerOne().GetComponent<RegisterController>().GetPlayerGamepad();
+            if (!gamepad.IsUnityNull())
+            {
+                Debug.Log("Vibrating Player One's controller");
+                VibrationManager.Instance.RumblePulse(gamepad, low, high, duration);
+            }
+               
+        }
+        else
+        {
+            Gamepad gamepad = ReferenceManager.Instance.GetPlayerTwo().GetComponent<RegisterController>().GetPlayerGamepad();
+            if (!gamepad.IsUnityNull())
+            {
+                Debug.Log("Vibrating Player Two's controller");
+                VibrationManager.Instance.RumblePulse(gamepad, low, high, duration);
+            }
+        }
+    }
+
     void Update()
     {
         if (charging)
         {
-           // VibrationManager.Instance.RumblePulse(,0.5f, 0.5f);
-            Charge();
+            GrabVibrateController(lowVibrationIntensity, highVibrationIntensity, vibrationDuration);
+           Charge();
         }
 
         Mask currentMask = maskManager.GetCurrentMask();
