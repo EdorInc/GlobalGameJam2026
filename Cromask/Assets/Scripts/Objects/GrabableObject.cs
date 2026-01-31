@@ -25,17 +25,23 @@ public class GrabableObject : MonoBehaviour
     {
         return baseParent;
     }
+
     private void CheckGround()
     {
         Debug.DrawRay(transform.position, Vector3.down, Color.red, 5);
 
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, groundCheckDistance, groundLayer))
         {
-            Rigidbody.isKinematic = true; 
+            Rigidbody.isKinematic = true;
         }
         else
         {
             Rigidbody.isKinematic = false;
         }
+    }
+
+    public bool IsGrabbed()
+    {
+        return transform.parent != baseParent;
     }
 }
