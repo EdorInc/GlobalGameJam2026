@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
 public class Grab : MonoBehaviour
@@ -6,23 +6,33 @@ public class Grab : MonoBehaviour
     [SerializeField]
     private LayerMask mask;
     [SerializeField]
-    private float minForce = 0;
+    private float minForceFowards = 0;
     [SerializeField]
-    private float maxForce = 100;
+    private float minForceUp = 0;
     [SerializeField]
-    private float forceGrow = 100;
+    private float maxForceFoward = 8;
+    [SerializeField]
+    private float maxForceUp = 8;
+    [SerializeField]
+    private float forceGrow = 2;
     [SerializeField]
     private float holdDistance = 3;
     [SerializeField]
     private Vector3 holdPosition = Vector3.forward;
+    [SerializeField]
+    private int resolution = 30;
+    [SerializeField]
+    private float timeStep = 0.1f;
 
     private GameObject grabbedObject = null;
-    private float currentForce;
+    private float currentForceFoward;
+    private float currentForceUp;
     private bool charging = false;
+    private LineRenderer line;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {   
-        
+    private void Awake()
+    {
+        line = GetComponent<LineRenderer>();
     }
 
     // Update is called once per frame
@@ -72,36 +82,61 @@ public class Grab : MonoBehaviour
         if (!charging)
         {
             charging = true;
-            currentForce = minForce;
+            currentForceUp = minForceUp;
+            currentForceFoward = minForceFowards;
         }
     }
     public void ThrowObject()
     {
         Rigidbody rbCube = grabbedObject.GetComponent<Rigidbody>();
-        Debug.Log("Lanzado a:" + currentForce);
         if (rbCube != null) 
         {
             charging = false;
             rbCube.useGravity = true;
             grabbedObject.transform.parent = grabbedObject.GetComponent<GrabableObject>().GetBaseParent();
-            rbCube.AddForce(transform.forward * currentForce + Vector3.up * currentForce,ForceMode.Impulse);
+            rbCube.AddForce(transform.forward * currentForceFoward + Vector3.up * currentForceUp, ForceMode.Impulse);
             grabbedObject = null;
         }
     }
 
     private void Charge()
     {
-        Debug.Log(currentForce);
-        currentForce += forceGrow * Time.deltaTime;
-        if(currentForce > maxForce)
-        {
-            currentForce = maxForce;
-        }
+        currentForceFoward += forceGrow * Time.deltaTime;
+        currentForceUp += forceGrow * Time.deltaTime;
+        currentForceFoward = Mathf.Min(currentForceFoward, maxForceFoward);
+        currentForceUp = Mathf.Min(currentForceUp, maxForceUp);
+        DrawTrajectory(currentForceFoward, currentForceUp);
     }
 
     public GameObject GetGrabbedObject()
     {
         return grabbedObject;
+    }
+
+    public void DrawTrajectory(float impulseStrengthFoward,float impulseStrengthUp)
+    {
+        Vector3 startPos = grabbedObject.transform.position;
+
+        Vector3 initialVelocity = transform.forward * (impulseStrengthFoward / grabbedObject.GetComponent<Rigidbody>().mass) +
+            Vector3.up * (impulseStrengthUp / grabbedObject.GetComponent<Rigidbody>().mass);
+
+        line.positionCount = resolution;
+
+        for (int i = 0; i < resolution; i++)
+        {
+            float t = i * timeStep;
+
+            Vector3 point =
+                startPos +
+                initialVelocity * t +
+                0.5f * Physics.gravity * t * t;
+
+            line.SetPosition(i, point);
+        }
+    }
+    public void Clear()
+    {
+        line.positionCount = 0;
     }
 
 }
