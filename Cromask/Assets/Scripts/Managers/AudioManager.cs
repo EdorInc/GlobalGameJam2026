@@ -14,14 +14,6 @@ public enum AudioType
 }
 
 
-[Serializable]
-[CreateAssetMenu(fileName = "NewSound", menuName = "Audio/Sound")]
-public class SoundAsset : ScriptableObject
-{
-    public AudioType audioType;
-    public FMODUnity.EventReference eventReference;
-    public float volume = 1;
-}
 public class AudioManager : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
