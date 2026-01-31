@@ -428,6 +428,7 @@ GameObject:
   - component: {fileID: 157390229}
   - component: {fileID: 157390231}
   - component: {fileID: 157390230}
+  - component: {fileID: 157390232}
   m_Layer: 5
   m_Name: ControllersPanel
   m_TagString: Untagged
@@ -495,6 +496,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 157390228}
   m_CullTransparentMesh: 1
+--- !u!114 &157390232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157390228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fc12c04574534b45806aaa08c5abe92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ControllersUI
+  player1Panel: {fileID: 484167260}
+  player2Panel: {fileID: 1025967921}
+  player1ConfirmToggle: {fileID: 101352768}
+  player2ConfirmToggle: {fileID: 1577473124}
+  player1Character: {fileID: 6092709477919748870, guid: b3a75b3abb3b99e49babf94fee858832, type: 3}
+  player2Character: {fileID: 6092709477919748870, guid: b0b5c3b5c560d4244afe9fa474556c60, type: 3}
 --- !u!1 &484167260
 GameObject:
   m_ObjectHideFlags: 0
@@ -2453,6 +2472,7 @@ GameObject:
   - component: {fileID: 1037599149}
   - component: {fileID: 1037599148}
   - component: {fileID: 1037599147}
+  - component: {fileID: 1037599150}
   m_Layer: 5
   m_Name: ExitCanvas
   m_TagString: Untagged
@@ -2543,6 +2563,19 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1037599150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037599145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07a21615ff06947408b9f2e1da725b86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BackButtonController
+  backButton: {fileID: 1815442679}
 --- !u!1 &1155993872
 GameObject:
   m_ObjectHideFlags: 0
@@ -3564,6 +3597,7 @@ GameObject:
   - component: {fileID: 1545249310}
   - component: {fileID: 1545249312}
   - component: {fileID: 1545249311}
+  - component: {fileID: 1545249313}
   m_Layer: 5
   m_Name: ButtonsCanvas
   m_TagString: Untagged
@@ -3631,6 +3665,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1545249309}
   m_CullTransparentMesh: 1
+--- !u!114 &1545249313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1545249309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c99a3e4eeb99e1a4384e9e8e54e15c6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonsCanvasController
+  startButton: {fileID: 996608993}
+  controlsButton: {fileID: 1479201857}
+  exitButton: {fileID: 898918206}
+  inputCooldown: 0.2
+  selectedScale: 1.2
+  selectedColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1577473122
 GameObject:
   m_ObjectHideFlags: 0
@@ -3729,6 +3782,7 @@ GameObject:
   - component: {fileID: 1750540159}
   - component: {fileID: 1750540158}
   - component: {fileID: 1750540157}
+  - component: {fileID: 1750540160}
   m_Layer: 5
   m_Name: ExitCanvas
   m_TagString: Untagged
@@ -3819,6 +3873,19 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1750540160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1750540155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07a21615ff06947408b9f2e1da725b86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BackButtonController
+  backButton: {fileID: 1477464775}
 --- !u!1 &1815442677
 GameObject:
   m_ObjectHideFlags: 0
