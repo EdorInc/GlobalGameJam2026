@@ -68,21 +68,21 @@ public class ColoredObject : MonoBehaviour
         }
     }
 
-    private void SelectLayerMaskColor(ObjectColor color)
-    {
-        switch (color)
-        {
-            case ObjectColor.Red:
-                collisionMask = 1 << LayerMask.NameToLayer("RedMask");
-                break;
-            case ObjectColor.Blue:
-                collisionMask = 1 << LayerMask.NameToLayer("BlueMask");
-                break;
-            case ObjectColor.Green:
-                collisionMask = 1 << LayerMask.NameToLayer("GreenMask");
-                break;
-            default:
-                break;      
-        }
-    }
+    //private void SelectLayerMaskColor(ObjectColor color)
+    //{
+    //    switch (color)
+    //    {
+    //        case ObjectColor.Red:
+    //            collisionMask = 1 << LayerMask.NameToLayer("RedMask");
+    //            break;
+    //        case ObjectColor.Blue:
+    //            collisionMask = 1 << LayerMask.NameToLayer("BlueMask");
+    //            break;
+    //        case ObjectColor.Green:
+    //            collisionMask = 1 << LayerMask.NameToLayer("GreenMask");
+    //            break;
+    //        default:
+    //            break;      
+    //    }
+    //}
 }

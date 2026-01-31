@@ -18,15 +18,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void OnMove(Vector2 direction)
+    private void Update()
     {
-        moveDirection = direction.normalized;
-        Vector3 move = new Vector3(moveDirection.x, 0f, moveDirection.y) * moveSpeed * Time.deltaTime;
-        characterController.Move(move);
+        // Calcular y aplicar movimiento SIEMPRE (incluso si es Vector3.zero)
+        Vector3 move = new Vector3(moveDirection.x, 0f, moveDirection.y) * moveSpeed;
+        characterController.SimpleMove(move);
+
         if (moveDirection != Vector2.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(new Vector3(moveDirection.x, 0f, moveDirection.y));
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
+    }
+
+    public void OnMove(Vector2 direction)
+    {
+        moveDirection = direction.normalized;
     }
 }
