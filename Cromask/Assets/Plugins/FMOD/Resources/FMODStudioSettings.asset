@@ -488,7 +488,7 @@ MonoBehaviour:
   MasterBanks:
   - Master
   Banks:
-  - banco1
+  - Music
   BanksToLoad: []
   LiveUpdatePort: 9264
   EnableMemoryTracking: 0
