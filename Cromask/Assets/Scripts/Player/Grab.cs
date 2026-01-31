@@ -13,8 +13,10 @@ public class Grab : MonoBehaviour
     private float forceGrow = 100;
     [SerializeField]
     private float holdDistance = 3;
+    [SerializeField]
+    private Vector3 holdPosition = Vector3.forward;
 
-    private GameObject grabbedObject;
+    private GameObject grabbedObject = null;
     private float currentForce;
     private bool charging = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -34,43 +36,67 @@ public class Grab : MonoBehaviour
 
     public void GrabObject()
     {
+        if (grabbedObject != null) return;
+
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, transform.position + holdDistance * transform.forward, out hit, mask))
-        {
-            Debug.DrawLine(transform.position, transform.position + holdDistance * transform.forward);
-            Debug.Log("Hola");
-            grabbedObject = hit.transform.gameObject;
-            grabbedObject.transform.parent = transform;
-            Rigidbody rbCube = grabbedObject.GetComponent<Rigidbody>();
-            rbCube.useGravity = false;
+        Debug.DrawRay(transform.position, transform.forward * holdDistance, Color.red,5);
 
+        if (!Physics.Raycast(transform.position, transform.forward, out hit, holdDistance, mask))
+        {
+            Debug.Log("Nothing hit");
+            return;
         }
+
+        Debug.Log("Grabbed: " + hit.collider.name);
+
+        grabbedObject = hit.collider.gameObject;
+
+        Rigidbody rb = grabbedObject.GetComponent<Rigidbody>();
+        if (rb == null)
+        {
+            Debug.LogError("Object has no Rigidbody");
+            grabbedObject = null;
+            return;
+        }
+
+        grabbedObject.transform.parent = transform;
+        grabbedObject.transform.rotation = transform.rotation;
+        grabbedObject.transform.localPosition = holdPosition;
+        rb.useGravity = false;
     }
+
 
     public void StartCharge()
     {
-        charging = true;
-        currentForce = minForce;
+        if (!charging)
+        {
+            charging = true;
+            currentForce = minForce;
+        }
     }
     public void ThrowObject()
     {
         Rigidbody rbCube = grabbedObject.GetComponent<Rigidbody>();
-        Debug.Log("Throw");
+        Debug.Log("Lanzado a:" + currentForce);
         if (rbCube != null) 
         {
             charging = false;
             rbCube.useGravity = true;
             grabbedObject.transform.parent = grabbedObject.GetComponent<GrabableObject>().GetBaseParent();
             rbCube.AddForce(transform.forward * currentForce + Vector3.up * currentForce,ForceMode.Impulse);
+            grabbedObject = null;
         }
     }
 
     private void Charge()
     {
         Debug.Log(currentForce);
-        currentForce = Mathf.Lerp(currentForce, maxForce, Time.deltaTime * forceGrow);
-        Debug.Log(currentForce);
+        currentForce += forceGrow * Time.deltaTime;
+        if(currentForce > maxForce)
+        {
+            currentForce = maxForce;
+        }
     }
 
 }
