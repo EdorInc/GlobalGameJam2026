@@ -68,7 +68,7 @@ public class PressurePlate : MonoBehaviour
         targetPosition = pressedPosition;
         onPlateActivated?.Invoke();
 
-        lockedCube.layer = LayerMask.NameToLayer("Ignore Raycast");
+        lockedCube.layer = LayerMask.NameToLayer("RedMask");
         grabable.enabled = false;
 
         Rigidbody rb = lockedCube.GetComponent<Rigidbody>();
