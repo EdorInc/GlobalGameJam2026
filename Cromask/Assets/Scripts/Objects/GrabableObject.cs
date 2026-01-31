@@ -4,13 +4,13 @@ public class GrabableObject : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private Transform baseParent;
-    private Rigidbody rigidbody;
+    private Rigidbody Rigidbody;
 
     private void Awake()
     {
         baseParent = transform.parent;
-        rigidbody = GetComponent<Rigidbody>();
-        rigidbody.freezeRotation = true;
+        Rigidbody = GetComponent<Rigidbody>();
+        Rigidbody.freezeRotation = true;
     }
     void Start()
     {
