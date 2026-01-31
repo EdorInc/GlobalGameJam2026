@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6631159925313650895}
   - component: {fileID: 5984295940148904993}
   - component: {fileID: 7452227068187292434}
+  - component: {fileID: 6251512847225449352}
   m_Layer: 3
   m_Name: Red Mask
   m_TagString: Untagged
@@ -142,7 +143,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &5984295940148904993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,6 +174,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EquipableObject
   maskType: 1
   particleGenerationPosition: {fileID: 8984362516648219511}
+--- !u!114 &6251512847225449352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5427830977785388861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b209f04af7d02fe4584aeed58242af8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Reset
 --- !u!1 &6687927250776400339
 GameObject:
   m_ObjectHideFlags: 0
