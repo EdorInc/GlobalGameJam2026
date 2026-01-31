@@ -9,6 +9,7 @@ public class MyPlayerInput : MonoBehaviour
     private GrabAction grabComponent;
     private EquipAction equipableManager;
     private RegisterController registerController;
+
     private void Awake()
     {
         playerController = GetComponent<PlayerController>();
@@ -22,7 +23,7 @@ public class MyPlayerInput : MonoBehaviour
         if (ctx.performed)
         {
             playerController.OnMove(ctx.ReadValue<Vector2>());
-            VibrationManager.Instance.RumblePulse(registerController.GetPlayerGamepad(), 0.1f, 0.1f, 0.1f);
+            //VibrationManager.Instance.RumblePulse(registerController.GetPlayerGamepad(), 0.1f, 0.1f, 0.1f);
         }
         else if (ctx.canceled)
         {

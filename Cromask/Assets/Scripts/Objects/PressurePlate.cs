@@ -10,7 +10,6 @@ public class PressurePlate : MonoBehaviour
     [Header("Cube Detection")]
     [SerializeField] private string cubeTag = "Cube";
     [SerializeField] private Vector3 cubeLocalPosition = new Vector3(0, 0.8f, 0); // Posición relativa al padre de la placa
-    [SerializeField] private float repositionSpeed = 8f;
 
     [Header("Events")]
     public UnityEvent onPlateActivated;

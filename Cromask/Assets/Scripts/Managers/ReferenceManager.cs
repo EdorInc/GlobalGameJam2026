@@ -42,6 +42,7 @@ public class ReferenceManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     public GameObject GetPlayerOne() => playerOneReference;
     public GameObject GetPlayerTwo() => playerTwoReference;
     public Camera GetPlayerOneCamera() => playerOneCamera;

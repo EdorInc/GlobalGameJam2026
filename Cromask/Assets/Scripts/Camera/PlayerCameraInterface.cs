@@ -53,4 +53,9 @@ public class PlayerCameraInterface : MonoBehaviour
             cameraCullingMaskController.ApplyView(currentMask);
         }
     }
+
+    public void AssignTarget(Transform transform)
+    {
+        target = transform;
+    }
 }
