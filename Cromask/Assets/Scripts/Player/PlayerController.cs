@@ -13,6 +13,12 @@ public class PlayerController : MonoBehaviour
     private Vector3 verticalVelocity;
     private bool attached = false;
 
+    [SerializeField]
+    bool useBlueMask = false;
+
+    private MaskManager maskManager;
+    private Mask lastEquipedMask;
+
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
@@ -22,10 +28,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        maskManager = GetComponent<MaskManager>();
+
+        lastEquipedMask = maskManager.GetCurrentMask();
+    }
+
     private void Update()
     {
+        Mask currentMask = maskManager.GetCurrentMask();
 
-        CheckPlatform();
+        if (currentMask != lastEquipedMask)
+        {
+            lastEquipedMask = currentMask;
+            useBlueMask = currentMask == Mask.Blue;
+        }
+
+        if (useBlueMask)
+        {
+            CheckPlatform();
+        }
 
         Vector3 horizontalMove = new Vector3(moveDirection.x, 0f, moveDirection.y) * moveSpeed;
 
