@@ -161,6 +161,29 @@ public class GrabAction : MonoBehaviour
         grabbedObject = null;
     }
 
+    public void Drop()
+    {
+        if (grabbedObject == null) return;
+
+        Rigidbody rb = grabbedObject.GetComponent<Rigidbody>();
+
+        charging = false;
+
+        rb.isKinematic = false;
+        rb.useGravity = true;
+        rb.angularVelocity = Vector3.zero;
+
+        grabbedObject.transform.SetParent(
+            grabbedObject.GetComponent<GrabableObject>().GetBaseParent()
+        );
+
+        grabbedObject.GetComponent<Collider>().enabled = true;
+
+        grabbedObject = null;
+        Clear();
+    }
+
+
     public void ForceGrabObject(GameObject obj)
     {
         grabbedObject = obj;
@@ -228,6 +251,11 @@ public class GrabAction : MonoBehaviour
     public void Clear()
     {
         line.positionCount = 0;
+    }
+
+    public bool IsCharging()
+    {
+        return charging;
     }
 
 }

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EquipAction : MonoBehaviour
 {
@@ -14,26 +14,25 @@ public class EquipAction : MonoBehaviour
 
     public void ChangeState()
     {
+       
         GrabAction grab = GetComponent<GrabAction>();
         if (grab == null) return;
+        if (grab.IsCharging()) return;
 
         GameObject grabbed = grab.GetGrabbedObject();
 
-        // CASE 3: swap
         if (equipedObject != null && grabbed != null)
         {
             Swap(grabbed);
             return;
         }
 
-        // CASE 1: equip
         if (equipedObject == null && grabbed != null)
         {
             Equip(grabbed);
             return;
         }
 
-        // CASE 2: unequip
         if (equipedObject != null && grabbed == null)
         {
             UnEquip();
@@ -79,16 +78,24 @@ public class EquipAction : MonoBehaviour
         EquipableObject oldEquip = oldMask.GetComponent<EquipableObject>();
         oldEquip.UnEquip();
 
-        grab.RemoveGrabbedObject();
 
-        EquipableObject newEquip = newMask.GetComponent<EquipableObject>();
-        equipedObject = newMask;
-
-        Mask newMaskType = newEquip.Equip();
-        maskManager.ApplyMask(newMaskType);
+        if (newMask.TryGetComponent(out EquipableObject newEquip))
+        {
+            grab.RemoveGrabbedObject();
+            equipedObject = newMask;
+            Mask newMaskType = newEquip.Equip();
+            maskManager.ApplyMask(newMaskType);
+        }
+        else
+        {
+            equipedObject = null;
+            grab.Drop();
+            maskManager.ApplyMask(Mask.Unmasked);
+        }
 
         grab.ForceGrabObject(oldMask);
     }
+
 
 
 }
