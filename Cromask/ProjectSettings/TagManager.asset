@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Cube
   - MovingPlatform
+  - DeathZzzzone
   layers:
   - Default
   - TransparentFX
