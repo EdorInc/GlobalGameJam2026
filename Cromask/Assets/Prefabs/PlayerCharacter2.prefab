@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7005133246052480031}
   m_Layer: 0
-  m_Name: PlayerCharacter
+  m_Name: PlayerCharacter2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,7 +96,7 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: 0.5
     y: 0
     width: 0.5
     height: 1
