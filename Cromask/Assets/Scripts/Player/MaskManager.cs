@@ -1,17 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static CameraCullingMaskController;
 
 public class MaskManager : MonoBehaviour
 {
-    public enum Mask
-    {
-        Unmasked,
-        Red,
-        Blue,
-        Green
-    }
-
     [Header("State")]
     [SerializeField] private Mask currentMask = Mask.Unmasked;
 
@@ -32,7 +23,7 @@ public class MaskManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        controller = FindFirstObjectByType<CharacterController>();
+        controller = GetComponent<CharacterController>();
 
         if (controller == null)
             return;
@@ -78,6 +69,5 @@ public class MaskManager : MonoBehaviour
         controller.excludeLayers = exclude;
     }
 
-    // Optional helpers
     public Mask GetCurrentMask() => currentMask;
 }

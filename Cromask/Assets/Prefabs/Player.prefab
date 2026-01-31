@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 5381414202750036173}
   - component: {fileID: 7540803975786281409}
   - component: {fileID: 3199057291552848063}
+  - component: {fileID: 56654921852710923}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -568,3 +569,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70a4eb426ec78024ea22bc33f951f30a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RegisterController
+--- !u!114 &56654921852710923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8576669691709291928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f481ef8489433746bea6bdaf5b71779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskManager
+  currentMask: 0
