@@ -99,4 +99,9 @@ public class Grab : MonoBehaviour
         }
     }
 
+    public GameObject GetGrabbedObject()
+    {
+        return grabbedObject;
+    }
+
 }

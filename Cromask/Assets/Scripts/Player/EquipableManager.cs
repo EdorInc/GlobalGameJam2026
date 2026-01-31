@@ -5,14 +5,39 @@ public class EquipableManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private GameObject equipedObject;
-
-    public void Equip(GameObject mask)
+    public void ChangeState()
     {
-        equipedObject = mask;
+        if (equipedObject != null)
+        {
+            UnEquip();
+        }
+        else
+        {
+            Equip();
+        }
+    }
+    private void Equip()
+    {
+        Grab grabScrip = GetComponent<Grab>();
+        if (grabScrip == null)
+        {
+            return;
+        }
+
+        equipedObject = grabScrip.GetGrabbedObject();
+        
+        EquipableObject equipObjectScript =  equipedObject.GetComponent<EquipableObject>();
+        if (equipObjectScript == null)
+        {
+            return;
+        }
+        equipObjectScript.Equip();
     }
 
-    public GameObject UnEquip()
+    private GameObject UnEquip()
     {
+        equipedObject.GetComponent<EquipableObject>().UnEquip();
+        equipedObject = null;
         return equipedObject;
     }
 }

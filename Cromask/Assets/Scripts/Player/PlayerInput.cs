@@ -6,11 +6,12 @@ public class PlayerInput : MonoBehaviour
     [Header("References")]
     private PlayerController playerController;
     private Grab grabComponent;
-
+    private EquipableManager equipableManager;
     private void Awake()
     {
         playerController = GetComponent<PlayerController>();
         grabComponent = GetComponent<Grab>();
+        equipableManager = GetComponent<EquipableManager>();
     }
 
     public void OnMove(CallbackContext ctx)
@@ -44,5 +45,12 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
+    public void OnEquipUnequip(CallbackContext ctx)
+    {
+        if (ctx.started)
+        {
+            equipableManager.ChangeState();
+        }
 
+    }
 }
