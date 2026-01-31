@@ -431,7 +431,7 @@ MonoBehaviour:
   maxForceUp: 8
   forceGrow: 2
   holdDistance: 1
-  holdPosition: {x: 0, y: 0, z: 1.2}
+  holdPosition: {x: 0, y: 0.5, z: 1.2}
   resolution: 40
   timeStep: 0.3
 --- !u!114 &5381414202750036173
