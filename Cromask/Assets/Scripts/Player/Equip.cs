@@ -58,6 +58,8 @@ public class EquipAction : MonoBehaviour
 
         maskManager.ApplyMask(Mask.Unmasked);
 
+        grabScrip.GrabObjectFromEquip(equipedObject);
+
         return equipedObject;
     }
 }

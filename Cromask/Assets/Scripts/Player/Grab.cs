@@ -104,7 +104,7 @@ public class GrabAction : MonoBehaviour
 
     public void StartCharge()
     {
-        if (!charging)
+        if (!charging && grabbedObject != null)
         {
             charging = true;
             currentForceUp = minForceUp;
@@ -113,6 +113,7 @@ public class GrabAction : MonoBehaviour
     }
     public void ThrowObject()
     {
+        //Debug.Log()
         Rigidbody rbCube = grabbedObject.GetComponent<Rigidbody>();
         if (rbCube != null) 
         {
@@ -140,6 +141,24 @@ public class GrabAction : MonoBehaviour
         GameObject grabObjectAux = grabbedObject;
         grabbedObject = null;
         return grabObjectAux;
+    }
+
+    public void GrabObjectFromEquip(GameObject grabObject)
+    {
+        grabbedObject = grabObject;
+
+        Rigidbody rb = grabbedObject.GetComponent<Rigidbody>();
+        if (rb == null)
+        {
+            Debug.LogError("Object has no Rigidbody");
+            grabbedObject = null;
+            return;
+        }
+
+        grabbedObject.transform.parent = transform;
+        grabbedObject.transform.rotation = transform.rotation;
+        grabbedObject.transform.localPosition = holdPosition;
+        rb.useGravity = false;
     }
 
     public void DrawTrajectory(float impulseStrengthFoward,float impulseStrengthUp)
