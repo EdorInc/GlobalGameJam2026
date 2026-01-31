@@ -233,6 +233,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1068001750556655615, guid: e3d76dea1318f9846af6628e3e604928, type: 3}
+      propertyPath: m_Shadows.m_Type
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5427830977785388861, guid: e3d76dea1318f9846af6628e3e604928, type: 3}
       propertyPath: m_Name
       value: Blue Mask

@@ -85,18 +85,19 @@ public class GrabAction : MonoBehaviour
 
         Debug.DrawLine(position, position + transform.forward * holdDistance,Color.red,5);
 
+
         if (!Physics.Raycast(position, transform.forward, out hit, holdDistance, maskToDetect))
         {
             Debug.Log("Nothing detected in front.");
             return;
         }
-
+        
         Debug.Log("Grabbed: " + hit.collider.name);
 
         grabbedObject = hit.collider.gameObject;
 
         Rigidbody rb = grabbedObject.GetComponent<Rigidbody>();
-
+        
         if (rb == null)
         {
             Debug.LogError("Object has no Rigidbody");
