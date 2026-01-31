@@ -32,6 +32,8 @@ public class GrabAction : MonoBehaviour
     private float lineWidth = 0.06f;
     [SerializeField]
     private float grabHeight = 0.5f;
+    [SerializeField] 
+    private GameObject landingMarker;
 
     private GameObject grabbedObject = null;
     private float currentForceFoward;
@@ -173,6 +175,8 @@ public class GrabAction : MonoBehaviour
         rb.useGravity = true;
         rb.angularVelocity = Vector3.zero;
 
+        Clear();
+
         grabbedObject.transform.SetParent(
             grabbedObject.GetComponent<GrabableObject>().GetBaseParent()
         );
@@ -180,7 +184,6 @@ public class GrabAction : MonoBehaviour
         grabbedObject.GetComponent<Collider>().enabled = true;
 
         grabbedObject = null;
-        Clear();
     }
 
 
@@ -214,6 +217,7 @@ public class GrabAction : MonoBehaviour
 
         Vector3 previousPoint = initialPos;
         int pointsDrawn = 0;
+        bool hitFound = false;
 
         int maxSteps = Mathf.CeilToInt(maxTime / timeStep);
 
@@ -236,7 +240,11 @@ public class GrabAction : MonoBehaviour
             {
                 // Stop at ground hit
                 line.SetPosition(pointsDrawn, hit.point);
+                PlaceLandingMarker(hit);
+
                 pointsDrawn++;
+                hitFound = true;
+
                 break;
             }
 
@@ -247,10 +255,30 @@ public class GrabAction : MonoBehaviour
         }
 
         line.positionCount = pointsDrawn - 1;
+
+        if (!hitFound && landingMarker != null)
+        {
+            landingMarker.SetActive(false);
+        }
     }
+    private void PlaceLandingMarker(RaycastHit hit)
+    {
+        if (landingMarker == null)
+            return;
+
+        landingMarker.SetActive(true);
+
+        float halfHeight = landingMarker.GetComponent<Renderer>().bounds.extents.y;
+
+        landingMarker.transform.position = hit.point + hit.normal * halfHeight;
+
+        landingMarker.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+    }
+
     public void Clear()
     {
         line.positionCount = 0;
+        landingMarker.SetActive(false);
     }
 
     public bool IsCharging()
