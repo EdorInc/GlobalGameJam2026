@@ -4,17 +4,13 @@ using static UnityEngine.InputSystem.InputAction;
 public class PlayerInput : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private PlayerController playerController;
-    [SerializeField]
+    private PlayerController playerController;
     private Grab grabComponent;
 
     private void Awake()
     {
-        // Si no asignas el PlayerController desde el Inspector, lo busca automáticamente
-        if (playerController == null)
-        {
-            playerController = GetComponent<PlayerController>();
-        }
+        playerController = GetComponent<PlayerController>();
+        grabComponent = GetComponent<Grab>();
     }
 
     public void OnMove(CallbackContext ctx)
