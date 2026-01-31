@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: GreenMaskVFX
   m_EditorClassIdentifier: Assembly-CSharp::VFXAsset
   vfxType: 5
-  prefab: {fileID: 5677649944980355075, guid: bb3061b3f68df124a9073056a03824bb, type: 3}
+  prefab: {fileID: 1971072833978232, guid: fcf203480d715984daee5233c9dadae7, type: 3}
   lifetime: 1
