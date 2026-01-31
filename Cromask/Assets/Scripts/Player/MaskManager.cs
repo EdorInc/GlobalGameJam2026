@@ -92,7 +92,7 @@ public class MaskManager : MonoBehaviour
         }
 
         controller.excludeLayers = exclude;
-        if(audioManager != null)
+        if(audioManager != null && ReferenceManager.Instance != null)
             if(this.gameObject == ReferenceManager.Instance.GetPlayerOne())
             {
                 audioManager.UpdateMaskParameter(currentMask, ReferenceManager.Instance.GetPlayerTwoMask().GetCurrentMask());
