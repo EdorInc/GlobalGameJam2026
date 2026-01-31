@@ -92,7 +92,6 @@ public class GrabAction : MonoBehaviour
         {
             Debug.LogError("Object has no Rigidbody");
             grabbedObject = null;
-            grabbedObject = null;
             return;
         }
 
@@ -114,6 +113,10 @@ public class GrabAction : MonoBehaviour
     public void ThrowObject()
     {
         //Debug.Log()
+        if(grabbedObject == null)
+        {
+            return;
+        }
         Rigidbody rbCube = grabbedObject.GetComponent<Rigidbody>();
         if (rbCube != null) 
         {
@@ -138,27 +141,17 @@ public class GrabAction : MonoBehaviour
 
     public GameObject GetGrabbedObject()
     {
-        GameObject grabObjectAux = grabbedObject;
+        GameObject grabableObject = grabbedObject;
+        return grabableObject;
+    }
+    public void RemoveGrabbedObject()
+    {
         grabbedObject = null;
-        return grabObjectAux;
     }
 
-    public void GrabObjectFromEquip(GameObject grabObject)
+    public void GrabObjectFromEquip()
     {
-        grabbedObject = grabObject;
-
-        Rigidbody rb = grabbedObject.GetComponent<Rigidbody>();
-        if (rb == null)
-        {
-            Debug.LogError("Object has no Rigidbody");
-            grabbedObject = null;
-            return;
-        }
-
-        grabbedObject.transform.parent = transform;
-        grabbedObject.transform.rotation = transform.rotation;
-        grabbedObject.transform.localPosition = holdPosition;
-        rb.useGravity = false;
+        GrabObject();
     }
 
     public void DrawTrajectory(float impulseStrengthFoward,float impulseStrengthUp)

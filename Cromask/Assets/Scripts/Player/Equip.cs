@@ -4,7 +4,7 @@ public class EquipAction : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    private GameObject equipedObject;
+    private GameObject equipedObject = null;
     private MaskManager maskManager;
 
     void Start()
@@ -32,13 +32,18 @@ public class EquipAction : MonoBehaviour
         }
 
         equipedObject = grabScrip.GetGrabbedObject();
-        
-        EquipableObject equipObjectScript =  equipedObject.GetComponent<EquipableObject>();
-        if (equipObjectScript == null)
+
+        if (equipedObject == null)
         {
             return;
         }
-
+        EquipableObject equipObjectScript =  equipedObject.GetComponent<EquipableObject>();
+        if (equipObjectScript == null)
+        {
+            equipedObject = null;
+            return;
+        }
+        grabScrip.RemoveGrabbedObject();
         Mask equipedMask = equipObjectScript.Equip();
 
         maskManager.ApplyMask(equipedMask);
@@ -58,7 +63,7 @@ public class EquipAction : MonoBehaviour
 
         maskManager.ApplyMask(Mask.Unmasked);
 
-        grabScrip.GrabObjectFromEquip(equipedObject);
+        grabScrip.GrabObjectFromEquip();
 
         return equipedObject;
     }
