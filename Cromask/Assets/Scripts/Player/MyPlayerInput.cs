@@ -1,7 +1,7 @@
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
-public class PlayerInput : MonoBehaviour
+public class MyPlayerInput : MonoBehaviour
 {
     [Header("References")]
     private PlayerController playerController;
