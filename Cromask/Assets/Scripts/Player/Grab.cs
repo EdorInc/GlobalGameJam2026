@@ -195,7 +195,6 @@ public class GrabAction : MonoBehaviour
 
         Vector3 previousPoint = initialPos;
         int pointsDrawn = 0;
-        bool hitGround = false;
 
         int maxSteps = Mathf.CeilToInt(maxTime / timeStep);
 
@@ -219,7 +218,6 @@ public class GrabAction : MonoBehaviour
                 // Stop at ground hit
                 line.SetPosition(pointsDrawn, hit.point);
                 pointsDrawn++;
-                hitGround = true;
                 break;
             }
 
