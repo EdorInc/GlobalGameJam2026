@@ -125,6 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a88152bbdaeb33d45a6ea1e13a712979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Door
-  requiredPlates: []
+  requiredPlates:
+  - {fileID: 0}
   openedHeight: 4
   moveSpeed: 2
