@@ -1,26 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3781235695922581739
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Music.bank
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
-  Path: FMOD/Desktop/Music.bank
-  Name: Music
-  StudioPath: bank:/Music
-  lastModified: 639054847572476294
-  FileSizes:
-  - Name: Desktop
-    Value: 5951200
-  Exists: 1
---- !u!114 &-2473526663513137825
+--- !u!114 &-7842478679146372516
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -35,12 +15,12 @@ MonoBehaviour:
   Path: FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639054847571964178
+  lastModified: 639054825414484639
   FileSizes:
   - Name: Desktop
     Value: 872
   Exists: 1
---- !u!114 &11400000
+--- !u!114 &-7019116305587539760
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49,26 +29,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
-  m_Name: FMODStudioCache
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EventCache
-  EditorBanks:
-  - {fileID: -2473526663513137825}
-  - {fileID: 8477188821286666435}
-  - {fileID: -3781235695922581739}
-  EditorEvents:
-  - {fileID: 8160502771171216206}
-  EditorParameters: []
-  MasterBanks:
-  - {fileID: 8477188821286666435}
-  StringsBanks:
-  - {fileID: -2473526663513137825}
-  cacheVersion: 131858
-  cacheTime: 639054847572476294
-  SerializableEventsDict:
-  - key: event:/Music/Cumbion
-    index: 0
---- !u!114 &6599767084786547275
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Music.bank
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
+  Path: FMOD/Desktop/Music.bank
+  Name: Music
+  StudioPath: bank:/Music
+  lastModified: 639054825414942827
+  FileSizes:
+  - Name: Desktop
+    Value: 5951200
+  Exists: 1
+--- !u!114 &-6955134222366689941
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,7 +72,35 @@ MonoBehaviour:
   - RyA
   - Todos
   Exists: 1
---- !u!114 &8160502771171216206
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
+  m_Name: FMODStudioCache
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EventCache
+  EditorBanks:
+  - {fileID: -7842478679146372516}
+  - {fileID: 3517066179081115088}
+  - {fileID: -7019116305587539760}
+  EditorEvents:
+  - {fileID: 3375766990085858415}
+  EditorParameters: []
+  MasterBanks:
+  - {fileID: 3517066179081115088}
+  StringsBanks:
+  - {fileID: -7842478679146372516}
+  cacheVersion: 131858
+  cacheTime: 639054825414942827
+  SerializableEventsDict:
+  - key: event:/Music/Cumbion
+    index: 0
+--- !u!114 &3375766990085858415
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,16 +119,16 @@ MonoBehaviour:
     Data3: 1813583796
     Data4: -2067500692
   Banks:
-  - {fileID: -3781235695922581739}
+  - {fileID: -7019116305587539760}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 6599767084786547275}
+  - {fileID: -6955134222366689941}
   MinDistance: 1
   MaxDistance: 20
   Length: 101147
---- !u!114 &8477188821286666435
+--- !u!114 &3517066179081115088
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,7 +143,7 @@ MonoBehaviour:
   Path: FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639054847571954159
+  lastModified: 639054825414423188
   FileSizes:
   - Name: Desktop
     Value: 1074

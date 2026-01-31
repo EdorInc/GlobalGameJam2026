@@ -15,7 +15,6 @@ public class EquipableObject : MonoBehaviour
         {
             case Mask.Red:
                 particleSystem = VFXManager.Instance.PlayPermanentVFX(VFXType.EquipRedMask, particleGenerationPosition.position);
-                
                 break;
             case Mask.Blue:
                 Debug.Log("Playing blue mask VFX");
