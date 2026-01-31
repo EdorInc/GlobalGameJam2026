@@ -9,26 +9,52 @@ public class MovingObject : MonoBehaviour
     [SerializeField]
     private Transform pointB;
 
+    private Rigidbody rb;
     private Vector3 target;
+    private Vector3 platformVelocity;
 
-    private void Start()
+    private void Awake()
     {
+        rb = GetComponent<Rigidbody>();
+        rb.isKinematic = true; // platform moves manually
         target = pointB.position;
     }
     // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
+        // Move the platform
+        Vector3 nextPos = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.fixedDeltaTime);
+        platformVelocity = (nextPos - transform.position) / Time.fixedDeltaTime;
+        rb.MovePosition(nextPos);
 
-        if (Vector3.Distance(transform.position, target) < 0.01f)
+        if (Vector3.Distance(nextPos, target) < 0.01f)
         {
             target = target == pointA.position ? pointB.position : pointA.position;
         }
+
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Colision");
-        other.gameObject.transform.parent = transform;
+        foreach (ContactPoint contact in collision.contacts)
+        {
+            if (Vector3.Dot(contact.normal, Vector3.up) > 0.5f)
+            {
+                collision.transform.SetParent(transform);
+                break;
+            }
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        // Detach object when it leaves the platform
+        if (collision.transform.parent == transform)
+        {
+            collision.transform.SetParent(null);
+        }
+    }
+    public Vector3 GetVelocity()
+    {
+        return platformVelocity;
     }
 }

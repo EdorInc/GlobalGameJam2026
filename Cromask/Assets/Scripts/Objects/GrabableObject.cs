@@ -38,6 +38,7 @@ public class GrabableObject : MonoBehaviour
         }
     }
 
+
     public bool IsGrabbed()
     {
         return transform.parent != baseParent;
