@@ -965,7 +965,6 @@ GameObject:
   - component: {fileID: 1026342995}
   - component: {fileID: 1026342994}
   - component: {fileID: 1026342993}
-  - component: {fileID: 1026342997}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1061,27 +1060,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1026342997
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1026342992}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a43844f16ab1f9541bdcefee528501ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerStatusUI
-  maskPlayer1: {fileID: 2055526379}
-  boxPlayer1: {fileID: 1568069239}
-  maskPlayer2: {fileID: 451624150}
-  boxPlayer2: {fileID: 1452745543}
-  redMaskTexture: {fileID: 2800000, guid: f78d0a7e1f9111a4aa4fc14c3d3acf0b, type: 3}
-  blueMaskTexture: {fileID: 2800000, guid: d197f4a8939cd5945aca271f77879889, type: 3}
-  greenMaskTexture: {fileID: 2800000, guid: 81317e8130baaf74594ebf5e79535388, type: 3}
-  boxGrabbedTexture: {fileID: 2800000, guid: 1beee97aeb4bad34d9aa2106854d5979, type: 3}
-  boxEmptyTexture: {fileID: 0}
 --- !u!1001 &1220508454
 PrefabInstance:
   m_ObjectHideFlags: 0

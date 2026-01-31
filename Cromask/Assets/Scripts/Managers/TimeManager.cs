@@ -1,5 +1,6 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TimeManager : MonoBehaviour
 {
@@ -12,6 +13,14 @@ public class TimeManager : MonoBehaviour
     {
         time = MaxTime;
         StartTime();
+    }
+
+    private void Update()
+    {
+        if(time < 0)
+        {
+            SceneManager.LoadScene("DeathMenu");
+        }
     }
 
     public void StartTime()

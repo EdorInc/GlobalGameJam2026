@@ -93,6 +93,14 @@ public class MaskManager : MonoBehaviour
             {
                 audioManager.UpdateMaskParameter(ReferenceManager.Instance.GetPlayerOneMask().GetCurrentMask(), currentMask);
             }
+        if (currentMask.Equals(Mask.Blue)) 
+        { 
+            MovingObject.canMove = true;
+        }
+        else
+        {
+            MovingObject.canMove = false;
+        }
 
     }
 

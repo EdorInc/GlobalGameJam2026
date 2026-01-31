@@ -15,7 +15,7 @@ MonoBehaviour:
   Path: FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639054830075406905
+  lastModified: 639054829870996758
   FileSizes:
   - Name: Desktop
     Value: 872
@@ -35,7 +35,7 @@ MonoBehaviour:
   Path: FMOD/Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 639054830075898235
+  lastModified: 639054829871385647
   FileSizes:
   - Name: Desktop
     Value: 5951200
@@ -96,7 +96,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: -7842478679146372516}
   cacheVersion: 131858
-  cacheTime: 639054830075898235
+  cacheTime: 639054829871385647
   SerializableEventsDict:
   - key: event:/Music/Cumbion
     index: 0
@@ -143,7 +143,7 @@ MonoBehaviour:
   Path: FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639054830075403233
+  lastModified: 639054829870996758
   FileSizes:
   - Name: Desktop
     Value: 1074
