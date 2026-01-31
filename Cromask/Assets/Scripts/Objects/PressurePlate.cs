@@ -13,8 +13,7 @@ public class PressurePlate : MonoBehaviour
     [SerializeField] private float repositionSpeed = 8f;
 
     [Header("Events")]
-    [SerializeField] private UnityEvent onPlateActivated;
-    [SerializeField] private UnityEvent onPlateDeactivated;
+    public UnityEvent onPlateActivated;
 
     private Vector3 originalPosition;
     private Vector3 targetPosition;
