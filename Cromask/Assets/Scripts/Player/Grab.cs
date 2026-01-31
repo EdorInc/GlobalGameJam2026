@@ -30,6 +30,8 @@ public class GrabAction : MonoBehaviour
     private float timeStep = 0.1f;
     [SerializeField]
     private float lineWidth = 0.06f;
+    [SerializeField]
+    private float grabHeight = 0.5f;
 
     private GameObject grabbedObject = null;
     private float currentForceFoward;
@@ -75,6 +77,9 @@ public class GrabAction : MonoBehaviour
         RaycastHit hit;
 
         LayerMask maskToDetect = useRedMask ? maskWithRed : mask;
+
+        Vector3 position = transform.position + Vector3.down * grabHeight;
+
 
         if (!Physics.Raycast(transform.position, transform.forward, out hit, holdDistance, maskToDetect))
         {

@@ -18,7 +18,13 @@ public class EquipAction : MonoBehaviour
         {
             UnEquip();
         }
-        else
+        GrabAction grabScrip = GetComponent<GrabAction>();
+        if (grabScrip == null)
+        {
+            return;
+        }
+        equipedObject = grabScrip.GetGrabbedObject();
+        if (equipedObject.GetComponent<EquipableObject>())
         {
             Equip();
         }
