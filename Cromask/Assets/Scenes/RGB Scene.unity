@@ -1220,7 +1220,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7168530331075103801, guid: 50146f7f4cf0c24408a0f2a8a0c21cbe, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 1.31
       objectReference: {fileID: 0}
     - target: {fileID: 7168530331075103801, guid: 50146f7f4cf0c24408a0f2a8a0c21cbe, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1501,3 +1501,4 @@ SceneRoots:
   - {fileID: 2017714345}
   - {fileID: 253088231}
   - {fileID: 680943621}
+  - {fileID: 225910185}

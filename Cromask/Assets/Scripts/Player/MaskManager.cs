@@ -95,7 +95,7 @@ public class MaskManager : MonoBehaviour
         if(audioManager != null)
             if(this.gameObject == ReferenceManager.Instance.GetPlayerOne())
             {
-                audioManager.UpdateMaskParameter(currentMask, ReferenceManager.Instance.GetPlayerTwoMask().GetCurrentMask());
+                //audioManager.UpdateMaskParameter(currentMask, ReferenceManager.Instance.GetPlayerTwoMask().GetCurrentMask());
             }
             else
             {
