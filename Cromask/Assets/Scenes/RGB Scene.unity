@@ -232,6 +232,67 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &329638128
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1969365219257747675, guid: 6a829a95e3c4f0b44b076232890c2353, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972289242277945928, guid: 6a829a95e3c4f0b44b076232890c2353, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.9522038
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972289242277945928, guid: 6a829a95e3c4f0b44b076232890c2353, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.0000004
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972289242277945928, guid: 6a829a95e3c4f0b44b076232890c2353, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.9216788
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972289242277945928, guid: 6a829a95e3c4f0b44b076232890c2353, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972289242277945928, guid: 6a829a95e3c4f0b44b076232890c2353, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972289242277945928, guid: 6a829a95e3c4f0b44b076232890c2353, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972289242277945928, guid: 6a829a95e3c4f0b44b076232890c2353, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972289242277945928, guid: 6a829a95e3c4f0b44b076232890c2353, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972289242277945928, guid: 6a829a95e3c4f0b44b076232890c2353, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972289242277945928, guid: 6a829a95e3c4f0b44b076232890c2353, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8576669691709291928, guid: 6a829a95e3c4f0b44b076232890c2353, type: 3}
+      propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6a829a95e3c4f0b44b076232890c2353, type: 3}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,8 +305,9 @@ GameObject:
   - component: {fileID: 330585545}
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
+  - component: {fileID: 330585548}
   m_Layer: 0
-  m_Name: Player1Camera (Red)
+  m_Name: Player1Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -298,7 +360,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 631
+    m_Bits: 1079
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -369,6 +431,19 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &330585548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330585543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b35e0d7cbc59cd49b0b07b834116583, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraCullingMaskController
+  currentView: 0
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,8 +583,9 @@ GameObject:
   - component: {fileID: 565714223}
   - component: {fileID: 565714222}
   - component: {fileID: 565714221}
+  - component: {fileID: 565714225}
   m_Layer: 0
-  m_Name: Player2Camera (Green)
+  m_Name: Player2Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -606,7 +682,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 311
+    m_Bits: 1079
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -633,6 +709,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 45.061, z: 0}
+--- !u!114 &565714225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 565714220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b35e0d7cbc59cd49b0b07b834116583, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraCullingMaskController
+  currentView: 0
 --- !u!1001 &831455035
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -644,6 +733,14 @@ PrefabInstance:
     - target: {fileID: 1647355394626036089, guid: d0710e794da05ed49895797a729eef43, type: 3}
       propertyPath: m_Name
       value: Blue Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 3033007967508771417, guid: d0710e794da05ed49895797a729eef43, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3033007967508771417, guid: d0710e794da05ed49895797a729eef43, type: 3}
+      propertyPath: m_LayerOverridePriority
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7168530331075103801, guid: d0710e794da05ed49895797a729eef43, type: 3}
       propertyPath: m_LocalPosition.x
@@ -915,6 +1012,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8498787598773885926, guid: 50146f7f4cf0c24408a0f2a8a0c21cbe, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8498787598773885926, guid: 50146f7f4cf0c24408a0f2a8a0c21cbe, type: 3}
+      propertyPath: m_LayerOverridePriority
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -930,5 +1035,6 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 21332272}
   - {fileID: 1526839745}
+  - {fileID: 329638128}
   - {fileID: 2119946353}
   - {fileID: 831455035}
