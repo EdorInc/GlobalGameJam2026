@@ -3,35 +3,39 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 [RequireComponent(typeof(Camera))]
-
-public class CameraOcclusion: MonoBehaviour
+public class CameraOcclusion : MonoBehaviour
 {
-    private enum PlayerNumber
-    {
-        PlayerOne = 0, PlayerTwo = 1,
-    };
+    private enum PlayerNumber { PlayerOne = 0, PlayerTwo = 1 }
 
+    [SerializeField] private PlayerNumber playerNumber;
+    [SerializeField] private LayerMask occlusionMask = ~0;
+    [SerializeField] private float maxDistanceOffset = 0.05f;
 
-    [SerializeField]
-    private PlayerNumber playerNumber;
-   
-    public LayerMask occlusionMask = ~0;           // Capas que pueden bloquear la vista
-    public float maxDistanceOffset = 0.05f;        // pequeño margen para no chocar con el propio target
+    [Header("Detection")]
+    [Tooltip("Si true usa SphereCastAll en vez de RaycastAll (mejora detección de objetos finos).")]
+    public bool useSphereCast = false;
+    public float sphereRadius = 0.15f;
 
     [Header("Appearance")]
     [Range(0f, 1f)] public float transparentAlpha = 0.3f;
-    
-    private string colorPropertyName = "_BaseColor";
-    // Estado runtime
+    [Tooltip("Propiedad del color en tu shader ('_BaseColor' para URP, '_Color' para Built-in).")]
+    public string colorPropertyName = "_BaseColor";
+
     private Camera _camera;
+    private Transform target;
+
+    // estado por cámara
     private HashSet<Renderer> currentlyTransparent = new HashSet<Renderer>();
     private Dictionary<Renderer, MaterialPropertyBlock> originalBlocks = new Dictionary<Renderer, MaterialPropertyBlock>();
 
-    private Transform target;                   
+    private void Awake()
+    {
+        _camera = GetComponent<Camera>();
+    }
 
     private void Start()
     {
-        switch(playerNumber)
+        switch (playerNumber)
         {
             case PlayerNumber.PlayerOne:
                 target = ReferenceManager.Instance.GetPlayerOne().transform;
@@ -40,10 +44,6 @@ public class CameraOcclusion: MonoBehaviour
                 target = ReferenceManager.Instance.GetPlayerTwo().transform;
                 break;
         }
-    }
-    private void Awake()
-    {
-        _camera = GetComponent<Camera>();
     }
 
     private void OnEnable()
@@ -56,26 +56,16 @@ public class CameraOcclusion: MonoBehaviour
     {
         RenderPipelineManager.beginCameraRendering -= OnBeginCameraRendering;
         RenderPipelineManager.endCameraRendering -= OnEndCameraRendering;
-
-        // Aseguramos restaurar por si se desactiva mientras hay cosas modificadas
-        RestoreAll();
+        RestoreAll(); // por si acaso
+        currentlyTransparent.Clear();
     }
 
-    // ----- SRP callbacks -----
-    private void OnBeginCameraRendering(ScriptableRenderContext context, Camera cam)
-    {
-        BeginCamera(cam);
-    }
+    private void OnBeginCameraRendering(ScriptableRenderContext ctx, Camera cam) => BeginCamera(cam);
+    private void OnEndCameraRendering(ScriptableRenderContext ctx, Camera cam) => EndCamera(cam);
 
-    private void OnEndCameraRendering(ScriptableRenderContext context, Camera cam)
-    {
-        EndCamera(cam);
-    }
-
-    // ----- Core -----
     private void BeginCamera(Camera cam)
     {
-        if (cam != _camera) return;            // solo para la cámara a la que está attached
+        if (cam != _camera) return;
         if (target == null) return;
 
         Vector3 origin = cam.transform.position;
@@ -83,53 +73,87 @@ public class CameraOcclusion: MonoBehaviour
         float distance = dir.magnitude;
         if (distance <= 0.001f) return;
 
-        // Raycast simple (primer hit)
-        if (Physics.Raycast(origin, dir.normalized, out RaycastHit hit, Mathf.Max(0f, distance - maxDistanceOffset), occlusionMask, QueryTriggerInteraction.Ignore))
-        {
-            var hitRenderers = hit.collider.GetComponentsInChildren<Renderer>();
-            HashSet<Renderer> newSet = new HashSet<Renderer>(hitRenderers);
+        RaycastHit[] hits;
+        float castDistance = Mathf.Max(0f, distance - maxDistanceOffset);
 
-            // Poner transparentes los nuevos
-            foreach (var r in newSet)
-            {
-                if (r == null) continue;
-                if (!currentlyTransparent.Contains(r))
-                    MakeRendererTransparent(r);
-            }
-
-            // Restaurar los que ya no están en el nuevo set
-            var toRestore = new List<Renderer>();
-            foreach (var r in currentlyTransparent)
-                if (!newSet.Contains(r))
-                    toRestore.Add(r);
-
-            foreach (var r in toRestore)
-                RestoreRenderer(r);
-
-            currentlyTransparent = newSet;
-        }
+        if (useSphereCast)
+            hits = Physics.SphereCastAll(origin, sphereRadius, dir.normalized, castDistance, occlusionMask, QueryTriggerInteraction.Ignore);
         else
+            hits = Physics.RaycastAll(origin, dir.normalized, castDistance, occlusionMask, QueryTriggerInteraction.Ignore);
+
+        if (hits == null || hits.Length == 0)
         {
-            // No hit: restaurar todo lo que estuviera transparente para esta cámara
+            // nada bloqueando: restaurar todo
             RestoreAll();
             currentlyTransparent.Clear();
+            return;
         }
+
+        // ordenar por distancia (más cercano primero)
+        System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+
+        // recogemos todos los renderers de todos los hits (excluyendo los del target)
+        HashSet<Renderer> newSet = new HashSet<Renderer>();
+        foreach (var hit in hits)
+        {
+            if (hit.collider == null) continue;
+
+            // si el collider pertenece al target, lo ignoramos
+            if (IsColliderPartOfTarget(hit.collider)) continue;
+
+            var renderers = hit.collider.GetComponentsInChildren<Renderer>();
+            foreach (var r in renderers)
+            {
+                if (r == null) continue;
+                if (IsRendererPartOfTarget(r)) continue;
+                newSet.Add(r);
+            }
+        }
+
+        // Aplicar transparencia a los nuevos que no estén ya transparentes
+        foreach (var r in newSet)
+        {
+            if (!currentlyTransparent.Contains(r))
+                MakeRendererTransparent(r);
+        }
+
+        // Restaurar los que estaban pero ya no están en el nuevo set
+        var toRestore = new List<Renderer>();
+        foreach (var r in currentlyTransparent)
+        {
+            if (!newSet.Contains(r))
+                toRestore.Add(r);
+        }
+        foreach (var r in toRestore)
+            RestoreRenderer(r);
+
+        currentlyTransparent = newSet;
     }
 
     private void EndCamera(Camera cam)
     {
         if (cam != _camera) return;
-        // Restauramos TODO para que no afecte a siguientes cámaras
+        // Restauramos TODO para no afectar a otras cámaras en el mismo frame
         RestoreAll();
         currentlyTransparent.Clear();
     }
 
-    // ----- Helper: aplicar transparencia usando MaterialPropertyBlock -----
+    private bool IsColliderPartOfTarget(Collider col)
+    {
+        if (target == null) return false;
+        return col.transform.IsChildOf(target) || col.transform == target;
+    }
+
+    private bool IsRendererPartOfTarget(Renderer rend)
+    {
+        if (target == null || rend == null) return false;
+        return rend.transform.IsChildOf(target) || rend.transform == target;
+    }
+
     private void MakeRendererTransparent(Renderer rend)
     {
         if (rend == null) return;
 
-        // Guardar block original si no lo tenemos
         if (!originalBlocks.ContainsKey(rend))
         {
             var orig = new MaterialPropertyBlock();
@@ -137,14 +161,13 @@ public class CameraOcclusion: MonoBehaviour
             originalBlocks[rend] = orig;
         }
 
-        // Obtener block actual (podría ser vacío) y modificar color.alpha
         var block = new MaterialPropertyBlock();
         rend.GetPropertyBlock(block);
 
-        // Leer color base (intento: property block > shared material > white)
+        // obtener color base: property block -> sharedMaterial -> white
         Color baseColor = Color.white;
-        bool gotFromBlock = TryGetColorFromBlock(block, out Color colorFromBlock);
-        if (gotFromBlock) baseColor = colorFromBlock;
+        if (TryGetColorFromBlock(block, out Color cb))
+            baseColor = cb;
         else if (rend.sharedMaterial != null && rend.sharedMaterial.HasProperty(colorPropertyName))
             baseColor = rend.sharedMaterial.GetColor(colorPropertyName);
 
@@ -159,13 +182,11 @@ public class CameraOcclusion: MonoBehaviour
 
         if (originalBlocks.TryGetValue(rend, out var origBlock))
         {
-            // Restaurar el property block original (puede estar vacío)
             rend.SetPropertyBlock(origBlock);
             originalBlocks.Remove(rend);
         }
         else
         {
-            // No teníamos block original: limpiar
             rend.SetPropertyBlock(null);
         }
     }
@@ -181,17 +202,14 @@ public class CameraOcclusion: MonoBehaviour
         originalBlocks.Clear();
     }
 
-    // Intento seguro de leer color desde MaterialPropertyBlock
+    // lectura segura desde MaterialPropertyBlock
     private bool TryGetColorFromBlock(MaterialPropertyBlock block, out Color color)
     {
         color = Color.white;
         if (block == null) return false;
-        // MaterialPropertyBlock no tiene TryGetColor público, usamos GetVector con control de errores
         try
         {
             Vector4 v = block.GetVector(colorPropertyName);
-            // si v es (0,0,0,0) podría ser que no exista la propiedad, pero también puede ser color negro.
-            // Aun así lo consideramos válido si cualquier componente != 0, o si alpha != 0.
             color = new Color(v.x, v.y, v.z, v.w);
             return true;
         }
