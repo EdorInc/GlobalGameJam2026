@@ -2187,7 +2187,7 @@ GameObject:
   - component: {fileID: 452170528}
   - component: {fileID: 452170527}
   m_Layer: 10
-  m_Name: Pared (20)
+  m_Name: Block1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4898,6 +4898,14 @@ PrefabInstance:
     - target: {fileID: 1647355394626036089, guid: 50146f7f4cf0c24408a0f2a8a0c21cbe, type: 3}
       propertyPath: m_Name
       value: Red Cube3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471284025089585715, guid: 50146f7f4cf0c24408a0f2a8a0c21cbe, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471284025089585715, guid: 50146f7f4cf0c24408a0f2a8a0c21cbe, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 1024
       objectReference: {fileID: 0}
     - target: {fileID: 7168530331075103801, guid: 50146f7f4cf0c24408a0f2a8a0c21cbe, type: 3}
       propertyPath: m_LocalPosition.x
