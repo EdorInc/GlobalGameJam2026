@@ -5,7 +5,7 @@ public class LightLogic : MonoBehaviour
 {
     [SerializeField]
     private GameObject sceneLight;
-    private void SetLightState(bool state)
+    public void SetLightState(bool state)
     {
         sceneLight.SetActive(state);
     }
@@ -30,5 +30,10 @@ public class LightLogic : MonoBehaviour
         }
           
     }
-   
+
+    
+    private void OnDisable()
+    {
+        SetLightState(false);
+    }
 }

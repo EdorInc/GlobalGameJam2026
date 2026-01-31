@@ -428,6 +428,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EquipableObject
   maskType: 3
+  sphereTrigger: {fileID: 3797434486471559908}
   particleGenerationPosition: {fileID: 6068448686868455714}
 --- !u!114 &3058864092279250940
 MonoBehaviour:

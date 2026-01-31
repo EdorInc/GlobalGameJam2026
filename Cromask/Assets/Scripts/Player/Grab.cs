@@ -61,6 +61,7 @@ public class GrabAction : MonoBehaviour
     {
         if (charging)
         {
+           // VibrationManager.Instance.RumblePulse(,0.5f, 0.5f);
             Charge();
         }
 

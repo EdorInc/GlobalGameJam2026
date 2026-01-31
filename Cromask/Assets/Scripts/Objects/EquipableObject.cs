@@ -7,10 +7,14 @@ public class EquipableObject : MonoBehaviour
     private GameObject particleSystem;
 
     [SerializeField]
+    private GameObject sphereTrigger;
+
+    [SerializeField]
     private Transform particleGenerationPosition;
 
     public Mask Equip()
     {
+        sphereTrigger.SetActive(false);
         switch (maskType)
         {
             case Mask.Red:
@@ -24,7 +28,7 @@ public class EquipableObject : MonoBehaviour
                 particleSystem = VFXManager.Instance.PlayPermanentVFX(VFXType.EquipGreenMask, particleGenerationPosition.position);
                 break;
         }
-
+       
 
         particleSystem.transform.parent = this.transform;
 
@@ -32,12 +36,13 @@ public class EquipableObject : MonoBehaviour
         GetComponent<MeshRenderer>().enabled = false;
         GetComponent <Rigidbody>().isKinematic = true;
         Debug.Log("Object equipped");
-
+        
         return maskType;
     }
 
     public void UnEquip()
     {
+        sphereTrigger.SetActive(true);
         if (particleSystem)
         {
             Destroy(particleSystem);
@@ -46,6 +51,7 @@ public class EquipableObject : MonoBehaviour
         GetComponent<Collider>().enabled = true;
         GetComponent<MeshRenderer>().enabled = true;
         GetComponent<Rigidbody>().isKinematic = false;
+      
         Debug.Log("Object unequipped");
     }
 }
