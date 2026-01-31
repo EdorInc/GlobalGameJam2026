@@ -128,6 +128,7 @@ GameObject:
   - component: {fileID: 4225862006048757829}
   - component: {fileID: 484927700941272014}
   - component: {fileID: 3194440579157672503}
+  - component: {fileID: 6339925765209441009}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -259,8 +260,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13da1b53deaee9a4fa7d64adbc77adaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
-  playerController: {fileID: 7225989960421602752}
-  grabComponent: {fileID: 3194440579157672503}
 --- !u!114 &484927700941272014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -431,3 +430,16 @@ MonoBehaviour:
   forceGrow: 1
   holdDistance: 1
   holdPosition: {x: 0, y: 0, z: 1.2}
+--- !u!114 &6339925765209441009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8576669691709291928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f481ef8489433746bea6bdaf5b71779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskManager
+  currentMask: 0
