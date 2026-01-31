@@ -40,6 +40,7 @@ public class MovingObject : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("Pito");
         foreach (ContactPoint contact in collision.contacts)
         {
             if (Vector3.Dot(contact.normal, Vector3.up) > 0.5f)
