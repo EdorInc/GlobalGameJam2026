@@ -64,6 +64,11 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        PlayMusic(AudioType.Music); 
+    }
+
     public void StopMusic()
     {
         if (currentMusicInstance.isValid())
@@ -74,6 +79,52 @@ public class AudioManager : MonoBehaviour
         currentMusicInstance = default;
     }
 
+    public void ChangeParameterMusic(string label, int value)
+    {
+        if (currentMusicInstance.isValid())
+        {
+            currentMusicInstance.setParameterByName(label, value);
+        }
+    }
+
+    public void UpdateMaskParameter(Mask playerOneMask, Mask playerTwoMask)
+    {
+        UnityEngine.Debug.Log(playerOneMask);
+        UnityEngine.Debug.Log(playerTwoMask);
+        switch ((playerOneMask, playerTwoMask))
+        {
+            case (Mask.Unmasked,Mask.Unmasked):
+                ChangeParameterMusic("Mascaras", 0);
+                break;
+            case (Mask.Blue, Mask.Unmasked):
+            case (Mask.Unmasked, Mask.Blue):
+                ChangeParameterMusic("Mascaras", 1);
+                break;
+            case (Mask.Green, Mask.Unmasked):
+            case (Mask.Unmasked, Mask.Green):
+                ChangeParameterMusic("Mascaras", 2);
+                break;
+            case (Mask.Red, Mask.Unmasked):
+            case (Mask.Unmasked, Mask.Red):
+                ChangeParameterMusic("Mascaras", 3);
+                break;
+            case (Mask.Green, Mask.Blue):
+            case (Mask.Blue, Mask.Green):
+                ChangeParameterMusic("Mascaras", 4);
+                break;
+            case (Mask.Green, Mask.Red):
+            case (Mask.Red, Mask.Green):
+                ChangeParameterMusic("Mascaras", 5);
+                break;
+            case (Mask.Blue, Mask.Red):
+            case (Mask.Red, Mask.Blue):
+                ChangeParameterMusic("Mascaras", 6);
+                break;
+            default:
+                ChangeParameterMusic("Mascaras", 7);
+                break;
+        }
+    }
     public void StopSFX()
     {
         if (currentSFXInstance.isValid())
