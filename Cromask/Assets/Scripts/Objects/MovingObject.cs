@@ -13,6 +13,8 @@ public class MovingObject : MonoBehaviour
     private Vector3 target;
     private Vector3 platformVelocity;
 
+    public static bool canMove = false;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -23,15 +25,17 @@ public class MovingObject : MonoBehaviour
     private void FixedUpdate()
     {
         // Move the platform
-        Vector3 nextPos = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.fixedDeltaTime);
-        platformVelocity = (nextPos - transform.position) / Time.fixedDeltaTime;
-        rb.MovePosition(nextPos);
-
-        if (Vector3.Distance(nextPos, target) < 0.01f)
+        if (canMove)
         {
-            target = target == pointA.position ? pointB.position : pointA.position;
-        }
+            Vector3 nextPos = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.fixedDeltaTime);
+            platformVelocity = (nextPos - transform.position) / Time.fixedDeltaTime;
+            rb.MovePosition(nextPos);
 
+            if (Vector3.Distance(nextPos, target) < 0.01f)
+            {
+                target = target == pointA.position ? pointB.position : pointA.position;
+            }
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

@@ -6,9 +6,7 @@ using UnityEngine.UI;
 public class ButtonsCanvasController : MonoBehaviour
 {
     [Header("Buttons")]
-    [SerializeField] private Button startButton;
-    [SerializeField] private Button controlsButton;
-    [SerializeField] private Button exitButton;
+    [SerializeField] private Button[] buttons;
 
     [Header("Navigation Settings")]
     [SerializeField] private float inputCooldown = 0.2f;
@@ -18,13 +16,18 @@ public class ButtonsCanvasController : MonoBehaviour
     [SerializeField] private Color selectedColor = Color.yellow;
     [SerializeField] private Color normalColor = Color.white;
 
-    private Button[] buttons;
     private int currentIndex = 0;
     private float lastInputTime;
 
     private void Start()
     {
-        buttons = new Button[] { startButton, controlsButton, exitButton };
+        if (buttons == null || buttons.Length == 0)
+        {
+            Debug.LogError("ButtonsCanvasController: No buttons assigned.");
+            enabled = false;
+            return;
+        }
+
         SelectButton(0);
     }
 
@@ -35,15 +38,15 @@ public class ButtonsCanvasController : MonoBehaviour
 
         Vector2 navigation = Vector2.zero;
 
-        // Input de Gamepad
+        // Gamepad input
         if (Gamepad.current != null)
         {
             navigation = Gamepad.current.leftStick.ReadValue();
             Vector2 dpad = Gamepad.current.dpad.ReadValue();
+
             if (dpad.sqrMagnitude > navigation.sqrMagnitude)
                 navigation = dpad;
 
-            // Botón A para seleccionar
             if (Gamepad.current.buttonSouth.wasPressedThisFrame)
             {
                 buttons[currentIndex].onClick.Invoke();
@@ -52,7 +55,7 @@ public class ButtonsCanvasController : MonoBehaviour
             }
         }
 
-        // Input de Teclado (flechas)
+        // Keyboard input
         if (Keyboard.current != null)
         {
             if (Keyboard.current.upArrowKey.isPressed)
@@ -60,7 +63,6 @@ public class ButtonsCanvasController : MonoBehaviour
             else if (Keyboard.current.downArrowKey.isPressed)
                 navigation.y = -1f;
 
-            // Enter para seleccionar
             if (Keyboard.current.enterKey.wasPressedThisFrame)
             {
                 buttons[currentIndex].onClick.Invoke();
@@ -69,7 +71,7 @@ public class ButtonsCanvasController : MonoBehaviour
             }
         }
 
-        // Navegación vertical
+        // Vertical navigation
         if (navigation.y > 0.5f)
         {
             NavigateUp();
@@ -82,27 +84,20 @@ public class ButtonsCanvasController : MonoBehaviour
 
     private void NavigateUp()
     {
-        currentIndex--;
-        if (currentIndex < 0)
-            currentIndex = buttons.Length - 1;
-
+        currentIndex = (currentIndex - 1 + buttons.Length) % buttons.Length;
         SelectButton(currentIndex);
         lastInputTime = Time.unscaledTime;
     }
 
     private void NavigateDown()
     {
-        currentIndex++;
-        if (currentIndex >= buttons.Length)
-            currentIndex = 0;
-
+        currentIndex = (currentIndex + 1) % buttons.Length;
         SelectButton(currentIndex);
         lastInputTime = Time.unscaledTime;
     }
 
     private void SelectButton(int index)
     {
-        // Resetear todos los botones al estado normal
         for (int i = 0; i < buttons.Length; i++)
         {
             buttons[i].transform.localScale = Vector3.one;
@@ -113,21 +108,24 @@ public class ButtonsCanvasController : MonoBehaviour
         }
 
         currentIndex = index;
-        buttons[currentIndex].transform.localScale = Vector3.one * selectedScale;
 
-        var selectedImage = buttons[currentIndex].GetComponent<Image>();
+        Button selectedButton = buttons[currentIndex];
+        selectedButton.transform.localScale = Vector3.one * selectedScale;
+
+        Image selectedImage = selectedButton.GetComponent<Image>();
         if (selectedImage != null)
             selectedImage.color = selectedColor;
 
-        buttons[currentIndex].Select();
-        EventSystem.current.SetSelectedGameObject(buttons[currentIndex].gameObject);
+        selectedButton.Select();
+        EventSystem.current.SetSelectedGameObject(selectedButton.gameObject);
     }
 
     private void OnEnable()
     {
-        // Resetear al primer botón cuando se active el canvas
-        currentIndex = 0;
         if (buttons != null && buttons.Length > 0)
+        {
+            currentIndex = 0;
             SelectButton(0);
+        }
     }
 }

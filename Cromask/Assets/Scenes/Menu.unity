@@ -3677,9 +3677,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c99a3e4eeb99e1a4384e9e8e54e15c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonsCanvasController
-  startButton: {fileID: 996608993}
-  controlsButton: {fileID: 1479201857}
-  exitButton: {fileID: 898918206}
+  buttons:
+  - {fileID: 996608993}
+  - {fileID: 1479201857}
+  - {fileID: 898918206}
   inputCooldown: 0.2
   selectedScale: 1.2
   selectedColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
