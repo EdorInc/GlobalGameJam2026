@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+
         CheckPlatform();
 
         Vector3 horizontalMove = new Vector3(moveDirection.x, 0f, moveDirection.y) * moveSpeed;
@@ -61,6 +62,7 @@ public class PlayerController : MonoBehaviour
     public void OnMove(Vector2 direction)
     {
         moveDirection = direction.normalized;
+      
     }
 
     private void CheckPlatform()
