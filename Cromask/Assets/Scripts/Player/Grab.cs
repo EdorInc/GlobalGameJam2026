@@ -110,7 +110,9 @@ public class GrabAction : MonoBehaviour
 
     public GameObject GetGrabbedObject()
     {
-        return grabbedObject;
+        GameObject grabObjectAux = grabbedObject;
+        grabbedObject = null;
+        return grabObjectAux;
     }
 
     public void DrawTrajectory(float impulseStrengthFoward,float impulseStrengthUp)
