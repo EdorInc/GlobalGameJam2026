@@ -52,6 +52,7 @@ public class GrabAction : MonoBehaviour
         maskManager = GetComponent<MaskManager>();
 
         lastEquipedMask = maskManager.GetCurrentMask();
+        Clear();
     }
 
     void Update()
@@ -80,8 +81,9 @@ public class GrabAction : MonoBehaviour
 
         Vector3 position = transform.position + Vector3.down * grabHeight;
 
+        Debug.DrawLine(position, position + transform.forward * holdDistance,Color.red,5);
 
-        if (!Physics.Raycast(transform.position, transform.forward, out hit, holdDistance, maskToDetect))
+        if (!Physics.Raycast(position, transform.forward, out hit, holdDistance, maskToDetect))
         {
             Debug.Log("Nothing detected in front.");
             return;
@@ -103,7 +105,9 @@ public class GrabAction : MonoBehaviour
         grabbedObject.transform.parent = transform;
         grabbedObject.transform.rotation = transform.rotation;
         grabbedObject.transform.localPosition = holdPosition;
+        grabbedObject.GetComponent<BoxCollider>().enabled = false;
         rb.useGravity = false;
+        rb.isKinematic = true;
     }
 
     public void StartCharge()
@@ -128,8 +132,9 @@ public class GrabAction : MonoBehaviour
 
     public void ThrowObject()
     {
-        //Debug.Log()
-        if(grabbedObject == null)
+        grabbedObject.GetComponent<Rigidbody>().isKinematic = false;
+
+        if (grabbedObject == null)
         {
             return;
         }
@@ -142,6 +147,7 @@ public class GrabAction : MonoBehaviour
             rbCube.useGravity = true;
             grabbedObject.transform.parent = grabbedObject.GetComponent<GrabableObject>().GetBaseParent();
             rbCube.AddForce(transform.forward * currentForceFoward + Vector3.up * currentForceUp, ForceMode.Impulse);
+            grabbedObject.GetComponent<BoxCollider>().enabled = true;
             grabbedObject = null;
 
             Clear();
@@ -159,10 +165,21 @@ public class GrabAction : MonoBehaviour
         grabbedObject = null;
     }
 
-    public void GrabObjectFromEquip()
+    public void ForceGrabObject(GameObject obj)
     {
-        GrabObject();
+        grabbedObject = obj;
+
+        Rigidbody rb = obj.GetComponent<Rigidbody>();
+        rb.angularVelocity = Vector3.zero;
+        rb.useGravity = false;
+        rb.isKinematic = true;
+        grabbedObject.GetComponent<BoxCollider>().enabled = false;
+
+        obj.transform.SetParent(transform);
+        obj.transform.localPosition = holdPosition;
+        obj.transform.localRotation = Quaternion.identity;
     }
+
 
     public void DrawTrajectory(float impulseStrengthFoward, float impulseStrengthUp)
     {

@@ -14,63 +14,81 @@ public class EquipAction : MonoBehaviour
 
     public void ChangeState()
     {
-        if (equipedObject != null)
+        GrabAction grab = GetComponent<GrabAction>();
+        if (grab == null) return;
+
+        GameObject grabbed = grab.GetGrabbedObject();
+
+        // CASE 3: swap
+        if (equipedObject != null && grabbed != null)
+        {
+            Swap(grabbed);
+            return;
+        }
+
+        // CASE 1: equip
+        if (equipedObject == null && grabbed != null)
+        {
+            Equip(grabbed);
+            return;
+        }
+
+        // CASE 2: unequip
+        if (equipedObject != null && grabbed == null)
         {
             UnEquip();
         }
-        GrabAction grabScrip = GetComponent<GrabAction>();
-        if (grabScrip == null)
-        {
-            return;
-        }
-        equipedObject = grabScrip.GetGrabbedObject();
-        if (equipedObject.GetComponent<EquipableObject>())
-        {
-            Equip();
-        }
-    }
-    private void Equip()
-    {
-        GrabAction grabScrip = GetComponent<GrabAction>();
-        if (grabScrip == null)
-        {
-            return;
-        }
-
-        equipedObject = grabScrip.GetGrabbedObject();
-
-        if (equipedObject == null)
-        {
-            return;
-        }
-        EquipableObject equipObjectScript =  equipedObject.GetComponent<EquipableObject>();
-        if (equipObjectScript == null)
-        {
-            equipedObject = null;
-            return;
-        }
-        grabScrip.RemoveGrabbedObject();
-        Mask equipedMask = equipObjectScript.Equip();
-
-        maskManager.ApplyMask(equipedMask);
     }
 
-    private GameObject UnEquip()
+    private void Equip(GameObject obj)
     {
-        GrabAction grabScrip = GetComponent<GrabAction>();
+        if (!obj.TryGetComponent(out EquipableObject equipable))
+            return;
 
-        if (grabScrip == null)
-        {
-            return null;
-        }
+        GrabAction grab = GetComponent<GrabAction>();
 
-        equipedObject.GetComponent<EquipableObject>().UnEquip();
-        equipedObject = null;
+        grab.RemoveGrabbedObject();
+        equipedObject = obj;
 
+        Mask mask = equipable.Equip();
+        maskManager.ApplyMask(mask);
+    }
+
+
+    private void UnEquip()
+    {
+        if (equipedObject == null) return;
+
+        GrabAction grab = GetComponent<GrabAction>();
+        EquipableObject equip = equipedObject.GetComponent<EquipableObject>();
+
+        equip.UnEquip();
         maskManager.ApplyMask(Mask.Unmasked);
 
-        grabScrip.GrabObjectFromEquip();
+        GameObject mask = equipedObject;
+        equipedObject = null;
 
-        return equipedObject;
+        grab.ForceGrabObject(mask);
     }
+
+    private void Swap(GameObject newMask)
+    {
+        GrabAction grab = GetComponent<GrabAction>();
+
+        GameObject oldMask = equipedObject;
+        EquipableObject oldEquip = oldMask.GetComponent<EquipableObject>();
+        oldEquip.UnEquip();
+
+        grab.RemoveGrabbedObject();
+
+        EquipableObject newEquip = newMask.GetComponent<EquipableObject>();
+        equipedObject = newMask;
+
+        Mask newMaskType = newEquip.Equip();
+        maskManager.ApplyMask(newMaskType);
+
+        grab.ForceGrabObject(oldMask);
+    }
+
+
 }
