@@ -24,10 +24,14 @@ public class GrabAction : MonoBehaviour
     private float holdDistance = 3;
     [SerializeField]
     private Vector3 holdPosition = Vector3.forward;
-    [SerializeField]
-    private int resolution = 30;
+    [SerializeField] 
+    private float maxTime = 5.0f;
     [SerializeField]
     private float timeStep = 0.1f;
+    [SerializeField]
+    private float lineWidth = 0.06f;
+    [SerializeField]
+    private float grabHeight = 0.5f;
 
     private GameObject grabbedObject = null;
     private float currentForceFoward;
@@ -35,14 +39,13 @@ public class GrabAction : MonoBehaviour
     private bool charging = false;
     private LineRenderer line;
 
+    private MaskManager maskManager;
+    private Mask lastEquipedMask;
+
     private void Awake()
     {
         line = GetComponent<LineRenderer>();
     }
-
-    private MaskManager maskManager;
-
-    private Mask lastEquipedMask;
 
     void Start()
     {
@@ -51,7 +54,6 @@ public class GrabAction : MonoBehaviour
         lastEquipedMask = maskManager.GetCurrentMask();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (charging)
@@ -75,6 +77,9 @@ public class GrabAction : MonoBehaviour
         RaycastHit hit;
 
         LayerMask maskToDetect = useRedMask ? maskWithRed : mask;
+
+        Vector3 position = transform.position + Vector3.down * grabHeight;
+
 
         if (!Physics.Raycast(transform.position, transform.forward, out hit, holdDistance, maskToDetect))
         {
@@ -110,6 +115,17 @@ public class GrabAction : MonoBehaviour
             currentForceFoward = minForceFowards;
         }
     }
+
+    private void Charge()
+    {
+        currentForceFoward += forceGrow * Time.deltaTime;
+        currentForceUp += forceGrow * Time.deltaTime;
+        currentForceFoward = Mathf.Min(currentForceFoward, maxForceFoward);
+        currentForceUp = Mathf.Min(currentForceUp, maxForceUp);
+        DrawTrajectory(currentForceFoward, currentForceUp);
+    }
+
+
     public void ThrowObject()
     {
         //Debug.Log()
@@ -127,16 +143,9 @@ public class GrabAction : MonoBehaviour
             grabbedObject.transform.parent = grabbedObject.GetComponent<GrabableObject>().GetBaseParent();
             rbCube.AddForce(transform.forward * currentForceFoward + Vector3.up * currentForceUp, ForceMode.Impulse);
             grabbedObject = null;
-        }
-    }
 
-    private void Charge()
-    {
-        currentForceFoward += forceGrow * Time.deltaTime;
-        currentForceUp += forceGrow * Time.deltaTime;
-        currentForceFoward = Mathf.Min(currentForceFoward, maxForceFoward);
-        currentForceUp = Mathf.Min(currentForceUp, maxForceUp);
-        DrawTrajectory(currentForceFoward, currentForceUp);
+            Clear();
+        }
     }
 
     public GameObject GetGrabbedObject()
@@ -144,6 +153,7 @@ public class GrabAction : MonoBehaviour
         GameObject grabableObject = grabbedObject;
         return grabableObject;
     }
+
     public void RemoveGrabbedObject()
     {
         grabbedObject = null;
@@ -154,26 +164,55 @@ public class GrabAction : MonoBehaviour
         GrabObject();
     }
 
-    public void DrawTrajectory(float impulseStrengthFoward,float impulseStrengthUp)
+    public void DrawTrajectory(float impulseStrengthFoward, float impulseStrengthUp)
     {
-        Vector3 startPos = grabbedObject.transform.position;
-
+        Vector3 initialPos = grabbedObject.transform.position;
         Vector3 initialVelocity = transform.forward * (impulseStrengthFoward / grabbedObject.GetComponent<Rigidbody>().mass) +
             Vector3.up * (impulseStrengthUp / grabbedObject.GetComponent<Rigidbody>().mass);
 
-        line.positionCount = resolution;
+        line.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        line.receiveShadows = false;
 
-        for (int i = 0; i < resolution; i++)
+        line.startWidth = lineWidth;
+        line.endWidth = lineWidth;
+
+        Vector3 previousPoint = initialPos;
+        int pointsDrawn = 0;
+        bool hitGround = false;
+
+        int maxSteps = Mathf.CeilToInt(maxTime / timeStep);
+
+        line.positionCount = maxSteps;
+
+        for (int i = 0; i < maxSteps; i++)
         {
             float t = i * timeStep;
 
-            Vector3 point =
-                startPos +
+            Vector3 currentPoint =
+                initialPos +
                 initialVelocity * t +
                 0.5f * Physics.gravity * t * t;
 
-            line.SetPosition(i, point);
+            // Raycast between last point and this point
+            Vector3 segment = currentPoint - previousPoint;
+            float distance = segment.magnitude;
+
+            if (Physics.Raycast(previousPoint, segment.normalized, out RaycastHit hit, distance))
+            {
+                // Stop at ground hit
+                line.SetPosition(pointsDrawn, hit.point);
+                pointsDrawn++;
+                hitGround = true;
+                break;
+            }
+
+            line.SetPosition(pointsDrawn, currentPoint);
+
+            previousPoint = currentPoint;
+            pointsDrawn++;
         }
+
+        line.positionCount = pointsDrawn - 1;
     }
     public void Clear()
     {
