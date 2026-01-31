@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
 public class MyPlayerInput : MonoBehaviour
@@ -7,11 +8,13 @@ public class MyPlayerInput : MonoBehaviour
     private PlayerController playerController;
     private Grab grabComponent;
     private EquipableManager equipableManager;
+    private RegisterController registerController;
     private void Awake()
     {
         playerController = GetComponent<PlayerController>();
         grabComponent = GetComponent<Grab>();
         equipableManager = GetComponent<EquipableManager>();
+        registerController = GetComponent<RegisterController>();
     }
 
     public void OnMove(CallbackContext ctx)
@@ -19,6 +22,7 @@ public class MyPlayerInput : MonoBehaviour
         if (ctx.performed)
         {
             playerController.OnMove(ctx.ReadValue<Vector2>());
+            VibrationManager.Instance.RumblePulse(registerController.GetPlayerGamepad(), 0.1f, 0.1f, 0.1f);
         }
         else if (ctx.canceled)
         {
