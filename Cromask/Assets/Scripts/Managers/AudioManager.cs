@@ -121,7 +121,6 @@ public class AudioManager : MonoBehaviour
             UnityEngine.Debug.LogWarning("PlayAmbience: soundDictionary doesn't contain " + type);
     }
 
-
     public void PlaySFX(AudioType type, float volume = 1)
     {
         StopSFX();
@@ -133,6 +132,22 @@ public class AudioManager : MonoBehaviour
                 currentSFXInstance = RuntimeManager.CreateInstance(sound.eventReference);
                 currentSFXInstance.setParameterByName("Volume", volume);
                 currentSFXInstance.start();
+            }
+            else
+                UnityEngine.Debug.LogWarning("PlaySFX: sfx is null or volume is less/equal than 0");
+        }
+        else
+            UnityEngine.Debug.LogWarning("PlaySFX: soundDictionary doesn't contain " + type);
+    }
+
+    public void PlaySFXOneShotAttached(AudioType type, GameObject gameObject,float volume = 1)
+    {
+        if (soundDictionary.ContainsKey(type))
+        {
+            SoundAsset sound = soundDictionary[type];
+            if (volume >= 0)
+            {
+                RuntimeManager.PlayOneShotAttached(sound.eventReference, gameObject);
             }
             else
                 UnityEngine.Debug.LogWarning("PlaySFX: sfx is null or volume is less/equal than 0");

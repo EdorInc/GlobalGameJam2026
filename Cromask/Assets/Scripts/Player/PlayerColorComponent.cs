@@ -7,7 +7,7 @@ public class PlayerColorComponent : MonoBehaviour
     private ObjectColor playerColor = ObjectColor.Red;
     void Start()
     {
-        AudioManager.Instance.PlayMusic(AudioType.Music);
+        AudioManager.Instance.PlaySFXOneShotAttached(AudioType.Music,this.gameObject);
     }
 
     // Update is called once per frame
