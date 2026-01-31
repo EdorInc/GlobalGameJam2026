@@ -64,14 +64,6 @@ public class MaskManager : MonoBehaviour
         controller.includeLayers = defaultInclude;
         controller.excludeLayers = defaultExclude;
 
-        Mask oldMask = Mask.Unmasked;
-
-        if(currentMask != Mask.Unmasked)
-        {
-            // PArar m´´usica de máscara que hay ahora en currentMask
-            oldMask = currentMask;
-        }
-
         currentMask = mask;
 
         if (!excludedCollisionLayers.TryGetValue(mask, out var layers))
@@ -95,7 +87,7 @@ public class MaskManager : MonoBehaviour
         if(audioManager != null)
             if(this.gameObject == ReferenceManager.Instance.GetPlayerOne())
             {
-                //audioManager.UpdateMaskParameter(currentMask, ReferenceManager.Instance.GetPlayerTwoMask().GetCurrentMask());
+                audioManager.UpdateMaskParameter(currentMask, ReferenceManager.Instance.GetPlayerTwoMask().GetCurrentMask());
             }
             else
             {
