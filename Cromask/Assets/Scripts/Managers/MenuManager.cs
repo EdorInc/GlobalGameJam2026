@@ -69,8 +69,11 @@ public class MenuManager : MonoBehaviour
 
     public void StartGame()
     {
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.Destroy();
         Debug.Log("Both players ready — starting game!");
         SceneManager.LoadScene("SceneTutorial");
+
     }
 
     public void ReturnToMenu()
