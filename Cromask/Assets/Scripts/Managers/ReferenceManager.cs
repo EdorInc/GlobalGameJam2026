@@ -38,7 +38,7 @@ public class ReferenceManager : MonoBehaviour
             {
                 GameObject singletonObject = new GameObject("ReferenceManager");
                 _instance = singletonObject.AddComponent<ReferenceManager>();
-                DontDestroyOnLoad(singletonObject);
+                //DontDestroyOnLoad(singletonObject);
             }
             return _instance;
         }
@@ -48,7 +48,7 @@ public class ReferenceManager : MonoBehaviour
         if (_instance == null)
         {
             _instance = this;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
         else if (_instance != this)
         {
