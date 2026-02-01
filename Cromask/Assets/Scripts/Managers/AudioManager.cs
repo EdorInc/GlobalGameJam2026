@@ -343,4 +343,9 @@ public class AudioManager : MonoBehaviour
 
         activeSFX.Add(inst);
     }
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
+    }
 }
