@@ -17,7 +17,7 @@ public class ResetMask : MonoBehaviour
     private float rayDistance = 5f;
 
     [SerializeField]
-    private float respawnHeight = 10.0f;
+    private float respawnHeight = 20.0f;
 
     private Vector3 firstValidPosition;
     private Vector3 lastValidPosition;
@@ -45,11 +45,12 @@ public class ResetMask : MonoBehaviour
         RespawnObject();
     }
 
-    private void RespawnObject()
+    public void RespawnObject()
     {
         if (hasValidSpawn)
         {
             transform.position = lastValidPosition;
+            transform.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
             Debug.Log("Objeto respawneado en la última posición válida.");
         }
         else
@@ -63,7 +64,7 @@ public class ResetMask : MonoBehaviour
     {
         if (IsGroundAppropriate(transform.position))
         {
-            lastValidPosition = transform.position;
+            lastValidPosition = transform.position + Vector3.up * respawnHeight;
             hasValidSpawn = true;
         }
     }

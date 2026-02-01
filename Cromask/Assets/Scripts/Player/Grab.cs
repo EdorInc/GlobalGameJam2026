@@ -217,11 +217,14 @@ public class GrabAction : MonoBehaviour
     }
 
 
-    public void ThrowObject()
+    public GameObject ThrowObject()
     {
-        if (!grabbedObject) return;
+        if (!grabbedObject) return null;
+
         Rigidbody rbCube = grabbedObject.GetComponent<Rigidbody>();
+
         rbCube.isKinematic = false;
+
         if (rbCube != null) 
         {
             UnityEngine.Debug.Log("Thrown: " + grabbedObject.name);
@@ -245,6 +248,8 @@ public class GrabAction : MonoBehaviour
 
             Clear();
         }
+
+        return grabbedObject;
     }
 
     public GameObject GetGrabbedObject()

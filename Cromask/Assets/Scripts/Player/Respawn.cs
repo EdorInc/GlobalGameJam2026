@@ -47,6 +47,11 @@ public class Respawn : MonoBehaviour
     {
         if (other.CompareTag("DeathZzzzone"))
         {
+            GameObject grabbedObject = transform.GetComponent<GrabAction>().ThrowObject();
+
+            grabbedObject?.GetComponent<Reset>()?.ForceRespawn();
+            grabbedObject?.GetComponent<ResetMask>()?.RespawnObject();
+
             RespawnPlayer();
         }
     }

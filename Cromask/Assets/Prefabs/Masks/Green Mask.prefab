@@ -450,7 +450,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   rayDistance: 5
-  respawnHeight: 10
+  respawnHeight: 5
 --- !u!1 &8125935847830122981
 GameObject:
   m_ObjectHideFlags: 0
