@@ -38,6 +38,13 @@ public class ResetMask : MonoBehaviour
         }
     }
 
+    public void ForceRespawn(Transform objTransform)
+    {
+        hasValidSpawn = true;
+        lastValidPosition = objTransform.position + Vector3.up * respawnHeight;
+        RespawnObject();
+    }
+
     private void RespawnObject()
     {
         if (hasValidSpawn)

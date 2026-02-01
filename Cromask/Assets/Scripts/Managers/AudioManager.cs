@@ -1,23 +1,26 @@
 using FMOD;
 using FMODUnity;
-using Mono.Cecil;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-
 
 public enum AudioType
 {
     Music,
     SFX,
-    PickObject
+    Respawn,
+    Door,
+    Bridge,
+    Charge,
+    Equip,
+    Unequip,
+    Footstep,
+    PickObject,
+    Throw
 }
-
 
 public class AudioManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-
     private static AudioManager _instance;
     public static AudioManager Instance
     {
@@ -33,14 +36,19 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-
     private FMOD.Studio.EventInstance currentMusicInstance;
-    private FMOD.Studio.EventInstance currentSFXInstance;
 
     [SerializeField]
     private List<SoundAsset> soundList = new List<SoundAsset>();
 
     private Dictionary<AudioType, SoundAsset> soundDictionary;
+
+    // Lista para guardar todas las instancias SFX/ambience/footsteps activas
+    private List<FMOD.Studio.EventInstance> activeSFX = new List<FMOD.Studio.EventInstance>();
+
+    // Opcional: limitar número máximo de SFX simultáneos
+    [SerializeField]
+    private int maxSimultaneousSFX = 64;
 
     private void Awake()
     {
@@ -66,7 +74,28 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        PlayMusic(AudioType.Music); 
+        PlayMusic(AudioType.Music);
+    }
+
+    private void Update()
+    {
+        // Limpieza de instancias que han terminado de reproducirse
+        for (int i = activeSFX.Count - 1; i >= 0; i--)
+        {
+            var inst = activeSFX[i];
+            if (!inst.isValid())
+            {
+                activeSFX.RemoveAt(i);
+                continue;
+            }
+            FMOD.Studio.PLAYBACK_STATE state;
+            inst.getPlaybackState(out state);
+            if (state == FMOD.Studio.PLAYBACK_STATE.STOPPED)
+            {
+                inst.release();
+                activeSFX.RemoveAt(i);
+            }
+        }
     }
 
     public void StopMusic()
@@ -87,13 +116,15 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    // ... (tu UpdateMaskParameter lo dejo igual)
     public void UpdateMaskParameter(Mask playerOneMask, Mask playerTwoMask)
     {
+        // copia exactamente tu switch...
         UnityEngine.Debug.Log(playerOneMask);
         UnityEngine.Debug.Log(playerTwoMask);
         switch ((playerOneMask, playerTwoMask))
         {
-            case (Mask.Unmasked,Mask.Unmasked):
+            case (Mask.Unmasked, Mask.Unmasked):
                 ChangeParameterMusic("Mascaras", 0);
                 break;
             case (Mask.Blue, Mask.Unmasked):
@@ -125,13 +156,48 @@ public class AudioManager : MonoBehaviour
                 break;
         }
     }
+
+    // Detiene y libera todas las SFX activas
     public void StopSFX()
     {
-        if (currentSFXInstance.isValid())
+        for (int i = activeSFX.Count - 1; i >= 0; i--)
         {
-            currentSFXInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            currentSFXInstance.release();
+            var inst = activeSFX[i];
+            if (inst.isValid())
+            {
+                inst.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                inst.release();
+            }
         }
+        activeSFX.Clear();
+    }
+
+    public void StopFootstep()
+    {
+        for (int i = activeSFX.Count - 1; i >= 0; i--)
+        {
+            var inst = activeSFX[i];
+            if (inst.isValid())
+            {
+                inst.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                inst.release();
+            }
+        }
+        activeSFX.Clear();
+    }
+
+    public void StopFootstep2()
+    {
+        for (int i = activeSFX.Count - 1; i >= 0; i--)
+        {
+            var inst = activeSFX[i];
+            if (inst.isValid())
+            {
+                inst.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                inst.release();
+            }
+        }
+        activeSFX.Clear();
     }
 
     public void PlayMusic(AudioType audioType, float volume = 1)
@@ -149,8 +215,8 @@ public class AudioManager : MonoBehaviour
             else
                 UnityEngine.Debug.LogWarning("PlayMusic: Music is null or volume is less/equal than 0");
         }
-        else
-            UnityEngine.Debug.LogWarning("PlayMusic: soundDictionary doesn't contain " + audioType);
+        //else
+          //  UnityEngine.DebugWarning("PlayMusic: soundDictionary doesn't contain " + audioType);
     }
 
     public void PlayAmbience(AudioType type, float volume = 1)
@@ -160,10 +226,12 @@ public class AudioManager : MonoBehaviour
             SoundAsset sound = soundDictionary[type];
             if (volume >= 0)
             {
-                FMOD.Studio.EventInstance ambienceInstance = RuntimeManager.CreateInstance(sound.eventReference);
+                var ambienceInstance = RuntimeManager.CreateInstance(sound.eventReference);
                 ambienceInstance.setParameterByName("Volume", volume);
                 ambienceInstance.start();
-                ambienceInstance.release();
+
+                // Añadimos a activeSFX para que Update() lo libere cuando termine.
+                RegisterSFXInstance(ambienceInstance);
             }
             else
                 UnityEngine.Debug.LogWarning("PlayAmbience: ambience is null or volume is less/equal than 0");
@@ -172,17 +240,19 @@ public class AudioManager : MonoBehaviour
             UnityEngine.Debug.LogWarning("PlayAmbience: soundDictionary doesn't contain " + type);
     }
 
-    public void PlaySFX(AudioType type, float volume = 1)
+    public void PlaySFX(AudioType type, ATTRIBUTES_3D attributes, float volume = 1)
     {
-        StopSFX();
         if (soundDictionary.ContainsKey(type))
         {
             SoundAsset sound = soundDictionary[type];
             if (volume >= 0)
             {
-                currentSFXInstance = RuntimeManager.CreateInstance(sound.eventReference);
-                currentSFXInstance.setParameterByName("Volume", volume);
-                currentSFXInstance.start();
+                var inst = RuntimeManager.CreateInstance(sound.eventReference);
+                inst.set3DAttributes(attributes);
+                inst.setParameterByName("Volume", volume);
+                inst.start();
+
+                RegisterSFXInstance(inst);
             }
             else
                 UnityEngine.Debug.LogWarning("PlaySFX: sfx is null or volume is less/equal than 0");
@@ -191,19 +261,86 @@ public class AudioManager : MonoBehaviour
             UnityEngine.Debug.LogWarning("PlaySFX: soundDictionary doesn't contain " + type);
     }
 
-    public void PlaySFXOneShotAttached(AudioType type, GameObject gameObject,float volume = 1)
+    public void PlayFootstep(AudioType type, ATTRIBUTES_3D attributes, float volume = 1)
     {
         if (soundDictionary.ContainsKey(type))
         {
             SoundAsset sound = soundDictionary[type];
             if (volume >= 0)
             {
+                var inst = RuntimeManager.CreateInstance(sound.eventReference);
+                inst.set3DAttributes(attributes);
+                inst.setParameterByName("Pan", -1f); // Player 1 pan
+                inst.setParameterByName("Volume", volume);
+                inst.start();
+
+                RegisterSFXInstance(inst);
+            }
+            else
+                UnityEngine.Debug.LogWarning("PlayFootstep: sfx is null or volume is less/equal than 0");
+        }
+        else
+            UnityEngine.Debug.LogWarning("PlayFootstep: soundDictionary doesn't contain " + type);
+    }
+
+    public void PlayFootstep2(AudioType type, ATTRIBUTES_3D attributes, float volume = 1)
+    {
+        if (soundDictionary.ContainsKey(type))
+        {
+            SoundAsset sound = soundDictionary[type];
+            if (volume >= 0)
+            {
+                var inst = RuntimeManager.CreateInstance(sound.eventReference);
+                inst.set3DAttributes(attributes);
+                inst.setParameterByName("Pan", 1f); // Player 2 pan
+                inst.setParameterByName("Volume", volume);
+                inst.start();
+
+                RegisterSFXInstance(inst);
+            }
+            else
+                UnityEngine.Debug.LogWarning("PlayFootstep2: sfx is null or volume is less/equal than 0");
+        }
+        else
+            UnityEngine.Debug.LogWarning("PlayFootstep2: soundDictionary doesn't contain " + type);
+    }
+
+    public void PlaySFXOneShotAttached(AudioType type, GameObject gameObject, float volume = 1)
+    {
+        if (soundDictionary.ContainsKey(type))
+        {
+            SoundAsset sound = soundDictionary[type];
+            if (volume >= 0)
+            {
+                // PlayOneShotAttached maneja su propia liberación internamente
                 RuntimeManager.PlayOneShotAttached(sound.eventReference, gameObject);
             }
             else
-                UnityEngine.Debug.LogWarning("PlaySFX: sfx is null or volume is less/equal than 0");
+                UnityEngine.Debug.LogWarning("PlaySFXOneShotAttached: sfx is null or volume is less/equal than 0");
         }
         else
-            UnityEngine.Debug.LogWarning("PlaySFX: soundDictionary doesn't contain " + type);
+            UnityEngine.Debug.LogWarning("PlaySFXOneShotAttached: soundDictionary doesn't contain " + type);
+    }
+
+    // Helper para registrar instancias en la lista y controlar un posible tope
+    private void RegisterSFXInstance(FMOD.Studio.EventInstance inst)
+    {
+        if (!inst.isValid())
+            return;
+
+        // Si hay un límite, elimina el más antiguo cuando se exceda
+        if (maxSimultaneousSFX > 0 && activeSFX.Count >= maxSimultaneousSFX)
+        {
+            // detener + liberar el más antiguo
+            var oldest = activeSFX[0];
+            if (oldest.isValid())
+            {
+                oldest.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                oldest.release();
+            }
+            activeSFX.RemoveAt(0);
+        }
+
+        activeSFX.Add(inst);
     }
 }

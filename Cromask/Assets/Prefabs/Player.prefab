@@ -222,9 +222,10 @@ GameObject:
   - component: {fileID: 5381414202750036173}
   - component: {fileID: 7540803975786281409}
   - component: {fileID: 3199057291552848063}
+  - component: {fileID: 1476690430483924420}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -343,6 +344,7 @@ MonoBehaviour:
   moveSpeed: 3
   rotationSpeed: 40
   gravity: -6.81
+  useBlueMask: 0
 --- !u!114 &484927700941272014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -532,7 +534,10 @@ MonoBehaviour:
   timeStep: 0.05
   lineWidth: 0.1
   grabHeight: 0.5
-  landingMarker: {fileID: 5627111608261280193}
+  landingMarker: {fileID: 0}
+  lowVibrationIntensity: 0.1
+  highVibrationIntensity: 0.1
+  vibrationDuration: 0.01
 --- !u!114 &5381414202750036173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -667,3 +672,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70a4eb426ec78024ea22bc33f951f30a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RegisterController
+--- !u!114 &1476690430483924420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8576669691709291928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioListener
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}

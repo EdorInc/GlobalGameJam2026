@@ -21,6 +21,11 @@ public class Reset : MonoBehaviour
         }
     }
 
+    public void ForceRespawn()
+    {
+        RespawnObject();
+    }
+
     private void RespawnObject()
     {
         if (lastValidPosition != null)

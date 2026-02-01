@@ -1,3 +1,5 @@
+using FMOD;
+using FMODUnity;
 using UnityEngine;
 
 public class Respawn : MonoBehaviour
@@ -28,7 +30,7 @@ public class Respawn : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         if (characterController == null)
         {
-            Debug.LogError("No se encontró CharacterController en el jugador");
+            UnityEngine.Debug.LogError("No se encontró CharacterController en el jugador");
         }
     }
 
@@ -49,6 +51,13 @@ public class Respawn : MonoBehaviour
         }
     }
 
+    public void ForceRespawn(Transform objTransform)
+    {
+        hasValidSpawn = true;
+        lastValidPosition = objTransform.position + Vector3.up * 1.0f;
+        RespawnPlayer();
+    }
+
     private void RespawnPlayer()
     {
         if (hasValidSpawn)
@@ -56,11 +65,20 @@ public class Respawn : MonoBehaviour
             if (characterController != null) characterController.enabled = false;
             transform.position = lastValidPosition + Vector3.up * 1.0f; // Elevar un poco para evitar quedar atrapado en el suelo
             if (characterController != null) characterController.enabled = true; // Reactivar
-            Debug.Log("Jugador respawneado en la última posición válida");
+
+            ATTRIBUTES_3D attr = new ATTRIBUTES_3D();
+
+            attr.position = RuntimeUtils.ToFMODVector(transform.position);
+            attr.forward = RuntimeUtils.ToFMODVector(transform.forward);
+            attr.up = RuntimeUtils.ToFMODVector(transform.up);
+
+            AudioManager.Instance.PlaySFX(AudioType.Respawn, attr);
+
+            UnityEngine.Debug.Log("Jugador respawneado en la última posición válida");
         }
         else
         {
-            Debug.LogWarning("No hay una posición de respawn válida disponible");
+            UnityEngine.Debug.LogWarning("No hay una posición de respawn válida disponible");
         }
     }
 
@@ -68,7 +86,7 @@ public class Respawn : MonoBehaviour
     {
         if (!Physics.Raycast(position, Vector3.down, rayDistance, groundLayer))
         {
-            Debug.Log("No hay suelo debajo del jugador");
+            UnityEngine.Debug.Log("No hay suelo debajo del jugador");
             return false;
         }
 
@@ -117,7 +135,7 @@ public class Respawn : MonoBehaviour
             Ray ray = new Ray(checkPosition, Vector3.down);
             if (showDebugRays)
             {
-                Debug.DrawRay(checkPosition, Vector3.down * rayDistance, Color.cyan, 0.1f);
+                UnityEngine.Debug.DrawRay(checkPosition, Vector3.down * rayDistance, Color.cyan, 0.1f);
             }
 
             if (!Physics.Raycast(ray, rayDistance, groundLayer))
