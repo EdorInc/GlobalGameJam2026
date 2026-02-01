@@ -83,9 +83,13 @@ public class PlayerController : MonoBehaviour
         }
 
         Vector3 horizontalMove = new Vector3(moveDirection.x, 0f, moveDirection.y) * moveSpeed;
-        Vector3 move = horizontalMove + platformVelocity;
+        
+        Vector3 horizontalPlatformVelocity = new Vector3(platformVelocity.x, 0f, platformVelocity.z);
+        Vector3 move = horizontalMove + horizontalPlatformVelocity;
 
-        if (attached)
+        Mask currentMask = maskManager.GetCurrentMask();
+
+        if (attached && currentMask == Mask.Blue)
         {
             verticalVelocity.y = platformVelocity.y > 0 ? platformVelocity.y : -2f;
         }

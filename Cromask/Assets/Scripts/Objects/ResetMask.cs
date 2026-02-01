@@ -20,6 +20,8 @@ public class ResetMask : MonoBehaviour
     private float respawnHeight = 20.0f;
 
     private Vector3 firstValidPosition;
+
+    [SerializeField]
     private Vector3 lastValidPosition;
     private bool hasValidSpawn = false;
 
@@ -56,6 +58,7 @@ public class ResetMask : MonoBehaviour
         else
         {
             transform.position = firstValidPosition;
+            transform.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
             Debug.LogWarning("No hay una posición de respawn válida disponible, se respawnea en el origen.");
         }
     }
