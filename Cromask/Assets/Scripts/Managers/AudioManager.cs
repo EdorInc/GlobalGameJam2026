@@ -10,6 +10,13 @@ public enum AudioType
 {
     Music,
     SFX,
+    Respawn,
+    Door,
+    Bridge,
+    Charge,
+    Equip,
+    Unequip,
+    Footstep,
     PickObject
 }
 
@@ -36,6 +43,8 @@ public class AudioManager : MonoBehaviour
 
     private FMOD.Studio.EventInstance currentMusicInstance;
     private FMOD.Studio.EventInstance currentSFXInstance;
+    private FMOD.Studio.EventInstance currentFootstepInstance;
+    private FMOD.Studio.EventInstance currentFootstep2Instance;
 
     [SerializeField]
     private List<SoundAsset> soundList = new List<SoundAsset>();
@@ -134,6 +143,24 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void StopFootstep()
+    {
+        if (currentFootstepInstance.isValid())
+        {
+            currentFootstepInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            currentFootstepInstance.release();
+        }
+    }
+
+    public void StopFootstep2()
+    {
+        if (currentFootstep2Instance.isValid())
+        {
+            currentFootstep2Instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            currentFootstep2Instance.release();
+        }
+    }
+
     public void PlayMusic(AudioType audioType, float volume = 1)
     {
         StopMusic();
@@ -172,17 +199,65 @@ public class AudioManager : MonoBehaviour
             UnityEngine.Debug.LogWarning("PlayAmbience: soundDictionary doesn't contain " + type);
     }
 
-    public void PlaySFX(AudioType type, float volume = 1)
+    public void PlaySFX(AudioType type, ATTRIBUTES_3D attributes, float volume = 1)
     {
         StopSFX();
         if (soundDictionary.ContainsKey(type))
         {
+
             SoundAsset sound = soundDictionary[type];
             if (volume >= 0)
             {
                 currentSFXInstance = RuntimeManager.CreateInstance(sound.eventReference);
+                currentSFXInstance.set3DAttributes(attributes);
                 currentSFXInstance.setParameterByName("Volume", volume);
                 currentSFXInstance.start();
+            }
+            else
+                UnityEngine.Debug.LogWarning("PlaySFX: sfx is null or volume is less/equal than 0");
+        }
+        else
+            UnityEngine.Debug.LogWarning("PlaySFX: soundDictionary doesn't contain " + type);
+    }
+
+
+    public void PlayFootstep(AudioType type, ATTRIBUTES_3D attributes, float volume = 1)
+    {
+        StopFootstep();
+        if (soundDictionary.ContainsKey(type))
+        {
+
+            SoundAsset sound = soundDictionary[type];
+            if (volume >= 0)
+            {
+                currentFootstepInstance.setParameterByName("Pan", -1f); // Player 1
+                currentFootstepInstance = RuntimeManager.CreateInstance(sound.eventReference);
+                currentFootstepInstance.set3DAttributes(attributes);
+                currentFootstepInstance.setParameterByName("Volume", volume);
+                currentFootstepInstance.start();
+            }
+            else
+                UnityEngine.Debug.LogWarning("PlaySFX: sfx is null or volume is less/equal than 0");
+        }
+        else
+            UnityEngine.Debug.LogWarning("PlaySFX: soundDictionary doesn't contain " + type);
+    }
+
+
+    public void PlayFootstep2(AudioType type, ATTRIBUTES_3D attributes, float volume = 1)
+    {
+        StopFootstep2();
+        if (soundDictionary.ContainsKey(type))
+        {
+
+            SoundAsset sound = soundDictionary[type];
+            if (volume >= 0)
+            {
+                currentFootstep2Instance.setParameterByName("Pan", 1f); // Player 1
+                currentFootstep2Instance = RuntimeManager.CreateInstance(sound.eventReference);
+                currentFootstep2Instance.set3DAttributes(attributes);
+                currentFootstep2Instance.setParameterByName("Volume", volume);
+                currentFootstep2Instance.start();
             }
             else
                 UnityEngine.Debug.LogWarning("PlaySFX: sfx is null or volume is less/equal than 0");

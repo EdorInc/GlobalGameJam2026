@@ -789,6 +789,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   soundList:
   - {fileID: 11400000, guid: 63e5f3726a4ac324bbb784a9d7627682, type: 2}
+  - {fileID: 11400000, guid: 29be0704e56abf34d8995236c4c30d52, type: 2}
+  - {fileID: 11400000, guid: c1474f601bda68c48b9a2f5852bae2de, type: 2}
+  - {fileID: 11400000, guid: 85a17ac8b9555ea4aa7e6cb80aeadbea, type: 2}
+  - {fileID: 11400000, guid: 0491802b012e52240b3eb7860492c202, type: 2}
+  - {fileID: 11400000, guid: 2091f6ca7fff66a4786d778a3e989837, type: 2}
 --- !u!4 &680943621
 Transform:
   m_ObjectHideFlags: 0
@@ -978,7 +983,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6228442459399708460, guid: b3a75b3abb3b99e49babf94fee858832, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1797,7 +1803,8 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6228442459399708460, guid: b3a75b3abb3b99e49babf94fee858832, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

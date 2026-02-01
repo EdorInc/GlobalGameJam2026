@@ -1,3 +1,5 @@
+using FMOD;
+using FMODUnity;
 using UnityEngine;
 
 public class Door : MonoBehaviour
@@ -26,7 +28,7 @@ public class Door : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("Una de las placas asignadas a la puerta es null");
+                UnityEngine.Debug.LogWarning("Una de las placas asignadas a la puerta es null");
             }
         }
     }
@@ -41,7 +43,7 @@ public class Door : MonoBehaviour
     {
         activatedPlatesCount++;
 
-        Debug.Log($"Placa activada. Total: {activatedPlatesCount}/{requiredPlates.Length}");
+        UnityEngine.Debug.Log($"Placa activada. Total: {activatedPlatesCount}/{requiredPlates.Length}");
 
         if (activatedPlatesCount >= requiredPlates.Length)
         {
@@ -54,7 +56,16 @@ public class Door : MonoBehaviour
         if (!isDoorOpened)
         {
             isDoorOpened = true;
-            Debug.Log("¡Puerta abierta! Todas las placas activadas.");
+
+            ATTRIBUTES_3D attr = new ATTRIBUTES_3D();
+
+            attr.position = RuntimeUtils.ToFMODVector(transform.position);
+            attr.forward = RuntimeUtils.ToFMODVector(transform.forward);
+            attr.up = RuntimeUtils.ToFMODVector(transform.up);
+
+            AudioManager.Instance.PlaySFX(AudioType.Door, attr);
+
+            UnityEngine.Debug.Log("¡Puerta abierta! Todas las placas activadas.");
         }
     }
 
