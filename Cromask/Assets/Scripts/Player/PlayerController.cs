@@ -94,13 +94,7 @@ public class PlayerController : MonoBehaviour
             verticalVelocity.y = fallSpeed;
         }
 
-        if (!Physics.Raycast(transform.position, Vector3.down, rayDistance, groundLayer))
-        {
-            UnityEngine.Debug.Log("No hay suelo debajo del jugador");
-            move += verticalVelocity;
-        }
-
-        // move += verticalVelocity;
+        move += verticalVelocity;
 
         characterController.Move(move * Time.deltaTime);
 
