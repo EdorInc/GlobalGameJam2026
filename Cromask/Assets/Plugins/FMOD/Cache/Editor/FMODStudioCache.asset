@@ -1,5 +1,32 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8565963110072075192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Throw
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/Throw
+  Guid:
+    Data1: 125894151
+    Data2: 1157698459
+    Data3: -216411240
+    Data4: -281516228
+  Banks:
+  - {fileID: 3672603943801340296}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2044
 --- !u!114 &-7842478679146372516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15,10 +42,10 @@ MonoBehaviour:
   Path: FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639055072765393085
+  lastModified: 639055071949622451
   FileSizes:
   - Name: Desktop
-    Value: 1202
+    Value: 1238
   Exists: 1
 --- !u!114 &-7019116305587539760
 MonoBehaviour:
@@ -35,7 +62,7 @@ MonoBehaviour:
   Path: FMOD/Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 639055072765954901
+  lastModified: 639055074003194944
   FileSizes:
   - Name: Desktop
     Value: 5951200
@@ -152,13 +179,14 @@ MonoBehaviour:
   - {fileID: 2539041881995999781}
   - {fileID: -2914154578999349897}
   - {fileID: 7789430508175059600}
+  - {fileID: -8565963110072075192}
   EditorParameters: []
   MasterBanks:
   - {fileID: 3517066179081115088}
   StringsBanks:
   - {fileID: -7842478679146372516}
   cacheVersion: 131858
-  cacheTime: 639055072766176906
+  cacheTime: 639055074003697008
   SerializableEventsDict:
   - key: event:/Music/Cumbion
     index: 0
@@ -176,6 +204,8 @@ MonoBehaviour:
     index: 6
   - key: event:/SFX/Walk
     index: 7
+  - key: event:/SFX/Throw
+    index: 8
 --- !u!114 &2539041881995999781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,7 +303,7 @@ MonoBehaviour:
   Path: FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639054825414423188
+  lastModified: 639055071949590143
   FileSizes:
   - Name: Desktop
     Value: 1074
@@ -293,10 +323,10 @@ MonoBehaviour:
   Path: FMOD/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 639055072766176906
+  lastModified: 639055074003697008
   FileSizes:
   - Name: Desktop
-    Value: 200672
+    Value: 226592
   Exists: 1
 --- !u!114 &6917474496117716385
 MonoBehaviour:
