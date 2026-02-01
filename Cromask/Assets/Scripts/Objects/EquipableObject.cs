@@ -15,6 +15,13 @@ public class EquipableObject : MonoBehaviour
     [SerializeField]
     private Transform maskRender;
 
+    private Vector3 originalScale;
+
+    private void Awake()
+    {
+        originalScale = maskRender.localScale;
+    }
+
     public Mask Equip()
     {
         sphereTrigger.SetActive(false);
@@ -37,7 +44,7 @@ public class EquipableObject : MonoBehaviour
         GetComponent<Collider>().enabled = false;
         GetComponent <Rigidbody>().isKinematic = true;
         Debug.Log("Object equipped");
-        maskRender.localScale = new Vector3(0.7f,0.7f,0.7f);
+        maskRender.localScale = originalScale * 0.7f;
         maskRender.position -= maskRender.forward * (0.8f);
         return maskType;
     }
@@ -52,7 +59,7 @@ public class EquipableObject : MonoBehaviour
        
         GetComponent<Collider>().enabled = true;
         GetComponent<Rigidbody>().isKinematic = false;
-        maskRender.localScale = new Vector3(1, 1, 1);
+        maskRender.localScale = originalScale;
         maskRender.position += maskRender.forward * (0.8f);
         Debug.Log("Object unequipped");
     }
