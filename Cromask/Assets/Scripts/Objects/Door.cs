@@ -7,17 +7,21 @@ public class Door : MonoBehaviour
     [Header("Door Settings")]
     [SerializeField] private PressurePlate[] requiredPlates;
     [SerializeField] private float moveSpeed = 2f;
+    [SerializeField] private float openDelay = 1f;
 
     private Vector3 closedPosition;
     private Vector3 openedPosition;
     private bool isDoorOpened = false;
     private int activatedPlatesCount = 0;
+    private Light[] lights;
 
     void Start()
     {
         float openedHeight = transform.localScale.y;
         closedPosition = transform.position;
         openedPosition = closedPosition - Vector3.up * openedHeight;
+
+        lights = GetComponentsInChildren<Light>();
 
         foreach (PressurePlate plate in requiredPlates)
         {
@@ -45,9 +49,18 @@ public class Door : MonoBehaviour
 
         UnityEngine.Debug.Log($"Placa activada. Total: {activatedPlatesCount}/{requiredPlates.Length}");
 
+        foreach (Light light in lights)
+        {
+            if (light.enabled == false)
+            {
+                light.enabled = true;
+                break;
+            }
+        }
+
         if (activatedPlatesCount >= requiredPlates.Length)
         {
-            OpenDoor();
+            Invoke("OpenDoor", openDelay);
         }
     }
 
