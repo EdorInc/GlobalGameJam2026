@@ -42,12 +42,14 @@ public class PlayerStatusUI : MonoBehaviour
         {
             maskManagerP1 = playerOne.GetComponent<MaskManager>();
             grabActionP1 = playerOne.GetComponent<GrabAction>();
+            maskPlayer1.enabled = false;
         }
 
         if (playerTwo != null)
         {
             maskManagerP2 = playerTwo.GetComponent<MaskManager>();
             grabActionP2 = playerTwo.GetComponent<GrabAction>();
+            maskPlayer2.enabled = false;
         }
     }
 
@@ -66,6 +68,14 @@ public class PlayerStatusUI : MonoBehaviour
 
         Mask currentMask = maskManager.GetCurrentMask();
 
+        if (currentMask == Mask.Unmasked)
+        {
+            maskImage.enabled = false;
+            return;
+        }
+
+        maskImage.enabled = true;
+
         maskImage.texture = currentMask switch
         {
             Mask.Red => redMaskTexture,
@@ -74,6 +84,7 @@ public class PlayerStatusUI : MonoBehaviour
             _ => null
         };
     }
+
 
     private void UpdatePlayerBoxUI(GrabAction grabAction, RawImage boxImage)
     {
