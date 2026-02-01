@@ -31,7 +31,7 @@ Transform:
   m_LocalScale: {x: 0.79999995, y: 0.79999995, z: 0.79999995}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 7005133246052480031}
+  m_Father: {fileID: 9057826836675520178}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &5778019492510929634
 MeshRenderer:
@@ -119,7 +119,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2120042889145336453}
   - {fileID: 9057826836675520178}
   - {fileID: 8695479141954474250}
   m_Father: {fileID: 0}
@@ -468,6 +467,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7972289242277945928, guid: 6a829a95e3c4f0b44b076232890c2353, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3652110197549568413}
+    - targetCorrespondingSourceObject: {fileID: 7972289242277945928, guid: 6a829a95e3c4f0b44b076232890c2353, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2120042889145336453}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8576669691709291928, guid: 6a829a95e3c4f0b44b076232890c2353, type: 3}
       insertIndex: -1

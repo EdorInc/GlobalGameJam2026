@@ -62,6 +62,8 @@ public class Respawn : MonoBehaviour
     {
         if (hasValidSpawn)
         {
+            transform.GetComponent<GrabAction>().ThrowObject();
+
             if (characterController != null) characterController.enabled = false;
             transform.position = lastValidPosition + Vector3.up * 1.0f; // Elevar un poco para evitar quedar atrapado en el suelo
             if (characterController != null) characterController.enabled = true; // Reactivar

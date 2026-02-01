@@ -8,7 +8,7 @@ public class Reset : MonoBehaviour
 
     private Vector3 lastValidPosition;
 
-    void Start()
+    void Awake()
     {
         lastValidPosition = transform.position + Vector3.up * respawnHeight;
     }
