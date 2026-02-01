@@ -25748,7 +25748,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2352922123126759399, guid: c868de04665f0f944b702ba8d1ebe30f, type: 3}
       propertyPath: m_text
-      value: "X\n to grab"
+      value: X to grab
       objectReference: {fileID: 0}
     - target: {fileID: 4068392698957862735, guid: c868de04665f0f944b702ba8d1ebe30f, type: 3}
       propertyPath: mainCamera
@@ -49220,8 +49220,12 @@ PrefabInstance:
       value: Unequip and hold RT to throw your mask to your friend
       objectReference: {fileID: 0}
     - target: {fileID: 2352922123126759399, guid: c868de04665f0f944b702ba8d1ebe30f, type: 3}
+      propertyPath: m_margin.x
+      value: -117.40588
+      objectReference: {fileID: 0}
+    - target: {fileID: 2352922123126759399, guid: c868de04665f0f944b702ba8d1ebe30f, type: 3}
       propertyPath: m_margin.z
-      value: -163.5289
+      value: -227.1217
       objectReference: {fileID: 0}
     - target: {fileID: 4068392698957862735, guid: c868de04665f0f944b702ba8d1ebe30f, type: 3}
       propertyPath: mainCamera
