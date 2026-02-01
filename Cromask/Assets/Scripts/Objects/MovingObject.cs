@@ -8,6 +8,8 @@ public class MovingObject : MonoBehaviour
     private Transform pointA;
     [SerializeField]
     private Transform pointB;
+    [SerializeField]
+    private float stopTime;
 
     private Rigidbody rb;
     private Vector3 target;
@@ -34,6 +36,8 @@ public class MovingObject : MonoBehaviour
             if (Vector3.Distance(nextPos, target) < 0.01f)
             {
                 target = target == pointA.position ? pointB.position : pointA.position;
+                canMove = false;
+                Invoke(nameof(CanMove), stopTime); 
             }
         }
     }
@@ -61,5 +65,10 @@ public class MovingObject : MonoBehaviour
     public Vector3 GetVelocity()
     {
         return platformVelocity;
+    }
+
+    private void CanMove()
+    {
+        canMove = true;
     }
 }
