@@ -1319,6 +1319,9 @@ MonoBehaviour:
   playerTwoReference: {fileID: 0}
   playerOneCamera: {fileID: 141454696}
   playerTwoCamera: {fileID: 0}
+  redMask: {fileID: 0}
+  blueMask: {fileID: 0}
+  greenMask: {fileID: 0}
 --- !u!4 &1734948398
 Transform:
   m_ObjectHideFlags: 0
