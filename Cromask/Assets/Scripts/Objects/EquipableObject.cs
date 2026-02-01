@@ -4,7 +4,7 @@ public class EquipableObject : MonoBehaviour
 {
     [SerializeField] private Mask maskType = Mask.Unmasked;
 
-    private GameObject particleSystem;
+    private ParticleSystem particleSystem;
 
     [SerializeField]
     private GameObject sphereTrigger;
@@ -28,23 +28,25 @@ public class EquipableObject : MonoBehaviour
         switch (maskType)
         {
             case Mask.Red:
-                particleSystem = VFXManager.Instance.PlayPermanentVFX(VFXType.EquipRedMask, particleGenerationPosition.position);
+                particleSystem = transform.GetComponentInChildren<ParticleSystem>();
                 break;
             case Mask.Blue:
-                particleSystem = VFXManager.Instance.PlayPermanentVFX(VFXType.EquipBlueMask, particleGenerationPosition.position);
+                particleSystem = transform.GetComponentInChildren<ParticleSystem>();
                 break;
             case Mask.Green:
-                particleSystem = VFXManager.Instance.PlayPermanentVFX(VFXType.EquipGreenMask, particleGenerationPosition.position);
+                particleSystem = transform.GetComponentInChildren<ParticleSystem>();
                 break;
         }
 
-        particleSystem.transform.parent = this.transform;
+        if (particleSystem)
+        {
+            particleSystem.Play();
+        }
 
         GetComponent<Collider>().enabled = false;
         GetComponent <Rigidbody>().isKinematic = true;
         Debug.Log("Object equipped");
         maskRender.position -= maskRender.forward * (0.8f);
-        // Debug.Log("Position set when equipped to: " + maskRender.position);
         maskRender.localScale = originalScale * 0.7f;
         return maskType;
     }
@@ -52,16 +54,16 @@ public class EquipableObject : MonoBehaviour
     public void UnEquip()
     {
         sphereTrigger.SetActive(true);
+
         if (particleSystem)
         {
-            Destroy(particleSystem);
+            particleSystem.Stop();
         }
 
         GetComponent<Collider>().enabled = true;
         GetComponent<Rigidbody>().isKinematic = false;
         maskRender.localScale = originalScale;
         maskRender.position += maskRender.forward * (0.8f);
-        // Debug.Log("Position set when unequipped to: " + maskRender.position);
         Debug.Log("Object unequipped");
     }
 }
