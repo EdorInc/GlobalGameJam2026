@@ -48,6 +48,18 @@ public class SpawnManager : MonoBehaviour
 
     public void ForceRespawnAll()
     {
+        ReferenceManager refs = ReferenceManager.Instance;
+
+        GameObject player1 = refs.GetPlayerOne();
+        player1.GetComponent<GrabAction>().ThrowObject();
+        player1.GetComponent<EquipAction>().UnEquip();
+        player1.GetComponent<GrabAction>().ThrowObject();
+
+        GameObject player2 = refs.GetPlayerTwo();
+        player2.GetComponent<GrabAction>().ThrowObject();
+        player2.GetComponent<EquipAction>().UnEquip();
+        player2.GetComponent<GrabAction>().ThrowObject();
+
         Reset[] resetComponents = Object.FindObjectsByType<Reset>(FindObjectsSortMode.None);
 
         foreach (Reset reset in resetComponents)
@@ -55,10 +67,8 @@ public class SpawnManager : MonoBehaviour
             reset.ForceRespawn();
         }
 
-        ReferenceManager refs = ReferenceManager.Instance;
-
-        ForceRespawn(refs.GetPlayerOne(), Player1SpawnPoint);
-        ForceRespawn(refs.GetPlayerTwo(), Player2SpawnPoint);
+        ForceRespawn(player1, Player1SpawnPoint);
+        ForceRespawn(player2, Player2SpawnPoint);
 
         ForceRespawn(refs.GetRedMask(), RedSpawnPoint);
         ForceRespawn(refs.GetGreenMask(), GreenSpawnPoint);

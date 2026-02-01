@@ -39,7 +39,7 @@ public class EquipAction : MonoBehaviour
         }
     }
 
-    private void Equip(GameObject obj)
+    public void Equip(GameObject obj)
     {
         if (!obj.TryGetComponent(out EquipableObject equipable))
             return;
@@ -54,7 +54,7 @@ public class EquipAction : MonoBehaviour
     }
 
 
-    private void UnEquip()
+    public void UnEquip()
     {
         if (equipedObject == null) return;
 

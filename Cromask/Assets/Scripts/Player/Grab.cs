@@ -94,7 +94,7 @@ public class GrabAction : MonoBehaviour
     {
         if (charging)
         {
-            GrabVibrateController(lowVibrationIntensity, highVibrationIntensity, vibrationDuration);
+           GrabVibrateController(lowVibrationIntensity, highVibrationIntensity, vibrationDuration);
            Charge();
         }
 
