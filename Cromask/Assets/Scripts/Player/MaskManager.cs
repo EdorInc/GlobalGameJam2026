@@ -66,6 +66,27 @@ public class MaskManager : MonoBehaviour
         controller.includeLayers = defaultInclude;
         controller.excludeLayers = defaultExclude;
 
+        if (!currentMask.Equals(Mask.Blue))
+        {
+            if(mask.Equals(Mask.Blue))
+            {
+                MovingObject.canMove = true;
+            }
+        }
+        else
+        {
+            MovingObject.canMove = false;
+        }
+
+        // if (currentMask.Equals(Mask.Blue))
+        // {
+        //     MovingObject.canMove = true;
+        // }
+        // else
+        // {
+        //     MovingObject.canMove = false;
+        // }
+
         currentMask = mask;
 
         if (!excludedCollisionLayers.TryGetValue(mask, out var layers))
@@ -106,14 +127,6 @@ public class MaskManager : MonoBehaviour
             {
                 audioManager.UpdateMaskParameter(ReferenceManager.Instance.GetPlayerOneMask().GetCurrentMask(), currentMask);
             }
-        }
-        if (currentMask.Equals(Mask.Blue))
-        {
-            MovingObject.canMove = true;
-        }
-        else
-        {
-            MovingObject.canMove = false;
         }
 
     }

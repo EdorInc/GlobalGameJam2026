@@ -31,7 +31,6 @@ public class EquipableObject : MonoBehaviour
                 particleSystem = VFXManager.Instance.PlayPermanentVFX(VFXType.EquipRedMask, particleGenerationPosition.position);
                 break;
             case Mask.Blue:
-                Debug.Log("Playing blue mask VFX");
                 particleSystem = VFXManager.Instance.PlayPermanentVFX(VFXType.EquipBlueMask, particleGenerationPosition.position);
                 break;
             case Mask.Green:
@@ -44,8 +43,9 @@ public class EquipableObject : MonoBehaviour
         GetComponent<Collider>().enabled = false;
         GetComponent <Rigidbody>().isKinematic = true;
         Debug.Log("Object equipped");
-        maskRender.localScale = originalScale * 0.7f;
         maskRender.position -= maskRender.forward * (0.8f);
+        // Debug.Log("Position set when equipped to: " + maskRender.position);
+        maskRender.localScale = originalScale * 0.7f;
         return maskType;
     }
 
@@ -56,11 +56,12 @@ public class EquipableObject : MonoBehaviour
         {
             Destroy(particleSystem);
         }
-       
+
         GetComponent<Collider>().enabled = true;
         GetComponent<Rigidbody>().isKinematic = false;
         maskRender.localScale = originalScale;
         maskRender.position += maskRender.forward * (0.8f);
+        // Debug.Log("Position set when unequipped to: " + maskRender.position);
         Debug.Log("Object unequipped");
     }
 }
