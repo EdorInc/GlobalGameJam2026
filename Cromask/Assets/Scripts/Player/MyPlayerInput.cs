@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using static UnityEngine.InputSystem.InputAction;
 
 public class MyPlayerInput : MonoBehaviour
@@ -56,6 +57,16 @@ public class MyPlayerInput : MonoBehaviour
         {
             equipableManager.ChangeState();
         }
+    }
 
+    public void OnPause(CallbackContext ctx)
+    {
+        if (ctx.started)
+        {
+            if (PauseManager.Instance != null)
+            {
+                PauseManager.Instance.TogglePause();
+            }
+        }
     }
 }

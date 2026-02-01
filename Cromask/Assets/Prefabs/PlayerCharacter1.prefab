@@ -332,6 +332,22 @@ PrefabInstance:
       propertyPath: m_DefaultControlScheme
       value: Gamepad
       objectReference: {fileID: 0}
+    - target: {fileID: 484927700941272014, guid: 6a829a95e3c4f0b44b076232890c2353, type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 484927700941272014, guid: 6a829a95e3c4f0b44b076232890c2353, type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnPause
+      objectReference: {fileID: 0}
+    - target: {fileID: 484927700941272014, guid: 6a829a95e3c4f0b44b076232890c2353, type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MyPlayerInput, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 484927700941272014, guid: 6a829a95e3c4f0b44b076232890c2353, type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 519765338528509065, guid: 6a829a95e3c4f0b44b076232890c2353, type: 3}
       propertyPath: m_NormalizedViewPortRect.x
       value: 0.5
