@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 231c545c57ac9ef43a3cce8bdead7ef3, type: 3}
-  m_Name: PruebaAgain
+  m_Name: ChargeSFX
   m_EditorClassIdentifier: Assembly-CSharp::SoundAsset
-  audioType: 0
+  audioType: 5
   eventReference:
     Guid:
-      Data1: -1422145311
-      Data2: 1081421550
-      Data3: -420162395
-      Data4: 1704703275
-    Path: event:/Amb_Forest
-  volume: 1
+      Data1: 942557036
+      Data2: 1242170874
+      Data3: 1438975911
+      Data4: -721878056
+    Path: event:/SFX/Charge
+  volume: 100

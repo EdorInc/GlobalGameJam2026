@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using FMOD;
+using FMODUnity;
+using UnityEngine;
 
 public class EquipAction : MonoBehaviour
 {
@@ -62,6 +64,15 @@ public class EquipAction : MonoBehaviour
         EquipableObject equip = equipedObject.GetComponent<EquipableObject>();
 
         equip.UnEquip();
+
+        ATTRIBUTES_3D attr = new ATTRIBUTES_3D();
+
+        attr.position = RuntimeUtils.ToFMODVector(transform.position);
+        attr.forward = RuntimeUtils.ToFMODVector(transform.forward);
+        attr.up = RuntimeUtils.ToFMODVector(transform.up);
+
+        AudioManager.Instance.PlaySFX(AudioType.Unequip, attr);
+
         maskManager.ApplyMask(Mask.Unmasked);
 
         GameObject mask = equipedObject;
