@@ -3,6 +3,7 @@ using FMODUnity;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 using static UnityEngine.InputSystem.InputAction;
 
@@ -113,15 +114,38 @@ public class GrabAction : MonoBehaviour
     {
         if (grabbedObject != null) return;
 
-        RaycastHit hit;
 
         LayerMask maskToDetect = useRedMask ? maskWithRed : mask;
 
-        Vector3 position = transform.position + Vector3.down * grabHeight;
+        RaycastHit hit = default;
 
-        UnityEngine.Debug.DrawLine(position, position + transform.forward * holdDistance,Color.red,5);
+        float angle = 20f;
+        float distance = holdDistance;
+        Vector3 origin = transform.position;
 
-        if (!Physics.Raycast(position, transform.forward, out hit, holdDistance, maskToDetect))
+        // Directions
+        Vector3[] directions =
+        {
+        transform.forward,
+        Quaternion.AngleAxis(-angle, Vector3.up) * transform.forward,
+        Quaternion.AngleAxis(angle, Vector3.up) * transform.forward
+        };
+
+        bool hitSomething = false;
+
+
+        foreach (Vector3 dir in directions)
+        {
+            UnityEngine.Debug.DrawLine(origin, origin + dir * holdDistance, Color.red, 5);
+
+            if (Physics.Raycast(origin, dir, out hit, distance, maskToDetect))
+            {
+                hitSomething = true;
+                break;
+            }
+        }
+
+        if (!hitSomething)
         {
             UnityEngine.Debug.Log("Nothing detected in front.");
             return;
