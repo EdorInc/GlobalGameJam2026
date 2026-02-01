@@ -13,6 +13,8 @@ public class PressurePlate : MonoBehaviour
 
     [Header("Events")]
     public UnityEvent onPlateActivated;
+    [Header("Visual Feedback")]
+    [SerializeField] private ArrowIndicator arrowIndicator;
 
     private Vector3 originalPosition;
     private Vector3 targetPosition;
@@ -90,6 +92,11 @@ public class PressurePlate : MonoBehaviour
         Vector3 finalPosition = pressedPosition + cubeLocalPosition;
         lockedCube.transform.position = finalPosition;
         lockedCube.transform.rotation = Quaternion.identity;
+
+        if (arrowIndicator != null)
+        {
+            arrowIndicator.Hide();
+        }
 
         Debug.Log("Placa presionada - Cubo bloqueado");
     }
