@@ -15,7 +15,7 @@ MonoBehaviour:
   Path: FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639055062396907491
+  lastModified: 639055072765393085
   FileSizes:
   - Name: Desktop
     Value: 1202
@@ -35,7 +35,7 @@ MonoBehaviour:
   Path: FMOD/Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 639055062397508896
+  lastModified: 639055072765954901
   FileSizes:
   - Name: Desktop
     Value: 5951200
@@ -158,10 +158,24 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: -7842478679146372516}
   cacheVersion: 131858
-  cacheTime: 639055062397539212
+  cacheTime: 639055072766176906
   SerializableEventsDict:
   - key: event:/Music/Cumbion
     index: 0
+  - key: event:/SFX/Door
+    index: 1
+  - key: event:/SFX/Respawn
+    index: 2
+  - key: event:/SFX/Charge
+    index: 3
+  - key: event:/SFX/Unequip
+    index: 4
+  - key: event:/SFX/Bridge
+    index: 5
+  - key: event:/SFX/Equip
+    index: 6
+  - key: event:/SFX/Walk
+    index: 7
 --- !u!114 &2539041881995999781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,7 +273,7 @@ MonoBehaviour:
   Path: FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639055041797948430
+  lastModified: 639054825414423188
   FileSizes:
   - Name: Desktop
     Value: 1074
@@ -279,7 +293,7 @@ MonoBehaviour:
   Path: FMOD/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 639055062397539212
+  lastModified: 639055072766176906
   FileSizes:
   - Name: Desktop
     Value: 200672
