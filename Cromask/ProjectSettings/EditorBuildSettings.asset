@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/RGB Scene.unity
     guid: 1ee03beb9dd954849acc6e7daeceb83a
   - enabled: 1
-    path: Assets/Scenes/DeathMenu.unity
+    path: Assets/Scenes/Win.unity
     guid: f4dd1d88c635b8347b938393fc9023cd
   - enabled: 1
     path: Assets/Scenes/SceneTutorial.unity
@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SceneLv4.unity
     guid: 77d6b17d8dd24b3409027ce5738cefe3
+  - enabled: 1
+    path: Assets/Scenes/DeathMenu.unity
+    guid: 35cc3ee846ecd144f877d1f365c48858
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
