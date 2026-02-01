@@ -15,7 +15,7 @@ public class MovingObject : MonoBehaviour
     private Vector3 target;
     private Vector3 platformVelocity;
 
-    public static bool canMove = true;
+    public static bool canMove = false;
 
     private void Awake()
     {
