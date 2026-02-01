@@ -474,6 +474,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: b3ae2121-7ed5-4ef2-bbae-780cbd5876e3
     m_ActionName: Player/Equip/Unequip
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4225862006048757829}
+        m_TargetAssemblyTypeName: MyPlayerInput, Assembly-CSharp
+        m_MethodName: OnPause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d17bad73-f787-4ec9-b631-fa6db795ff06
+    m_ActionName: 'Player/Pause[/Keyboard/escape]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: 

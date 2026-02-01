@@ -58,9 +58,9 @@ public class ButtonsCanvasController : MonoBehaviour
         // Keyboard input
         if (Keyboard.current != null)
         {
-            if (Keyboard.current.upArrowKey.isPressed)
+            if (Keyboard.current.upArrowKey.wasPressedThisFrame)
                 navigation.y = 1f;
-            else if (Keyboard.current.downArrowKey.isPressed)
+            else if (Keyboard.current.downArrowKey.wasPressedThisFrame)
                 navigation.y = -1f;
 
             if (Keyboard.current.enterKey.wasPressedThisFrame)
