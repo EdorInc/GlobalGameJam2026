@@ -1,3 +1,5 @@
+using FMOD;
+using FMODUnity;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,7 +31,7 @@ public class MaskManager : MonoBehaviour
 
         if (controller == null)
         {
-            Debug.LogError("No CharacterController found on MaskManager's GameObject.");
+            UnityEngine.Debug.LogError("No CharacterController found on MaskManager's GameObject.");
             return;
         }
 
@@ -37,7 +39,7 @@ public class MaskManager : MonoBehaviour
 
         if(audioManager == null)
         {
-            Debug.LogError("No AudioManager found.");
+            UnityEngine.Debug.LogError("No AudioManager found.");
             return;
         }
 
@@ -57,7 +59,7 @@ public class MaskManager : MonoBehaviour
     {
         if (controller == null)
         {
-            Debug.LogWarning("No CharacterController found on MaskManager's GameObject.");
+            UnityEngine.Debug.LogWarning("No CharacterController found on MaskManager's GameObject.");
             return;
         }
 
@@ -76,7 +78,7 @@ public class MaskManager : MonoBehaviour
             int layer = LayerMask.NameToLayer(layerName);
             if (layer < 0)
             {
-                Debug.LogWarning($"Layer '{layerName}' does not exist.");
+                UnityEngine.Debug.LogWarning($"Layer '{layerName}' does not exist.");
                 continue;
             }
 
@@ -84,8 +86,19 @@ public class MaskManager : MonoBehaviour
         }
 
         controller.excludeLayers = exclude;
-        if(audioManager != null)
-            if(this.gameObject == ReferenceManager.Instance.GetPlayerOne())
+
+
+        if (audioManager != null)
+        {
+            ATTRIBUTES_3D attr = new ATTRIBUTES_3D();
+
+            attr.position = RuntimeUtils.ToFMODVector(transform.position);
+            attr.forward = RuntimeUtils.ToFMODVector(transform.forward);
+            attr.up = RuntimeUtils.ToFMODVector(transform.up);
+
+            AudioManager.Instance.PlaySFX(AudioType.Equip, attr);
+
+            if (this.gameObject == ReferenceManager.Instance.GetPlayerOne())
             {
                 audioManager.UpdateMaskParameter(currentMask, ReferenceManager.Instance.GetPlayerTwoMask().GetCurrentMask());
             }
@@ -93,8 +106,9 @@ public class MaskManager : MonoBehaviour
             {
                 audioManager.UpdateMaskParameter(ReferenceManager.Instance.GetPlayerOneMask().GetCurrentMask(), currentMask);
             }
-        if (currentMask.Equals(Mask.Blue)) 
-        { 
+        }
+        if (currentMask.Equals(Mask.Blue))
+        {
             MovingObject.canMove = true;
         }
         else

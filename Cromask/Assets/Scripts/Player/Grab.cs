@@ -1,4 +1,6 @@
-﻿using Unity.VisualScripting;
+using FMOD;
+using FMODUnity;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.GraphicsBuffer;
@@ -34,7 +36,7 @@ public class GrabAction : MonoBehaviour
     private float lineWidth = 0.06f;
     [SerializeField]
     private float grabHeight = 0.5f;
-    [SerializeField] 
+    [SerializeField]
     private GameObject landingMarker;
 
     private GameObject grabbedObject = null;
@@ -77,7 +79,7 @@ public class GrabAction : MonoBehaviour
                 Debug.Log("Vibrating Player One's controller");
                 VibrationManager.Instance.RumblePulse(gamepad, low, high, duration);
             }
-               
+
         }
         else
         {
@@ -117,24 +119,23 @@ public class GrabAction : MonoBehaviour
 
         Vector3 position = transform.position + Vector3.down * grabHeight;
 
-        Debug.DrawLine(position, position + transform.forward * holdDistance,Color.red,5);
-
+        UnityEngine.Debug.DrawLine(position, position + transform.forward * holdDistance,Color.red,5);
 
         if (!Physics.Raycast(position, transform.forward, out hit, holdDistance, maskToDetect))
         {
-            Debug.Log("Nothing detected in front.");
+            UnityEngine.Debug.Log("Nothing detected in front.");
             return;
         }
-        
-        Debug.Log("Grabbed: " + hit.collider.name);
+
+        UnityEngine.Debug.Log("Grabbed: " + hit.collider.name);
 
         grabbedObject = hit.collider.gameObject;
 
         Rigidbody rb = grabbedObject.GetComponent<Rigidbody>();
-        
+
         if (rb == null)
         {
-            Debug.LogError("Object has no Rigidbody");
+            UnityEngine.Debug.LogError("Object has no Rigidbody");
             grabbedObject = null;
             return;
         }
@@ -154,6 +155,15 @@ public class GrabAction : MonoBehaviour
             charging = true;
             currentForceUp = minForceUp;
             currentForceFoward = minForceFowards;
+
+
+            ATTRIBUTES_3D attr = new ATTRIBUTES_3D();
+
+            attr.position = RuntimeUtils.ToFMODVector(transform.position);
+            attr.forward = RuntimeUtils.ToFMODVector(transform.forward);
+            attr.up = RuntimeUtils.ToFMODVector(transform.up);
+
+            AudioManager.Instance.PlaySFX(AudioType.Charge, attr);
         }
     }
 
@@ -174,7 +184,9 @@ public class GrabAction : MonoBehaviour
         rbCube.isKinematic = false;
         if (rbCube != null) 
         {
-            Debug.Log("Thrown: " + grabbedObject.name);
+            UnityEngine.Debug.Log("Thrown: " + grabbedObject.name);
+
+            AudioManager.Instance.StopSFX();
 
             charging = false;
             rbCube.useGravity = true;
