@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: BlueMaskVFX
   m_EditorClassIdentifier: Assembly-CSharp::VFXAsset
   vfxType: 4
-  prefab: {fileID: 1711362819071980, guid: c3b9975886e3fa44ca8aac642728fb7b, type: 3}
+  prefab: {fileID: 5677649944980355075, guid: 0546331c1d9901e4e96e366cfd679d8d, type: 3}
   lifetime: 2
