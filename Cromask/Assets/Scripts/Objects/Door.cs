@@ -9,17 +9,21 @@ public class Door : MonoBehaviour
     [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private float openDelay = 1f;
 
+
     private Vector3 closedPosition;
     private Vector3 openedPosition;
     private bool isDoorOpened = false;
     private int activatedPlatesCount = 0;
     private Light[] lights;
+    private float doorOpenDuration;
 
     void Start()
     {
         float openedHeight = transform.localScale.y;
         closedPosition = transform.position;
         openedPosition = closedPosition - Vector3.up * openedHeight;
+
+        doorOpenDuration = openedHeight / moveSpeed;
 
         lights = GetComponentsInChildren<Light>();
 
@@ -56,7 +60,14 @@ public class Door : MonoBehaviour
                 light.enabled = true;
                 break;
             }
-        }
+        }   
+
+        PlayerCameraInterface player1Camera = ReferenceManager.Instance.GetPlayerOneCamera().GetComponent<PlayerCameraInterface>();
+        PlayerCameraInterface player2Camera = ReferenceManager.Instance.GetPlayerTwoCamera().GetComponent<PlayerCameraInterface>();
+        float focusDuration = activatedPlatesCount >= requiredPlates.Length ? openDelay + doorOpenDuration : openDelay;
+        
+        if (player1Camera != null) player1Camera.FocusOnTarget(transform, focusDuration);
+        if (player2Camera != null) player2Camera.FocusOnTarget(transform, focusDuration);
 
         if (activatedPlatesCount >= requiredPlates.Length)
         {

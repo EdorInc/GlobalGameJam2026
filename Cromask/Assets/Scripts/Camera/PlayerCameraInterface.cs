@@ -13,6 +13,10 @@ public class PlayerCameraInterface : MonoBehaviour
     private Vector3 initialOffset;
     private Quaternion initialRotation;
 
+    // Vars for temp focus
+    private Transform temporaryTarget;
+    private float temporaryFocusEndTime;
+
     void Start()
     {
         if (!target)
@@ -38,10 +42,12 @@ public class PlayerCameraInterface : MonoBehaviour
         // Lock rotation to the initial one
         transform.rotation = initialRotation;
 
+        Transform currentTarget = GetCurrentTarget();
+
         // Smooth position follow
         transform.position = Vector3.Lerp(
             transform.position,
-            target.position + initialOffset,
+            currentTarget.position + initialOffset,
             followSpeed * Time.deltaTime
         );
 
@@ -52,6 +58,22 @@ public class PlayerCameraInterface : MonoBehaviour
             lastEquipedMask = currentMask;
             cameraCullingMaskController.ApplyView(currentMask);
         }
+    }
+
+    private Transform GetCurrentTarget()
+    {
+        if (temporaryTarget != null && Time.time < temporaryFocusEndTime)
+        {
+            return temporaryTarget;
+        }
+        temporaryTarget = null;
+        return target;
+    }
+
+    public void FocusOnTarget(Transform transform, float duration)
+    {
+        temporaryTarget = transform;
+        temporaryFocusEndTime = Time.time + duration;
     }
 
     public void AssignTarget(Transform transform)
