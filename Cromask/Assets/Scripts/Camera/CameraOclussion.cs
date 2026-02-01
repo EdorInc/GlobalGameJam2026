@@ -16,17 +16,11 @@ public class CameraOcclusion : MonoBehaviour
     public bool useSphereCast = false;
     public float sphereRadius = 0.15f;
 
-    [Header("Appearance")]
-    [Range(0f, 1f)] public float transparentAlpha = 0.3f;
-    [Tooltip("Propiedad del color en tu shader ('_BaseColor' para URP, '_Color' para Built-in).")]
-    public string colorPropertyName = "_BaseColor";
-
     private Camera _camera;
     private Transform target;
 
     // estado por cámara
     private HashSet<Renderer> currentlyTransparent = new HashSet<Renderer>();
-    private Dictionary<Renderer, MaterialPropertyBlock> originalBlocks = new Dictionary<Renderer, MaterialPropertyBlock>();
 
     private void Awake()
     {
@@ -114,6 +108,7 @@ public class CameraOcclusion : MonoBehaviour
         foreach (var r in newSet)
         {
             if (!currentlyTransparent.Contains(r))
+                // TODO - Change what this does
                 MakeRendererTransparent(r);
         }
 
@@ -125,6 +120,7 @@ public class CameraOcclusion : MonoBehaviour
                 toRestore.Add(r);
         }
         foreach (var r in toRestore)
+            // TODO - Change what this does
             RestoreRenderer(r);
 
         currentlyTransparent = newSet;
@@ -134,6 +130,7 @@ public class CameraOcclusion : MonoBehaviour
     {
         if (cam != _camera) return;
         // Restauramos TODO para no afectar a otras cámaras en el mismo frame
+        Debug.Log("EndCameraRendering: Restoring all");
         RestoreAll();
         currentlyTransparent.Clear();
     }
@@ -152,70 +149,65 @@ public class CameraOcclusion : MonoBehaviour
 
     private void MakeRendererTransparent(Renderer rend)
     {
-        if (rend == null) return;
+        if (rend == null)
+            return;
 
-        if (!originalBlocks.ContainsKey(rend))
-        {
-            var orig = new MaterialPropertyBlock();
-            rend.GetPropertyBlock(orig);
-            originalBlocks[rend] = orig;
-        }
+        rend.enabled = false;
 
-        var block = new MaterialPropertyBlock();
-        rend.GetPropertyBlock(block);
-
-        // obtener color base: property block -> sharedMaterial -> white
-        Color baseColor = Color.white;
-        if (TryGetColorFromBlock(block, out Color cb))
-            baseColor = cb;
-        else if (rend.sharedMaterial != null && rend.sharedMaterial.HasProperty(colorPropertyName))
-            baseColor = rend.sharedMaterial.GetColor(colorPropertyName);
-
-        baseColor.a = transparentAlpha;
-        block.SetColor(colorPropertyName, baseColor);
-        rend.SetPropertyBlock(block);
+        //  if (rend == null) return;
+        //  
+        //  if (!originalBlocks.ContainsKey(rend))
+        //  {
+        //      var orig = new MaterialPropertyBlock();
+        //      rend.GetPropertyBlock(orig);
+        //      originalBlocks[rend] = orig;
+        //  }
+        //  
+        //  var block = new MaterialPropertyBlock();
+        //  rend.GetPropertyBlock(block);
+        //  
+        //  // obtener color base: property block -> sharedMaterial -> white
+        //  Color baseColor = Color.white;
+        //  if (TryGetColorFromBlock(block, out Color cb))
+        //      baseColor = cb;
+        //  else if (rend.sharedMaterial != null && rend.sharedMaterial.HasProperty(colorPropertyName))
+        //      baseColor = rend.sharedMaterial.GetColor(colorPropertyName);
+        //  
+        //  baseColor.a = transparentAlpha;
+        //  block.SetColor(colorPropertyName, baseColor);
+        //  rend.SetPropertyBlock(block);
     }
 
     private void RestoreRenderer(Renderer rend)
     {
-        if (rend == null) return;
+        Debug.Log("Restoring renderer: " + rend.name);
+        if (rend == null)
+            return;
 
-        if (originalBlocks.TryGetValue(rend, out var origBlock))
-        {
-            rend.SetPropertyBlock(origBlock);
-            originalBlocks.Remove(rend);
-        }
-        else
-        {
-            rend.SetPropertyBlock(null);
-        }
+        rend.enabled = true;
+
+        //  if (rend == null) return;
+        //  
+        //  if (originalBlocks.TryGetValue(rend, out var origBlock))
+        //  {
+        //      rend.SetPropertyBlock(origBlock);
+        //      originalBlocks.Remove(rend);
+        //  }
+        //  else
+        //  {
+        //      rend.SetPropertyBlock(null);
+        //  }
     }
 
     private void RestoreAll()
     {
-        var keys = new List<Renderer>(originalBlocks.Keys);
-        foreach (var r in keys)
+        Debug.Log("Restoring all renderers");
+        foreach (var r in currentlyTransparent)
         {
-            if (r != null)
-                r.SetPropertyBlock(originalBlocks[r]);
-        }
-        originalBlocks.Clear();
-    }
+            if (r == null)
+                return;
 
-    // lectura segura desde MaterialPropertyBlock
-    private bool TryGetColorFromBlock(MaterialPropertyBlock block, out Color color)
-    {
-        color = Color.white;
-        if (block == null) return false;
-        try
-        {
-            Vector4 v = block.GetVector(colorPropertyName);
-            color = new Color(v.x, v.y, v.z, v.w);
-            return true;
-        }
-        catch
-        {
-            return false;
+            r.enabled = true;
         }
     }
 }
