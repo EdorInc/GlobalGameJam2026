@@ -15,10 +15,10 @@ public class PlayerController : MonoBehaviour
     private Vector3 verticalVelocity;
     private bool attached = false;
 
-    private bool isPlaying = false;
+    private bool isPlayingFootsteps = false;
+    private bool wasMovingLastFrame = false;
 
-    [SerializeField]
-    bool useBlueMask = false;
+    [SerializeField] private bool useBlueMask = false;
 
     private MaskManager maskManager;
     private Mask lastEquipedMask;
@@ -32,14 +32,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Start()
+    private void Start()
     {
         maskManager = GetComponent<MaskManager>();
-
         lastEquipedMask = maskManager.GetCurrentMask();
     }
 
     private void Update()
+    {
+        HandleMask();
+        HandleMovement();
+        HandleFootsteps();
+    }
+
+    private void HandleMask()
     {
         Mask currentMask = maskManager.GetCurrentMask();
 
@@ -53,22 +59,16 @@ public class PlayerController : MonoBehaviour
         {
             CheckPlatform();
         }
+    }
 
+    private void HandleMovement()
+    {
         Vector3 horizontalMove = new Vector3(moveDirection.x, 0f, moveDirection.y) * moveSpeed;
-
         Vector3 move = horizontalMove + platformVelocity;
 
-       
         if (attached)
         {
-            if (platformVelocity.y > 0)
-            {
-                verticalVelocity.y = platformVelocity.y;
-            }
-            else
-            {
-                verticalVelocity.y = -2f;
-            }
+            verticalVelocity.y = platformVelocity.y > 0 ? platformVelocity.y : -2f;
         }
         else
         {
@@ -76,54 +76,82 @@ public class PlayerController : MonoBehaviour
         }
 
         move += verticalVelocity;
-
         characterController.Move(move * Time.deltaTime);
 
-        if (moveDirection != Vector2.zero)
+        if (moveDirection.sqrMagnitude > 0.01f)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(new Vector3(moveDirection.x, 0f, moveDirection.y));
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-            ReplayFootsteps();
+            Quaternion targetRotation = Quaternion.LookRotation(
+                new Vector3(moveDirection.x, 0f, moveDirection.y)
+            );
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation,
+                targetRotation,
+                rotationSpeed * Time.deltaTime
+            );
         }
-        else
+    }
+
+    private void HandleFootsteps()
+    {
+        bool isMovingNow = moveDirection.sqrMagnitude > 0.01f;
+
+        // START footsteps
+        if (isMovingNow && !wasMovingLastFrame)
         {
-            isPlaying = false;
+            StartFootsteps();
         }
+
+        // STOP footsteps
+        if (!isMovingNow && wasMovingLastFrame)
+        {
+            StopFootsteps();
+        }
+
+        wasMovingLastFrame = isMovingNow;
     }
 
     public void OnMove(Vector2 direction)
     {
         moveDirection = direction.normalized;
-      
     }
 
-    private void ReplayFootsteps()
+    private void StartFootsteps()
     {
+        if (isPlayingFootsteps) return;
 
-        if(this.gameObject == ReferenceManager.Instance.GetPlayerOne() && !isPlaying)
+        isPlayingFootsteps = true;
+
+        ATTRIBUTES_3D attr = new ATTRIBUTES_3D
         {
-            isPlaying = true;
-            ATTRIBUTES_3D attr = new ATTRIBUTES_3D();
+            position = RuntimeUtils.ToFMODVector(transform.position),
+            forward = RuntimeUtils.ToFMODVector(transform.forward),
+            up = RuntimeUtils.ToFMODVector(transform.up)
+        };
 
-            attr.position = RuntimeUtils.ToFMODVector(transform.position);
-            attr.forward = RuntimeUtils.ToFMODVector(transform.forward);
-            attr.up = RuntimeUtils.ToFMODVector(transform.up);
-
+        if (gameObject == ReferenceManager.Instance.GetPlayerOne())
+        {
             AudioManager.Instance.PlayFootstep(AudioType.Footstep, attr);
         }
-        else if(this.gameObject == ReferenceManager.Instance.GetPlayerTwo() && !isPlaying)
+        else if (gameObject == ReferenceManager.Instance.GetPlayerTwo())
         {
-
-            isPlaying = true;
-            ATTRIBUTES_3D attr = new ATTRIBUTES_3D();
-
-            attr.position = RuntimeUtils.ToFMODVector(transform.position);
-            attr.forward = RuntimeUtils.ToFMODVector(transform.forward);
-            attr.up = RuntimeUtils.ToFMODVector(transform.up);
-
             AudioManager.Instance.PlayFootstep2(AudioType.Footstep, attr);
         }
+    }
 
+    private void StopFootsteps()
+    {
+        if (!isPlayingFootsteps) return;
+
+        isPlayingFootsteps = false;
+
+        if (gameObject == ReferenceManager.Instance.GetPlayerOne())
+        {
+            AudioManager.Instance.StopFootstep();
+        }
+        else if (gameObject == ReferenceManager.Instance.GetPlayerTwo())
+        {
+            AudioManager.Instance.StopFootstep2();
+        }
     }
 
     private void CheckPlatform()
@@ -139,7 +167,7 @@ public class PlayerController : MonoBehaviour
                 {
                     platformVelocity = platform.GetVelocity();
                     attached = true;
-                    return; 
+                    return;
                 }
             }
         }

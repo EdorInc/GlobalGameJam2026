@@ -172,6 +172,34 @@ public class AudioManager : MonoBehaviour
         activeSFX.Clear();
     }
 
+    public void StopFootstep()
+    {
+        for (int i = activeSFX.Count - 1; i >= 0; i--)
+        {
+            var inst = activeSFX[i];
+            if (inst.isValid())
+            {
+                inst.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                inst.release();
+            }
+        }
+        activeSFX.Clear();
+    }
+
+    public void StopFootstep2()
+    {
+        for (int i = activeSFX.Count - 1; i >= 0; i--)
+        {
+            var inst = activeSFX[i];
+            if (inst.isValid())
+            {
+                inst.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                inst.release();
+            }
+        }
+        activeSFX.Clear();
+    }
+
     public void PlayMusic(AudioType audioType, float volume = 1)
     {
         StopMusic();
