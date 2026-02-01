@@ -175,4 +175,24 @@ public class PlayerController : MonoBehaviour
         platformVelocity = Vector3.zero;
         attached = false;
     }
+
+    public void SetMoveSpeed(float newSpeed)
+    {
+        moveSpeed = newSpeed;
+    }
+
+    public void SetRotationSpeed(float newSpeed)
+    {
+        rotationSpeed = newSpeed;
+    }
+
+    public float GetMoveSpeed()
+    {
+        return moveSpeed;
+    }
+
+    public float GetRotationSpeed()
+    {
+        return rotationSpeed;
+    }
 }

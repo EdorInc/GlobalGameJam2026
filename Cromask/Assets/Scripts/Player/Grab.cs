@@ -4,8 +4,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
-using static UnityEngine.InputSystem.InputAction;
 
 public class GrabAction : MonoBehaviour
 {
@@ -39,12 +37,18 @@ public class GrabAction : MonoBehaviour
     private float grabHeight = 0.5f;
     [SerializeField]
     private GameObject landingMarker;
+    [SerializeField]
+    private float chargingMoveSpeed = 4f;
+    [SerializeField]
+    private float chargingRotationSpeed = 10f;
 
     private GameObject grabbedObject = null;
     private float currentForceFoward;
     private float currentForceUp;
     private bool charging = false;
     private LineRenderer line;
+    private float originalMoveSpeed;
+    private float originalRotationSpeed;
 
     private MaskManager maskManager;
     private Mask lastEquipedMask;
@@ -196,6 +200,14 @@ public class GrabAction : MonoBehaviour
             currentForceUp = minForceUp;
             currentForceFoward = minForceFowards;
 
+            PlayerController playerController = GetComponent<PlayerController>();
+            originalMoveSpeed = playerController.GetMoveSpeed();
+            originalRotationSpeed = playerController.GetRotationSpeed();
+            if (playerController != null)
+            {
+                playerController.SetMoveSpeed(chargingMoveSpeed);
+                playerController.SetRotationSpeed(chargingRotationSpeed);
+            }
 
             ATTRIBUTES_3D attr = new ATTRIBUTES_3D();
 
@@ -219,6 +231,13 @@ public class GrabAction : MonoBehaviour
 
     public GameObject ThrowObject()
     {
+        PlayerController playerController = GetComponent<PlayerController>();
+        if (playerController != null)
+        {
+            playerController.SetMoveSpeed(originalMoveSpeed);
+            playerController.SetRotationSpeed(originalRotationSpeed);
+        }
+
         if (!grabbedObject) return null;
 
         Rigidbody rbCube = grabbedObject.GetComponent<Rigidbody>();
@@ -263,9 +282,9 @@ public class GrabAction : MonoBehaviour
         grabbedObject = null;
     }
 
-    public void Drop()
+    public GameObject Drop()
     {
-        if (grabbedObject == null) return;
+        if (grabbedObject == null) return null;
 
         Rigidbody rb = grabbedObject.GetComponent<Rigidbody>();
 
@@ -283,7 +302,10 @@ public class GrabAction : MonoBehaviour
 
         grabbedObject.GetComponent<Collider>().enabled = true;
 
+        GameObject returnObject = grabbedObject;
         grabbedObject = null;
+
+        return returnObject;
     }
 
 

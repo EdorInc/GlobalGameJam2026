@@ -343,7 +343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 3
   rotationSpeed: 40
-  gravity: -6.81
+  gravity: -4
   useBlueMask: 0
 --- !u!114 &484927700941272014
 MonoBehaviour:

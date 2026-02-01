@@ -47,10 +47,7 @@ public class Respawn : MonoBehaviour
     {
         if (other.CompareTag("DeathZzzzone"))
         {
-            GameObject grabbedObject = transform.GetComponent<GrabAction>().ThrowObject();
-
-            grabbedObject?.GetComponent<Reset>()?.ForceRespawn();
-            grabbedObject?.GetComponent<ResetMask>()?.RespawnObject();
+            ThrowToRespawn();
 
             RespawnPlayer();
         }
@@ -63,11 +60,25 @@ public class Respawn : MonoBehaviour
         RespawnPlayer();
     }
 
+    private void ThrowToRespawn()
+    {
+        GameObject grabbedObject = transform.GetComponent<GrabAction>().ThrowObject();
+
+        GameObject droppedObject = transform.GetComponent<GrabAction>().Drop();
+
+        grabbedObject?.GetComponent<Reset>()?.ForceRespawn();
+        grabbedObject?.GetComponent<ResetMask>()?.RespawnObject();
+
+        droppedObject?.GetComponent<Reset>()?.ForceRespawn();
+        droppedObject?.GetComponent<ResetMask>()?.RespawnObject();
+
+    }
+
     private void RespawnPlayer()
     {
         if (hasValidSpawn)
         {
-            transform.GetComponent<GrabAction>().ThrowObject();
+            ThrowToRespawn();
 
             if (characterController != null) characterController.enabled = false;
             transform.position = lastValidPosition + Vector3.up * 1.0f; // Elevar un poco para evitar quedar atrapado en el suelo
