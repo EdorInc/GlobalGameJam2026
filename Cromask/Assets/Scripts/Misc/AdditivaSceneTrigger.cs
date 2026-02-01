@@ -5,6 +5,7 @@ public class AdditiveSceneTrigger : MonoBehaviour
 {
     [SerializeField] private string sceneToLoad;
     [SerializeField] private bool loadOnlyOnce = true;
+    [SerializeField] private bool newLoad = false;
 
     private bool hasLoaded = false;
 
@@ -22,6 +23,11 @@ public class AdditiveSceneTrigger : MonoBehaviour
 
     private void LoadScene()
     {
+        if (newLoad)
+        {
+            SceneManager.LoadScene(sceneToLoad);
+            return;
+        }
         if (!SceneManager.GetSceneByName(sceneToLoad).isLoaded)
         {
             SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Additive);
