@@ -152,9 +152,9 @@ public class GrabAction : MonoBehaviour
 
         foreach (Vector3 dir in directions)
         {
-            UnityEngine.Debug.DrawLine(origin, origin + dir * holdDistance, Color.red, 5);
+            UnityEngine.Debug.DrawLine(origin, origin + dir * (holdDistance + 1), Color.red, 5);
 
-            if (Physics.Raycast(origin, dir, out hit, distance, maskToDetect))
+            if (Physics.Raycast(origin, dir, out hit, distance +  1, maskToDetect))
             {
                 hitSomething = true;
                 break;
