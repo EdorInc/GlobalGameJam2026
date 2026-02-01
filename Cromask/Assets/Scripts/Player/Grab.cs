@@ -188,6 +188,14 @@ public class GrabAction : MonoBehaviour
 
             AudioManager.Instance.StopSFX();
 
+            ATTRIBUTES_3D attr = new ATTRIBUTES_3D();
+
+            attr.position = RuntimeUtils.ToFMODVector(transform.position);
+            attr.forward = RuntimeUtils.ToFMODVector(transform.forward);
+            attr.up = RuntimeUtils.ToFMODVector(transform.up);
+
+            AudioManager.Instance.PlaySFX(AudioType.Throw, attr);
+
             charging = false;
             rbCube.useGravity = true;
             grabbedObject.transform.parent = grabbedObject.GetComponent<GrabableObject>().GetBaseParent();

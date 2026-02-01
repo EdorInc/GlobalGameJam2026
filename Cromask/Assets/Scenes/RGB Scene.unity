@@ -789,6 +789,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 85a17ac8b9555ea4aa7e6cb80aeadbea, type: 2}
   - {fileID: 11400000, guid: 0491802b012e52240b3eb7860492c202, type: 2}
   - {fileID: 11400000, guid: 2091f6ca7fff66a4786d778a3e989837, type: 2}
+  - {fileID: 11400000, guid: 21af5dc46ca1d704db9f242c94012939, type: 2}
 --- !u!4 &680943621
 Transform:
   m_ObjectHideFlags: 0
@@ -1345,6 +1346,9 @@ MonoBehaviour:
   playerTwoReference: {fileID: 2105365292}
   playerOneCamera: {fileID: 141454696}
   playerTwoCamera: {fileID: 1149609186}
+  redMask: {fileID: 0}
+  blueMask: {fileID: 0}
+  greenMask: {fileID: 0}
 --- !u!4 &1734948398
 Transform:
   m_ObjectHideFlags: 0
