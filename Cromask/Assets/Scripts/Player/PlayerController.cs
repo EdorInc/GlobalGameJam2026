@@ -1,13 +1,17 @@
 ﻿using FMOD;
 using FMODUnity;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float rotationSpeed = 10f;
-    [SerializeField] private float gravity = -6.81f;
+    [SerializeField] private float fallSpeed = -40f;
+
+    private float originalMoveSpeed;
+    private float originalRotationSpeed;
 
     private CharacterController characterController;
     private Vector2 moveDirection;
@@ -17,6 +21,12 @@ public class PlayerController : MonoBehaviour
 
     private bool isPlayingFootsteps = false;
     private bool wasMovingLastFrame = false;
+
+    [SerializeField]
+    private float rayDistance = 5f;
+
+    [SerializeField]
+    private LayerMask groundLayer;
 
     [SerializeField] private bool useBlueMask = false;
 
@@ -30,6 +40,9 @@ public class PlayerController : MonoBehaviour
         {
             characterController = gameObject.AddComponent<CharacterController>();
         }
+
+        originalMoveSpeed = moveSpeed;
+        originalRotationSpeed = rotationSpeed;
     }
 
     private void Start()
@@ -63,6 +76,12 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement()
     {
+        if (moveSpeed <= 0f || rotationSpeed <= 0f)
+        {
+            moveSpeed = originalMoveSpeed;
+            rotationSpeed = originalRotationSpeed;
+        }
+
         Vector3 horizontalMove = new Vector3(moveDirection.x, 0f, moveDirection.y) * moveSpeed;
         Vector3 move = horizontalMove + platformVelocity;
 
@@ -72,10 +91,17 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            verticalVelocity.y += gravity * Time.deltaTime;
+            verticalVelocity.y = fallSpeed;
         }
 
-        move += verticalVelocity;
+        if (!Physics.Raycast(transform.position, Vector3.down, rayDistance, groundLayer))
+        {
+            UnityEngine.Debug.Log("No hay suelo debajo del jugador");
+            move += verticalVelocity;
+        }
+
+        // move += verticalVelocity;
+
         characterController.Move(move * Time.deltaTime);
 
         if (moveDirection.sqrMagnitude > 0.01f)

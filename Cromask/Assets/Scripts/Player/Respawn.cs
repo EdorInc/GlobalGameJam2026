@@ -66,12 +66,20 @@ public class Respawn : MonoBehaviour
 
         GameObject droppedObject = transform.GetComponent<GrabAction>().Drop();
 
-        grabbedObject?.GetComponent<Reset>()?.ForceRespawn();
-        grabbedObject?.GetComponent<ResetMask>()?.RespawnObject();
+        if(grabbedObject)
+        {
+            UnityEngine.Debug.Log("Respawning grabbed object");
+            grabbedObject?.GetComponent<Reset>()?.ForceRespawn();
+            grabbedObject?.GetComponent<ResetMask>()?.RespawnObject();
 
-        droppedObject?.GetComponent<Reset>()?.ForceRespawn();
-        droppedObject?.GetComponent<ResetMask>()?.RespawnObject();
+        }
 
+        if (droppedObject)
+        {
+            UnityEngine.Debug.Log("Respawning dropped object");
+            droppedObject?.GetComponent<Reset>()?.ForceRespawn();
+            droppedObject?.GetComponent<ResetMask>()?.RespawnObject();
+        }
     }
 
     private void RespawnPlayer()
