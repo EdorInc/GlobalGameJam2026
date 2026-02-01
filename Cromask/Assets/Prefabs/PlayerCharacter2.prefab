@@ -217,10 +217,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   maxDistanceOffset: 0.05
-  useSphereCast: 0
-  sphereRadius: 0.15
-  transparentAlpha: 0.3
-  colorPropertyName: _BaseColor
+  useSphereCast: 1
+  sphereRadius: 1
 --- !u!1001 &1373773085876831482
 PrefabInstance:
   m_ObjectHideFlags: 0
