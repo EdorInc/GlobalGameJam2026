@@ -231,14 +231,14 @@ public class GrabAction : MonoBehaviour
 
     public GameObject ThrowObject()
     {
+        if (!grabbedObject) return null;
+
         PlayerController playerController = GetComponent<PlayerController>();
         if (playerController != null)
         {
             playerController.SetMoveSpeed(originalMoveSpeed);
             playerController.SetRotationSpeed(originalRotationSpeed);
         }
-
-        if (!grabbedObject) return null;
 
         Rigidbody rbCube = grabbedObject.GetComponent<Rigidbody>();
 
