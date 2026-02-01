@@ -32,7 +32,6 @@ public class EquipableObject : MonoBehaviour
         particleSystem.transform.parent = this.transform;
 
         GetComponent<Collider>().enabled = false;
-        GetComponent<MeshRenderer>().enabled = false;
         GetComponent <Rigidbody>().isKinematic = true;
         Debug.Log("Object equipped");
         
@@ -48,7 +47,6 @@ public class EquipableObject : MonoBehaviour
         }
        
         GetComponent<Collider>().enabled = true;
-        GetComponent<MeshRenderer>().enabled = true;
         GetComponent<Rigidbody>().isKinematic = false;
       
         Debug.Log("Object unequipped");
