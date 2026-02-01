@@ -76,7 +76,7 @@ public class GrabAction : MonoBehaviour
             Gamepad gamepad = ReferenceManager.Instance.GetPlayerOne().GetComponent<RegisterController>().GetPlayerGamepad();
             if (!gamepad.IsUnityNull())
             {
-                Debug.Log("Vibrating Player One's controller");
+                UnityEngine.Debug.Log("Vibrating Player One's controller");
                 VibrationManager.Instance.RumblePulse(gamepad, low, high, duration);
             }
 
@@ -86,7 +86,7 @@ public class GrabAction : MonoBehaviour
             Gamepad gamepad = ReferenceManager.Instance.GetPlayerTwo().GetComponent<RegisterController>().GetPlayerGamepad();
             if (!gamepad.IsUnityNull())
             {
-                Debug.Log("Vibrating Player Two's controller");
+                UnityEngine.Debug.Log("Vibrating Player Two's controller");
                 VibrationManager.Instance.RumblePulse(gamepad, low, high, duration);
             }
         }
