@@ -125,11 +125,27 @@ public class GrabAction : MonoBehaviour
 
         // Directions
         Vector3[] directions =
-        {
+    {
         transform.forward,
-        Quaternion.AngleAxis(-angle, Vector3.up) * transform.forward,
-        Quaternion.AngleAxis(angle, Vector3.up) * transform.forward
-        };
+
+        Quaternion.AngleAxis( angle, transform.up) * transform.forward,
+        Quaternion.AngleAxis(-angle, transform.up) * transform.forward,
+
+        Quaternion.AngleAxis( angle, transform.right) * transform.forward,
+        Quaternion.AngleAxis(-angle, transform.right) * transform.forward,
+
+        Quaternion.AngleAxis( angle, transform.up) *
+        Quaternion.AngleAxis( angle, transform.right) * transform.forward,
+
+        Quaternion.AngleAxis( angle, transform.up) *
+        Quaternion.AngleAxis(-angle, transform.right) * transform.forward,
+
+        Quaternion.AngleAxis(-angle, transform.up) *
+        Quaternion.AngleAxis( angle, transform.right) * transform.forward,
+
+        Quaternion.AngleAxis(-angle, transform.up) *
+        Quaternion.AngleAxis(-angle, transform.right) * transform.forward
+    };
 
         bool hitSomething = false;
 
