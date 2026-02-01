@@ -70,7 +70,7 @@ public class MenuManager : MonoBehaviour
     public void StartGame()
     {
         Debug.Log("Both players ready — starting game!");
-        SceneManager.LoadScene("RGB Scene");
+        SceneManager.LoadScene("SceneTutorial");
     }
 
     public void ReturnToMenu()
