@@ -49,6 +49,13 @@ public class Respawn : MonoBehaviour
         }
     }
 
+    public void ForceRespawn(Transform objTransform)
+    {
+        hasValidSpawn = true;
+        lastValidPosition = objTransform.position + Vector3.up * 1.0f;
+        RespawnPlayer();
+    }
+
     private void RespawnPlayer()
     {
         if (hasValidSpawn)

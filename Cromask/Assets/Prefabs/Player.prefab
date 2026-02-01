@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 3199057291552848063}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -343,6 +343,7 @@ MonoBehaviour:
   moveSpeed: 3
   rotationSpeed: 40
   gravity: -6.81
+  useBlueMask: 0
 --- !u!114 &484927700941272014
 MonoBehaviour:
   m_ObjectHideFlags: 0

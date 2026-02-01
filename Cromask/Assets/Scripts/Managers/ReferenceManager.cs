@@ -19,6 +19,15 @@ public class ReferenceManager : MonoBehaviour
     private Gamepad playerOneGamepad;
     private Gamepad playerTwoGamepad;
 
+    [SerializeField]
+    private GameObject redMask;
+
+    [SerializeField]
+    private GameObject blueMask;
+
+    [SerializeField]
+    private GameObject greenMask;
+
     private static ReferenceManager _instance;
 
     public static ReferenceManager Instance
@@ -68,6 +77,10 @@ public class ReferenceManager : MonoBehaviour
     public GameObject GetPlayerTwo() => playerTwoReference;
     public Camera GetPlayerOneCamera() => playerOneCamera;
     public Camera GetPlayerTwoCamera() => playerTwoCamera;
+    public GameObject GetRedMask() => redMask;
+    public GameObject GetBlueMask() => blueMask;
+    public GameObject GetGreenMask() => greenMask;
+
     public MaskManager GetPlayerOneMask() =>
     playerOneReference != null ? playerOneReference.GetComponent<MaskManager>() : null;
 
