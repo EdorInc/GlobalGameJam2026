@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: RedMaskVFX
   m_EditorClassIdentifier: Assembly-CSharp::VFXAsset
   vfxType: 3
-  prefab: {fileID: 1967372879927686, guid: 2492a38f2c3a20f4695d374ded8a8981, type: 3}
+  prefab: {fileID: 5677649944980355075, guid: 89f8d45b76bebce45a1af57ca4eaed52, type: 3}
   lifetime: 1
