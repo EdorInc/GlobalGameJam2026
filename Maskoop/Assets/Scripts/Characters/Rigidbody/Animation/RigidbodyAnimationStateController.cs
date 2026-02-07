@@ -53,7 +53,7 @@ public class RigidbodyAnimationStateController : MonoBehaviour
     {
         bool RigidbodyGrounded = IsGrounded;
         bool RigidbodyJumping = rigidbody.linearVelocity.y > 0f;
-        bool RigidbodyMoving = new Vector3(rigidbody.linearVelocity.x, 0f, rigidbody.linearVelocity.z).sqrMagnitude > 0.1f;
+        bool RigidbodyMoving = new Vector3(rigidbody.linearVelocity.x, 0f, rigidbody.linearVelocity.z).sqrMagnitude > 0.01f;
 
         if (IsGrounded)
         {
