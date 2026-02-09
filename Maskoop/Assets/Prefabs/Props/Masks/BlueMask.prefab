@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5427337455369828086}
   - component: {fileID: 8804594083934277986}
   - component: {fileID: 1046204137106339779}
+  - component: {fileID: -5937193348582428052}
   m_Layer: 0
   m_Name: BlueMask
   m_TagString: Untagged
@@ -83,6 +84,20 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 80
   m_CollisionDetection: 1
+--- !u!114 &-5937193348582428052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6079786050083026125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb0594dc0b58ef14998160f1ae31654d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Grabbable
+  holdOffset: {x: 0, y: 0, z: 0}
+  holdRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &7561135809734292149
 GameObject:
   m_ObjectHideFlags: 0

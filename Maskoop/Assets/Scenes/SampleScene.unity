@@ -151,6 +151,18 @@ PrefabInstance:
       propertyPath: raycastMask.m_Bits
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 1738267526175680270, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1738267526175680270, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1738267526175680270, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2365696635727678705, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: m_Name
       value: ChibiPlayer
@@ -291,6 +303,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.00000047683716
       objectReference: {fileID: 0}
+    - target: {fileID: 7823483162123811180, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: grabRange
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7823483162123811180, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: grabRadius
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 8277380321304050910, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: castRadius
       value: 0.75
@@ -334,6 +354,10 @@ PrefabInstance:
     - target: {fileID: 8679349952841481165, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: groundLayerMask.m_Bits
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834480173448017807, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8896125012713392075, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: m_Mesh
