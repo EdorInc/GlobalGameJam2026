@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class FollowPlayer : MonoBehaviour
 {
+    [Header("References")]
     public Transform target;
+
+    [Header("Settings")]
     public float smoothTime = 0.1f;
 
     private Vector3 positionOffset;

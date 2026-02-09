@@ -10,6 +10,9 @@ public class BuildWall : MonoBehaviour
     [SerializeField, Min(1)]
     private int wallHeight = 3;
 
+    [SerializeField, Min(1)]
+    private int wallWidth = 1;
+
     public int WallHeight
     {
         get => wallHeight;
@@ -18,6 +21,19 @@ public class BuildWall : MonoBehaviour
             if (wallHeight != value)
             {
                 wallHeight = Mathf.Max(1, value);
+                Rebuild();
+            }
+        }
+    }
+
+    public int WallWidth
+    {
+        get => wallWidth;
+        set
+        {
+            if (wallWidth != value)
+            {
+                wallWidth = Mathf.Max(1, value);
                 Rebuild();
             }
         }
@@ -47,18 +63,8 @@ public class BuildWall : MonoBehaviour
         rebuildQueued = false;
 
         if (!this || !wallPrefab) return;
-        if (PrefabUtility.IsPartOfPrefabAsset(this)) return;
 
-        for (int i = transform.childCount - 1; i >= 0; i--)
-        {
-            DestroyImmediate(transform.GetChild(i).gameObject);
-        }
-
-        for (int i = 0; i < wallHeight; i++)
-        {
-            var segment = Instantiate(wallPrefab, transform);
-            segment.transform.localPosition = Vector3.up * i;
-        }
+        wallPrefab.transform.localScale = new Vector3(wallWidth, wallHeight, 1);
     }
 #endif
 }
