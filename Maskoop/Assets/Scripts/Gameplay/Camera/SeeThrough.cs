@@ -10,6 +10,7 @@ public class SeeThrough : MonoBehaviour
 
     [Header("Cast Settings")]
     public float castSphereRadius = 0.5f;
+    public bool useNearSphereCast = false;
     public float nearSphereDistance = 1.5f;
 
     [Header("Wall Settings")]
@@ -56,20 +57,24 @@ public class SeeThrough : MonoBehaviour
         // -------- SphereCast near camera --------
         Ray ray = new Ray(origin, dirNorm);
 
-        RaycastHit[] nearHits = Physics.SphereCastAll(
-            ray,
-            castSphereRadius,
-            nearSphereDistance,
-            raycastMask
-        );
-
-        foreach (RaycastHit hit in nearHits)
+        if (useNearSphereCast)
         {
-            TryAddWall(hit.collider, wallsThisFrame);
+            RaycastHit[] nearHits = Physics.SphereCastAll(
+                ray,
+                castSphereRadius,
+                nearSphereDistance,
+                raycastMask
+            );
+
+            foreach (RaycastHit hit in nearHits)
+            {
+                TryAddWall(hit.collider, wallsThisFrame);
+            }
         }
 
         // -------- Linecast for the rest --------
-        Vector3 lineStart = origin + dirNorm * nearSphereDistance;
+        Vector3 lineStart = origin;
+        if (useNearSphereCast)  lineStart = origin + dirNorm * nearSphereDistance;
 
         if (Physics.Linecast(lineStart, target, out RaycastHit lineHit, raycastMask))
         {
