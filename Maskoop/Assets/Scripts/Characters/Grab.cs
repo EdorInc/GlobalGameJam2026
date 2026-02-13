@@ -1,7 +1,10 @@
 using UnityEngine;
 
 public class Grab : MonoBehaviour
-{   
+{
+    //[HideInInspector]
+    public GameObject grabbedObject = null;
+
     [Header("Grab Settings")]
     public float grabRange = 3f;
     public float grabRadius = 0.5f;
@@ -10,8 +13,6 @@ public class Grab : MonoBehaviour
     [Header("Hold Settings")]
     [SerializeField]
     private Transform grabbedPosition;
-
-    private GameObject grabbedObject = null;
 
     void LateUpdate()
     {
@@ -42,14 +43,9 @@ public class Grab : MonoBehaviour
 
         RaycastHit hit;
 
-        DebugDrawSphereCast(origin, grabRadius, direction, grabRange);
-
         // SphereCast to detect objects in front
-        if (Physics.SphereCast(origin, grabRadius, direction, out hit, grabRange))
+        if (RaycastCross(origin, direction, grabRange, grabRadius, out hit))
         {
-
-            Debug.DrawLine(origin, hit.point, Color.green);
-
             // Check if the object has a Grabbable component
             Grabbable grabbable = hit.collider.GetComponent<Grabbable>();
             if (grabbable == null)
@@ -90,28 +86,39 @@ public class Grab : MonoBehaviour
 
     }
 
-    void DebugDrawSphereCast(Vector3 origin, float radius, Vector3 direction, float distance, int steps = 10)
+    bool RaycastCross(Vector3 origin, Vector3 direction, float range, float radius, out RaycastHit hit)
     {
-        // Draw a line along the cast
-        Debug.DrawLine(origin, origin + direction * distance, Color.red);
+        hit = default;
 
-        // Reduce radius for better visualization
-        radius = radius / 2;
+        direction = direction.normalized; // Make sure direction is normalized
 
-        // Draw spheres along the path to approximate the cast volume
-        for (int i = 0; i <= steps; i++)
+        // Center ray
+        Debug.DrawLine(origin, origin + direction * range, Color.red, 0.1f);
+        if (Physics.Raycast(origin, direction, out hit, range, ~0, QueryTriggerInteraction.Ignore))
+            return true;
+
+        // Cross pattern offsets
+        Vector3[] offsets = new Vector3[]
         {
-            float t = i / (float)steps;
-            Vector3 point = origin + direction * t * distance;
+        origin + Vector3.up * radius,
+        origin + Vector3.down * radius,
+        origin + Vector3.right * radius,
+        origin + Vector3.left * radius
+        };
 
-            Vector3 position = point;
-            Color color = Color.yellow;
-            float duration = 0.1f;
+        Color debugColor = Color.yellow;
 
-            Debug.DrawLine(position + Vector3.up * radius, position - Vector3.up * radius, color, duration);
-            Debug.DrawLine(position + Vector3.right * radius, position - Vector3.right * radius, color, duration);
-            Debug.DrawLine(position + Vector3.forward * radius, position - Vector3.forward * radius, color, duration);
+        foreach (var offset in offsets)
+        {
+            // Draw debug line for each offset
+            Debug.DrawLine(offset, offset + direction * range, debugColor, 0.1f);
+
+            if (Physics.Raycast(offset, direction, out hit, range, ~0, QueryTriggerInteraction.Ignore))
+                return true;
         }
+
+        // No hit found
+        return false;
     }
 
     public void DropObject()
