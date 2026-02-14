@@ -43,7 +43,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6079786050083026125}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ab51bb5fba769cb47a1e30ae1a9a5197, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Grabbable
   holdOffset: {x: 0, y: 0, z: 0}
-  holdRotation: {x: 0, y: 0, z: 0}
+  holdRotation: {x: 0, y: 0, z: 0, w: 1}
 --- !u!1 &7561135809734292149
 GameObject:
   m_ObjectHideFlags: 0

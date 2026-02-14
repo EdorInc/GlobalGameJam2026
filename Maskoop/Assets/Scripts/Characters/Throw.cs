@@ -5,7 +5,7 @@ public class Throw : MonoBehaviour
 {
     private Grab grabComponent;
 
-    //[HideInInspector]
+    [HideInInspector]
     public GameObject grabbedObject;
 
     [Header("Throw Settings")]
@@ -19,22 +19,6 @@ public class Throw : MonoBehaviour
     private float maxForceUp = 8;
     [SerializeField]
     private float forceGrowRate = 2;
-
-    [Header("Trajectory Settings")]
-    [SerializeField]
-    private float maxTime = 5.0f;
-    [SerializeField]
-    private float timeStep = 0.1f;
-    [SerializeField]
-    private float lineWidth = 0.5f;
-
-    [Header("Vibration Settings")]
-    [SerializeField]
-    float lowVibrationIntensity = 0.1f;
-    [SerializeField]
-    float highVibrationIntensity = 0.1f;
-    [SerializeField]
-    float vibrationDuration = 0.01f;
 
     private LineRenderer trajectoryRenderer;
 
@@ -71,6 +55,14 @@ public class Throw : MonoBehaviour
             ChargeUpdate();
         }
     }
+
+    [Header("Vibration Settings")]
+    [SerializeField]
+    float lowVibrationIntensity = 0.1f;
+    [SerializeField]
+    float highVibrationIntensity = 0.1f;
+    [SerializeField]
+    float vibrationDuration = 0.01f;
 
     private void Vibrate(float low, float high, float duration)
     {
@@ -151,73 +143,61 @@ public class Throw : MonoBehaviour
         ClearTrajectory();
     }
 
+    [Header("Trajectory Settings")]
+    [SerializeField]
+    private float maxTime = 5.0f;
+    [SerializeField]
+    private float timeStep = 0.1f;
+    [SerializeField]
+    private GameObject landingMarker;
+
     public void DrawTrajectory(float impulseStrengthFoward, float impulseStrengthUp)
     {
-        if(!trajectoryRenderer.enabled || !grabbedObject)
-            Debug.Log("Something is missing, not drawing trajectory.");
+        if (!trajectoryRenderer.enabled || !grabbedObject)
+            return;
 
-        Vector3 initialPos = grabbedObject.transform.localPosition;
-        float initialMass = grabbedObject.GetComponent<Rigidbody>().mass;
+        float objectMass = grabbedObject.GetComponent<Rigidbody>().mass;
+        Vector3 launchPosition = grabbedObject.transform.localPosition;
+        
+        Vector3 forwardVelocity = transform.forward * (impulseStrengthFoward / objectMass);
+        Vector3 upwardVelocity = Vector3.up * (impulseStrengthUp / objectMass);
+        Vector3 launchVelocity = forwardVelocity + upwardVelocity;
 
-        Debug.Log($"Initial Position: {initialPos}");
-        Debug.Log("Preview forward: " + transform.forward);
-
-        Vector3 forwardVelocity = transform.forward * (impulseStrengthFoward / initialMass);
-        Vector3 upwardVelocity = Vector3.up * (impulseStrengthUp / initialMass);
-        Vector3 initialVelocity = forwardVelocity + upwardVelocity;
-
-        trajectoryRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-        trajectoryRenderer.receiveShadows = false;
-
-        trajectoryRenderer.startWidth = lineWidth;
-        trajectoryRenderer.endWidth = lineWidth;
-
-        trajectoryRenderer.material.mainTextureScale = new Vector2(1f / lineWidth, 1.0f);
-
-        Vector3 previousPoint = initialPos;
-        int pointsDrawn = 0;
+        int pointsDrawn;
         int maxSteps = Mathf.CeilToInt(maxTime / timeStep);
 
         bool hitFound = false;
 
+        Vector3 previousPoint = launchPosition;
+
         trajectoryRenderer.positionCount = maxSteps;
 
-        for (int i = 0; i < maxSteps; i++)
+        for (pointsDrawn = 0; pointsDrawn < maxSteps; pointsDrawn++)
         {
-            float t = i * timeStep;
+            float t = pointsDrawn * timeStep;
+            Vector3 point = launchPosition + launchVelocity * t + 0.5f * Physics.gravity * t * t;
 
-            Vector3 currentPoint = initialPos + initialVelocity * t + 0.5f * Physics.gravity * t * t;
-
-            // Raycast between last point and this point
-            Vector3 segment = currentPoint - previousPoint;
+            Vector3 segment = point - previousPoint;
             float distance = segment.magnitude;
+
+             trajectoryRenderer.SetPosition(pointsDrawn, point);
 
             if (Physics.Raycast(previousPoint, segment.normalized, out RaycastHit hit, distance))
             {
-                // Stop at ground hit
-                trajectoryRenderer.SetPosition(pointsDrawn, hit.point);
-                
-                // PlaceLandingMarker(hit);
+                trajectoryRenderer.SetPosition(++pointsDrawn, hit.point);
+                EndTrajectory(hit);
 
-                pointsDrawn++;
                 hitFound = true;
 
                 break;
             }
 
-            trajectoryRenderer.SetPosition(pointsDrawn, currentPoint);
-
-            previousPoint = currentPoint;
-            pointsDrawn++;
+            previousPoint = point;
         }
 
-        // trajectoryRenderer.positionCount = pointsDrawn - 1;
         trajectoryRenderer.positionCount = pointsDrawn;
 
-        // if (!hitFound && landingMarker != null)
-        // {
-        //     landingMarker.SetActive(false);
-        // }
+        if (!hitFound && landingMarker != null) landingMarker.SetActive(false);
     }
 
     public void ClearTrajectory()
@@ -225,6 +205,19 @@ public class Throw : MonoBehaviour
         Debug.Log("Clearing trajectory");
 
         trajectoryRenderer.positionCount = 0;
-        //landingMarker.SetActive(false);
+        landingMarker.SetActive(false);
+    }
+
+    private void EndTrajectory(RaycastHit hit)
+    {
+        if (!landingMarker)
+            return;
+
+        landingMarker.SetActive(true);
+
+        float halfHeight = landingMarker.GetComponent<Renderer>().bounds.extents.y;
+
+        landingMarker.transform.position = hit.point + hit.normal * halfHeight;
+        landingMarker.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
     }
 }

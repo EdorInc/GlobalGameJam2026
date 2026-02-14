@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Grab : MonoBehaviour
 {
-    //[HideInInspector]
+    [HideInInspector]
     public GameObject grabbedObject = null;
 
     [Header("Grab Settings")]
