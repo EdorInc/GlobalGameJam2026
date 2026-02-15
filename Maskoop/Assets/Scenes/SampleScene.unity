@@ -611,6 +611,14 @@ PrefabInstance:
       propertyPath: lineWidth
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 8512399398987540270, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: forceGrowRate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8512399398987540270, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: obstaclesParent
+      value: 
+      objectReference: {fileID: 1926420739}
     - target: {fileID: 8679349952841481165, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: allowJump
       value: 1
@@ -1068,6 +1076,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1926420739 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8009533574091425967, guid: 5d1ab1e1a959dd2488a1eeb106076dec, type: 3}
+  m_PrefabInstance: {fileID: 705619975}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2116083841
 PrefabInstance:
   m_ObjectHideFlags: 0

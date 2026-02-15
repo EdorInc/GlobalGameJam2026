@@ -1,5 +1,8 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class Throw : MonoBehaviour
 {
@@ -28,6 +31,8 @@ public class Throw : MonoBehaviour
 
     void Start()
     {
+        StartSimulation();
+
         trajectoryRenderer = GetComponent<LineRenderer>();
 
         if (trajectoryRenderer == null)
@@ -41,18 +46,6 @@ public class Throw : MonoBehaviour
         {
             Debug.LogError("Grab component missing from Throw script on " + gameObject.name);
             this.enabled = false;
-        }
-    }
-
-    void Update()
-    {
-        if (grabComponent.grabbedObject != null) grabbedObject = grabComponent.grabbedObject;
-        else grabbedObject = null;
-
-        if (charging && grabbedObject != null)
-        {
-            Vibrate(lowVibrationIntensity, highVibrationIntensity, vibrationDuration);
-            ChargeUpdate();
         }
     }
 
@@ -147,45 +140,124 @@ public class Throw : MonoBehaviour
     [SerializeField]
     private float maxTime = 5.0f;
     [SerializeField]
-    private float timeStep = 0.1f;
+    private int endPointsIgnored = 1;
+    [SerializeField]
+    private bool useSimulationForTrajectory = true;
     [SerializeField]
     private GameObject landingMarker;
+    [SerializeField] 
+    private Transform obstaclesParent;
 
-    public void DrawTrajectory(float impulseStrengthFoward, float impulseStrengthUp)
+    private Scene simulationScene;
+    private PhysicsScene physicsScene;
+    private readonly Dictionary<Transform, Transform> spawnedObjects = new Dictionary<Transform, Transform>();
+
+    private void StartSimulation()
     {
-        if (!trajectoryRenderer.enabled || !grabbedObject)
+        simulationScene = SceneManager.CreateScene("Simulation", new CreateSceneParameters(LocalPhysicsMode.Physics3D));
+        physicsScene = simulationScene.GetPhysicsScene();
+
+        foreach (Transform obj in obstaclesParent)
+        {
+            var ghostObj = Instantiate(obj.gameObject, obj.position, obj.rotation);
+            Renderer ghostRenderer = ghostObj.GetComponent<Renderer>();
+            if (ghostRenderer) ghostRenderer.enabled = false;
+            SceneManager.MoveGameObjectToScene(ghostObj, simulationScene);
+            if (!ghostObj.isStatic) spawnedObjects.Add(obj, ghostObj.transform);
+        }
+    }
+
+    private void SimulateTrajectory(GameObject gameObject, Vector3 velocity)
+    {
+        if(gameObject == null)
+        {
+            Debug.LogError("No object to simulate trajectory for.");
             return;
+        }
 
-        float objectMass = grabbedObject.GetComponent<Rigidbody>().mass;
-        Vector3 launchPosition = grabbedObject.transform.localPosition;
-        
-        Vector3 forwardVelocity = transform.forward * (impulseStrengthFoward / objectMass);
-        Vector3 upwardVelocity = Vector3.up * (impulseStrengthUp / objectMass);
-        Vector3 launchVelocity = forwardVelocity + upwardVelocity;
+        GameObject ghostObj = Instantiate(gameObject, gameObject.transform.position, gameObject.transform.rotation);
+        Renderer[] ghostRenderers = ghostObj.GetComponentsInChildren<Renderer>();
+        BoxCollider ghostCollider = ghostObj.GetComponent<BoxCollider>();
+        Rigidbody ghostRigidbody = ghostObj.GetComponent<Rigidbody>();
 
+        SceneManager.MoveGameObjectToScene(ghostObj, simulationScene);
+
+        foreach (Renderer r in ghostRenderers)  r.enabled = false;
+        if (ghostCollider) ghostCollider.enabled = true;
+        if (ghostRigidbody)
+        {
+            ghostRigidbody.isKinematic = false;
+            ghostRigidbody.useGravity = true;
+            ghostRigidbody.AddForce(velocity, ForceMode.Impulse);
+        }
+        else
+        {
+            Debug.LogWarning("Object " + gameObject.name + " has no Rigidbody, cannot simulate trajectory.");
+            return;
+        }
+
+        bool ghostStopped = false;
+        int maxSteps = Mathf.CeilToInt(maxTime / Time.fixedDeltaTime);
+        trajectoryRenderer.positionCount = maxSteps;
+
+        int actualSteps = 0;
+
+        for (int i = 0; i < maxSteps; i++)
+        {
+            physicsScene.Simulate(Time.fixedDeltaTime);
+
+            trajectoryRenderer.SetPosition(i, ghostObj.transform.position);
+            actualSteps++;
+
+            // Stop when object almost stops moving
+            if (ghostRigidbody.IsSleeping() || ghostRigidbody.linearVelocity.sqrMagnitude < 0.01f)
+            {
+                RaycastHit hit;
+
+                Vector3 start = ghostObj.transform.position;
+
+                if (Physics.Raycast(start, Vector3.down, out hit, 10f))
+                {
+                    ghostStopped = true;
+                    EndTrajectory(hit.point, hit.normal, ghostObj.transform.rotation);
+                }
+
+                break;
+            }
+        }
+
+        trajectoryRenderer.positionCount = actualSteps - endPointsIgnored;
+
+        if (!ghostStopped && landingMarker != null) landingMarker.SetActive(false);
+
+        Destroy(ghostObj);
+    }
+
+    private void CalculateTrajectory(Vector3 pos, Vector3 velocity)
+    {
         int pointsDrawn;
-        int maxSteps = Mathf.CeilToInt(maxTime / timeStep);
+        int maxSteps = Mathf.CeilToInt(maxTime / Time.fixedDeltaTime);
 
         bool hitFound = false;
 
-        Vector3 previousPoint = launchPosition;
+        Vector3 previousPoint = pos;
 
         trajectoryRenderer.positionCount = maxSteps;
 
         for (pointsDrawn = 0; pointsDrawn < maxSteps; pointsDrawn++)
         {
-            float t = pointsDrawn * timeStep;
-            Vector3 point = launchPosition + launchVelocity * t + 0.5f * Physics.gravity * t * t;
+            float t = pointsDrawn * Time.fixedDeltaTime;
+            Vector3 point = pos + velocity * t + 0.5f * Physics.gravity * t * t;
 
             Vector3 segment = point - previousPoint;
             float distance = segment.magnitude;
 
-             trajectoryRenderer.SetPosition(pointsDrawn, point);
+            trajectoryRenderer.SetPosition(pointsDrawn, point);
 
             if (Physics.Raycast(previousPoint, segment.normalized, out RaycastHit hit, distance))
             {
                 trajectoryRenderer.SetPosition(++pointsDrawn, hit.point);
-                EndTrajectory(hit);
+                EndTrajectory(hit.point, hit.normal);
 
                 hitFound = true;
 
@@ -195,9 +267,46 @@ public class Throw : MonoBehaviour
             previousPoint = point;
         }
 
-        trajectoryRenderer.positionCount = pointsDrawn;
+        trajectoryRenderer.positionCount = pointsDrawn - endPointsIgnored;
 
         if (!hitFound && landingMarker != null) landingMarker.SetActive(false);
+    }
+
+    public void DrawTrajectory(float impulseStrengthFoward, float impulseStrengthUp)
+    {
+        if (!trajectoryRenderer.enabled || !grabbedObject)
+            return;
+
+        Rigidbody objectRigidbody = grabbedObject.GetComponent<Rigidbody>();
+        BoxCollider objectCollider = grabbedObject.GetComponent<BoxCollider>();
+
+        if (objectRigidbody == null || objectCollider == null)
+        {
+            Debug.LogError("Grabbed object must have both Rigidbody and BoxCollider components.");
+            return;
+        }
+
+        float objectMass = objectRigidbody.mass;
+
+        Vector3 forwardVelocity = transform.forward * (impulseStrengthFoward / objectMass);
+        Vector3 upwardVelocity = Vector3.up * (impulseStrengthUp / objectMass);
+
+        Vector3 launchPosition = grabbedObject.transform.localPosition;
+        Vector3 launchVelocity = forwardVelocity + upwardVelocity;
+        Vector3 launchForce = transform.forward * impulseStrengthFoward + Vector3.up * impulseStrengthUp;
+
+        // Adjust landing marker scale to match the size of the object being thrown
+        Vector3 worldSize = Vector3.Scale(objectCollider.size, objectCollider.transform.lossyScale);
+        landingMarker.transform.localScale = worldSize;
+
+        if (useSimulationForTrajectory)
+        {
+            SimulateTrajectory(grabbedObject, launchForce);
+        }
+        else
+        {
+            CalculateTrajectory(launchPosition, launchVelocity);
+        }
     }
 
     public void ClearTrajectory()
@@ -208,7 +317,7 @@ public class Throw : MonoBehaviour
         landingMarker.SetActive(false);
     }
 
-    private void EndTrajectory(RaycastHit hit)
+    private void EndTrajectory(Vector3 position, Vector3 normal, Quaternion? rotation = null)
     {
         if (!landingMarker)
             return;
@@ -217,7 +326,31 @@ public class Throw : MonoBehaviour
 
         float halfHeight = landingMarker.GetComponent<Renderer>().bounds.extents.y;
 
-        landingMarker.transform.position = hit.point + hit.normal * halfHeight;
-        landingMarker.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+        landingMarker.transform.position = position + normal * halfHeight;
+
+        // Use the provided rotation if any, otherwise default to normal-based rotation
+        landingMarker.transform.rotation = rotation ?? Quaternion.FromToRotation(Vector3.up, normal);
+    }
+
+    void Update()
+    {
+        if (grabComponent.grabbedObject != null) grabbedObject = grabComponent.grabbedObject;
+        else grabbedObject = null;
+
+        if (charging && grabbedObject != null)
+        {
+            Vibrate(lowVibrationIntensity, highVibrationIntensity, vibrationDuration);
+            ChargeUpdate();
+        }
+
+        if (useSimulationForTrajectory)
+        {
+            if (spawnedObjects.Count == 0) return;
+            foreach (var item in spawnedObjects)
+            {
+                item.Value.position = item.Key.position;
+                item.Value.rotation = item.Key.rotation;
+            }
+        }
     }
 }
