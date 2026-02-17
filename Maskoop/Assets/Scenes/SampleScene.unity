@@ -143,6 +143,14 @@ PrefabInstance:
       propertyPath: collisionRadius
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 424470244333066843, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: m_Size.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 424470244333066843, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: m_StartAngleFade
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 496925781920368979, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: m_Positions.Array.size
       value: 0
@@ -393,8 +401,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 508253425273826759, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1246453032831536765, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1246453032831536765, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 04a7cdda93f70dd4487cbd25f4cde55f, type: 2}
     - target: {fileID: 1368692153816943079, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -418,6 +434,10 @@ PrefabInstance:
     - target: {fileID: 2365696635727678705, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: m_Name
       value: ChibiPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 2447271271775947508, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2691037543324853678, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: showRaycasts
@@ -616,7 +636,23 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8512399398987540270, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: landingMarker
+      value: 
+      objectReference: {fileID: 788813342}
+    - target: {fileID: 8512399398987540270, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: useSimulation
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8512399398987540270, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: obstaclesParent
+      value: 
+      objectReference: {fileID: 1926420739}
+    - target: {fileID: 8512399398987540270, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: endPointsIgnored
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8512399398987540270, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: simulationObstaclesParent
       value: 
       objectReference: {fileID: 1926420739}
     - target: {fileID: 8679349952841481165, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
@@ -920,6 +956,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d1ab1e1a959dd2488a1eeb106076dec, type: 3}
+--- !u!1 &788813342 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2447271271775947508, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+  m_PrefabInstance: {fileID: 18670247}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
