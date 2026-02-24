@@ -29,6 +29,15 @@ public class Grab : MonoBehaviour
         }
     }
 
+    void SetColliderState(bool enabled)
+    {
+        if (grabbedObject == null) return;
+        Collider collider = grabbedObject.GetComponent<Collider>();
+        if (collider != null)
+        {
+            collider.enabled = enabled;
+        }
+    }
     public void GrabObject()
     {
         if (grabbedObject != null)
@@ -70,12 +79,7 @@ public class Grab : MonoBehaviour
                 return;
             }
 
-            BoxCollider boxCollider = grabbedObject.GetComponent<BoxCollider>();
-
-            if (boxCollider != null)
-            {
-                boxCollider.enabled = false;
-            }
+            SetColliderState(false);
 
             Debug.Log("Grabbed object " + grabbedObject.name);
         }
@@ -125,12 +129,7 @@ public class Grab : MonoBehaviour
     {
         if (grabbedObject == null) return;
 
-        BoxCollider boxCollider = grabbedObject.GetComponent<BoxCollider>();
-
-        if (boxCollider != null)
-        {
-            boxCollider.enabled = true;
-        }
+        SetColliderState(true);
 
         Rigidbody rb = grabbedObject.GetComponent<Rigidbody>();
 

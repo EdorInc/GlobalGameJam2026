@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6547426620647289602}
   m_Layer: 0
-  m_Name: ChibiPlayer
+  m_Name: FunkoPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

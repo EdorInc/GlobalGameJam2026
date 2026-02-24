@@ -86,8 +86,9 @@ public class SeeThrough : MonoBehaviour
         {
             if (!modifiedWalls.ContainsKey(obj))
             {
+                Debug.Log($"Making wall '{obj.name}' see-through.");
                 modifiedWalls[obj] = obj.layer;
-                obj.layer = seeThroughLayer;
+                SetLayerRecursively(obj, seeThroughLayer);
             }
         }
 
@@ -109,7 +110,19 @@ public class SeeThrough : MonoBehaviour
 
         foreach (GameObject obj in toRestore)
         {
+            Debug.Log($"Restoring wall '{obj?.name ?? "null"}' to original layer.");
+            SetLayerRecursively(obj, modifiedWalls[obj]);
             modifiedWalls.Remove(obj);
+        }
+    }
+
+    void SetLayerRecursively(GameObject obj, int newLayer)
+    {
+        obj.layer = newLayer;
+
+        foreach (Transform child in obj.transform)
+        {
+            SetLayerRecursively(child.gameObject, newLayer);
         }
     }
 
@@ -121,7 +134,12 @@ public class SeeThrough : MonoBehaviour
         GameObject obj = collider.gameObject;
 
         if (!obj.CompareTag(wallTag))
+        {
+            Debug.LogWarning($"Object '{obj.name}' hit by SeeThrough raycast does not have the tag '{wallTag}'. Skipping.");
             return;
+        }
+
+        // Debug.Log($"SeeThrough hit wall: {obj.name}");
 
         walls.Add(obj);
     }
