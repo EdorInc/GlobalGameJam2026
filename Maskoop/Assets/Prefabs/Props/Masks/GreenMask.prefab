@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8804594083934277986}
   - component: {fileID: 1046204137106339779}
   - component: {fileID: 4610126433517775791}
+  - component: {fileID: 4101004402691554748}
   m_Layer: 0
   m_Name: GreenMask
   m_TagString: Untagged
@@ -29,8 +30,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3490537177383912981}
   - {fileID: 2443375911306657657}
@@ -98,6 +99,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Grabbable
   holdOffset: {x: 0, y: 0, z: 0}
   holdRotation: {x: 0, y: 0, z: 0, w: 1}
+--- !u!114 &4101004402691554748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6079786050083026125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1614517ccfa4da941b90cab05e6fd367, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Equipable
+  equipOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &7561135809734292149
 GameObject:
   m_ObjectHideFlags: 0

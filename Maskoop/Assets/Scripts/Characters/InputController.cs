@@ -6,6 +6,7 @@ public class InputController : MonoBehaviour
     private RigidbodyCharacterController charController;
     private Grab grabComponent;
     private Throw throwComponent;
+    private EquipUnequipController equipUnequipComponent;
     private PlayerInput playerInput;
 
     private InputAction moveAction;
@@ -16,11 +17,14 @@ public class InputController : MonoBehaviour
 
     private InputAction throwAction;
 
+    private InputAction equipAction;
+
     private void Awake()
     {
         charController = GetComponent<RigidbodyCharacterController>();
         grabComponent = GetComponent<Grab>();
         throwComponent = GetComponent<Throw>();
+        equipUnequipComponent = GetComponent<EquipUnequipController>();
 
         playerInput = GetComponent<PlayerInput>();
 
@@ -29,6 +33,7 @@ public class InputController : MonoBehaviour
         grabAction = playerInput.actions["Grab"];
         dropAction = playerInput.actions["Drop"];
         throwAction = playerInput.actions["Throw"];
+        equipAction = playerInput.actions["Equip"];
 
         throwAction.started += OnThrowStarted;
         throwAction.canceled += OnThrowReleased;
@@ -49,9 +54,12 @@ public class InputController : MonoBehaviour
 
         bool grab = grabAction.IsPressed();
         bool drop = dropAction.IsPressed();
+        bool equip = equipAction.IsPressed();
 
         if (grab) grabComponent.GrabObject();
         else if (drop) grabComponent.DropObject();
+
+        if (equip) equipUnequipComponent.ChangeEquipState();
     }
 
     private void OnThrowStarted(InputAction.CallbackContext ctx)
