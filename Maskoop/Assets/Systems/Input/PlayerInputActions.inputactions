@@ -25,18 +25,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Grab",
+                    "name": "GrabAndDrop",
                     "type": "Button",
                     "id": "27aa9948-fbf9-443c-8e39-f71ef201ea1e",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Drop",
-                    "type": "Button",
-                    "id": "143ed711-50df-49d9-86d1-12b0590fb777",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -52,7 +43,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Equip",
+                    "name": "EquipAndUnequip",
                     "type": "Button",
                     "id": "6ae94c7d-03ce-4524-9878-cc3811ed4e0b",
                     "expectedControlType": "",
@@ -234,18 +225,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Grab",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "bbc371ce-886a-4b4f-9903-a5774490ef88",
-                    "path": "<Keyboard>/r",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Drop",
+                    "action": "GrabAndDrop",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -267,7 +247,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Equip",
+                    "action": "EquipAndUnequip",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -1409,6 +1409,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4610126433517775791, guid: d8b28f6bedeb6b04ab619f0043d165a8, type: 3}
+      propertyPath: forceGrowRate
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610126433517775791, guid: d8b28f6bedeb6b04ab619f0043d165a8, type: 3}
+      propertyPath: maxThrowForce.x
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610126433517775791, guid: d8b28f6bedeb6b04ab619f0043d165a8, type: 3}
+      propertyPath: maxThrowForce.y
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 5427337455369828086, guid: d8b28f6bedeb6b04ab619f0043d165a8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

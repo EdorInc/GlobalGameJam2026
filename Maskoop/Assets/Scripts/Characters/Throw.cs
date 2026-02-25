@@ -79,16 +79,10 @@ public class Throw : MonoBehaviour
         // }
     }
 
-    [Header("Throw Settings")]
-    [SerializeField]
     private float minForceFowards = 0;
-    [SerializeField]
     private float minForceUp = 0;
-    [SerializeField]
     private float maxForceFoward = 8;
-    [SerializeField]
     private float maxForceUp = 8;
-    [SerializeField]
     private float forceGrowRate = 2;
 
     private float currentForceFoward;
@@ -99,6 +93,13 @@ public class Throw : MonoBehaviour
     {
         if (!charging && grabbedObject != null)
         {
+
+            minForceFowards = grabbedObject.GetComponent<Grabbable>().minThrowForce.x;
+            minForceUp = grabbedObject.GetComponent<Grabbable>().minThrowForce.y;
+            maxForceFoward = grabbedObject.GetComponent<Grabbable>().maxThrowForce.x;
+            maxForceUp = grabbedObject.GetComponent<Grabbable>().maxThrowForce.y;
+            forceGrowRate = grabbedObject.GetComponent<Grabbable>().forceGrowRate;
+
             charging = true;
             currentForceUp = minForceUp;
             currentForceFoward = minForceFowards;

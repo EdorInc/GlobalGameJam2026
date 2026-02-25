@@ -34,6 +34,7 @@ public class Grab : MonoBehaviour
         if (grabbedObject != null)
         {
             Debug.Log("Already grabbing an object.");
+            DropObject();
             return;
         }
 
