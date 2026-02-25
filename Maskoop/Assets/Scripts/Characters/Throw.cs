@@ -174,7 +174,7 @@ public class Throw : MonoBehaviour
             return;
 
         Rigidbody objectRigidbody = grabbedObject.GetComponent<Rigidbody>();
-        BoxCollider objectCollider = grabbedObject.GetComponent<BoxCollider>();
+        Collider objectCollider = grabbedObject.GetComponent<Collider>();
 
         if (objectRigidbody == null)
         {
@@ -211,7 +211,7 @@ public class Throw : MonoBehaviour
 
         GameObject ghostObj = Instantiate(gameObject, gameObject.transform.position, gameObject.transform.rotation);
         Renderer[] ghostRenderers = ghostObj.GetComponentsInChildren<Renderer>();
-        BoxCollider ghostCollider = ghostObj.GetComponent<BoxCollider>();
+        Collider ghostCollider = ghostObj.GetComponent<Collider>();
         Rigidbody ghostRigidbody = ghostObj.GetComponent<Rigidbody>();
 
         SceneManager.MoveGameObjectToScene(ghostObj, simulationScene);
@@ -325,7 +325,7 @@ public class Throw : MonoBehaviour
         if (!landingMarker ||!trajectoryRenderer.enabled || !grabbedObject)
             return;
 
-        BoxCollider objectCollider = grabbedObject.GetComponent<BoxCollider>();
+        Collider objectCollider = grabbedObject.GetComponent<Collider>();
 
         if (objectCollider == null)
         {
@@ -334,7 +334,7 @@ public class Throw : MonoBehaviour
         }
 
         // Adjust landing marker scale to match the size of the object being thrown
-        Vector3 worldSize = Vector3.Scale(objectCollider.size, objectCollider.transform.lossyScale);
+        Vector3 worldSize = Vector3.Scale(objectCollider.transform.localScale, objectCollider.transform.lossyScale);
 
         // Because it is a sphere...
         float diameter = (worldSize.x + worldSize.z) * 0.5f;

@@ -71,11 +71,12 @@ public class Grab : MonoBehaviour
                 return;
             }
 
-            BoxCollider boxCollider = grabbedObject.GetComponent<BoxCollider>();
+            //BoxCollider boxCollider = grabbedObject.GetComponent<BoxCollider>();
+            Collider collider = grabbedObject.GetComponent<Collider>();
 
-            if (boxCollider != null)
+            if (collider != null)
             {
-                boxCollider.enabled = false;
+                collider.enabled = false;
             }
 
             Debug.Log("Grabbed object " + grabbedObject.name);
@@ -95,7 +96,7 @@ public class Grab : MonoBehaviour
 
         // Center ray
         Debug.DrawLine(origin, origin + direction * range, Color.red, 0.1f);
-        if (Physics.Raycast(origin, direction, out hit, range, ~0, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(origin, direction, out hit, range, grabMask))
             return true;
 
         // Cross pattern offsets
@@ -114,7 +115,7 @@ public class Grab : MonoBehaviour
             // Draw debug line for each offset
             Debug.DrawLine(offset, offset + direction * range, debugColor, 0.1f);
 
-            if (Physics.Raycast(offset, direction, out hit, range, ~0, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(offset, direction, out hit, range, grabMask))
                 return true;
         }
 
@@ -126,11 +127,12 @@ public class Grab : MonoBehaviour
     {
         if (grabbedObject == null) return;
 
-        BoxCollider boxCollider = grabbedObject.GetComponent<BoxCollider>();
+        //BoxCollider boxCollider = grabbedObject.GetComponent<BoxCollider>();
+        Collider collider = grabbedObject.GetComponent<Collider>();
 
-        if (boxCollider != null)
+        if (collider != null)
         {
-            boxCollider.enabled = true;
+            collider.enabled = true;
         }
 
         Rigidbody rb = grabbedObject.GetComponent<Rigidbody>();
