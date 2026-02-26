@@ -41,9 +41,8 @@ public class Throw : MonoBehaviour
         foreach (Transform obj in simulationObstaclesParent)
         {
             var ghostObj = Instantiate(obj.gameObject, obj.position, obj.rotation);
-            Renderer[] ghostRenderer = ghostObj.GetComponentsInChildren<Renderer>();
-            foreach (Renderer renderer in ghostRenderer)
-                renderer.enabled = false;
+            Renderer ghostRenderer = ghostObj.GetComponent<Renderer>();
+            if (ghostRenderer) ghostRenderer.enabled = false;
             SceneManager.MoveGameObjectToScene(ghostObj, simulationScene);
             if (!ghostObj.isStatic) spawnedObjects.Add(obj, ghostObj.transform);
         }
@@ -80,16 +79,10 @@ public class Throw : MonoBehaviour
         // }
     }
 
-    [Header("Throw Settings")]
-    [SerializeField]
     private float minForceFowards = 0;
-    [SerializeField]
     private float minForceUp = 0;
-    [SerializeField]
     private float maxForceFoward = 8;
-    [SerializeField]
     private float maxForceUp = 8;
-    [SerializeField]
     private float forceGrowRate = 2;
 
     private float currentForceFoward;
@@ -100,6 +93,13 @@ public class Throw : MonoBehaviour
     {
         if (!charging && grabbedObject != null)
         {
+
+            minForceFowards = grabbedObject.GetComponent<Grabbable>().minThrowForce.x;
+            minForceUp = grabbedObject.GetComponent<Grabbable>().minThrowForce.y;
+            maxForceFoward = grabbedObject.GetComponent<Grabbable>().maxThrowForce.x;
+            maxForceUp = grabbedObject.GetComponent<Grabbable>().maxThrowForce.y;
+            forceGrowRate = grabbedObject.GetComponent<Grabbable>().forceGrowRate;
+
             charging = true;
             currentForceUp = minForceUp;
             currentForceFoward = minForceFowards;
@@ -174,6 +174,7 @@ public class Throw : MonoBehaviour
             return;
 
         Rigidbody objectRigidbody = grabbedObject.GetComponent<Rigidbody>();
+        Collider objectCollider = grabbedObject.GetComponent<Collider>();
 
         if (objectRigidbody == null)
         {
@@ -210,15 +211,13 @@ public class Throw : MonoBehaviour
 
         GameObject ghostObj = Instantiate(gameObject, gameObject.transform.position, gameObject.transform.rotation);
         Renderer[] ghostRenderers = ghostObj.GetComponentsInChildren<Renderer>();
-        BoxCollider ghostBoxCollider = ghostObj.GetComponent<BoxCollider>();
-        CapsuleCollider ghostCapsuleCollider = ghostObj.GetComponent<CapsuleCollider>();
+        Collider ghostCollider = ghostObj.GetComponent<Collider>();
         Rigidbody ghostRigidbody = ghostObj.GetComponent<Rigidbody>();
 
         SceneManager.MoveGameObjectToScene(ghostObj, simulationScene);
 
         foreach (Renderer r in ghostRenderers)  r.enabled = false;
-        if (ghostBoxCollider) ghostBoxCollider.enabled = true;
-        if (ghostCapsuleCollider) ghostCapsuleCollider.enabled = true;
+        if (ghostCollider) ghostCollider.enabled = true;
         if (ghostRigidbody)
         {
             ghostRigidbody.isKinematic = false;
@@ -330,63 +329,24 @@ public class Throw : MonoBehaviour
 
         if (objectCollider == null)
         {
-            Debug.LogError("Grabbed object must have a Collider component.");
+            Debug.LogError("Grabbed object must have a BoxCollider component.");
             return;
         }
 
-        Vector3 worldSize = Vector3.zero;
-
-        if (objectCollider is BoxCollider box)
-        {
-            worldSize = Vector3.Scale(box.size, box.transform.lossyScale);
-        }
-        else if (objectCollider is CapsuleCollider capsule)
-        {
-            // Capsule dimensions depend on direction (0=X, 1=Y, 2=Z)
-            Vector3 scale = capsule.transform.lossyScale;
-
-            float capsuleDiameter = capsule.radius * 2f;
-            float capsuleHeight = capsule.height;
-
-            switch (capsule.direction)
-            {
-                case 0: // X-axis
-                    worldSize = new Vector3(
-                        capsuleHeight * scale.x,
-                        capsuleDiameter * scale.y,
-                        capsuleDiameter * scale.z
-                    );
-                    break;
-
-                case 1: // Y-axis
-                    worldSize = new Vector3(
-                        capsuleDiameter * scale.x,
-                        capsuleHeight * scale.y,
-                        capsuleDiameter * scale.z
-                    );
-                    break;
-
-                case 2: // Z-axis
-                    worldSize = new Vector3(
-                        capsuleDiameter * scale.x,
-                        capsuleDiameter * scale.y,
-                        capsuleHeight * scale.z
-                    );
-                    break;
-            }
-        }
-        else
-        {
-            Debug.LogError("Unsupported collider type: " + objectCollider.GetType());
-            return;
-        }
+        // Adjust landing marker scale to match the size of the object being thrown
+        Vector3 worldSize = Vector3.Scale(objectCollider.transform.localScale, objectCollider.transform.lossyScale);
 
         // Because it is a sphere...
         float diameter = (worldSize.x + worldSize.z) * 0.5f;
 
         landingMarker.transform.localScale = new Vector3(diameter, diameter, diameter);
 
-        landingMarker.transform.position = position;
+        //float halfHeight = landingMarker.GetComponent<Renderer>().bounds.extents.y;
+
+        landingMarker.transform.position = position; // + normal * halfHeight;
+
+        // Use the provided rotation if any
+        // landingMarker.transform.rotation = rotation ?? Quaternion.FromToRotation(Vector3.up, normal);
 
         landingMarker.SetActive(true);
     }

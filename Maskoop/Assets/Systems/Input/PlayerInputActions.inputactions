@@ -25,18 +25,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Grab",
+                    "name": "GrabAndDrop",
                     "type": "Button",
                     "id": "27aa9948-fbf9-443c-8e39-f71ef201ea1e",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Drop",
-                    "type": "Button",
-                    "id": "143ed711-50df-49d9-86d1-12b0590fb777",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -46,6 +37,15 @@
                     "name": "Throw",
                     "type": "Button",
                     "id": "d0401fb8-dea6-495e-8e20-899b6dd623b0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "EquipAndUnequip",
+                    "type": "Button",
+                    "id": "6ae94c7d-03ce-4524-9878-cc3811ed4e0b",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -225,18 +225,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Grab",
+                    "action": "GrabAndDrop",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "bbc371ce-886a-4b4f-9903-a5774490ef88",
-                    "path": "<Keyboard>/r",
+                    "id": "52cdc46e-19b6-4485-8697-ca709fd79f99",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Drop",
+                    "groups": "",
+                    "action": "GrabAndDrop",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -248,6 +248,39 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Throw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ef7e52a1-96d1-4b73-96b2-bae78a4d0df1",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Throw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8edb0284-1eeb-4230-b9a8-d2d5fc65c327",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "EquipAndUnequip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d9177b2d-0b84-4d03-be0e-71ccd8c17fa3",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EquipAndUnequip",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

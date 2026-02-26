@@ -29,20 +29,12 @@ public class Grab : MonoBehaviour
         }
     }
 
-    void SetColliderState(bool enabled)
-    {
-        if (grabbedObject == null) return;
-        Collider collider = grabbedObject.GetComponent<Collider>();
-        if (collider != null)
-        {
-            collider.enabled = enabled;
-        }
-    }
     public void GrabObject()
     {
         if (grabbedObject != null)
         {
             Debug.Log("Already grabbing an object.");
+            DropObject();
             return;
         }
 
@@ -79,7 +71,13 @@ public class Grab : MonoBehaviour
                 return;
             }
 
-            SetColliderState(false);
+            //BoxCollider boxCollider = grabbedObject.GetComponent<BoxCollider>();
+            Collider collider = grabbedObject.GetComponent<Collider>();
+
+            if (collider != null)
+            {
+                collider.enabled = false;
+            }
 
             Debug.Log("Grabbed object " + grabbedObject.name);
         }
@@ -98,7 +96,7 @@ public class Grab : MonoBehaviour
 
         // Center ray
         Debug.DrawLine(origin, origin + direction * range, Color.red, 0.1f);
-        if (Physics.Raycast(origin, direction, out hit, range, ~0, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(origin, direction, out hit, range, grabMask))
             return true;
 
         // Cross pattern offsets
@@ -117,7 +115,7 @@ public class Grab : MonoBehaviour
             // Draw debug line for each offset
             Debug.DrawLine(offset, offset + direction * range, debugColor, 0.1f);
 
-            if (Physics.Raycast(offset, direction, out hit, range, ~0, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(offset, direction, out hit, range, grabMask))
                 return true;
         }
 
@@ -129,7 +127,13 @@ public class Grab : MonoBehaviour
     {
         if (grabbedObject == null) return;
 
-        SetColliderState(true);
+        //BoxCollider boxCollider = grabbedObject.GetComponent<BoxCollider>();
+        Collider collider = grabbedObject.GetComponent<Collider>();
+
+        if (collider != null)
+        {
+            collider.enabled = true;
+        }
 
         Rigidbody rb = grabbedObject.GetComponent<Rigidbody>();
 

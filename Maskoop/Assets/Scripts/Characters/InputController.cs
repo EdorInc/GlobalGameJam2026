@@ -1,11 +1,70 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
+using static UnityEngine.InputSystem.InputAction;
 
 public class InputController : MonoBehaviour
 {
+    [Header("References")]
+    private RigidbodyCharacterController playerController;
+    private Grab grabComponent;
+    private Throw throwComponent;
+    private EquipUnequipController equipableManager;
+
+    private void Awake()
+    {
+        playerController = GetComponent<RigidbodyCharacterController>();
+        grabComponent = GetComponent<Grab>();
+        equipableManager = GetComponent<EquipUnequipController>();
+        throwComponent = GetComponent<Throw>();
+    }
+
+    public void OnMove(CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            Vector2 moveDir = ctx.ReadValue<Vector2>();
+
+            playerController.ForwardInput = moveDir.x;
+            playerController.SideInput = moveDir.y;
+            //VibrationManager.Instance.RumblePulse(registerController.GetPlayerGamepad(), 0.1f, 0.1f, 0.1f);
+        }
+        else if (ctx.canceled)
+        {
+            playerController.ForwardInput = 0;
+            playerController.SideInput = 0;
+        }
+    }
+
+    public void OnGrab(CallbackContext ctx)
+    {
+        if (ctx.started)
+        {
+            grabComponent.GrabObject();
+        }
+    }
+    public void OnThrow(CallbackContext ctx)
+    {
+        if (ctx.started)
+        {
+            throwComponent.ChargeObject();
+        }
+        else if (ctx.canceled)
+        {
+            throwComponent.ThrowObject();
+        }
+    }
+
+    public void OnEquipUnequip(CallbackContext ctx)
+    {
+        if (ctx.started)
+        {
+            equipableManager.ChangeEquipState();
+        }
+    }
+    /*
     private RigidbodyCharacterController charController;
     private Grab grabComponent;
     private Throw throwComponent;
+    private EquipUnequipController equipUnequipComponent;
     private PlayerInput playerInput;
 
     private InputAction moveAction;
@@ -16,11 +75,14 @@ public class InputController : MonoBehaviour
 
     private InputAction throwAction;
 
+    private InputAction equipAction;
+
     private void Awake()
     {
         charController = GetComponent<RigidbodyCharacterController>();
         grabComponent = GetComponent<Grab>();
         throwComponent = GetComponent<Throw>();
+        equipUnequipComponent = GetComponent<EquipUnequipController>();
 
         playerInput = GetComponent<PlayerInput>();
 
@@ -29,6 +91,7 @@ public class InputController : MonoBehaviour
         grabAction = playerInput.actions["Grab"];
         dropAction = playerInput.actions["Drop"];
         throwAction = playerInput.actions["Throw"];
+        equipAction = playerInput.actions["Equip"];
 
         throwAction.started += OnThrowStarted;
         throwAction.canceled += OnThrowReleased;
@@ -49,9 +112,12 @@ public class InputController : MonoBehaviour
 
         bool grab = grabAction.IsPressed();
         bool drop = dropAction.IsPressed();
+        bool equip = equipAction.IsPressed();
 
         if (grab) grabComponent.GrabObject();
         else if (drop) grabComponent.DropObject();
+
+        if (equip) equipUnequipComponent.ChangeEquipState();
     }
 
     private void OnThrowStarted(InputAction.CallbackContext ctx)
@@ -63,4 +129,5 @@ public class InputController : MonoBehaviour
     {
         throwComponent.ThrowObject();
     }
+    */
 }
