@@ -28,6 +28,7 @@ public class EquipUnequipController : MonoBehaviour
             {
                 return;
             }
+            //If no object is grabbed but an object is equipped you should unEquip
 
             equipedObject.GetComponent<Equipable>().UnEquip();
             grabComponent.grabbedObject = equipedObject;
@@ -44,6 +45,7 @@ public class EquipUnequipController : MonoBehaviour
 
         if(equipedObject == null)
         {
+            //If no object is equip you shoudl equip held object
             equipedObject = grabbedObject;
             grabComponent.grabbedObject = null;
             objectToEquip.Equip();

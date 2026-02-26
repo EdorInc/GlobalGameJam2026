@@ -14,17 +14,21 @@ public class RockSpawner : MonoBehaviour
         SpawnRock();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void SpawnRock()
     {
-        if( rockSpawned == null)
+        if(rockSpawned == null)
         {
-            SpawnRock();
+            rockSpawned = Instantiate(rockPrefab, spawnPosition.position, Quaternion.identity);
+            rockSpawned.GetComponent<Breakable>().SetSpawner(this);
+        }
+        else
+        {
+            rockSpawned.transform.position = spawnPosition.position;
         }
     }
 
-    private void SpawnRock()
+    public void DestroyRock()
     {
-        rockSpawned = Instantiate(rockPrefab, spawnPosition.position, Quaternion.identity);
+        SpawnRock();
     }
 }

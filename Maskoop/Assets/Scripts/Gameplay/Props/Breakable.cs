@@ -4,16 +4,22 @@ using UnityEngine;
 public class Breakable : MonoBehaviour
 {
     [Header("Break Settings")]
-    [SerializeField] float speedToBreak = 10;
+    [Tooltip("Speed needed in magnitud of the vector to break the rock on impact")]
+    [SerializeField] private float speedToBreak = 10;
+    [SerializeField] private GameObject particlePrefab;
 
     private Rigidbody rb;
     private float maxSpeed = 0;
+    private RockSpawner spawner;
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+    }
+
+    public void SetSpawner(RockSpawner spawner)
+    {
+        this.spawner = spawner;
     }
 
     void Update()
@@ -24,14 +30,17 @@ public class Breakable : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.GetComponent<RigidbodyCharacterController>())
+        //Ignore the player so it doesnt break when thrown 
+        if (collision.gameObject.CompareTag("Player"))
             return;
-        Debug.Log(maxSpeed + ":" + speedToBreak);
-
         if (maxSpeed > speedToBreak)
         {
-            Destroy(this.gameObject);
+            rb.angularVelocity = Vector3.zero;
+            rb.linearVelocity = Vector3.zero;
+            Instantiate(particlePrefab, transform.position, Quaternion.identity);
+            spawner.DestroyRock();
         }
+        //Reset speed when hitting with not enough force
         maxSpeed = 0;
 
     }
