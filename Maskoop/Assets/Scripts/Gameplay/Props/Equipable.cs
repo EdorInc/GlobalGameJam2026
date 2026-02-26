@@ -3,16 +3,14 @@ using UnityEngine;
 public class Equipable : MonoBehaviour
 {
     [Header("Optional Settings")]
-    public Vector3 equipOffset = Vector3.zero; // local position when equiped
+    public float equipOffset = 0.2f; // local position when equiped
+    public float equipVerticalOffset = 0.2f;
+    public Quaternion equipOffsetRotation = Quaternion.identity; // local rotation when equiped
 
-    public void Equip()
+    public void Equip(Transform equipPosition)
     {
-        transform.position += equipOffset;
-        transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
     }
     public void UnEquip()
     {
-        transform.position -= equipOffset;
-        transform.localScale += new Vector3(0.2f, 0.2f, 0.2f);
     }
 }

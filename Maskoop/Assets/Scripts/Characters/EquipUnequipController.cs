@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class EquipUnequipController : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [Header("Equiped Settings")]
+    [SerializeField] private Transform equipedPosition;
 
     private GameObject equipedObject;
 
@@ -11,6 +12,22 @@ public class EquipUnequipController : MonoBehaviour
     void Start()
     {
         grabComponent = GetComponent<Grab>();
+    }
+
+    void LateUpdate()
+    {
+        if (equipedObject != null)
+        {
+            Equipable equipable = equipedObject.GetComponent<Equipable>();
+
+            // Move smoothly to the hold position
+            Vector3 targetPos = equipedPosition.position + transform.forward * equipable.equipOffset;
+            targetPos += Vector3.up * equipable.equipVerticalOffset;
+            Quaternion targetRot = equipedPosition.rotation * equipable.equipOffsetRotation;
+
+            equipedObject.transform.position = targetPos;
+            equipedObject.transform.rotation = targetRot;
+        }
     }
 
     public void ChangeEquipState()
@@ -29,7 +46,6 @@ public class EquipUnequipController : MonoBehaviour
                 return;
             }
             //If no object is grabbed but an object is equipped you should unEquip
-
             equipedObject.GetComponent<Equipable>().UnEquip();
             grabComponent.grabbedObject = equipedObject;
             equipedObject = null;
@@ -48,7 +64,7 @@ public class EquipUnequipController : MonoBehaviour
             //If no object is equip you shoudl equip held object
             equipedObject = grabbedObject;
             grabComponent.grabbedObject = null;
-            objectToEquip.Equip();
+            objectToEquip.Equip(equipedPosition);
         }
     }
 }
