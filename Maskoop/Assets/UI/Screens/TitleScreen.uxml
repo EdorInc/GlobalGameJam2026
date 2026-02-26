@@ -1,0 +1,16 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Themes/DefaultTheme.uss?fileID=7433441132597879392&amp;guid=abd6d9976d619a646a1faab02692b347&amp;type=3#DefaultTheme"/>
+    <ui:VisualElement name="BackgroundImage" class="background-image">
+        <ui:VisualElement name="TitleContainer" class="menu-container" style="align-content: center; justify-content: space-evenly; width: 60%;">
+            <ui:Label text="Kromask" name="TitleLabel" class="title-text title-text-flex" style="flex-grow: 0;"/>
+            <ui:VisualElement name="ButtonContainer" class="vertical-button-container">
+                <ui:Button text="New Game" name="PlayButton" class="text-button" style="border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0);"/>
+                <ui:Button text="Resume Game" name="ContinueButton" enable-rich-text="true" selectable="false" focusable="false" enabled="false" class="text-button" style="-unity-text-generator: standard;"/>
+                <ui:Button text="Settings" name="SettingsButton" enabled="false" class="text-button"/>
+                <ui:Button text="Credits" name="CreditsButton" enabled="false" class="text-button"/>
+                <ui:Button text="Exit&#10;" name="ExitButton" class="text-button"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:Label text="v0.0.1" name="VersionLabel" class="version-text" style="-unity-text-align: lower-left; padding-bottom: 0.5%; padding-top: 0.5%; right: auto; top: auto;"/>
+    </ui:VisualElement>
+</ui:UXML>

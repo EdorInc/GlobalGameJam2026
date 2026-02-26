@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Camera))]
 public class SeeThrough : MonoBehaviour
 {
     [Header("References")]
@@ -86,7 +87,7 @@ public class SeeThrough : MonoBehaviour
         {
             if (!modifiedWalls.ContainsKey(obj))
             {
-                Debug.Log($"Making wall '{obj.name}' see-through.");
+                // Debug.Log($"Making wall '{obj.name}' see-through.");
                 modifiedWalls[obj] = obj.layer;
                 SetLayerRecursively(obj, seeThroughLayer);
             }
@@ -110,7 +111,7 @@ public class SeeThrough : MonoBehaviour
 
         foreach (GameObject obj in toRestore)
         {
-            Debug.Log($"Restoring wall '{obj?.name ?? "null"}' to original layer.");
+            // Debug.Log($"Restoring wall '{obj?.name ?? "null"}' to original layer.");
             SetLayerRecursively(obj, modifiedWalls[obj]);
             modifiedWalls.Remove(obj);
         }
@@ -135,7 +136,7 @@ public class SeeThrough : MonoBehaviour
 
         if (!obj.CompareTag(wallTag))
         {
-            Debug.LogWarning($"Object '{obj.name}' hit by SeeThrough raycast does not have the tag '{wallTag}'. Skipping.");
+            // Debug.LogWarning($"Object '{obj.name}' hit by SeeThrough raycast does not have the tag '{wallTag}'. Skipping.");
             return;
         }
 

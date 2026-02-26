@@ -68,7 +68,7 @@ Rigidbody:
   serializedVersion: 5
   m_Mass: 1
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -97,8 +97,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb0594dc0b58ef14998160f1ae31654d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Grabbable
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  groundCheckDistance: 0.1
   holdOffset: {x: 0, y: 0, z: 0}
-  holdRotation: {x: 0, y: 0, z: 0, w: 1}
+  holdRotation: {x: -0.70710677, y: 0, z: 0, w: 0.70710677}
+  resetRotationInAir: 1
+  originalRotation: {x: 0, y: 0, z: 0, w: 0}
+  maxThrowForce: {x: 8, y: 8}
+  minThrowForce: {x: 0, y: 0}
+  forceGrowRate: 4
 --- !u!114 &4101004402691554748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,7 +120,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1614517ccfa4da941b90cab05e6fd367, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Equipable
-  equipOffset: {x: 0, y: 0, z: 0}
+  equipOffset: 0.3
+  equipVerticalOffset: 0.3
+  equipOffsetRotation: {x: -0.49987787, y: 0.5001221, z: -0.49987787, w: -0.5001221}
 --- !u!1 &7561135809734292149
 GameObject:
   m_ObjectHideFlags: 0

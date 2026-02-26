@@ -1,0 +1,184 @@
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
+
+public class GameScreenController : MonoBehaviour
+{
+    private VisualElement root;
+
+    [Header("References")]
+    [SerializeField] private string pauseScreenName = "pause-ui";
+    [SerializeField] private string winScreenName = "win-ui";
+    [SerializeField] private string loseScreenName = "lose-ui";
+
+    [Header("Pause References")]
+    [SerializeField] private string resumeButtonName = "resume-button";
+    [SerializeField] private string restartButtonName = "restart-button";
+    [SerializeField] private string menuButtonName = "quit-button";
+
+    [Header("Win References")]
+    [SerializeField] private string winRestartButtonName = "replay-button";
+    [SerializeField] private string winMenuButtonName = "quit-button";
+
+    [Header("Lose References")]
+    [SerializeField] private string loseRestartButtonName = "restart-button";
+    [SerializeField] private string loseMenuButtonName = "quit-button";
+
+    [Header("Debug")]
+    [SerializeField] private UIState initialState = UIState.Gameplay;
+
+    private VisualElement pauseScreen;
+    private VisualElement winScreen;
+    private VisualElement loseScreen;
+
+    private Button resumeButton;
+    private Button restartButton;
+    private Button menuButton;
+    private Button winRestartButton;
+    private Button winMenuButton;
+    private Button loseRestartButton;
+    private Button loseMenuButton;
+
+    private UIState currentState = UIState.Gameplay;
+
+    private enum UIState
+    {
+        Gameplay,
+        Paused,
+        Win,
+        Lose
+    }
+
+    private void Awake()
+    {
+        root = GetComponent<UIDocument>().rootVisualElement;
+
+        pauseScreen = root.Q<VisualElement>(pauseScreenName);
+
+        if (pauseScreen == null)
+        {
+            Debug.LogError($"Pause screen with name '{pauseScreenName}' not found in the UI.");
+            return;
+        }
+
+        winScreen = root.Q<VisualElement>(winScreenName);
+
+        if (winScreen == null)
+        {
+            Debug.LogError($"Win screen with name '{winScreenName}' not found in the UI.");
+            return;
+        }
+
+        loseScreen = root.Q<VisualElement>(loseScreenName);
+
+        if (loseScreen == null)
+        {
+            Debug.LogError($"Lose screen with name '{loseScreenName}' not found in the UI.");
+            return;
+        }
+
+        RegisterCallbacks();
+
+        currentState = initialState;
+
+        SetState(initialState);
+    }
+
+    private void Update()
+    {
+        // This needs to be updated using the new Input System, but for now this is fine for testing.
+        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            if (currentState == UIState.Gameplay)
+                SetState(UIState.Paused);
+            else if (currentState == UIState.Paused)
+                SetState(UIState.Gameplay);
+        }
+    }
+
+    private void SetState(UIState newState)
+    {
+        currentState = newState;
+
+        pauseScreen.style.display = DisplayStyle.None;
+        winScreen.style.display = DisplayStyle.None;
+        loseScreen.style.display = DisplayStyle.None;
+
+        switch (newState)
+        {
+            case UIState.Gameplay:
+                GameEvents.ResumeRequested();
+                break;
+
+            case UIState.Paused:
+                GameEvents.PauseRequested();
+                pauseScreen.style.display = DisplayStyle.Flex;
+                break;
+
+            case UIState.Win:
+                GameEvents.PauseRequested();
+                winScreen.style.display = DisplayStyle.Flex;
+                break;
+
+            case UIState.Lose:
+                GameEvents.PauseRequested();
+                loseScreen.style.display = DisplayStyle.Flex;
+                break;
+        }
+    }
+
+    public void ShowWin()
+    {
+        SetState(UIState.Win);
+    }
+
+    public void ShowLose()
+    {
+        SetState(UIState.Lose);
+    }
+
+    private bool IsValidButton(string buttonName, Button button)
+    {
+        if (button == null)
+        {
+            Debug.LogError($"Button with name '{buttonName}' not found in the UI.");
+            return false;
+        }
+
+        return true;
+    }
+
+    private void RegisterCallbacks()
+    {
+        // Pause
+        resumeButton = pauseScreen.Q<Button>(resumeButtonName);
+        if(!IsValidButton(resumeButtonName, resumeButton)) return;
+        resumeButton.clicked += () => SetState(UIState.Gameplay);
+
+        restartButton = pauseScreen.Q<Button>(restartButtonName);
+        if(!IsValidButton(restartButtonName, restartButton)) return;
+        restartButton.clicked += () => GameEvents.RestartRequested();
+
+        menuButton = pauseScreen.Q<Button>(menuButtonName);
+        if(!IsValidButton(menuButtonName, menuButton)) return;
+        menuButton.clicked += () => GameEvents.GoToMenuRequested();
+
+        // Win
+        winRestartButton = winScreen.Q<Button>(winRestartButtonName);
+        if(!IsValidButton(winRestartButtonName, winRestartButton)) return;
+        winRestartButton.clicked += () => GameEvents.RestartRequested();
+
+        winMenuButton = winScreen.Q<Button>(winMenuButtonName);
+        if(!IsValidButton(winMenuButtonName, winMenuButton)) return;
+        winMenuButton.clicked += () => GameEvents.GoToMenuRequested();
+
+        // Lose
+        loseRestartButton = loseScreen.Q<Button>(loseRestartButtonName);
+        if(!IsValidButton(loseRestartButtonName, loseRestartButton)) return;
+        loseRestartButton.clicked += () => GameEvents.RestartRequested();
+
+        loseMenuButton = loseScreen.Q<Button>(loseMenuButtonName);
+        if(!IsValidButton(loseMenuButtonName, loseMenuButton)) return;
+        loseMenuButton.clicked += () => GameEvents.GoToMenuRequested();
+    }
+}

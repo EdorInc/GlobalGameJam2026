@@ -1,0 +1,10 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="LoseTemplate" src="project://database/Assets/UI/Templates/LoseTemplate.uxml?fileID=9197481963319205126&amp;guid=642c947003927604e83bfdfc1633753a&amp;type=3#LoseTemplate"/>
+    <ui:Template name="PauseTemplate" src="project://database/Assets/UI/Templates/PauseTemplate.uxml?fileID=9197481963319205126&amp;guid=55ff63d6ceb378e4a8630c51a6cacf60&amp;type=3#PauseTemplate"/>
+    <ui:Template name="WinTemplate" src="project://database/Assets/UI/Templates/WinTemplate.uxml?fileID=9197481963319205126&amp;guid=5d41eb22aeb63304c9041e72575b2e42&amp;type=3#WinTemplate"/>
+    <ui:VisualElement name="root" style="flex-grow: 1;">
+        <ui:Instance template="WinTemplate" name="win-ui" style="width: 100%; height: 100%; display: none;"/>
+        <ui:Instance template="PauseTemplate" name="pause-ui" style="height: 100%; width: 100%; display: none;"/>
+        <ui:Instance template="LoseTemplate" name="lose-ui" style="width: 100%; height: 100%; display: none;"/>
+    </ui:VisualElement>
+</ui:UXML>

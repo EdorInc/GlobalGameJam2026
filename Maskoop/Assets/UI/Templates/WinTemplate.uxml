@@ -1,0 +1,13 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Themes/DefaultTheme.uss?fileID=7433441132597879392&amp;guid=abd6d9976d619a646a1faab02692b347&amp;type=3#DefaultTheme"/>
+    <ui:VisualElement name="background-image" class="background-image" style="flex-grow: 1;">
+        <ui:VisualElement name="menu-container" class="menu-container menu-container-pop">
+            <ui:Label text="You Win" name="screen-label" class="title-text title-text-flex"/>
+            <ui:VisualElement name="button-container" class="vertical-button-container" style="flex-grow: 1; justify-content: center; flex-shrink: 2;">
+                <ui:Button text="Next Level" name="next-button" enabled="false" class="text-button"/>
+                <ui:Button text="Play Again" name="replay-button" class="text-button"/>
+                <ui:Button text="Go To Menu&#10;" name="quit-button" class="text-button"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

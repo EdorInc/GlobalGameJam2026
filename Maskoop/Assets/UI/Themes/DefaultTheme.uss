@@ -1,0 +1,129 @@
+.version-text {
+    position: absolute;
+    bottom: 0;
+    -unity-text-align: lower-left;
+    padding-right: 0%;
+    padding-left: 0%;
+    margin-top: 4px;
+    margin-right: 12px;
+    margin-bottom: 4px;
+    margin-left: 12px;
+    -unity-font-definition: url("project://database/Assets/UI/Fonts/edit-undo/editundo.ttf?fileID=12800000&guid=705ddb52a8992ac4796777383bf4d5c5&type=3#editundo");
+    padding-top: 0%;
+    padding-bottom: 0%;
+    left: 0;
+    right: auto;
+    top: auto;
+    white-space: nowrap;
+    align-self: flex-start;
+    align-content: flex-end;
+    color: rgb(255, 255, 255);
+}
+
+.menu-container {
+    align-self: center;
+    width: 50%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.59);
+    justify-content: space-around;
+    align-content: flex-start;
+}
+
+.menu-container-pop {
+    flex-grow: 1;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+    align-self: center;
+    width: 80%;
+    height: 80%;
+    position: absolute;
+    top: 10%;
+    bottom: 10%;
+}
+
+.vertical-button-container {
+    justify-content: space-evenly;
+    align-self: stretch;
+    align-content: center;
+}
+
+.background-image {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.04);
+}
+
+.title-image {
+    align-self: center;
+    width: 100%;
+    height: auto;
+    background-image: none;
+    aspect-ratio: 1.5;
+    max-height: 50%;
+}
+
+.title-text {
+    font-size: 64px;
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-center;
+    text-overflow: ellipsis;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    -unity-font-definition: url("project://database/Assets/UI/Fonts/edit-undo/edunline.ttf?fileID=12800000&guid=0d348a2df80ae394391ea049544a0082&type=3#edunline");
+}
+
+.title-text-flex {
+    -unity-font-definition: url("project://database/Assets/UI/Fonts/edit-undo/edunline.ttf?fileID=12800000&guid=0d348a2df80ae394391ea049544a0082&type=3#edunline");
+    width: 100%;
+    height: auto;
+    flex-grow: 1;
+    font-size: 96px;
+    -unity-text-generator: advanced;
+    -unity-text-auto-size: best-fit 10px 96px;
+    -unity-text-align: lower-center;
+    flex-shrink: 1;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+}
+
+.text-button {
+    background-color: rgba(188, 188, 188, 0);
+    color: rgb(255, 255, 255);
+    -unity-font-definition: url("project://database/Assets/UI/Fonts/edit-undo/editundo.ttf?fileID=12800000&guid=705ddb52a8992ac4796777383bf4d5c5&type=3#editundo");
+    font-size: 32px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-right: 10px;
+    padding-left: 10px;
+    flex-wrap: nowrap;
+    text-overflow: ellipsis;
+    -unity-background-scale-mode: stretch-to-fill;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    background-size: contain;
+}
+
+.text-button:hover {
+    scale: 1.1 1.1;
+}
+
+.text-button:active {
+    scale: 0.9;
+}
