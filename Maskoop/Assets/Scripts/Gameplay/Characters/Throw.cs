@@ -87,7 +87,7 @@ public class Throw : MonoBehaviour
 
     private float currentForceFoward;
     private float currentForceUp;
-    private bool charging = false;
+    public bool charging = false;
 
     public void ChargeObject()
     {

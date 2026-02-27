@@ -17,7 +17,24 @@ public class RigidbodyCharacterController : MonoBehaviour
     [Tooltip("Multiplier for horizontal control while in the air.")]
     public float airControlMultiplier = 0.5f;
 
+
+    [Header("Roll Settings")]
+    [Tooltip("Foward speed to apply when rolling.")]
+    public float rollSpeed = 3f;
+    [Tooltip("Time of the roll.")]
+    public float rollTime = 0.5f;
+
+    [Header("Throwing Settings")]
+    [Tooltip("Move speed when throwing.")]
+    public float throwingMoveSpeed = 3f;
+    [Tooltip("Turn speed when throwing.")]
+    public float throwingTurnSpeed = 6f;
+
+    public bool isRolling = false;
+    private float currentRollTime = 0; 
+
     private GroundDetector groundDetector;
+    private Throw throwComponent;
 
     private bool IsGrounded => groundDetector.IsGrounded;
 
@@ -29,6 +46,7 @@ public class RigidbodyCharacterController : MonoBehaviour
 
     private void Start()
     {
+        throwComponent = GetComponent<Throw>();
         rigidbody = GetComponent<Rigidbody>();
         groundDetector = GetComponent<GroundDetector>();
     }
@@ -41,9 +59,14 @@ public class RigidbodyCharacterController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(
                 transform.rotation,
                 targetRotation,
-                turnSpeed * turnSpeedMultiplier * Time.deltaTime
+                ((!throwComponent.charging) ? turnSpeed : throwingTurnSpeed) * turnSpeedMultiplier * Time.deltaTime
             );
         }
+    }
+
+    public void ApplyRoll()
+    {
+        isRolling = true;
     }
 
     /// <summary>
@@ -62,12 +85,30 @@ public class RigidbodyCharacterController : MonoBehaviour
             if (JumpInput && allowJump)
                 rigidbody.linearVelocity += Vector3.up * jumpSpeed;
 
-            // Apply a forward or backward velocity based on player input
-            Vector3 movementVector = horizontalInput * moveSpeed;
+            if (isRolling)
+            {
+                rigidbody.linearVelocity += transform.forward * rollSpeed * Time.deltaTime;
 
-            rigidbody.linearVelocity += movementVector;
+                currentRollTime += Time.deltaTime;
 
-            RotateTowardsMovementDirection(movementVector, 1.0f);
+                if(currentRollTime > rollTime)
+                {
+                    currentRollTime = 0;
+                    isRolling = false;
+                }
+
+            }
+            else
+            {
+                // Apply a forward or backward velocity based on player input
+                Vector3 movementVector = horizontalInput * ((!throwComponent.charging) ? moveSpeed : throwingMoveSpeed);
+
+                rigidbody.linearVelocity += movementVector;
+
+                RotateTowardsMovementDirection(movementVector, 1.0f);
+            }
+
+                
         }
         else
         {

@@ -125,3 +125,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea0b1ee06b8b2694587e5e36135ac6f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Target
+  channel: 1
+  activatedMaterial: {fileID: -6478536213147159724, guid: bfb10d0ca60d7e54c8303645ad645c42, type: 3}

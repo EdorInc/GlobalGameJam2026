@@ -62,6 +62,14 @@ public class InputController : MonoBehaviour
         }
     }
 
+    public void OnDash(CallbackContext ctx)
+    {
+        if (ctx.started)
+        {
+            playerController.ApplyRoll();
+        }
+    }
+
     /*
     private RigidbodyCharacterController charController;
     private Grab grabComponent;

@@ -66,5 +66,15 @@ public class Equip : MonoBehaviour
             grabComponent.grabbedObject = null;
             objectToEquip.Equip(equipedPosition);
         }
+        else
+        {
+            //If an object is equiped and grab swap them
+            GameObject changeAux = equipedObject;
+            equipedObject.GetComponent<Equipable>().UnEquip();
+            equipedObject = grabbedObject;
+            grabComponent.grabbedObject = changeAux;
+            objectToEquip.Equip(equipedPosition);
+
+        }
     }
 }
