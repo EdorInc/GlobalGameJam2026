@@ -730,7 +730,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1535542980
 Transform:
   m_ObjectHideFlags: 0
@@ -903,8 +903,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f89f5414ae314aa42a8321402a732dcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TitleScreenController
-  playButtonName: PlayButton
-  quitButtonName: ExitButton
+  playButtonName: play-button
+  quitButtonName: exit-button
 --- !u!1001 &2061722128
 PrefabInstance:
   m_ObjectHideFlags: 0

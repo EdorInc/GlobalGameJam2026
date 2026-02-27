@@ -1,16 +1,22 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Themes/DefaultTheme.uss?fileID=7433441132597879392&amp;guid=abd6d9976d619a646a1faab02692b347&amp;type=3#DefaultTheme"/>
-    <ui:VisualElement name="BackgroundImage" class="background-image">
-        <ui:VisualElement name="TitleContainer" class="menu-container" style="align-content: center; justify-content: space-evenly; width: 60%;">
-            <ui:Label text="Kromask" name="TitleLabel" class="title-text title-text-flex" style="flex-grow: 0;"/>
-            <ui:VisualElement name="ButtonContainer" class="vertical-button-container">
-                <ui:Button text="New Game" name="PlayButton" class="text-button" style="border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0);"/>
-                <ui:Button text="Resume Game" name="ContinueButton" enable-rich-text="true" selectable="false" focusable="false" enabled="false" class="text-button" style="-unity-text-generator: standard;"/>
-                <ui:Button text="Settings" name="SettingsButton" enabled="false" class="text-button"/>
-                <ui:Button text="Credits" name="CreditsButton" enabled="false" class="text-button"/>
-                <ui:Button text="Exit&#10;" name="ExitButton" class="text-button"/>
+    <ui:VisualElement name="background-image" class="image-background" style="background-image: none; -unity-background-image-tint-color: rgb(255, 255, 255); background-size: 100% 100%; -unity-slice-type: sliced;">
+        <ui:Image name="front-image" style="position: absolute; top: auto; background-image: url(&quot;project://database/Assets/UI/Images/Tikki%20Mask.jpeg?fileID=2800000&amp;guid=d4ccf37a91743714195f777d97655748&amp;type=3#Tikki Mask&quot;); width: auto; height: 100%; aspect-ratio: 1; align-self: center; align-content: center; justify-content: center; align-items: center; -unity-background-image-tint-color: rgba(72, 72, 72, 0.31);"/>
+        <ui:VisualElement name="title-container" class="container-menu">
+            <ui:Label text="Kromask" name="title-label" class="text-title" style="flex-grow: 0; text-shadow: 0 10px 2px rgba(0, 0, 0, 0.29); aspect-ratio: auto; align-self: center; align-content: center;"/>
+            <ui:VisualElement name="button-container" class="container-button-vertical">
+                <ui:Button text="Play" name="play-button" class="text-button button-hexagon" style="border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0);"/>
+                <ui:Button text="Options" name="options-button" enabled="false" class="button-hexagon"/>
+                <ui:Button text="Exit" name="exit-button" parse-escape-sequences="true" class="button-hexagon"/>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:Label text="v0.0.1" name="VersionLabel" class="version-text" style="-unity-text-align: lower-left; padding-bottom: 0.5%; padding-top: 0.5%; right: auto; top: auto;"/>
+        <ui:VisualElement name="logos-container" class="container-logo" style="flex-grow: 1; width: auto;">
+            <ui:Image name="logo-negative" class="logo" style="background-image: url(&quot;project://database/Assets/UI/Images/Circle.png?fileID=2800000&amp;guid=ff55b20fab58b8246ad983140fb7ca76&amp;type=3#Circle&quot;);">
+                <ui:Image name="logo-itchio" class="logo" style="background-image: url(&quot;project://database/Assets/UI/Images/Logos/itchio.png?fileID=2800000&amp;guid=3ac1d781975e0444ba81a25ce3493e74&amp;type=3#itchio&quot;); -unity-background-image-tint-color: rgb(149, 149, 149); background-color: rgba(0, 0, 0, 0); padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 8px; margin-right: 8px; margin-bottom: 8px; margin-left: 8px;"/>
+            </ui:Image>
+            <ui:Image name="logo-instagram" class="logo" style="background-image: url(&quot;project://database/Assets/UI/Images/Logos/instagram.png?fileID=2800000&amp;guid=d2a97e9b1307d3c4683dffccdb9cffaf&amp;type=3#instagram&quot;);"/>
+            <ui:Image name="logo-github" class="logo" style="background-image: url(&quot;project://database/Assets/UI/Images/Logos/github.png?fileID=2800000&amp;guid=f91eb73c62ba08843bfbc12f6126a40d&amp;type=3#github&quot;);"/>
+        </ui:VisualElement>
+        <ui:Label text="v0.0.1" name="version-label" class="text-version" style="-unity-text-align: lower-left; padding-bottom: 0.5%; padding-top: 0.5%; right: auto; top: auto;"/>
     </ui:VisualElement>
 </ui:UXML>
