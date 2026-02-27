@@ -1110,9 +1110,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: -3.503, y: -0.482, z: 0.496}
+    m_Target: {x: 12.208326, y: -25.048378, z: 22.362413}
     speed: 2
-    m_Value: {x: 0.896544, y: 2.3755193, z: 0.20706166}
+    m_Value: {x: -3.503, y: -0.482, z: 0.496}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1158,15 +1158,15 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.16001882, y: 0.77179503, z: -0.21401034, w: -0.577034}
+    m_Target: {x: 0.30235243, y: 0.3903511, z: -0.13737047, w: 0.8587639}
     speed: 2
-    m_Value: {x: -0.036689356, y: 0.78949165, z: -0.61083424, w: -0.047428757}
+    m_Value: {x: -0.16001543, y: 0.77177876, z: -0.21400583, w: -0.57702184}
   m_Size:
-    m_Target: 3.2435405
+    m_Target: 21.842829
     speed: 2
-    m_Value: 7.3366823
+    m_Value: 3.2435405
   m_Ortho:
-    m_Target: 1
+    m_Target: 0
     speed: 2
     m_Value: 1
   m_CameraSettings:
@@ -1535,15 +1535,15 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 56324
-    - m_Data: 56326
-    - m_Data: 56328
-    - m_Data: 56330
-    - m_Data: 56332
-    - m_Data: 56334
-    - m_Data: 56336
-    - m_Data: 56338
-    - m_Data: 56340
+    - m_Data: 59434
+    - m_Data: 59436
+    - m_Data: 59438
+    - m_Data: 59440
+    - m_Data: 59442
+    - m_Data: 59444
+    - m_Data: 59446
+    - m_Data: 59448
+    - m_Data: 59450
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1577,15 +1577,15 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 56324
-    - m_Data: 56326
-    - m_Data: 56328
-    - m_Data: 56330
-    - m_Data: 56332
-    - m_Data: 56334
-    - m_Data: 56336
-    - m_Data: 56338
-    - m_Data: 56340
+    - m_Data: 59434
+    - m_Data: 59436
+    - m_Data: 59438
+    - m_Data: 59440
+    - m_Data: 59442
+    - m_Data: 59444
+    - m_Data: 59446
+    - m_Data: 59448
+    - m_Data: 59450
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
