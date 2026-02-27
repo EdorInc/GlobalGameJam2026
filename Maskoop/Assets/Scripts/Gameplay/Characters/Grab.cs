@@ -1,4 +1,6 @@
+using System.Net;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Grab : MonoBehaviour
 {
@@ -6,14 +8,15 @@ public class Grab : MonoBehaviour
     public GameObject grabbedObject = null;
 
     [Header("Grab Settings")]
-    [SerializeField] private float grabOffset = 0.1f; // Distance in front of the player to check for grabbable objects
+    [SerializeField] private float grabForwardOffset = 0.1f;
+    [SerializeField] private float grabUpOffset = 0.3f;
+    [SerializeField] private bool useGrabCross = false;
     [SerializeField] private float grabRange = 3f;
     [SerializeField] private float grabRadius = 0.5f;
     [SerializeField] private LayerMask grabMask;
 
     [Header("Hold Settings")]
     [SerializeField] private Transform grabbedPosition;
-    [SerializeField] private Vector3 dropOffsetPosition = new Vector3(0, 0.5f, 0); 
 
     void LateUpdate()
     {
@@ -42,45 +45,50 @@ public class Grab : MonoBehaviour
         }
 
         // Raycast a sphere to find nearby objects to grab
-        Vector3 origin = transform.position + transform.forward.normalized * grabOffset;
+        Vector3 origin = transform.position + transform.forward.normalized * grabForwardOffset + Vector3.up * grabUpOffset;
         Vector3 direction = transform.forward.normalized;
 
         RaycastHit hit;
+        bool hitFound;
 
-        // SphereCast to detect objects in front
-        if (RaycastCross(origin, direction, grabRange, grabRadius, out hit))
+        if (useGrabCross)
+            hitFound = RaycastCross(origin, direction, grabRange, grabRadius, out hit);
+        else
+            hitFound = RaycastCone(origin, direction, grabRange, grabRadius, out hit);
+
+        // Custom cast to detect objects in front
+        if (hitFound)
         {
-            // Check if the object has a Grabbable component
             Grabbable grabbable = hit.collider.GetComponent<Grabbable>();
+
             if (grabbable == null)
             {
-                Debug.Log("Object is not grabbable: " + hit.collider.name);
+                Debug.Log("Hit object " + hit.collider.name + " is not grabbable.");
                 return;
             }
+
+            Rigidbody rb = hit.collider.GetComponent<Rigidbody>();
+
+            if (rb == null)
+            {
+                Debug.Log("Hit object " + hit.collider.name + " has not Rigidbody.");
+                return;
+            }
+
+            Collider collider = hit.collider.GetComponent<Collider>();
+
+            if (collider == null)
+            {
+                Debug.Log("Hit object " + hit.collider.name + " has not Collider.");
+                return;
+            }
+
+            rb.isKinematic = true;
+            rb.useGravity = false;
+
+            collider.enabled = false;
 
             grabbedObject = grabbable.gameObject;
-            
-
-            Rigidbody rb = grabbedObject.GetComponent<Rigidbody>();
-
-            if (rb != null)
-            {
-                rb.isKinematic = true;
-                rb.useGravity = false;
-            }
-            else
-            {
-                grabbedObject = null;
-                return;
-            }
-
-            Collider collider = grabbedObject.GetComponent<Collider>();
-
-            if (collider != null)
-            {
-                collider.enabled = false;
-                return;
-            }
 
             Debug.Log("Grabbed object " + grabbedObject.name);
         }
@@ -90,16 +98,35 @@ public class Grab : MonoBehaviour
         }
 
     }
+    bool TryRaycast(Vector3 rayOrigin, Vector3 rayDirection, float range, Color debugColor, out RaycastHit hit)
+    {
+        hit = default;
+
+        Debug.DrawLine(rayOrigin, rayOrigin + rayDirection * range, debugColor, 0.1f);
+
+        if (Physics.Raycast(rayOrigin, rayDirection, out hit, range, grabMask))
+        {
+            Grabbable grabbable = hit.collider.GetComponent<Grabbable>();
+            if (grabbable != null)
+            {
+                return true;
+            } else { 
+                // Debug.LogWarning("Skipped object " + hit.collider.name + ".");
+                hit = default;
+            }
+            
+        }
+
+        return false;
+    }
 
     bool RaycastCross(Vector3 origin, Vector3 direction, float range, float radius, out RaycastHit hit)
     {
         hit = default;
-
-        direction = direction.normalized; // Make sure direction is normalized
+        direction = direction.normalized;
 
         // Center ray
-        Debug.DrawLine(origin, origin + direction * range, Color.red, 0.1f);
-        if (Physics.Raycast(origin, direction, out hit, range, grabMask))
+        if (TryRaycast(origin, direction, range, Color.red, out hit))
             return true;
 
         // Cross pattern offsets
@@ -115,10 +142,7 @@ public class Grab : MonoBehaviour
 
         foreach (var offset in offsets)
         {
-            // Draw debug line for each offset
-            Debug.DrawLine(offset, offset + direction * range, debugColor, 0.1f);
-
-            if (Physics.Raycast(offset, direction, out hit, range, grabMask))
+            if (TryRaycast(offset, direction, range, Color.yellow, out hit))
                 return true;
         }
 
@@ -126,7 +150,39 @@ public class Grab : MonoBehaviour
         return false;
     }
 
-    
+    bool RaycastCone(Vector3 origin, Vector3 direction, float range, float radius, out RaycastHit hit)
+    {
+        hit = default;
+        direction = direction.normalized;
+
+        Vector3 end = origin + direction * range;
+
+        // Center ray
+        if (TryRaycast(origin, direction, range, Color.red, out hit))
+            return true;
+
+        // Cross pattern offsets
+        Vector3[] endOffsets = new Vector3[]
+        {
+        end + transform.up * radius,       // above
+        end - transform.up * radius,       // below
+        end + transform.right * radius,    // right
+        end - transform.right * radius     // left
+        };
+
+        Color debugColor = Color.yellow;
+
+        foreach (var endOffset in endOffsets)
+        {
+            Vector3 rayDirection = (endOffset - origin).normalized;
+
+            if (TryRaycast(origin, rayDirection, range, Color.yellow, out hit))
+                return true;
+        }
+
+        // No hit found
+        return false;
+    }
 
     public void DropObject()
     {

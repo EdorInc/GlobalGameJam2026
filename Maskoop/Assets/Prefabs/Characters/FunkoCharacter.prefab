@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 2855194099576685220}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 1.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -479,8 +479,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Grab
   grabbedObject: {fileID: 0}
-  grabRange: 0.5
-  grabRadius: 0.2
+  grabForwardOffset: 0.1
+  grabUpOffset: 0.5
+  useGrabCross: 0
+  grabRange: 0.8
+  grabRadius: 0.3
   grabMask:
     serializedVersion: 2
     m_Bits: 55
@@ -547,8 +550,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 389435165789757613}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
