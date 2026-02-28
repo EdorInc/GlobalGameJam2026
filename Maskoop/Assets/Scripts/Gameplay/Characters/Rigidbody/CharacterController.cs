@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class RigidbodyCharacterController : MonoBehaviour
+public class CharacterController : MonoBehaviour
 {
     [Header("Movement Settings")]
     [Tooltip("Move speed.")]
@@ -18,11 +18,15 @@ public class RigidbodyCharacterController : MonoBehaviour
     public float airControlMultiplier = 0.5f;
 
 
-    [Header("Roll Settings")]
+    [Header("Dash Settings")]
     [Tooltip("Foward speed to apply when rolling.")]
-    public float rollSpeed = 3f;
+    public float rollSpeed = 400f;
     [Tooltip("Time of the roll.")]
-    public float rollTime = 0.5f;
+    public float rollTime = 0.3f;
+
+    [HideInInspector]
+    public bool isRolling = false;
+    private float currentRollTime = 0;
 
     [Header("Throwing Settings")]
     [Tooltip("Move speed when throwing.")]
@@ -30,10 +34,8 @@ public class RigidbodyCharacterController : MonoBehaviour
     [Tooltip("Turn speed when throwing.")]
     public float throwingTurnSpeed = 6f;
 
-    public bool isRolling = false;
-    private float currentRollTime = 0; 
-
     private GroundDetector groundDetector;
+
     private Throw throwComponent;
 
     private bool IsGrounded => groundDetector.IsGrounded;

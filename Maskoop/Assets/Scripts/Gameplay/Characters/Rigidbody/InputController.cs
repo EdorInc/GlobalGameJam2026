@@ -4,14 +4,14 @@ using static UnityEngine.InputSystem.InputAction;
 public class InputController : MonoBehaviour
 {
     [Header("References")]
-    private RigidbodyCharacterController playerController;
+    private CharacterController playerController;
     private Grab grabComponent;
     private Throw throwComponent;
     private Equip equipableManager;
 
     private void Awake()
     {
-        playerController = GetComponent<RigidbodyCharacterController>();
+        playerController = GetComponent<CharacterController>();
         grabComponent = GetComponent<Grab>();
         equipableManager = GetComponent<Equip>();
         throwComponent = GetComponent<Throw>();

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class RigidbodyAnimationStateController : MonoBehaviour
+public class AnimationController : MonoBehaviour
 {
     private Animator animator;
 
@@ -19,7 +19,7 @@ public class RigidbodyAnimationStateController : MonoBehaviour
     private string isRollingParameter = "IsRolling";
 
     private GroundDetector groundDetector;
-    private RigidbodyCharacterController characterController;
+    private CharacterController characterController;
 
     private bool IsGrounded => groundDetector.IsGrounded;
     private bool IsRolling => characterController.isRolling;
@@ -31,7 +31,7 @@ public class RigidbodyAnimationStateController : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
         groundDetector = GetComponent<GroundDetector>();
         animator = GetComponent<Animator>();
-        characterController = GetComponent<RigidbodyCharacterController>();
+        characterController = GetComponent<CharacterController>();
 
         isMovingHash = Animator.StringToHash(isMovingParameter);
         isJumpingHash = Animator.StringToHash(isJumpingParameter);
