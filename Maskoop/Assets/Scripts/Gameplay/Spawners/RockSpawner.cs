@@ -27,8 +27,19 @@ public class RockSpawner : MonoBehaviour
         }
     }
 
-    public void DestroyRock()
+    public void DestroyRock(float respawnDelay = 0.0f)
     {
+        Invoke(nameof(DestroyAndRespawnRock), respawnDelay);
+    }
+
+    private void DestroyAndRespawnRock()
+    {
+        if (rockSpawned == null)
+            return;
+
+        Destroy(rockSpawned);
+        rockSpawned = null;
+
         SpawnRock();
     }
 }
