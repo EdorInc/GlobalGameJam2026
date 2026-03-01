@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 using System;
+using UnityEngine.InputSystem;
 
 public static class GameEvents
 {
@@ -32,6 +33,8 @@ public class GameManager : MonoBehaviour
     [Header("Scenes")]
     [SerializeField] private string titleScene = "TitleScene";
     [SerializeField] private string gameScene = "GameScene";
+    [SerializeField] private PlayerInput player1Input;
+    [SerializeField] private PlayerInput player2Input;
 
     private void Awake()
     {
@@ -43,6 +46,14 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        var keyboard = Keyboard.current;
+
+        player1Input.SwitchCurrentControlScheme("Keyboard1", keyboard);
+        player2Input.SwitchCurrentControlScheme("Keyboard2", keyboard);
     }
 
     private void OnEnable()

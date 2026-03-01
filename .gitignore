@@ -99,20 +99,16 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
-Maskoop/Assets/Plugins/FMOD/Cache/Editor/FMODStudioCache.asset
-Maskoop/Assets/Plugins/FMOD/platforms/mac/lib/fmodstudio.bundle/Contents/Info.plist
-Maskoop/Assets/Plugins/FMOD/platforms/mac/lib/fmodstudioL.bundle/Contents/Info.plist
-Maskoop/Assets/Plugins/FMOD/platforms/mac/lib/resonanceaudio.bundle/Contents/Info.plist
+
+# Added from GitHub Desktop
+Maskoop/Assets/Plugins/FMOD/platforms/mac/lib/fmodstudio.bundle/Contents
 Maskoop/Assets/Plugins/FMOD/Cache/Editor/FMODStudioCache.asset
 Cromask/Assets/Plugins/FMOD/Cache/Editor/FMODStudioCache.asset
 /Maskoop/Library
 /Maskoop/Temp
 /Maskoop/obj/Debug
-/Maskoop/obj/Debug
-/Maskoop/obj/Debug
-/Maskoop/obj/Debug
-/Maskoop/obj/Debug
 /Maskoop/UserSettings
-/Maskoop/UserSettings
-Maskoop/UserSettings/EditorUserSettings.asset
+/Maskoop/ProjectSettings
 /Maskoop/Assets/_Recovery
+Maskoop/Assets/_Recovery.meta
+*.slnx
