@@ -58,6 +58,16 @@ public class GameScreenController : MonoBehaviour
         Lose
     }
 
+    private void OnEnable()
+    {
+        EventManager.OnVictory += HasWon;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.OnVictory -= HasWon;
+    }
+
     private void Awake()
     {
         root = GetComponent<UIDocument>().rootVisualElement;
@@ -144,10 +154,12 @@ public class GameScreenController : MonoBehaviour
         timerLabel.text = seconds.ToString("000");
     }
 
-    private void ResetTimer()
+    private void HasWon()
     {
-        currentTime = gameDuration;
-        UpdateTimer();
+        if (currentState != UIState.Gameplay)
+            return;
+
+        SetState(UIState.Win);
     }
 
     private void SetState(UIState newState)
