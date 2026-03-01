@@ -352,7 +352,10 @@ public class Throw : MonoBehaviour
 
     void Update()
     {
-        if (grabComponent.grabbedObject != null) grabbedObject = grabComponent.grabbedObject;
+        if (grabComponent.grabbedObject != null)
+        {
+            grabbedObject = grabComponent.grabbedObject;
+        }
         else grabbedObject = null;
 
         if (charging && grabbedObject != null)
