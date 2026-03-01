@@ -33,8 +33,9 @@ public class GameManager : MonoBehaviour
     [Header("Scenes")]
     [SerializeField] private string titleScene = "TitleScene";
     [SerializeField] private string gameScene = "GameScene";
-    [SerializeField] private PlayerInput player1Input;
-    [SerializeField] private PlayerInput player2Input;
+    
+    private PlayerInput player1Input;
+    private PlayerInput player2Input;
 
     private void Awake()
     {
@@ -48,12 +49,9 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Start()
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        var keyboard = Keyboard.current;
-
-        player1Input.SwitchCurrentControlScheme("Keyboard1", keyboard);
-        player2Input.SwitchCurrentControlScheme("Keyboard2", keyboard);
+        SetPlayerInput();
     }
 
     private void OnEnable()
@@ -65,6 +63,8 @@ public class GameManager : MonoBehaviour
         GameEvents.OnPauseRequested += PauseGame;
         GameEvents.OnResumeRequested += ResumeGame;
         GameEvents.OnExitRequested += QuitGame;
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnDisable()
@@ -76,6 +76,8 @@ public class GameManager : MonoBehaviour
         GameEvents.OnPauseRequested -= PauseGame;
         GameEvents.OnResumeRequested -= ResumeGame;
         GameEvents.OnExitRequested -= QuitGame;
+
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     public void LoadTitle()
@@ -119,5 +121,42 @@ public class GameManager : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+
+    private void SetPlayerInput()
+    {
+        PlayerInput[] playerInputs = FindObjectsByType<PlayerInput>(FindObjectsSortMode.None);
+
+        if (playerInputs.Length == 0)
+        {
+            Debug.LogWarning("No PlayerInput components found in this scene.");
+        }
+        else
+        {
+            if (playerInputs.Length == 1)
+            {
+                player1Input = playerInputs[0];
+                Debug.LogWarning("Only one PlayerInput found. Player 2 will not be assigned.");
+            }
+            else
+            {
+                player1Input = playerInputs[0];
+                player2Input = playerInputs[1];
+            }
+        }
+
+        var keyboard = Keyboard.current;
+
+        if (keyboard == null)
+        {
+            Debug.LogWarning("No keyboard detected. Control schemes not switched.");
+            return;
+        }
+
+        if (player1Input != null)
+            player1Input.SwitchCurrentControlScheme("Keyboard1", keyboard);
+
+        if (player2Input != null)
+            player2Input.SwitchCurrentControlScheme("Keyboard2", keyboard);
     }
 }

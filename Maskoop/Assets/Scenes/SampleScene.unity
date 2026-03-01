@@ -1084,17 +1084,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1220920221 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7968253882079472184, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
-  m_PrefabInstance: {fileID: 67106581}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
 --- !u!1 &1419694817
 GameObject:
   m_ObjectHideFlags: 0
@@ -1126,8 +1115,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   titleScene: TitleScene
   gameScene: SampleScene
-  player1Input: {fileID: 1556467200}
-  player2Input: {fileID: 1220920221}
 --- !u!4 &1419694819
 Transform:
   m_ObjectHideFlags: 0
@@ -1188,17 +1175,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1556467200 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7968253882079472184, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
-  m_PrefabInstance: {fileID: 18670247}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
 --- !u!1 &1778304832
 GameObject:
   m_ObjectHideFlags: 0
@@ -1733,6 +1709,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1125019678439613271, guid: 3b548c485a8d81b41b69089849a85bfe, type: 3}
       propertyPath: buttonsNedded
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1125019678439613271, guid: 3b548c485a8d81b41b69089849a85bfe, type: 3}
+      propertyPath: activatorsNeeded
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3296574170664333059, guid: 3b548c485a8d81b41b69089849a85bfe, type: 3}

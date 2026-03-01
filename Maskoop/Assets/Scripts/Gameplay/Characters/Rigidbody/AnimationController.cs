@@ -28,6 +28,15 @@ public class AnimationController : MonoBehaviour
 
     new private Rigidbody rigidbody;
 
+    private void OnEnable()
+    {
+        EventManager.OnCantPerforAction += SetCantPerformAction;
+    }
+    private void OnDisable()
+    {
+        EventManager.OnCantPerforAction -= SetCantPerformAction;
+    }
+
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -42,11 +51,6 @@ public class AnimationController : MonoBehaviour
         isFallingHash = Animator.StringToHash(isFalingParameter);
         isRollingHash = Animator.StringToHash(isRollingParameter);
         cantPerformActionHash = Animator.StringToHash(cantPerformActionParameter);
-
-
-        //Set event for changing the cantPerformAction
-
-        EventManager.OnCantPerforAction += SetCantPerformAction;
 
         if (animator == null)
         {
