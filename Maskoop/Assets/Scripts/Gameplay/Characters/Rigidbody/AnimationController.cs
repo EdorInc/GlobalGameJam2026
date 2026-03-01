@@ -50,7 +50,7 @@ public class AnimationController : MonoBehaviour
 
         if (animator == null)
         {
-            Debug.Log("Animator component not found on " + gameObject.name + "trying on children...");
+            Debug.Log("Animator component not found on " + gameObject.name + ", trying on children...");
             animator = GetComponentInChildren<Animator>();
         }
 

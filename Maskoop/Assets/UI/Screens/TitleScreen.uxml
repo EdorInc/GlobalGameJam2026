@@ -3,11 +3,11 @@
     <ui:VisualElement name="background-image" class="image-background" style="background-image: none; -unity-background-image-tint-color: rgb(255, 255, 255); background-size: 100% 100%; -unity-slice-type: sliced;">
         <ui:Image name="front-image" style="position: absolute; top: auto; background-image: url(&quot;project://database/Assets/UI/Images/Tikki%20Mask.jpeg?fileID=2800000&amp;guid=d4ccf37a91743714195f777d97655748&amp;type=3#Tikki Mask&quot;); width: auto; height: 100%; aspect-ratio: 1; align-self: center; align-content: center; justify-content: center; align-items: center; -unity-background-image-tint-color: rgba(72, 72, 72, 0.31);"/>
         <ui:VisualElement name="title-container" class="container-menu">
-            <ui:Label text="Kromask" name="title-label" class="text-title" style="flex-grow: 0; text-shadow: 0 10px 2px rgba(0, 0, 0, 0.29); aspect-ratio: auto; align-self: center; align-content: center;"/>
-            <ui:VisualElement name="button-container" class="container-button-vertical">
-                <ui:Button text="Play" name="play-button" class="text-button button-hexagon" style="border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0);"/>
-                <ui:Button text="Options" name="options-button" enabled="false" class="button-hexagon"/>
-                <ui:Button text="Exit" name="exit-button" parse-escape-sequences="true" class="button-hexagon"/>
+            <ui:Label text="Kromask" name="title-label" class="text-title" style="flex-grow: 1; text-shadow: 0 10px 2px rgba(0, 0, 0, 0.29); aspect-ratio: auto; align-self: center; align-content: center;"/>
+            <ui:VisualElement name="button-container" class="container-button-vertical" style="height: 40%; flex-grow: 1; flex-shrink: 0; justify-content: flex-start; align-self: stretch; align-items: stretch;">
+                <ui:Button text="Play" name="play-button" class="text-button button-hexagon" style="border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0); max-height: 70px; width: auto; min-width: 400px; margin-top: 7px;"/>
+                <ui:Button text="Options" name="options-button" enabled="false" class="button-hexagon" style="max-height: 70px; min-width: 400px; margin-top: 7px;"/>
+                <ui:Button text="Exit" name="exit-button" parse-escape-sequences="true" class="button-hexagon" style="max-height: 70px; min-width: 400px; margin-top: 7px;"/>
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="logos-container" class="container-logo" style="flex-grow: 1; width: auto;">

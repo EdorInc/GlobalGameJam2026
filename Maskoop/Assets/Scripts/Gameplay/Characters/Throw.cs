@@ -35,16 +35,26 @@ public class Throw : MonoBehaviour
 
     private void StartSimulation()
     {
-        simulationScene = SceneManager.CreateScene("Simulation", new CreateSceneParameters(LocalPhysicsMode.Physics3D));
-        physicsScene = simulationScene.GetPhysicsScene();
+        Scene simulationScene = SceneManager.GetSceneByName("Simulation");
 
-        foreach (Transform obj in simulationObstaclesParent)
+        if (!simulationScene.IsValid())
         {
-            var ghostObj = Instantiate(obj.gameObject, obj.position, obj.rotation);
-            Renderer[] ghostRenderers = ghostObj.GetComponentsInChildren<Renderer>();
-            foreach (Renderer r in ghostRenderers) r.enabled = false;
-            SceneManager.MoveGameObjectToScene(ghostObj, simulationScene);
-            if (!ghostObj.isStatic) spawnedObjects.Add(obj, ghostObj.transform);
+            simulationScene = SceneManager.CreateScene("Simulation", new CreateSceneParameters(LocalPhysicsMode.Physics3D));
+
+            physicsScene = simulationScene.GetPhysicsScene();
+
+            foreach (Transform obj in simulationObstaclesParent)
+            {
+                var ghostObj = Instantiate(obj.gameObject, obj.position, obj.rotation);
+                Renderer[] ghostRenderers = ghostObj.GetComponentsInChildren<Renderer>();
+                foreach (Renderer r in ghostRenderers) r.enabled = false;
+                SceneManager.MoveGameObjectToScene(ghostObj, simulationScene);
+                if (!ghostObj.isStatic) spawnedObjects.Add(obj, ghostObj.transform);
+            }
+        }
+        else
+        {
+            physicsScene = simulationScene.GetPhysicsScene();
         }
     }
 
@@ -333,19 +343,8 @@ public class Throw : MonoBehaviour
             Debug.LogError("Grabbed object must have a BoxCollider component.");
             return;
         }
-
-        // Adjust landing marker scale to match the size of the object being thrown
-        // Vector3 worldSize = Vector3.Scale(objectCollider.transform.localScale, objectCollider.transform.lossyScale);
-
-        // Because it is a sphere...
-        // float diameter = (worldSize.x + worldSize.z) * 0.5f;
-        // landingMarker.transform.localScale = new Vector3(diameter, diameter, diameter);
-        //float halfHeight = landingMarker.GetComponent<Renderer>().bounds.extents.y;
         
         landingMarker.transform.position = position; // + normal * halfHeight;
-
-        // Use the provided rotation if any
-        // landingMarker.transform.rotation = rotation ?? Quaternion.FromToRotation(Vector3.up, normal);
 
         landingMarker.SetActive(true);
     }
@@ -356,7 +355,10 @@ public class Throw : MonoBehaviour
         {
             grabbedObject = grabComponent.grabbedObject;
         }
-        else grabbedObject = null;
+        else 
+        {
+            grabbedObject = null; 
+        }
 
         if (charging && grabbedObject != null)
         {

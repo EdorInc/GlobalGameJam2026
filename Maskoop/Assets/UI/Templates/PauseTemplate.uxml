@@ -1,13 +1,12 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Themes/DefaultTheme.uss?fileID=7433441132597879392&amp;guid=abd6d9976d619a646a1faab02692b347&amp;type=3#DefaultTheme"/>
-    <ui:VisualElement name="menu-container" enabled="true" class="menu-container" style="position: absolute; right: auto; left: auto; top: 10%; bottom: 10%; height: 80%; align-items: center; justify-content: center;">
-        <ui:Label text="Pause" name="pause-label" class="title-text" style="-unity-font-definition: url(&quot;project://database/Assets/UI/Fonts/edit-undo/edunline.ttf?fileID=12800000&amp;guid=0d348a2df80ae394391ea049544a0082&amp;type=3#edunline&quot;); font-size: 72px;"/>
-        <ui:VisualElement name="button-container" class="vertical-button-container">
-            <ui:Button text="Resume" name="resume-button" class="text-button"/>
-            <ui:Button text="Restart" name="restart-button" class="text-button"/>
-            <ui:Button text="Settings&#10;" name="settings-button" enable-rich-text="false" enabled="false" class="text-button"/>
-            <ui:Button text="Save" name="save-button" enabled="false" class="text-button"/>
-            <ui:Button text="Quit" name="quit-button" class="text-button"/>
+    <ui:VisualElement name="menu-container" enabled="true" class="container-window">
+        <ui:Label text="Pause" name="pause-label" class="text-title-windowed" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;"/>
+        <ui:VisualElement name="button-container" class="container-button-vertical" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;">
+            <ui:Button text="Resume" name="resume-button" class="button-hexagon" style="font-size: 32px; width: auto; margin-top: 15px; padding-top: 14px; padding-right: 14px; padding-bottom: 14px; padding-left: 14px;"/>
+            <ui:Button text="Restart" name="restart-button" class="text-button button-hexagon" style="margin-top: 15px; padding-top: 14px; padding-right: 14px; padding-bottom: 14px; padding-left: 14px;"/>
+            <ui:Button text="Options" name="settings-button" enable-rich-text="false" enabled="false" class="text-button button-hexagon" style="margin-top: 15px; padding-top: 14px; padding-right: 14px; padding-bottom: 14px; padding-left: 14px;"/>
+            <ui:Button text="Exit" name="quit-button" emoji-fallback-support="true" class="text-button button-hexagon" style="margin-top: 15px; padding-top: 14px; padding-right: 14px; padding-bottom: 14px; padding-left: 14px;"/>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

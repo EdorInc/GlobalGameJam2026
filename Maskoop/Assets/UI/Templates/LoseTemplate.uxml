@@ -1,11 +1,11 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Themes/DefaultTheme.uss?fileID=7433441132597879392&amp;guid=abd6d9976d619a646a1faab02692b347&amp;type=3#DefaultTheme"/>
-    <ui:VisualElement name="background-image" class="background-image" style="flex-grow: 1;">
-        <ui:VisualElement name="menu-container" class="menu-container menu-container-pop" style="flex-grow: 1; align-content: center; justify-content: space-evenly;">
-            <ui:Label text="You Lose" name="screen-label" class="title-text title-text-flex"/>
-            <ui:VisualElement name="button-container" class="vertical-button-container" style="flex-grow: 2; justify-content: center; align-self: stretch; flex-shrink: 2; align-items: stretch; align-content: center;">
-                <ui:Button text="Try Again&#10;" name="restart-button" class="text-button"/>
-                <ui:Button text="Go Back To Menu" name="quit-button" class="text-button"/>
+    <ui:VisualElement name="background-image" class="image-background" style="flex-grow: 1;">
+        <ui:VisualElement name="menu-container" class="container-menu" style="flex-grow: 1; align-content: center; justify-content: space-evenly;">
+            <ui:Label text="You Lose" name="screen-label" class="text-title" style="align-self: center; flex-grow: 1; text-shadow: 0 10px 2px rgba(0, 0, 0, 0.39);"/>
+            <ui:VisualElement name="button-container" class="container-button-vertical" style="flex-grow: 1; justify-content: flex-start; align-self: stretch; flex-shrink: 0; align-items: stretch; align-content: flex-start;">
+                <ui:Button text="RETRY" name="restart-button" class="button-hexagon" style="padding-top: 14px; padding-right: 14px; padding-bottom: 14px; padding-left: 14px;"/>
+                <ui:Button text="MENU" name="quit-button" class="button-hexagon" style="padding-top: 14px; padding-right: 14px; padding-bottom: 14px; padding-left: 14px;"/>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

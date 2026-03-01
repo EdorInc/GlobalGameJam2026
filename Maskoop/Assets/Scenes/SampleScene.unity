@@ -256,7 +256,8 @@ PrefabInstance:
       propertyPath: simulationObstaclesParent
       value: 
       objectReference: {fileID: 1926420739}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3083719472569087854, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1376,9 +1377,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cce4bd90f8a16444837c0b1a546903e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameScreenController
+  gameDuration: 30
   pauseScreenName: pause-ui
   winScreenName: win-ui
   loseScreenName: lose-ui
+  timerLabelName: timer-label
   resumeButtonName: resume-button
   restartButtonName: restart-button
   menuButtonName: quit-button

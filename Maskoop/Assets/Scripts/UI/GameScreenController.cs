@@ -6,10 +6,19 @@ public class GameScreenController : MonoBehaviour
 {
     private VisualElement root;
 
+    [Header("Time Settings")]
+    [SerializeField] private int gameDuration = 300;
+
     [Header("References")]
     [SerializeField] private string pauseScreenName = "pause-ui";
     [SerializeField] private string winScreenName = "win-ui";
     [SerializeField] private string loseScreenName = "lose-ui";
+
+    [Header("HUD References")]
+    [SerializeField] private string timerLabelName = "timer-label";
+
+    private Label timerLabel;
+    private float currentTime;
 
     [Header("Pause References")]
     [SerializeField] private string resumeButtonName = "resume-button";
@@ -82,6 +91,17 @@ public class GameScreenController : MonoBehaviour
         currentState = initialState;
 
         SetState(initialState);
+
+        // HUD Timer
+        timerLabel = root.Q<Label>(timerLabelName);
+        if (timerLabel == null)
+        {
+            Debug.LogError($"Timer label with name '{timerLabelName}' not found in the UI.");
+            return;
+        }
+
+        currentTime = gameDuration;
+        UpdateTimer();
     }
 
     private void Update()
@@ -94,6 +114,40 @@ public class GameScreenController : MonoBehaviour
             else if (currentState == UIState.Paused)
                 SetState(UIState.Gameplay);
         }
+
+        if (currentState == UIState.Gameplay)
+        {
+            if (currentTime > 0)
+            {
+                currentTime -= Time.deltaTime;
+
+                if (currentTime <= 0)
+                {
+                    currentTime = 0;
+                    UpdateTimer();
+                    SetState(UIState.Lose);
+                    return;
+                }
+
+                UpdateTimer();
+            }
+        }
+    }
+
+    private void UpdateTimer()
+    {
+        int seconds = Mathf.CeilToInt(currentTime);
+
+        if (seconds < 0)
+            seconds = 0;
+
+        timerLabel.text = seconds.ToString("000");
+    }
+
+    private void ResetTimer()
+    {
+        currentTime = gameDuration;
+        UpdateTimer();
     }
 
     private void SetState(UIState newState)
