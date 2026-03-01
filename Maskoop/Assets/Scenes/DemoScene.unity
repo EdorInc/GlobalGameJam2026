@@ -417,7 +417,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2365696635727678705, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: m_Name
-      value: ChibiPlayer
+      value: FunkoPlayer
       objectReference: {fileID: 0}
     - target: {fileID: 2691037543324853678, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: showRaycasts
@@ -479,6 +479,10 @@ PrefabInstance:
       propertyPath: m_CullingMask.m_Bits
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 4674157658259649391, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: m_NormalizedViewPortRect.width
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5017981793802599899, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: jumpSpeedParameter
       value: JumpingAnimationSpeed
@@ -486,18 +490,6 @@ PrefabInstance:
     - target: {fileID: 5017981793802599899, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: moveSpeedParameter
       value: MovingAnimationSpeed
-      objectReference: {fileID: 0}
-    - target: {fileID: 5503209485557306345, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5503209485557306345, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5503209485557306345, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 6547426620647289602, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1267,6 +1259,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8009533574091425967, guid: 5d1ab1e1a959dd2488a1eeb106076dec, type: 3}
   m_PrefabInstance: {fileID: 1179801845}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1343081377
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1343081379}
+  - component: {fileID: 1343081378}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1343081378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1343081377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15d91bb767a4c4347a254d91a68a5110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  titleScene: TitleScene
+  gameScene: GameScene
+--- !u!4 &1343081379
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1343081377}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.37875, y: 0, z: -0.41905}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1468074079
 GameObject:
   m_ObjectHideFlags: 0
@@ -1459,6 +1497,7 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 1887952664}
+  - {fileID: 1343081379}
   - {fileID: 1468074081}
   - {fileID: 1778304833}
   - {fileID: 18670247}
