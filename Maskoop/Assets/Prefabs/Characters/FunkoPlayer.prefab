@@ -63,13 +63,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3136899934927077235}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2588191, y: -0, z: -0, w: 0.9659258}
-  m_LocalPosition: {x: 0, y: 2, z: -3}
+  m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
+  m_LocalPosition: {x: 0, y: 6.72, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6547426620647289602}
-  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
 --- !u!20 &4674157658259649391
 Camera:
   m_ObjectHideFlags: 0
@@ -99,7 +99,7 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1
+    width: 0.5
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -287,9 +287,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4035208202334370859, guid: befe075e024e9144996dd0d6d51798e4, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: Keyboard1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4035208202334370859, guid: befe075e024e9144996dd0d6d51798e4, type: 3}
+      propertyPath: m_NeverAutoSwitchControlSchemes
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6189409550493942852, guid: befe075e024e9144996dd0d6d51798e4, type: 3}
       propertyPath: m_Name
-      value: FunkoCharacter
+      value: FunkoCharacter1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

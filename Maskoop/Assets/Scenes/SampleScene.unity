@@ -127,17 +127,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 904713327362609751, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
-      propertyPath: m_Name
-      value: FunkoCharacter1
-      objectReference: {fileID: 0}
     - target: {fileID: 2365696635727678705, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: m_Name
       value: FunkoPlayer1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4674157658259649391, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
-      propertyPath: m_NormalizedViewPortRect.width
-      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6547426620647289602, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -178,14 +170,6 @@ PrefabInstance:
     - target: {fileID: 6547426620647289602, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7968253882079472184, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
-      propertyPath: m_DefaultControlScheme
-      value: Keyboard1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7968253882079472184, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
-      propertyPath: m_NeverAutoSwitchControlSchemes
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8512399398987540270, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: simulationObstaclesParent
@@ -798,6 +782,10 @@ PrefabInstance:
       value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 5689604278998774111, guid: 5d1ab1e1a959dd2488a1eeb106076dec, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6943245027681110585, guid: 5d1ab1e1a959dd2488a1eeb106076dec, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
