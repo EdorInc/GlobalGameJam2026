@@ -106,6 +106,7 @@ public class Throw : MonoBehaviour
         }
         else if (!charging && grabbedObject == null)
         {
+            EventManager.OnCantPerforAction?.Invoke(true);
             Debug.Log("No object to throw.");
         }
     }

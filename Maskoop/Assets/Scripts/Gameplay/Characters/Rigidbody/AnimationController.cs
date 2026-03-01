@@ -10,6 +10,7 @@ public class AnimationController : MonoBehaviour
     private int moveSpeedHash;
     private int isFallingHash;
     private int isRollingHash;
+    private int cantPerformActionHash;
 
     private string isMovingParameter = "IsMoving";
     private string isJumpingParameter = "IsJumping";
@@ -17,6 +18,7 @@ public class AnimationController : MonoBehaviour
     private string isFalingParameter = "IsFalling";
     private string moveSpeedParameter = "MovingAnimationSpeed";
     private string isRollingParameter = "IsRolling";
+    private string cantPerformActionParameter = "CantPerformAction";
 
     private GroundDetector groundDetector;
     private CharacterController characterController;
@@ -39,6 +41,12 @@ public class AnimationController : MonoBehaviour
         moveSpeedHash = Animator.StringToHash(moveSpeedParameter);
         isFallingHash = Animator.StringToHash(isFalingParameter);
         isRollingHash = Animator.StringToHash(isRollingParameter);
+        cantPerformActionHash = Animator.StringToHash(cantPerformActionParameter);
+
+
+        //Set event for changing the cantPerformAction
+
+        EventManager.OnCantPerforAction += SetCantPerformAction;
 
         if (animator == null)
         {
@@ -103,4 +111,10 @@ public class AnimationController : MonoBehaviour
                 animator.SetBool(isMovingHash, false);
         }
     }       
+
+
+    private void SetCantPerformAction(bool state)
+    {
+        animator.SetTrigger(cantPerformActionHash);
+    }
 }

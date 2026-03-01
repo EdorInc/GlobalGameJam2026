@@ -1,13 +1,7 @@
 using UnityEngine;
 
-public class Door : MonoBehaviour
+public class Door : ActivableBase
 {
-    [Header("Conection Settings")]
-    [SerializeField]
-    [Tooltip("Channel to use to connect to buttons. Buttons need to have the same channel to open the door/Bridge")]
-    private int channel = 1;
-    [SerializeField] private int buttonsNedded = 1;
-
     [Header("Position Settings")]
     [SerializeField]
     [Tooltip("Position of the door/bridge when it opens")]
@@ -19,14 +13,6 @@ public class Door : MonoBehaviour
     private float speed = 2;
 
     private bool shouldOpen = false;
-
-    private int buttonsLeft = 1;
-    void Start()
-    {
-        //Link the function to the unity action emmited by targets and buttons
-        EventManager.OnButtonPressed += OnButtonPressRecived;
-        buttonsLeft = buttonsNedded;
-    }
 
     // Update is called once per frame
     void Update()
@@ -41,15 +27,16 @@ public class Door : MonoBehaviour
         }
     }
 
-    void OnButtonPressRecived(int channel)
+    public override void OnActivatorRecived(int channel)
     {
-        if(this.channel == channel)
+        if (this.channel == channel)
         {
-            buttonsLeft--;
-            if(buttonsLeft == 0)
+            activatorsNeeded--;
+            if (activatorsNeeded == 0)
             {
                 shouldOpen = true;
             }
         }
     }
+
 }

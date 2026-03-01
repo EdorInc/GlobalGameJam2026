@@ -43,6 +43,8 @@ public class Equip : MonoBehaviour
         {
             if (equipedObject == null)
             {
+                //No object to equip
+                EventManager.OnCantPerforAction?.Invoke(true);
                 return;
             }
             //If no object is grabbed but an object is equipped you should unEquip
@@ -56,6 +58,8 @@ public class Equip : MonoBehaviour
 
         if(objectToEquip == null)
         {
+            //Object can be equipped
+            EventManager.OnCantPerforAction?.Invoke(true);
             return;
         }
 

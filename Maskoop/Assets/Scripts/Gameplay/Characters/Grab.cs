@@ -95,6 +95,8 @@ public class Grab : MonoBehaviour
         else
         {
             Debug.Log("No grabbable object in range.");
+            EventManager.OnCantPerforAction?.Invoke(true);
+
         }
 
     }
