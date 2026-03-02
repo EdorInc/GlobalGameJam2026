@@ -395,6 +395,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 725293474236890932, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: m_RendererIndex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 725293474236890932, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: m_RenderPostProcessing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 904713327362609751, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: m_Name
+      value: FunkoCharacter
+      objectReference: {fileID: 0}
     - target: {fileID: 1368692153816943079, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -478,6 +490,10 @@ PrefabInstance:
     - target: {fileID: 4674157658259649391, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: m_CullingMask.m_Bits
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674157658259649391, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: m_NormalizedViewPortRect.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4674157658259649391, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: m_NormalizedViewPortRect.width
@@ -734,7 +750,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
-    m_Type: 2
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -772,7 +788,7 @@ Light:
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
   m_ColorTemperature: 5000
-  m_UseColorTemperature: 1
+  m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1

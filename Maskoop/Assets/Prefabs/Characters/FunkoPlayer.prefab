@@ -96,7 +96,7 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: 0.5
     y: 0
     width: 0.5
     height: 1
@@ -137,13 +137,13 @@ MonoBehaviour:
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
   m_Cameras: []
-  m_RendererIndex: -1
+  m_RendererIndex: 0
   m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -280,7 +280,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4035208202334370859, guid: befe075e024e9144996dd0d6d51798e4, type: 3}
       propertyPath: m_DefaultControlScheme
-      value: Keyboard1
+      value: Keyboard2
       objectReference: {fileID: 0}
     - target: {fileID: 4035208202334370859, guid: befe075e024e9144996dd0d6d51798e4, type: 3}
       propertyPath: m_NeverAutoSwitchControlSchemes
@@ -288,7 +288,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6189409550493942852, guid: befe075e024e9144996dd0d6d51798e4, type: 3}
       propertyPath: m_Name
-      value: FunkoCharacter
+      value: FunkoCharacter2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

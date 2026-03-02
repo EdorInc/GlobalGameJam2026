@@ -127,6 +127,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 725293474236890932, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: m_RendererIndex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 725293474236890932, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: m_RenderPostProcessing
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 904713327362609751, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: m_Name
       value: FunkoCharacter1
@@ -134,6 +142,10 @@ PrefabInstance:
     - target: {fileID: 2365696635727678705, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: m_Name
       value: FunkoPlayer1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674157658259649391, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: m_NormalizedViewPortRect.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6547426620647289602, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -192,21 +204,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 904713327362609751, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
-      propertyPath: m_Name
-      value: FunkoCharacter2
-      objectReference: {fileID: 0}
     - target: {fileID: 2365696635727678705, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: m_Name
       value: FunkoPlayer2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4674157658259649391, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
-      propertyPath: m_NormalizedViewPortRect.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4674157658259649391, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
-      propertyPath: m_NormalizedViewPortRect.width
-      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6547426620647289602, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -248,20 +248,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7968253882079472184, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
-      propertyPath: m_DefaultControlScheme
-      value: Keyboard2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7968253882079472184, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
-      propertyPath: m_NeverAutoSwitchControlSchemes
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8512399398987540270, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: simulationObstaclesParent
       value: 
       objectReference: {fileID: 1926420739}
-    m_RemovedComponents:
-    - {fileID: 3083719472569087854, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -427,7 +418,7 @@ Light:
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
   m_ColorTemperature: 5000
-  m_UseColorTemperature: 1
+  m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
@@ -849,7 +840,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6943245027681110585, guid: 5d1ab1e1a959dd2488a1eeb106076dec, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8009533574091425967, guid: 5d1ab1e1a959dd2488a1eeb106076dec, type: 3}
       propertyPath: m_LocalPosition.x
