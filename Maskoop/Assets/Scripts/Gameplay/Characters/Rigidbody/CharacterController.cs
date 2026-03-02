@@ -34,6 +34,10 @@ public class CharacterController : MonoBehaviour
     [Tooltip("Turn speed when throwing.")]
     public float throwingTurnSpeed = 6f;
 
+    [Header("Respawn Settings")]
+    public Vector3 checkPointPosition = new Vector3(0, 1 ,0);
+    public float deathDistance = -3;
+
     private GroundDetector groundDetector;
 
     private Throw throwComponent;
@@ -124,6 +128,16 @@ public class CharacterController : MonoBehaviour
                 airMovementVector.y = rigidbody.linearVelocity.y; 
                 rigidbody.linearVelocity = airMovementVector;
             }
+        }
+
+        Respawn();
+    }
+
+    void Respawn()
+    {
+        if(rigidbody.position.y < deathDistance)
+        {
+            rigidbody.position = checkPointPosition;
         }
     }
 }
