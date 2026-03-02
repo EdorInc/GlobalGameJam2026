@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Wall
   - Rock
+  - Cube
   layers:
   - Default
   - TransparentFX
