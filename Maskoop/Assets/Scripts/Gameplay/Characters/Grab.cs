@@ -18,6 +18,9 @@ public class Grab : MonoBehaviour
     [Header("Hold Settings")]
     [SerializeField] private Transform grabbedPosition;
 
+    [SerializeField] private AudioEventChannel audioChannel;
+    [SerializeField] private SoundDefinition hitSound;
+
     void LateUpdate()
     {
         if (grabbedObject != null)
@@ -91,6 +94,8 @@ public class Grab : MonoBehaviour
             grabbedObject = grabbable.gameObject;
 
             Debug.Log("Grabbed object " + grabbedObject.name);
+
+            audioChannel?.RaiseEvent(hitSound, grabbedObject.transform.position);
         }
         else
         {

@@ -19,6 +19,8 @@ public class Grabbable : GroundDetector
 
     private Rigidbody rigidBody;
 
+
+
     protected override void Start()
     {
         base.Start();
