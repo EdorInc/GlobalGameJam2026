@@ -82,6 +82,7 @@ GameObject:
   - component: {fileID: 3889285676591165311}
   - component: {fileID: 3407257806615490877}
   - component: {fileID: 6532311188431754760}
+  - component: {fileID: -5216866879657366040}
   m_Layer: 0
   m_Name: FunkoCharacter
   m_TagString: Player
@@ -540,6 +541,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EquipUnequipController
   equipedPosition: {fileID: 2419637300062318023}
+--- !u!114 &-5216866879657366040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6189409550493942852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b7d6c44fd5b3e845827b8107cbc3c4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Respawn
+  respawnPosition: {x: 0, y: 1, z: 0}
+  voidDistance: -3
+  willDestroy: 0
 --- !u!1 &8691217799028268263
 GameObject:
   m_ObjectHideFlags: 0

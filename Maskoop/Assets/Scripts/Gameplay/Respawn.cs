@@ -18,22 +18,23 @@ public class Respawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (willDestroy == false)
+        if (rigidbody.position.y < voidDistance)
         {
-            RespawnFunction();
+            if (willDestroy == false)
+            {
+                RespawnFunction();
+            }
+            else
+            {
+                Destroy();
+            }
         }
-        else
-        {
-            Destroy();
-        }
+        
     }
 
     void RespawnFunction()
     {
-        if (rigidbody.position.y < voidDistance)
-        {
-            rigidbody.position = respawnPosition;
-        }
+        rigidbody.position = respawnPosition;
     }
 
     void Destroy()
