@@ -12,6 +12,9 @@ public abstract class ActivableBase : MonoBehaviour
 
     protected int activatorsLeft = 1;
 
+    protected bool shouldActivate = false;
+
+
     void Start()
     {
         //Link the function to the unity action emmited by targets and buttons
@@ -19,5 +22,32 @@ public abstract class ActivableBase : MonoBehaviour
         activatorsLeft = activatorsNeeded;
     }
 
-    public abstract void OnActivatorRecived(int channel);
+    // Update is called once per frame
+    void Update()
+    {
+        if (shouldActivate)
+        {
+            ActivatedAction();
+        }
+        if (StopCondition())
+        {
+            shouldActivate = false;
+        }
+    }
+
+    public void OnActivatorRecived(int channel)
+    {
+        if (this.channel == channel)
+        {
+            activatorsNeeded--;
+            if (activatorsNeeded == 0)
+            {
+                shouldActivate = true;
+            }
+        }
+    }
+
+    protected abstract bool StopCondition();
+    protected abstract void ActivatedAction();
+     
 }

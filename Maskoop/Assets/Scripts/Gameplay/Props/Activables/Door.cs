@@ -12,31 +12,14 @@ public class Door : ActivableBase
     [Tooltip("Speed to open the door/bridge")]
     private float speed = 2;
 
-    private bool shouldOpen = false;
-
-    // Update is called once per frame
-    void Update()
+    protected override bool StopCondition()
     {
-        if (shouldOpen)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, openPosition.position, Time.deltaTime * speed);
-        }
-        if (transform.position.Equals(openPosition.position))
-        {
-            shouldOpen = false;
-        }
+        return transform.position.Equals(openPosition.position);
     }
 
-    public override void OnActivatorRecived(int channel)
+    protected override void ActivatedAction()
     {
-        if (this.channel == channel)
-        {
-            activatorsNeeded--;
-            if (activatorsNeeded == 0)
-            {
-                shouldOpen = true;
-            }
-        }
+        transform.position = Vector3.MoveTowards(transform.position, openPosition.position, Time.deltaTime * speed);
     }
 
 }
