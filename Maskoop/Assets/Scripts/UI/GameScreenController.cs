@@ -7,6 +7,7 @@ public class GameScreenController : MonoBehaviour
     private VisualElement root;
 
     [Header("Time Settings")]
+    [Range(1, 999)]
     [SerializeField] private int gameDuration = 300;
 
     [Header("References")]
