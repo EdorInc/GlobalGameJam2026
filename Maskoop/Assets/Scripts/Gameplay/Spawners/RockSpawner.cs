@@ -4,17 +4,17 @@ public class RockSpawner : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    [SerializeField] private GameObject rockPrefab;
-    [SerializeField] private Transform spawnPosition;
+    [SerializeField] protected GameObject rockPrefab;
+    [SerializeField] protected Transform spawnPosition;
 
-    private GameObject rockSpawned;
+    protected GameObject rockSpawned;
 
     void Start()
     {
         SpawnRock();
     }
 
-    private void SpawnRock()
+    protected virtual void SpawnRock()
     {
         if(rockSpawned == null)
         {

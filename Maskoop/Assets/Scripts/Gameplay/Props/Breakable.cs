@@ -102,13 +102,13 @@ public class Breakable : MonoBehaviour
 
             if (spawner != null)
                 spawner.DestroyRock(fragmentLifespan);
-            else Destroy(this, fragmentLifespan);
+            else Destroy(gameObject, fragmentLifespan);
         }
         else
         {
             if (spawner != null)
                 spawner.DestroyRock();
-            else Destroy(this);
+            else Destroy(gameObject);
 
         }
     }
