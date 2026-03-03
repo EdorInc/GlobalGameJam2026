@@ -10,7 +10,7 @@ public class GroundDetector : MonoBehaviour
     [SerializeField] private float groundCheckDistance = 0.1f;
 
     public bool IsGrounded { get; private set; }
-    public MovingPlatform MovingPlatform { get; private set; }
+    public GameObject MovingPlatform { get; private set; }
 
     protected virtual void Start()
     {
@@ -35,7 +35,7 @@ public class GroundDetector : MonoBehaviour
         {
             if (hit.collider.CompareTag("MovingPlatform"))
             {
-                MovingPlatform = hit.collider.GetComponent<MovingPlatform>();
+                MovingPlatform = hit.collider.gameObject;
             }
             else
             {

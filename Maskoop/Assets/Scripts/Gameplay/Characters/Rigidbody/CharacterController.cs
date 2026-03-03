@@ -38,7 +38,7 @@ public class CharacterController : MonoBehaviour
 
     private Throw throwComponent;
 
-    private MovingPlatform currentPlatform => groundDetector.MovingPlatform;
+    private GameObject currentPlatform => groundDetector.MovingPlatform;
 
     private bool IsGrounded => groundDetector.IsGrounded;
 
@@ -80,10 +80,22 @@ public class CharacterController : MonoBehaviour
     {
         Vector3 horizontalInput = new Vector3(ForwardInput, 0f, SideInput).normalized;
 
+        if(currentPlatform != null)
+        {
+            transform.parent.SetParent(currentPlatform.transform);
+        }
+        else
+        {
+            transform.parent.SetParent(null);
+        }
+
         if (IsGrounded)
         {
             // Reset the velocity
-            rigidbody.linearVelocity = Vector3.zero;
+            Vector3 currentVel = rigidbody.linearVelocity;
+            currentVel.x = 0;
+            currentVel.z = 0;
+            rigidbody.linearVelocity = currentVel;
 
             // Check if trying to jump
             if (JumpInput && allowJump)
@@ -107,12 +119,10 @@ public class CharacterController : MonoBehaviour
                 // Apply a forward or backward velocity based on player input
                 Vector3 movementVector = horizontalInput * ((!throwComponent.charging) ? moveSpeed : throwingMoveSpeed);
 
-                if (currentPlatform != null)
-                {
-                    Vector3 platformVelocity = currentPlatform.Velociy;
-                    movementVector += platformVelocity;
-                }
-                rigidbody.linearVelocity += movementVector;
+                Vector3 finalVelocity = movementVector;
+               
+                rigidbody.linearVelocity = finalVelocity;
+
                 RotateTowardsMovementDirection(movementVector, 1.0f);
             }
 
@@ -120,6 +130,7 @@ public class CharacterController : MonoBehaviour
         }
         else
         {
+            isRolling = false;
             if (!Mathf.Approximately(ForwardInput, 0f) || !Mathf.Approximately(SideInput, 0f))
             {
                 Vector3 airMovementVector = horizontalInput * (moveSpeed * airControlMultiplier);
