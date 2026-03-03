@@ -38,6 +38,8 @@ public class CharacterController : MonoBehaviour
 
     private Throw throwComponent;
 
+    private MovingPlatform currentPlatform => groundDetector.MovingPlatform;
+
     private bool IsGrounded => groundDetector.IsGrounded;
 
     public float ForwardInput { get; set; }
@@ -105,8 +107,12 @@ public class CharacterController : MonoBehaviour
                 // Apply a forward or backward velocity based on player input
                 Vector3 movementVector = horizontalInput * ((!throwComponent.charging) ? moveSpeed : throwingMoveSpeed);
 
+                if (currentPlatform != null)
+                {
+                    Vector3 platformVelocity = currentPlatform.Velociy;
+                    movementVector += platformVelocity;
+                }
                 rigidbody.linearVelocity += movementVector;
-
                 RotateTowardsMovementDirection(movementVector, 1.0f);
             }
 
