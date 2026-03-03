@@ -8,11 +8,17 @@ public class Respawn : MonoBehaviour
     public bool willDestroy = false;
 
     new private Rigidbody rigidbody;
+    private CubeSpawner spawner;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
+    }
+
+    public void SetSpawner(CubeSpawner spawner)
+    {
+        this.spawner = spawner;
     }
 
     // Update is called once per frame
@@ -24,7 +30,10 @@ public class Respawn : MonoBehaviour
             {
                 RespawnFunction();
             }
-            else
+            else if (willDestroy == true && this.tag == "Cube")
+            {
+                spawner.DestroyCube();
+            } else if(willDestroy == true)
             {
                 Destroy();
             }

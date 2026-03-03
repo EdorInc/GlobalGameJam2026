@@ -19,6 +19,7 @@ public class CubeSpawner : MonoBehaviour
         if(cubeSpawned == null)
         {
             cubeSpawned = Instantiate(cubePrefab, spawnPosition.position, Quaternion.identity);
+            cubeSpawned.GetComponent<Respawn>().SetSpawner(this);
         }
         else
         {
