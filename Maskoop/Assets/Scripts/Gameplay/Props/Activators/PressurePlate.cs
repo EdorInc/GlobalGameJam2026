@@ -10,12 +10,12 @@ public class PressurePlate : ActivatorBase
 
     protected float deactivatedWidth;
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
         bool willActivate = !hasBeenActivated;
         if (canOnlyBeActivatedByPlayer)
         {
-            willActivate = willActivate && collision.gameObject.CompareTag("Player");
+            willActivate = willActivate && other.gameObject.CompareTag("Player");
         }
 
         if (willActivate)
