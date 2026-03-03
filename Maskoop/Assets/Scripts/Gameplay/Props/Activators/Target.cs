@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Target : ActivatorBase
 {
-    [Header("Apparience Settings")]
+    [Header("Target Settings")]
     [SerializeField] protected float activatedWidth = 0.1f;
 
     protected float deactivatedWidth;

@@ -2,14 +2,23 @@ using UnityEngine;
 
 public class PressurePlate : ActivatorBase
 {
-    [Header("Apparience Settings")]
+    [Header("Plate Settings")]
     [SerializeField] protected float activatedWidth = 0.1f;
+
+    [Header("Activation Settings")]
+    [SerializeField] protected bool canOnlyBeActivatedByPlayer = true;
 
     protected float deactivatedWidth;
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player") && !hasBeenActivated)
+        bool willActivate = !hasBeenActivated;
+        if (canOnlyBeActivatedByPlayer)
+        {
+            willActivate = willActivate && collision.gameObject.CompareTag("Player");
+        }
+
+        if (willActivate)
         {
             hasBeenActivated = true;
 
