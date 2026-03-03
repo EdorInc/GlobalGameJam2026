@@ -8,24 +8,22 @@ public abstract class ActivatorBase : MonoBehaviour
 
     [Header("Apparience Settings")]
     [SerializeField] protected Material activatedMaterial;
-    [SerializeField] protected float activatedWidth = 0.1f;
 
     protected bool hasBeenActivated = false;
 
     protected MeshRenderer meshRenderer;
     protected Material deactivatedMaterial;
-    protected float deactivatedWidth;
 
 
     protected abstract void SetApparience();
 
-    private void Awake()
+    protected abstract void GetApparience();
+
+    protected void Awake()
     {
         meshRenderer = GetComponentInChildren<MeshRenderer>();
 
-        deactivatedMaterial = meshRenderer.material;
-        deactivatedWidth = transform.localScale.z;
-
+        GetApparience();
         SetApparience();
     }
 }
