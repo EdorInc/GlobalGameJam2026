@@ -19,7 +19,7 @@ public class Grabbable : GroundDetector
 
     private Rigidbody rigidBody;
 
-
+    public bool IsGrabbed { get; set; }
 
     protected override void Start()
     {
@@ -44,21 +44,24 @@ public class Grabbable : GroundDetector
 
     void ResetFrozenRotation()
     {
-        Vector3 currentEuler = transform.rotation.eulerAngles;
-        Vector3 originalEuler = originalRotation.eulerAngles;
+        if (resetRotationInAir)
+        {
+            Vector3 currentEuler = transform.rotation.eulerAngles;
+            Vector3 originalEuler = originalRotation.eulerAngles;
 
-        RigidbodyConstraints constraints = rigidBody.constraints;
+            RigidbodyConstraints constraints = rigidBody.constraints;
 
-        // Check each frozen axis and restore only those
-        if ((constraints & RigidbodyConstraints.FreezeRotationX) != 0)
-            currentEuler.x = originalEuler.x;
+            // Check each frozen axis and restore only those
+            if ((constraints & RigidbodyConstraints.FreezeRotationX) != 0)
+                currentEuler.x = originalEuler.x;
 
-        if ((constraints & RigidbodyConstraints.FreezeRotationY) != 0)
-            currentEuler.y = originalEuler.y;
+            if ((constraints & RigidbodyConstraints.FreezeRotationY) != 0)
+                currentEuler.y = originalEuler.y;
 
-        if ((constraints & RigidbodyConstraints.FreezeRotationZ) != 0)
-            currentEuler.z = originalEuler.z;
+            if ((constraints & RigidbodyConstraints.FreezeRotationZ) != 0)
+                currentEuler.z = originalEuler.z;
 
-        transform.rotation = Quaternion.Euler(currentEuler);
+            transform.rotation = Quaternion.Euler(currentEuler);
+        }
     }
 }

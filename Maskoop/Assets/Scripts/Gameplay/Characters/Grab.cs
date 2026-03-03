@@ -91,6 +91,8 @@ public class Grab : MonoBehaviour
 
             grabbedObject = grabbable.gameObject;
 
+            grabbable.IsGrabbed = true;
+
             Debug.Log("Grabbed object " + grabbedObject.name);
         }
         else
@@ -205,7 +207,7 @@ public class Grab : MonoBehaviour
             rb.isKinematic = false;
             rb.useGravity = true;
         }
-
+        grabbedObject.GetComponent<Grabbable>().IsGrabbed = false;
         grabbedObject = null;
     }
 }

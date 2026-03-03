@@ -11,6 +11,8 @@ public class AnimationController : MonoBehaviour
     private int isFallingHash;
     private int isRollingHash;
     private int cantPerformActionHash;
+    private int isGrabbedHash;
+    private int hasInputHash;
 
     private string isMovingParameter = "IsMoving";
     private string isJumpingParameter = "IsJumping";
@@ -19,12 +21,16 @@ public class AnimationController : MonoBehaviour
     private string moveSpeedParameter = "MovingAnimationSpeed";
     private string isRollingParameter = "IsRolling";
     private string cantPerformActionParameter = "CantPerformAction";
+    private string isGrabbedParameter = "IsGrabbed";
+    private string hasInputParameter = "HasInput";
 
     private GroundDetector groundDetector;
     private CharacterController characterController;
 
     private bool IsGrounded => groundDetector.IsGrounded;
     private bool IsRolling => characterController.isRolling;
+
+    private bool IsGrabbed => characterController.IsGrabbed;
 
     new private Rigidbody rigidbody;
 
@@ -51,6 +57,8 @@ public class AnimationController : MonoBehaviour
         isFallingHash = Animator.StringToHash(isFalingParameter);
         isRollingHash = Animator.StringToHash(isRollingParameter);
         cantPerformActionHash = Animator.StringToHash(cantPerformActionParameter);
+        hasInputHash = Animator.StringToHash(hasInputParameter);
+        isGrabbedHash = Animator.StringToHash(isGrabbedParameter);
 
         if (animator == null)
         {
@@ -73,46 +81,26 @@ public class AnimationController : MonoBehaviour
         bool RigidbodyGrounded = IsGrounded;
         bool RigidbodyJumping = rigidbody.linearVelocity.y > 0f;
         bool RigidbodyMoving = new Vector3(rigidbody.linearVelocity.x, 0f, rigidbody.linearVelocity.z).sqrMagnitude > 0.01f;
+        bool RigidbodyInput = characterController.SideInput != 0 || characterController.ForwardInput != 0;
+
+        Debug.Log(RigidbodyInput);
 
         if (IsGrounded)
         {
             animator.SetBool(isGroundedHash, true);
             animator.SetBool(isJumpingHash, false);
             animator.SetBool(isFallingHash, false);
-
-            if (IsRolling)
-            {
-                animator.SetBool(isRollingHash, true);
-            }
-            else
-            {
-                animator.SetBool(isRollingHash, false);
-            }
-
-            if (RigidbodyMoving)
-                animator.SetBool(isMovingHash, true);
-            else
-                animator.SetBool(isMovingHash, false);
+            animator.SetBool(isRollingHash, IsRolling);
+            animator.SetBool(isMovingHash, RigidbodyMoving);   
         }
         else
         {
+            animator.SetBool(isGrabbedHash, IsGrabbed);
             animator.SetBool(isGroundedHash, false);
-
-            if (RigidbodyJumping)
-            {
-                animator.SetBool(isJumpingHash, true);
-                animator.SetBool(isFallingHash, false);
-            }
-            else
-            {
-                animator.SetBool(isJumpingHash, false);
-                animator.SetBool(isFallingHash, true);
-            }
-
-            if (RigidbodyMoving)
-                animator.SetBool(isMovingHash, true);
-            else
-                animator.SetBool(isMovingHash, false);
+            animator.SetBool(isJumpingHash, RigidbodyJumping);
+            animator.SetBool(isFallingHash, !RigidbodyJumping);
+            animator.SetBool(hasInputHash,RigidbodyInput);
+            animator.SetBool(isMovingHash, RigidbodyMoving);
         }
     }       
 

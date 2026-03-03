@@ -151,9 +151,17 @@ PrefabInstance:
       propertyPath: m_NormalizedViewPortRect.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5503209485557306345, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 14.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 5503209485557306345, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -6.72
+      objectReference: {fileID: 0}
     - target: {fileID: 6547426620647289602, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -40.97
+      value: -1.2
       objectReference: {fileID: 0}
     - target: {fileID: 6547426620647289602, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -198,7 +206,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 904713327362609751, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 861053152}
   m_SourcePrefab: {fileID: 100100000, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
 --- !u!1001 &67106581
 PrefabInstance:
@@ -226,7 +237,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6547426620647289602, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -23.9
+      value: 1.3400011
       objectReference: {fileID: 0}
     - target: {fileID: 6547426620647289602, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -271,7 +282,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 904713327362609751, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1088150539}
   m_SourcePrefab: {fileID: 100100000, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
 --- !u!1001 &233877679
 PrefabInstance:
@@ -1235,6 +1249,62 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &861053139 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 904713327362609751, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+  m_PrefabInstance: {fileID: 18670247}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &861053152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 861053139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb0594dc0b58ef14998160f1ae31654d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Grabbable
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  groundCheckDistance: 0
+  holdOffset: {x: 0, y: 0, z: 0}
+  holdRotation: {x: 0, y: 0, z: 0, w: 1}
+  resetRotationInAir: 0
+  originalRotation: {x: 0, y: 0, z: 0, w: 0}
+  maxThrowForce: {x: 8, y: 8}
+  minThrowForce: {x: 0, y: 0}
+  forceGrowRate: 2
+--- !u!1 &1088150526 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 904713327362609751, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
+  m_PrefabInstance: {fileID: 67106581}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1088150539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1088150526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb0594dc0b58ef14998160f1ae31654d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Grabbable
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  groundCheckDistance: 0.1
+  holdOffset: {x: 0, y: 0, z: 0}
+  holdRotation: {x: 0, y: 0, z: 0, w: 1}
+  resetRotationInAir: 0
+  originalRotation: {x: 0, y: 0, z: 0, w: 0}
+  maxThrowForce: {x: 8, y: 8}
+  minThrowForce: {x: 0, y: 0}
+  forceGrowRate: 2
 --- !u!1001 &1106368378
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1794,15 +1864,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6274345291150320649, guid: 3d36eb59605316844846b25eff9679af, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -39.47
+      value: -26.28
       objectReference: {fileID: 0}
     - target: {fileID: 6274345291150320649, guid: 3d36eb59605316844846b25eff9679af, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6274345291150320649, guid: 3d36eb59605316844846b25eff9679af, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 19.82
+      value: 16.82
       objectReference: {fileID: 0}
     - target: {fileID: 6274345291150320649, guid: 3d36eb59605316844846b25eff9679af, type: 3}
       propertyPath: m_LocalRotation.w

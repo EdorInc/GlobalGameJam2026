@@ -198,7 +198,7 @@ public class Throw : MonoBehaviour
         Vector3 forwardVelocity = transform.forward * (impulseStrengthFoward / objectMass);
         Vector3 upwardVelocity = Vector3.up * (impulseStrengthUp / objectMass);
 
-        Vector3 launchPosition = grabbedObject.transform.localPosition;
+        Vector3 launchPosition = grabbedObject.transform.position;
         Vector3 launchVelocity = forwardVelocity + upwardVelocity;
         Vector3 launchForce = transform.forward * impulseStrengthFoward + Vector3.up * impulseStrengthUp;
 

@@ -38,6 +38,7 @@ public class CharacterController : MonoBehaviour
 
     private Throw throwComponent;
 
+    private Grabbable grabbableComponent;
     private GameObject currentPlatform => groundDetector.MovingPlatform;
 
     private bool IsGrounded => groundDetector.IsGrounded;
@@ -48,11 +49,16 @@ public class CharacterController : MonoBehaviour
 
     new private Rigidbody rigidbody;
 
+    [HideInInspector]
+    public bool IsGrabbed => grabbableComponent.IsGrabbed;
+    private bool wasGrabbed = false;
+
     private void Start()
     {
         throwComponent = GetComponent<Throw>();
         rigidbody = GetComponent<Rigidbody>();
         groundDetector = GetComponent<GroundDetector>();
+        grabbableComponent = GetComponent<Grabbable>();
     }
 
     void RotateTowardsMovementDirection(Vector3 movementVector, float turnSpeedMultiplier = 1.0f)
@@ -79,6 +85,13 @@ public class CharacterController : MonoBehaviour
     private void FixedUpdate()
     {
         Vector3 horizontalInput = new Vector3(ForwardInput, 0f, SideInput).normalized;
+
+        wasGrabbed = IsGrabbed;
+
+        if (IsGrabbed)
+        {
+            return;
+        }
 
         if(currentPlatform != null)
         {
