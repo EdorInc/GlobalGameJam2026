@@ -1,14 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SFXManager : MonoBehaviour
+public class AudioManager : MonoBehaviour
 {
     [Header("Channels")]
     [SerializeField] private AudioEventChannel generalAudioChannel;
+    [SerializeField] private AudioEventChannel musicAudioChannel;
 
-    [Header("Settings")]
+    [Header("SFX")]
     [SerializeField] private AudioSource audioPrefab;
     [SerializeField] private int poolSize = 5;
+
+    [Header("Music")]
+    [SerializeField] private AudioSource musicSource;
 
     private List<AudioSource> pool = new List<AudioSource>();
 
@@ -30,14 +34,40 @@ public class SFXManager : MonoBehaviour
     {
         if (generalAudioChannel != null)
             generalAudioChannel.OnPlaySound += EnqueueSound;
+
+        if (musicAudioChannel != null)
+            musicAudioChannel.OnPlayMusic += PlayMusic;
     }
 
     private void OnDisable()
     {
         if (generalAudioChannel != null)
             generalAudioChannel.OnPlaySound -= EnqueueSound;
+
+        if (musicAudioChannel != null)
+            musicAudioChannel.OnPlayMusic -= PlayMusic;
     }
 
+    //MUSIC
+    private void PlayMusic(SoundDefinition music)
+    {
+        if (musicSource.isPlaying)
+        {
+            if (musicSource.clip == music.clips[0])
+                return; // already playing this track
+        }
+
+        musicSource.clip = music.clips[0];
+        musicSource.volume = music.volume;
+        musicSource.pitch = 1f;
+        musicSource.loop = music.loop;
+        musicSource.spatialBlend = 0f; // 2D music
+
+        musicSource.Play();
+    }
+
+
+    //SFX
     private void EnqueueSound(SoundDefinition sound, Vector3 position)
     {
         int priority = sound.priority;

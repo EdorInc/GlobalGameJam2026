@@ -10,9 +10,11 @@ using UnityEngine;
 public class AudioEventChannel : ScriptableObject
 {
     public Action<SoundDefinition, Vector3> OnPlaySound;
+    public Action<SoundDefinition> OnPlayMusic;
 
     public void RaiseEvent(SoundDefinition sound, Vector3 position)
     {
         OnPlaySound?.Invoke(sound, position);
+        OnPlayMusic?.Invoke(sound);
     }
 }
