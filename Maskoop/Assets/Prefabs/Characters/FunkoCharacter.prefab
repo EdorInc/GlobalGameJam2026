@@ -83,6 +83,7 @@ GameObject:
   - component: {fileID: 3407257806615490877}
   - component: {fileID: 6532311188431754760}
   - component: {fileID: -5216866879657366040}
+  - component: {fileID: -3770357806278516720}
   m_Layer: 0
   m_Name: FunkoCharacter
   m_TagString: Player
@@ -556,6 +557,29 @@ MonoBehaviour:
   respawnPosition: {x: 0, y: 1, z: 0}
   voidDistance: -3
   willDestroy: 0
+--- !u!114 &-3770357806278516720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6189409550493942852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb0594dc0b58ef14998160f1ae31654d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Grabbable
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  groundCheckDistance: 0
+  holdOffset: {x: 0, y: 0, z: 0}
+  holdRotation: {x: 0, y: 0, z: 0, w: 1}
+  resetRotationInAir: 0
+  originalRotation: {x: 0, y: 0, z: 0, w: 0}
+  maxThrowForce: {x: 8, y: 8}
+  minThrowForce: {x: 0, y: 0}
+  forceGrowRate: 2
 --- !u!1 &8691217799028268263
 GameObject:
   m_ObjectHideFlags: 0

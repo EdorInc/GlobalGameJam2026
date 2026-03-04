@@ -206,10 +206,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 904713327362609751, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 861053152}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
 --- !u!1001 &67106581
 PrefabInstance:
@@ -1249,34 +1246,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &861053139 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 904713327362609751, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
-  m_PrefabInstance: {fileID: 18670247}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &861053152
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 861053139}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb0594dc0b58ef14998160f1ae31654d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Grabbable
-  groundLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  groundCheckDistance: 0
-  holdOffset: {x: 0, y: 0, z: 0}
-  holdRotation: {x: 0, y: 0, z: 0, w: 1}
-  resetRotationInAir: 0
-  originalRotation: {x: 0, y: 0, z: 0, w: 0}
-  maxThrowForce: {x: 8, y: 8}
-  minThrowForce: {x: 0, y: 0}
-  forceGrowRate: 2
 --- !u!1 &1088150526 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 904713327362609751, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
