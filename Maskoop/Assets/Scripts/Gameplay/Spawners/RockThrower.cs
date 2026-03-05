@@ -10,6 +10,7 @@ public class RockThrower : MonoBehaviour
     [SerializeField] float launchForce = 10;
     [SerializeField] protected GameObject rockPrefab;
     [SerializeField] float spawnDelay = 1f;
+    [SerializeField] Grabbable grabbableThrower;
 
     private float currentTimer = 0;
 
@@ -27,7 +28,11 @@ public class RockThrower : MonoBehaviour
    {
         GameObject rockSpawned = Instantiate(rockPrefab, spawnPosition.position, Quaternion.identity);
 
-        Vector3 direction = (spawnPosition.position - transform.position ).normalized;
+        Vector3 direction = (spawnPosition.position - grabbableThrower.transform.position).normalized;
+
+        direction.y = 0;
+
+        Debug.Log(direction);
 
         rockSpawned.GetComponent<Rigidbody>().AddForce(direction * launchForce, ForceMode.Impulse);
    }

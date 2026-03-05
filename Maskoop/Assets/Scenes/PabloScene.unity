@@ -2369,6 +2369,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8545861970733960378, guid: 248a5937099b9014b9b860cb369b44b0, type: 3}
+      propertyPath: grabbableThrower
+      value: 
+      objectReference: {fileID: 8822230893994303831}
     - target: {fileID: 9076754096888523404, guid: 248a5937099b9014b9b860cb369b44b0, type: 3}
       propertyPath: m_Name
       value: RockThower
