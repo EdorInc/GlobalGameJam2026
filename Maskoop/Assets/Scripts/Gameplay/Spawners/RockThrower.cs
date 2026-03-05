@@ -32,8 +32,6 @@ public class RockThrower : MonoBehaviour
 
         direction.y = 0;
 
-        Debug.Log(direction);
-
         rockSpawned.GetComponent<Rigidbody>().AddForce(direction * launchForce, ForceMode.Impulse);
    }
 }

@@ -9,8 +9,11 @@ public class Equip : MonoBehaviour
 
     private Grab grabComponent;
 
+    private CharacterStateController characterState;
+
     void Start()
     {
+        characterState = GetComponent<CharacterStateController>();
         grabComponent = GetComponent<Grab>();
     }
 
@@ -49,16 +52,19 @@ public class Equip : MonoBehaviour
             }
             //If no object is grabbed but an object is equipped you should unEquip
             equipedObject.GetComponent<Equipable>().UnEquip();
+            characterState.UnequipMask();
             grabComponent.grabbedObject = equipedObject;
             equipedObject = null;
             return;
         }
 
         Equipable objectToEquip = grabbedObject.GetComponent<Equipable>();
+        BaseMask maskToEquip = grabbedObject.GetComponent<BaseMask>();
 
-        if(objectToEquip == null)
+
+        if (objectToEquip == null)
         {
-            //Object can be equipped
+            //Object cant be equipped
             EventManager.OnCantPerforAction?.Invoke(true);
             return;
         }
@@ -69,6 +75,11 @@ public class Equip : MonoBehaviour
             equipedObject = grabbedObject;
             grabComponent.grabbedObject = null;
             objectToEquip.Equip(equipedPosition);
+            if (maskToEquip != null)
+            {
+                characterState.EquipMask(maskToEquip);
+            }
+
         }
         else
         {
@@ -77,8 +88,18 @@ public class Equip : MonoBehaviour
             equipedObject.GetComponent<Equipable>().UnEquip();
             equipedObject = grabbedObject;
             grabComponent.grabbedObject = changeAux;
+            grabComponent.DropObject();
             objectToEquip.Equip(equipedPosition);
 
+            if (maskToEquip != null)
+            {
+                characterState.EquipMask(maskToEquip);
+            }
         }
+    }
+
+    public bool IsMaskEquiped()
+    {
+        return equipedObject && equipedObject.CompareTag("Mask");
     }
 }

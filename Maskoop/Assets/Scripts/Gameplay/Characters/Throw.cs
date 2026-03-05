@@ -8,10 +8,12 @@ using UnityEngine.UIElements;
 public class Throw : MonoBehaviour
 {
     private Grab grabComponent;
+    private Equip equipComponent;
     private LineRenderer trajectoryRenderer;
 
     [HideInInspector]
     public GameObject grabbedObject;
+
 
     void Start()
     {
@@ -29,6 +31,14 @@ public class Throw : MonoBehaviour
         if (grabComponent == null)
         {
             Debug.LogError("Grab component missing from Throw script on " + gameObject.name);
+            this.enabled = false;
+        }
+
+        equipComponent = GetComponent<Equip>();
+
+        if (equipComponent == null)
+        {
+            Debug.LogError("Equip component missing from Throw script on " + gameObject.name);
             this.enabled = false;
         }
     }
@@ -101,6 +111,11 @@ public class Throw : MonoBehaviour
 
     public void ChargeObject()
     {
+        if (equipComponent.IsMaskEquiped())
+        {
+            equipComponent.ChangeEquipState();
+            grabbedObject = grabComponent.grabbedObject;
+        }
         if (!charging && grabbedObject != null)
         {
 

@@ -8,6 +8,7 @@ TagManager:
   - Rock
   - Cube
   - MovingPlatform
+  - Mask
   layers:
   - Default
   - TransparentFX

@@ -25,11 +25,10 @@ public class AnimationController : MonoBehaviour
     private string hasInputParameter = "HasInput";
 
     private GroundDetector groundDetector;
-    private CharacterController characterController;
+    private CharacterMovementController characterController;
 
     private bool IsGrounded => groundDetector.IsGrounded;
     private bool IsRolling => characterController.isRolling;
-
     private bool IsGrabbed => characterController.IsGrabbed;
 
     new private Rigidbody rigidbody;
@@ -48,7 +47,7 @@ public class AnimationController : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
         groundDetector = GetComponent<GroundDetector>();
         animator = GetComponent<Animator>();
-        characterController = GetComponent<CharacterController>();
+        characterController = GetComponent<CharacterMovementController>();
 
         isMovingHash = Animator.StringToHash(isMovingParameter);
         isJumpingHash = Animator.StringToHash(isJumpingParameter);
@@ -82,8 +81,6 @@ public class AnimationController : MonoBehaviour
         bool RigidbodyJumping = rigidbody.linearVelocity.y > 0f;
         bool RigidbodyMoving = new Vector3(rigidbody.linearVelocity.x, 0f, rigidbody.linearVelocity.z).sqrMagnitude > 0.01f;
         bool RigidbodyInput = characterController.SideInput != 0 || characterController.ForwardInput != 0;
-
-        Debug.Log(RigidbodyInput);
 
         if (IsGrounded)
         {

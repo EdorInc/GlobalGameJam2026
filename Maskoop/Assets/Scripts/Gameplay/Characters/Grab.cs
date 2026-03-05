@@ -19,6 +19,15 @@ public class Grab : MonoBehaviour
     [SerializeField] private Transform grabbedPosition;
 
 
+    private Equip equipComponent;
+    private CharacterStateController characterState;
+
+    private void Start()
+    {
+        equipComponent = GetComponent<Equip>();
+        characterState = GetComponent<CharacterStateController>();
+    }
+
     void LateUpdate()
     {
         if (grabbedObject != null)
@@ -93,7 +102,22 @@ public class Grab : MonoBehaviour
 
             grabbable.IsGrabbed = true;
 
-            Debug.Log("Grabbed object " + grabbedObject.name);
+            characterState.SetHeldObject(grabbable);
+
+            if (grabbable.gameObject.CompareTag("Player"))
+            {
+                grabbable.gameObject.GetComponent<CharacterStateController>().SetBeingGrabbed(true);
+            }
+
+            if (grabbable.gameObject.CompareTag("Mask"))
+            {
+                equipComponent.ChangeEquipState();
+            }
+            else
+            {
+                Debug.Log("Grabbed object " + grabbedObject.name);
+
+            }
         }
         else
         {
@@ -202,12 +226,18 @@ public class Grab : MonoBehaviour
 
         Rigidbody rb = grabbedObject.GetComponent<Rigidbody>();
 
+        characterState.SetHeldObject(null);
+
         if (rb != null)
         {
             rb.isKinematic = false;
             rb.useGravity = true;
         }
         grabbedObject.GetComponent<Grabbable>().IsGrabbed = false;
+        if (grabbedObject.CompareTag("Player"))
+        {
+            grabbedObject.GetComponent<CharacterStateController>().SetBeingGrabbed(false);
+        }
         grabbedObject = null;
     }
 }
