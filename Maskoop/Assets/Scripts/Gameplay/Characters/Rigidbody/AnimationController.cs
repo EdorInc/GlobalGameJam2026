@@ -25,11 +25,13 @@ public class AnimationController : MonoBehaviour
     private string hasInputParameter = "HasInput";
 
     private GroundDetector groundDetector;
-    private CharacterMovementController characterController;
+    private CharacterMovementController characterMovementController;
+    private CharacterStateController characterState;
 
     private bool IsGrounded => groundDetector.IsGrounded;
-    private bool IsRolling => characterController.isRolling;
-    private bool IsGrabbed => characterController.IsGrabbed;
+    private bool IsRolling => characterMovementController.isRolling;
+    private bool IsGrabbed => characterState.IsBeingGrabbed;
+    private bool IsCharging => characterState.IsChargingThrow;
 
     new private Rigidbody rigidbody;
 
@@ -47,7 +49,9 @@ public class AnimationController : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
         groundDetector = GetComponent<GroundDetector>();
         animator = GetComponent<Animator>();
-        characterController = GetComponent<CharacterMovementController>();
+        characterMovementController = GetComponent<CharacterMovementController>();
+        characterState = GetComponent<CharacterStateController>();
+
 
         isMovingHash = Animator.StringToHash(isMovingParameter);
         isJumpingHash = Animator.StringToHash(isJumpingParameter);
@@ -77,10 +81,9 @@ public class AnimationController : MonoBehaviour
 
     void Update()
     {
-        bool RigidbodyGrounded = IsGrounded;
         bool RigidbodyJumping = rigidbody.linearVelocity.y > 0f;
         bool RigidbodyMoving = new Vector3(rigidbody.linearVelocity.x, 0f, rigidbody.linearVelocity.z).sqrMagnitude > 0.01f;
-        bool RigidbodyInput = characterController.SideInput != 0 || characterController.ForwardInput != 0;
+        bool RigidbodyInput = characterMovementController.SideInput != 0 || characterMovementController.ForwardInput != 0;
 
         if (IsGrounded)
         {
@@ -102,8 +105,15 @@ public class AnimationController : MonoBehaviour
     }       
 
 
-    private void SetCantPerformAction(bool state)
+    private void SetCantPerformAction(GameObject sender)
     {
-        animator.SetTrigger(cantPerformActionHash);
+        CharacterStateController player = sender.GetComponent<CharacterStateController>();
+        if(player != null)
+        {
+            if(player.characterId == GetComponent<CharacterStateController>().characterId)
+            {
+                animator.SetTrigger(cantPerformActionHash);
+            }
+        }
     }
 }

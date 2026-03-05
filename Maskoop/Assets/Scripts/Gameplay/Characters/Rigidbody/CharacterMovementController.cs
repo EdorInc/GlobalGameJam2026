@@ -36,12 +36,12 @@ public class CharacterMovementController : MonoBehaviour
 
     private GroundDetector groundDetector;
 
-    private Throw throwComponent;
-
-    private Grabbable grabbableComponent;
+    private CharacterStateController characterState;
     private GameObject currentPlatform => groundDetector.MovingPlatform;
 
+    private bool IsCharging => characterState.IsChargingThrow;
     private bool IsGrounded => groundDetector.IsGrounded;
+    public bool CanMove => characterState.CanMove();
 
     public float ForwardInput { get; set; }
     public float SideInput { get; set; }
@@ -49,16 +49,11 @@ public class CharacterMovementController : MonoBehaviour
 
     new private Rigidbody rigidbody;
 
-    [HideInInspector]
-    public bool IsGrabbed => grabbableComponent.IsGrabbed;
-    private bool wasGrabbed = false;
-
     private void Start()
     {
-        throwComponent = GetComponent<Throw>();
+        characterState = GetComponent<CharacterStateController>();
         rigidbody = GetComponent<Rigidbody>();
         groundDetector = GetComponent<GroundDetector>();
-        grabbableComponent = GetComponent<Grabbable>();
     }
 
     void RotateTowardsMovementDirection(Vector3 movementVector, float turnSpeedMultiplier = 1.0f)
@@ -69,7 +64,7 @@ public class CharacterMovementController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(
                 transform.rotation,
                 targetRotation,
-                ((!throwComponent.charging) ? turnSpeed : throwingTurnSpeed) * turnSpeedMultiplier * Time.deltaTime
+                ((!IsCharging) ? turnSpeed : throwingTurnSpeed) * turnSpeedMultiplier * Time.deltaTime
             );
         }
     }
@@ -84,16 +79,15 @@ public class CharacterMovementController : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        Vector3 horizontalInput = new Vector3(ForwardInput, 0f, SideInput).normalized;
 
-        wasGrabbed = IsGrabbed;
-
-        if (IsGrabbed)
+        if (!CanMove)
         {
             return;
         }
 
-        if(currentPlatform != null)
+        Vector3 horizontalInput = new Vector3(ForwardInput, 0f, SideInput).normalized;
+
+        if (currentPlatform != null)
         {
             transform.parent.SetParent(currentPlatform.transform);
         }
@@ -130,7 +124,7 @@ public class CharacterMovementController : MonoBehaviour
             else
             {
                 // Apply a forward or backward velocity based on player input
-                Vector3 movementVector = horizontalInput * ((!throwComponent.charging) ? moveSpeed : throwingMoveSpeed);
+                Vector3 movementVector = horizontalInput * ((!IsCharging) ? moveSpeed : throwingMoveSpeed);
 
                 Vector3 finalVelocity = movementVector;
                

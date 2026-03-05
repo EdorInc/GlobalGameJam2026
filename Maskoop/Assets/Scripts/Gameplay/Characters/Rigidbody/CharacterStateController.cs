@@ -3,20 +3,27 @@ using UnityEngine;
 public class CharacterStateController : MonoBehaviour
 {
     [Tooltip("Id of the player")]
-    [SerializeField]private int characterId = -1;
+    public int characterId = -1;
 
 
     public bool IsHoldingObject => heldObject != null;
     public bool IsBeingGrabbed { get; private set; }
+
+    public bool IsChargingThrow => throwComponent.charging;
     public bool HasMaskEquipped => currentMask != null;
 
     private Grabbable heldObject;
     private BaseMask currentMask;
+    private Throw throwComponent;
 
 
+    private void Start()
+    {
+        throwComponent = GetComponent<Throw>();
+    }
     private void Update()
     {
-        currentMask?.updateLogic();
+        currentMask?.UpdateLogic();
     }
 
     public void SetHeldObject(Grabbable obj)

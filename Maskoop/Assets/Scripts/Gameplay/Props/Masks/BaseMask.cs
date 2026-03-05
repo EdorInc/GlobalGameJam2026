@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class BaseMask : MonoBehaviour
 {
-    public abstract void updateLogic();
+    public abstract void UpdateLogic();
 
     public abstract void OnUnequip();
 
