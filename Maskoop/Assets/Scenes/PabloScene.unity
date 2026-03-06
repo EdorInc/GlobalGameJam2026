@@ -2000,6 +2000,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6512683557164225755, guid: 13f8a92061617c6438166683dd3d3e71, type: 3}
+      propertyPath: groundCheckDistance
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 8731178097982571527, guid: 13f8a92061617c6438166683dd3d3e71, type: 3}
       propertyPath: m_Name
       value: FunkoPlayer1
@@ -2371,6 +2375,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4440133813229890450, guid: b60a9515b2028484bae18b35b70e99c8, type: 3}
+      propertyPath: groundCheckDistance
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 5726695309184281844, guid: b60a9515b2028484bae18b35b70e99c8, type: 3}
       propertyPath: simulationObstaclesParent
       value: 

@@ -290,6 +290,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FunkoCharacter1
       objectReference: {fileID: 0}
+    - target: {fileID: 6750556965445416539, guid: befe075e024e9144996dd0d6d51798e4, type: 3}
+      propertyPath: groundCheckDistance
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 7439378836434446538, guid: befe075e024e9144996dd0d6d51798e4, type: 3}
       propertyPath: airControlMultiplier
       value: 1

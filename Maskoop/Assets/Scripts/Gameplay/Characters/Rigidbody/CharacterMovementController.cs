@@ -8,12 +8,6 @@ public class CharacterMovementController : MonoBehaviour
     public float moveSpeed = 5f;
     [Tooltip("Turn speed.")]
     public float turnSpeed = 10f;
-
-    [Header("Jump Settings")]
-    [Tooltip("Whether the character can jump")]
-    public bool allowJump = false;
-    [Tooltip("Upward speed to apply when jumping.")]
-    public float jumpSpeed = 3f;
     [Tooltip("Multiplier for horizontal control while in the air.")]
     public float airControlMultiplier = 0.5f;
 
@@ -45,7 +39,6 @@ public class CharacterMovementController : MonoBehaviour
 
     public float ForwardInput { get; set; }
     public float SideInput { get; set; }
-    public bool JumpInput { get; set; }
 
     new private Rigidbody rigidbody;
 
@@ -87,6 +80,12 @@ public class CharacterMovementController : MonoBehaviour
 
         Vector3 horizontalInput = new Vector3(ForwardInput, 0f, SideInput).normalized;
 
+        // Reset the velocity
+        Vector3 currentVel = rigidbody.linearVelocity;
+        currentVel.x = 0;
+        currentVel.z = 0;
+        rigidbody.linearVelocity = currentVel;
+
         if (currentPlatform != null)
         {
             transform.parent.SetParent(currentPlatform.transform);
@@ -96,32 +95,25 @@ public class CharacterMovementController : MonoBehaviour
             transform.parent.SetParent(null);
         }
 
-        if (IsGrounded)
+        if (isRolling)
         {
-            // Reset the velocity
-            Vector3 currentVel = rigidbody.linearVelocity;
-            currentVel.x = 0;
-            currentVel.z = 0;
-            rigidbody.linearVelocity = currentVel;
+            Vector3 dashDirection = transform.forward;
+            dashDirection.y = 0;
 
-            // Check if trying to jump
-            if (JumpInput && allowJump)
-                rigidbody.linearVelocity += Vector3.up * jumpSpeed;
+            rigidbody.linearVelocity += dashDirection * rollSpeed * Time.deltaTime;
+            currentRollTime += Time.deltaTime;
 
-            if (isRolling)
+            if (currentRollTime > rollTime)
             {
-                rigidbody.linearVelocity += transform.forward * rollSpeed * Time.deltaTime;
-
-                currentRollTime += Time.deltaTime;
-
-                if(currentRollTime > rollTime)
-                {
-                    currentRollTime = 0;
-                    isRolling = false;
-                }
-
+                currentRollTime = 0;
+                isRolling = false;
             }
-            else
+
+        }
+
+        if (IsGrounded)
+        {   
+            if(!isRolling)
             {
                 // Apply a forward or backward velocity based on player input
                 Vector3 movementVector = horizontalInput * ((!IsCharging) ? moveSpeed : throwingMoveSpeed);
@@ -137,7 +129,6 @@ public class CharacterMovementController : MonoBehaviour
         }
         else
         {
-            isRolling = false;
             if (!Mathf.Approximately(ForwardInput, 0f) || !Mathf.Approximately(SideInput, 0f))
             {
                 Vector3 airMovementVector = horizontalInput * (moveSpeed * airControlMultiplier);
