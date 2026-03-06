@@ -4,7 +4,7 @@ public class AirMask : BaseMask
 {
     [Header("Flutter Settings")]
     [Tooltip("Reduction in speed of the flutter")]
-    [SerializeField] private float flutterSpeedReduction = 0;
+    [SerializeField] private float flutterSliperness = 0;
     [Tooltip("Time the player remains in the flutter state")]
     [SerializeField] private float flutterTime = 2;
 
@@ -14,6 +14,7 @@ public class AirMask : BaseMask
     private Rigidbody playerRigidBody;
 
     private float currentFloatTime = 0;
+    private Vector3 lastSpeed = Vector3.zero;
 
     public override void OnUnequip()
     {
@@ -41,7 +42,7 @@ public class AirMask : BaseMask
         {
             playerRigidBody = target.GetComponent<Rigidbody>();
             IsFluttering = true;
-            playerRigidBody.useGravity = false;
+            playerRigidBody.constraints = RigidbodyConstraints.FreezePositionY;
             characterState.IsFloating = true;
         }
     }
@@ -59,18 +60,22 @@ public class AirMask : BaseMask
     {
         IsFluttering = false;
         currentFloatTime = 0;
-        playerRigidBody.useGravity = true;
+        playerRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
         characterState.IsFloating = false;
+        lastSpeed = Vector3.zero;
     }
 
     public override void FixedUpdateLogic()
     {
         if (IsFluttering)
         {
-            Vector3 velocity = playerRigidBody.linearVelocity;
-            velocity.y = 0;
-            playerRigidBody.linearVelocity = velocity * 3f;
+            Vector3 targetSpeed = playerRigidBody.linearVelocity;
+
+            targetSpeed = Vector3.MoveTowards(lastSpeed, targetSpeed, Time.deltaTime * flutterSliperness);
+
+            playerRigidBody.linearVelocity = targetSpeed;
             currentFloatTime += Time.deltaTime;
+            lastSpeed = playerRigidBody.linearVelocity;
         }
         if (currentFloatTime > flutterTime)
         {

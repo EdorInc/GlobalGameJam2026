@@ -1498,8 +1498,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f8f5c677ed3ca9499f92725cf4a9f9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AirMask
-  flutterSpeedReduction: 0
-  flutterTime: 1
+  flutterSliperness: 5
+  flutterTime: 10
 --- !u!4 &1926420739 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8009533574091425967, guid: 5d1ab1e1a959dd2488a1eeb106076dec, type: 3}
@@ -2020,6 +2020,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3863490123164622529, guid: 13f8a92061617c6438166683dd3d3e71, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6956452054261950646, guid: 13f8a92061617c6438166683dd3d3e71, type: 3}
+      propertyPath: m_AngularDamping
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8731178097982571527, guid: 13f8a92061617c6438166683dd3d3e71, type: 3}
