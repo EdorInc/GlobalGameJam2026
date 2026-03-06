@@ -3,9 +3,14 @@ using UnityEngine;
 
 public abstract class BaseMask : MonoBehaviour
 {
+    protected CharacterStateController characterState;
+
     public abstract void UpdateLogic();
 
     public abstract void OnUnequip();
 
-    public abstract void OnEquip();
+    public virtual void OnEquip(CharacterStateController characterState)
+    {
+        this.characterState = characterState;
+    }
 }

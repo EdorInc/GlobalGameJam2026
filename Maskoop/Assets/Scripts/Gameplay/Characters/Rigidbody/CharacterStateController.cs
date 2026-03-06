@@ -52,7 +52,7 @@ public class CharacterStateController : MonoBehaviour
 
         if (currentMask != null)
         {
-            currentMask.OnEquip();
+            currentMask.OnEquip(this);
         }
     }
 

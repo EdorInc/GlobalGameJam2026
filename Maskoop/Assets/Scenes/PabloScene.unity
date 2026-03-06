@@ -1481,6 +1481,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1907491566 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6079786050083026125, guid: d8b28f6bedeb6b04ab619f0043d165a8, type: 3}
+  m_PrefabInstance: {fileID: 2116083841}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1907491572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907491566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f8f5c677ed3ca9499f92725cf4a9f9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AirMask
 --- !u!4 &1926420739 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8009533574091425967, guid: 5d1ab1e1a959dd2488a1eeb106076dec, type: 3}
@@ -1889,7 +1906,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6079786050083026125, guid: d8b28f6bedeb6b04ab619f0043d165a8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1907491572}
   m_SourcePrefab: {fileID: 100100000, guid: d8b28f6bedeb6b04ab619f0043d165a8, type: 3}
 --- !u!1001 &1009719895856197587
 PrefabInstance:
@@ -1999,10 +2019,6 @@ PrefabInstance:
     - target: {fileID: 3863490123164622529, guid: 13f8a92061617c6438166683dd3d3e71, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6512683557164225755, guid: 13f8a92061617c6438166683dd3d3e71, type: 3}
-      propertyPath: groundCheckDistance
-      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8731178097982571527, guid: 13f8a92061617c6438166683dd3d3e71, type: 3}
       propertyPath: m_Name
@@ -2375,10 +2391,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4440133813229890450, guid: b60a9515b2028484bae18b35b70e99c8, type: 3}
-      propertyPath: groundCheckDistance
-      value: 0.1
-      objectReference: {fileID: 0}
     - target: {fileID: 5726695309184281844, guid: b60a9515b2028484bae18b35b70e99c8, type: 3}
       propertyPath: simulationObstaclesParent
       value: 
