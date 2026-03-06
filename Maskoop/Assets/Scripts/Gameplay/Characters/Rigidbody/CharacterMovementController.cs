@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+[DefaultExecutionOrder(-300)]
 public class CharacterMovementController : MonoBehaviour
 {
     [Header("Movement Settings")]
@@ -32,10 +32,13 @@ public class CharacterMovementController : MonoBehaviour
 
     private CharacterStateController characterState;
     private GameObject currentPlatform => groundDetector.MovingPlatform;
+    private bool wasGrounded = false;
 
     private bool IsCharging => characterState.IsChargingThrow;
     private bool IsGrounded => groundDetector.IsGrounded;
-    public bool CanMove => characterState.CanMove();
+    private bool CanMove => characterState.CanMove();
+
+    private bool IsFloating => characterState.IsFloating;
 
     public float ForwardInput { get; set; }
     public float SideInput { get; set; }
@@ -80,12 +83,6 @@ public class CharacterMovementController : MonoBehaviour
 
         Vector3 horizontalInput = new Vector3(ForwardInput, 0f, SideInput).normalized;
 
-        // Reset the velocity
-        Vector3 currentVel = rigidbody.linearVelocity;
-        currentVel.x = 0;
-        currentVel.z = 0;
-        rigidbody.linearVelocity = currentVel;
-
         if (currentPlatform != null)
         {
             transform.parent.SetParent(currentPlatform.transform);
@@ -100,7 +97,7 @@ public class CharacterMovementController : MonoBehaviour
             Vector3 dashDirection = transform.forward;
             dashDirection.y = 0;
 
-            rigidbody.linearVelocity += dashDirection * rollSpeed * Time.deltaTime;
+            rigidbody.linearVelocity = dashDirection * rollSpeed * Time.deltaTime;
             currentRollTime += Time.deltaTime;
 
             if (currentRollTime > rollTime)
@@ -129,16 +126,25 @@ public class CharacterMovementController : MonoBehaviour
         }
         else
         {
-            if (!Mathf.Approximately(ForwardInput, 0f) || !Mathf.Approximately(SideInput, 0f))
-            {
-                Vector3 airMovementVector = horizontalInput * (moveSpeed * airControlMultiplier);
-                
-                RotateTowardsMovementDirection(airMovementVector, airControlMultiplier);
 
-                // Preserve vertical velocity while in the air
-                airMovementVector.y = rigidbody.linearVelocity.y; 
-                rigidbody.linearVelocity = airMovementVector;
-            }
+            Vector3 airMovementVector = horizontalInput * (moveSpeed * airControlMultiplier);
+
+            RotateTowardsMovementDirection(airMovementVector, airControlMultiplier);
+
+            // Preserve vertical velocity while in the air
+            airMovementVector.y = rigidbody.linearVelocity.y;
+            rigidbody.linearVelocity = airMovementVector;
         }
+
+        if(wasGrounded && !IsGrounded)
+        {
+            EventManager.OnFallStarted?.Invoke(gameObject);
+        }
+        if(!wasGrounded && IsGrounded)
+        {
+            EventManager.OnFallEnded?.Invoke(gameObject);
+        }
+
+        wasGrounded = IsGrounded;
     }
 }

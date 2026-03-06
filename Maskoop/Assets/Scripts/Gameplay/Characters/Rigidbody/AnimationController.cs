@@ -13,6 +13,7 @@ public class AnimationController : MonoBehaviour
     private int cantPerformActionHash;
     private int isGrabbedHash;
     private int hasInputHash;
+    private int isFloatingHash;
 
     private string isMovingParameter = "IsMoving";
     private string isJumpingParameter = "IsJumping";
@@ -23,6 +24,7 @@ public class AnimationController : MonoBehaviour
     private string cantPerformActionParameter = "CantPerformAction";
     private string isGrabbedParameter = "IsGrabbed";
     private string hasInputParameter = "HasInput";
+    private string isFloatingParameter = "IsFloating";
 
     private GroundDetector groundDetector;
     private CharacterMovementController characterMovementController;
@@ -32,6 +34,8 @@ public class AnimationController : MonoBehaviour
     private bool IsRolling => characterMovementController.isRolling;
     private bool IsGrabbed => characterState.IsBeingGrabbed;
     private bool IsCharging => characterState.IsChargingThrow;
+
+    private bool IsFloating => characterState.IsFloating;
 
     new private Rigidbody rigidbody;
 
@@ -62,6 +66,7 @@ public class AnimationController : MonoBehaviour
         cantPerformActionHash = Animator.StringToHash(cantPerformActionParameter);
         hasInputHash = Animator.StringToHash(hasInputParameter);
         isGrabbedHash = Animator.StringToHash(isGrabbedParameter);
+        isFloatingHash = Animator.StringToHash(isFloatingParameter);
 
         if (animator == null)
         {
@@ -85,6 +90,8 @@ public class AnimationController : MonoBehaviour
         bool RigidbodyMoving = new Vector3(rigidbody.linearVelocity.x, 0f, rigidbody.linearVelocity.z).sqrMagnitude > 0.01f;
         bool RigidbodyInput = characterMovementController.SideInput != 0 || characterMovementController.ForwardInput != 0;
 
+
+        animator.SetBool(isFloatingHash, IsFloating);
         if (IsGrounded)
         {
             animator.SetBool(isGroundedHash, true);
