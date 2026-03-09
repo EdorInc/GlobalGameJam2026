@@ -20,12 +20,14 @@ public class AirMask : BaseMask
     private Vector3 lastSpeed = Vector3.zero;
 
     private GameObject windParticlesObject;
+    private Vector3 currentSpeed = Vector3.zero;
 
     public override void OnUnequip()
     {
-        Debug.Log("Me quito la mascara verde");
         EventManager.OnFallStarted -= StartFlutter;
         EventManager.OnFallEnded -= EndFlutter;
+        EventManager.OnAirCurrentEnter -= AirCurrentEnter;
+        EventManager.OnAirCurrentExit -= AirCurrentExit;
         Destroy(windParticlesObject);
     }
 
@@ -36,10 +38,11 @@ public class AirMask : BaseMask
     public override void OnEquip(CharacterStateController characterState)
     {
         base.OnEquip(characterState);
-        Debug.Log("Tengo la mascara verde");
 
         EventManager.OnFallStarted += StartFlutter;
         EventManager.OnFallEnded += EndFlutter;
+        EventManager.OnAirCurrentEnter += AirCurrentEnter;
+        EventManager.OnAirCurrentExit += AirCurrentExit;
     }
 
     public void StartFlutter(GameObject target)
@@ -73,8 +76,6 @@ public class AirMask : BaseMask
                     target.transform
                 );
             }
-     
-
         }
     }
 
@@ -91,7 +92,10 @@ public class AirMask : BaseMask
     {
         IsFluttering = false;
         currentFloatTime = 0;
-        playerRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
+        if(playerRigidBody != null)
+        {
+            playerRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
+        }
         characterState.IsFloating = false;
         lastSpeed = Vector3.zero;
         windParticlesObject.SetActive(false);
@@ -109,10 +113,43 @@ public class AirMask : BaseMask
             currentFloatTime += Time.deltaTime;
             lastSpeed = playerRigidBody.linearVelocity;
         }
+        if(currentSpeed != Vector3.zero)
+        {
+            playerRigidBody?.AddForce(currentSpeed);
+            if (IsFluttering)
+            {
+                ResetFlutter();
+            }
+        }
         if (currentFloatTime > flutterTime)
         {
             ResetFlutter();
         }
-        Debug.Log("Update la mascara verde");
+
+    }
+
+    public void AirCurrentEnter(Collider collider, Vector3 force)
+    {
+        if (characterState.IsMyPlayer(collider.gameObject))
+        {
+            if (IsFluttering)
+            {
+                ResetFlutter();
+            }
+            playerRigidBody = collider.attachedRigidbody;
+            currentSpeed = force;
+            Debug.Log("ENTRADO");
+        } 
+    }
+
+    public void AirCurrentExit(Collider collider)
+    {
+        if (characterState.IsMyPlayer(collider.gameObject))
+        {
+            currentSpeed = Vector3.zero;
+            if(!IsFluttering)
+                playerRigidBody = null;
+            Debug.Log("SALIDO");
+        }
     }
 }
