@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 [DefaultExecutionOrder(-300)]
@@ -33,11 +34,13 @@ public class CharacterMovementController : MonoBehaviour
     private CharacterStateController characterState;
     private GameObject currentPlatform => groundDetector.MovingPlatform;
     private bool wasGrounded = false;
-
+    private bool isBeingThrown = false;
+    private bool wasGrabbed = false;
     private bool IsCharging => characterState.IsChargingThrow;
     private bool IsGrounded => groundDetector.IsGrounded;
     private bool CanMove => characterState.CanMove();
 
+    private bool IsGrabbed => characterState.IsBeingGrabbed;
     private bool IsFloating => characterState.IsFloating;
 
     public float ForwardInput { get; set; }
@@ -75,12 +78,30 @@ public class CharacterMovementController : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
+        
+        
+        Debug.Log(IsGrabbed);
+        if (wasGrabbed && !IsGrabbed)
+        {
+            isBeingThrown = true;
+        }
+        if (!wasGrounded && IsGrounded)
+        {
+            EventManager.OnFallEnded?.Invoke(gameObject);
+            isBeingThrown = false;
+        }
+        if (wasGrounded && !IsGrounded)
+        {
+            EventManager.OnFallStarted?.Invoke(gameObject);
+        }
 
-        if (!CanMove)
+        wasGrounded = IsGrounded;
+        wasGrabbed = IsGrabbed;
+        if (!CanMove || isBeingThrown)
         {
             return;
         }
-
+        
         Vector3 horizontalInput = new Vector3(ForwardInput, 0f, SideInput).normalized;
 
         if (currentPlatform != null)
@@ -126,7 +147,6 @@ public class CharacterMovementController : MonoBehaviour
         }
         else
         {
-
             Vector3 airMovementVector = horizontalInput * (moveSpeed * airControlMultiplier);
 
             RotateTowardsMovementDirection(airMovementVector, airControlMultiplier);
@@ -136,15 +156,7 @@ public class CharacterMovementController : MonoBehaviour
             rigidbody.linearVelocity = airMovementVector;
         }
 
-        if(wasGrounded && !IsGrounded)
-        {
-            EventManager.OnFallStarted?.Invoke(gameObject);
-        }
-        if(!wasGrounded && IsGrounded)
-        {
-            EventManager.OnFallEnded?.Invoke(gameObject);
-        }
+       
 
-        wasGrounded = IsGrounded;
     }
 }
