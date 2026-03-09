@@ -10,7 +10,7 @@ public class Throw : MonoBehaviour
     private Grab grabComponent;
     private Equip equipComponent;
     private LineRenderer trajectoryRenderer;
-
+    
     [HideInInspector]
     public GameObject grabbedObject;
 

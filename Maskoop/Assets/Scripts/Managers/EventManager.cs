@@ -9,4 +9,5 @@ public static class EventManager
     public static Action<GameObject> OnFallEnded;
     public static Action<Collider, Vector3> OnAirCurrentEnter;
     public static Action<Collider> OnAirCurrentExit;
+    public static Action<GameObject> OnDamageRecived;
 }

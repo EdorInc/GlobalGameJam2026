@@ -215,7 +215,17 @@ public class Grab : MonoBehaviour
 
     public void DropObject()
     {
-        if (grabbedObject == null) return;
+        if (grabbedObject == null)
+        {
+            if (equipComponent.IsMaskEquiped())
+            {
+                equipComponent.ChangeEquipState();
+            }
+            else
+            {
+                return;
+            }
+        }
 
         Collider collider = grabbedObject.GetComponent<Collider>();
 

@@ -17,12 +17,24 @@ public class CharacterStateController : MonoBehaviour
     private Grabbable heldObject;
     private BaseMask currentMask;
     private Throw throwComponent;
-
+    private Grab grabComponent;
 
     private void Start()
     {
         throwComponent = GetComponent<Throw>();
+        grabComponent = GetComponent<Grab>();
     }
+
+    private void OnEnable()
+    {
+        EventManager.OnDamageRecived += ReciveDamage;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.OnDamageRecived -= ReciveDamage;
+    }
+
     private void Update()
     {
         currentMask?.UpdateLogic();
@@ -90,5 +102,13 @@ public class CharacterStateController : MonoBehaviour
             return false;
         }
         return otherplayer.characterId == this.characterId;
+    }
+
+    public void ReciveDamage(GameObject player)
+    {
+        if (IsMyPlayer(player))
+        {
+            grabComponent.DropObject();
+        }
     }
 }
