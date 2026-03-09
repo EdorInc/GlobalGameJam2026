@@ -29,7 +29,7 @@ public class PointGenerator : MonoBehaviour
     [Range(0f, 5f)] public float length2;
     public GameObject domainGameObject;
 
-    private List<Transform> tempPoints;
+    private List<Transform> tempPoints = new List<Transform>();
     private bool dtIsClean;
     private DelaunayTetrahedralization dt;
     private Vector3 lowerBound;
