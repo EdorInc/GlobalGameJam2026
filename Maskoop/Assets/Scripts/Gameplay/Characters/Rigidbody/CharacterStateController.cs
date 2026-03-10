@@ -24,17 +24,6 @@ public class CharacterStateController : MonoBehaviour
         throwComponent = GetComponent<Throw>();
         grabComponent = GetComponent<Grab>();
     }
-
-    private void OnEnable()
-    {
-        EventManager.OnDamageRecived += ReciveDamage;
-    }
-
-    private void OnDisable()
-    {
-        EventManager.OnDamageRecived -= ReciveDamage;
-    }
-
     private void Update()
     {
         currentMask?.UpdateLogic();
@@ -104,11 +93,17 @@ public class CharacterStateController : MonoBehaviour
         return otherplayer.characterId == this.characterId;
     }
 
-    public void ReciveDamage(GameObject player)
+    public void ReciveDamage(float hitTime)
     {
-        if (IsMyPlayer(player))
+        if (HasMaskEquipped)
         {
-            grabComponent.DropObject();
+            UnequipMask();
+            Invoke(nameof(DelayDrop), hitTime);
         }
+    }
+
+    private void DelayDrop()
+    {
+        grabComponent.DropObject();
     }
 }

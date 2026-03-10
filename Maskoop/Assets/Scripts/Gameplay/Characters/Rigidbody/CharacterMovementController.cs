@@ -29,6 +29,14 @@ public class CharacterMovementController : MonoBehaviour
     [Tooltip("Turn speed when throwing.")]
     public float throwingTurnSpeed = 6f;
 
+    [Header("Hit settings")]
+    [Tooltip("Magnitud of force added to the player when getting hit")]
+    [SerializeField] private float hitKnockBackForce = 20;
+    [Tooltip("Magnitud of upwards force added to the player when getting hit")]
+    [SerializeField] private float hitKnockBackUpwardsForce = 10;
+    [Tooltip("Time the player wont be able to move after getting hit")]
+    [SerializeField] private float hitStunTime = 1;
+
     private GroundDetector groundDetector;
 
     private CharacterStateController characterState;
@@ -36,6 +44,8 @@ public class CharacterMovementController : MonoBehaviour
     private bool wasGrounded = false;
     private bool isBeingThrown = false;
     private bool wasGrabbed = false;
+    private float currentHitTime = 0;
+    private bool isStunned = false;
     private bool IsCharging => characterState.IsChargingThrow;
     private bool IsGrounded => groundDetector.IsGrounded;
     private bool CanMove => characterState.CanMove();
@@ -53,6 +63,30 @@ public class CharacterMovementController : MonoBehaviour
         characterState = GetComponent<CharacterStateController>();
         rigidbody = GetComponent<Rigidbody>();
         groundDetector = GetComponent<GroundDetector>();
+    }
+
+    private void OnEnable()
+    {
+        EventManager.OnDamageRecived += ReciveDamage;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.OnDamageRecived -= ReciveDamage;
+    }
+
+    private void Update()
+    {
+        if(isStunned)
+        {
+            currentHitTime += Time.deltaTime;
+        }
+
+        if(currentHitTime > hitStunTime)
+        {
+            currentHitTime = 0;
+            isStunned = false;
+        }
     }
 
     void RotateTowardsMovementDirection(Vector3 movementVector, float turnSpeedMultiplier = 1.0f)
@@ -78,9 +112,6 @@ public class CharacterMovementController : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        
-        
-        Debug.Log(IsGrabbed);
         if (wasGrabbed && !IsGrabbed)
         {
             isBeingThrown = true;
@@ -97,7 +128,7 @@ public class CharacterMovementController : MonoBehaviour
 
         wasGrounded = IsGrounded;
         wasGrabbed = IsGrabbed;
-        if (!CanMove || isBeingThrown)
+        if (!CanMove || isBeingThrown || isStunned)
         {
             return;
         }
@@ -158,5 +189,20 @@ public class CharacterMovementController : MonoBehaviour
 
        
 
+    }
+
+
+    public void ReciveDamage(GameObject player, Vector3 hitPosition)
+    {
+        if (characterState.IsMyPlayer(player))
+        {
+            Vector3 knockBackDirection = (transform.position - hitPosition).normalized;
+
+            rigidbody.AddForce(knockBackDirection * hitKnockBackForce + Vector3.up * hitKnockBackUpwardsForce, ForceMode.Impulse);
+            isStunned = true;
+            Debug.Log("HITED");
+            currentHitTime = 0;
+            characterState.ReciveDamage(hitStunTime);
+        }
     }
 }

@@ -41,7 +41,7 @@ public class Respawn : MonoBehaviour
         
     }
 
-    void RespawnFunction()
+    public void RespawnFunction()
     {
         rigidbody.position = respawnPosition;
     }

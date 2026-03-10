@@ -4,9 +4,14 @@ public class ContactDamage : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+       
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
         {
-            EventManager.OnDamageRecived?.Invoke(other.gameObject);
+            EventManager.OnDamageRecived?.Invoke(collision.gameObject, collision.contacts[0].point);
         }
     }
 }
