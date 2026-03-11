@@ -79,6 +79,8 @@ public class MapEditor : MonoBehaviour
                 DestroyImmediate(t.GetChild(i).gameObject);
             }
         }
+
+        mapGrid.gameObject.SetActive(true);
     }
 
     [ContextMenu("Generate map")]
@@ -261,6 +263,7 @@ public class MapEditor : MonoBehaviour
             }
 
         mapGrid.gameObject.SetActive(false);
+
         mapPrefab = root;
     }
 
@@ -292,5 +295,7 @@ public class MapEditor : MonoBehaviour
         DestroyImmediate(mapPrefab);
 
         mapPrefab = null;
+
+        mapGrid.gameObject.SetActive(true);
     }
 }
