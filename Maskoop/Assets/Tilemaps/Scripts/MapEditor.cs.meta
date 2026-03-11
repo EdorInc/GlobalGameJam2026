@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: f6adab8290c8e5d44bcc0c5ca54a5b5f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - mapGrid: {instanceID: 0}
+  - floorBrush: {fileID: 6487881303263944399, guid: e295b66982aa63246a5b974a92f01908, type: 3}
+  - wallBrush: {fileID: 6487881303263944399, guid: 462932b4c840f9943856424c843b771a, type: 3}
+  - floorPrefab: {fileID: 6487881303263944399, guid: 90060c1db4e26244db3c2c7f02206c36, type: 3}
+  - wallPrefab: {fileID: 6487881303263944399, guid: 5e51d708c74e5354da694aa7fd6a29d9, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

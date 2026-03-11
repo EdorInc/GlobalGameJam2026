@@ -6,14 +6,12 @@ using UnityEngine.Tilemaps;
 using System.IO;
 using static Unity.VisualScripting.Metadata;
 
-public class PrefabGenerator : MonoBehaviour
+public class MapEditor : MonoBehaviour
 {
     [Header("Map Settings")]
     [SerializeField] Grid mapGrid;
 
     [Header("Save Settings")]
-    [SerializeField] bool saveMap = true;
-    [SerializeField] bool saveGrid = true;
     [SerializeField] string mapName = "ExampleMap";
     [SerializeField] string mapFolder = "Assets/Prefabs/Maps";
     [SerializeField] string gridFolder = "Assets/Tilemaps/Maps";
@@ -25,6 +23,8 @@ public class PrefabGenerator : MonoBehaviour
     [Header("Final Prefabs")]
     [SerializeField] GameObject floorPrefab;
     [SerializeField] GameObject wallPrefab;
+
+    private GameObject mapPrefab;
 
     enum WallOrientation
     {
@@ -55,18 +55,47 @@ public class PrefabGenerator : MonoBehaviour
         return path;
     }
 
-    [ContextMenu("Save")]
-    void Save()
+    [ContextMenu("Save grid")]
+    void SaveGrid()
+    {
+        EnsureFolder(gridFolder);
+
+        string gridPath = GetUniquePath(gridFolder, mapName);
+        PrefabUtility.SaveAsPrefabAsset(mapGrid.gameObject, gridPath);
+        Debug.Log($"Grid saved: {gridPath}");
+    }
+
+    [ContextMenu("Clear grid")]
+    void ClearGrid()
     {
         Tilemap[] levels = mapGrid.GetComponentsInChildren<Tilemap>();
 
-        // Ensure folders exist
-        EnsureFolder(mapFolder);
-        EnsureFolder(gridFolder);
+        foreach (Tilemap level in levels)
+        {
+            Transform t = level.transform;
+
+            for (int i = t.childCount - 1; i >= 0; i--)
+            {
+                DestroyImmediate(t.GetChild(i).gameObject);
+            }
+        }
+    }
+
+    [ContextMenu("Generate map")]
+    void GenerateMap()
+    {
+        if (mapPrefab != null)
+        {
+            Debug.LogError("Map prefab is already assigned.");
+            return;
+        }
+
+        Tilemap[] levels = mapGrid.GetComponentsInChildren<Tilemap>();
 
         // Root that will contain all levels
         GameObject root = new GameObject(mapName);
         root.transform.position = mapGrid.transform.position;
+        WallEditor wallEditor = root.AddComponent<WallEditor>();
 
         for (int i = 0; i < levels.Length; i++)
         {
@@ -231,21 +260,37 @@ public class PrefabGenerator : MonoBehaviour
                 }
             }
 
-        if (saveMap)
-        {
-            string mapPath = GetUniquePath(mapFolder, mapName);
-            PrefabUtility.SaveAsPrefabAsset(root, mapPath);
-            Debug.Log($"Map saved: {mapPath}");
-        }
-
-        if (saveGrid)
-        {
-            string gridPath = GetUniquePath(gridFolder, mapName);
-            PrefabUtility.SaveAsPrefabAsset(mapGrid.gameObject, gridPath);
-            Debug.Log($"Grid saved: {gridPath}");
-        }
-
         mapGrid.gameObject.SetActive(false);
+        mapPrefab = root;
+    }
 
+    [ContextMenu("Save map")]
+    void SaveMap()
+    {
+        if (mapPrefab == null)
+        {
+            Debug.LogError("Map prefab is not assigned.");
+            return;
+        }
+
+        EnsureFolder(mapFolder);
+
+        string mapPath = GetUniquePath(mapFolder, mapName);
+        PrefabUtility.SaveAsPrefabAsset(mapPrefab, mapPath);
+        Debug.Log($"Map saved: {mapPath}");
+    }
+
+    [ContextMenu("Clear map")]
+    void ClearMap()
+    {
+        if (mapPrefab == null)
+        {
+            Debug.LogError("Map prefab is not assigned.");
+            return;
+        }
+
+        DestroyImmediate(mapPrefab);
+
+        mapPrefab = null;
     }
 }
