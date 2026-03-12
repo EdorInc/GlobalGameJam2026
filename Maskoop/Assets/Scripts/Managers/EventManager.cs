@@ -10,4 +10,5 @@ public static class EventManager
     public static Action<Collider, Vector3> OnAirCurrentEnter;
     public static Action<Collider> OnAirCurrentExit;
     public static Action<GameObject,Vector3> OnDamageRecived;
+    public static Action<NavMeshManager> OnNavMeshUpdate;
 }

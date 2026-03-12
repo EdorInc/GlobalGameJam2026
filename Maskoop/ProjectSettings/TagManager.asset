@@ -9,6 +9,7 @@ TagManager:
   - Cube
   - MovingPlatform
   - Mask
+  - Enemy
   layers:
   - Default
   - TransparentFX
