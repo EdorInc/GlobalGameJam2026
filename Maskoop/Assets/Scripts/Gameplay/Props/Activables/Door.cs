@@ -5,7 +5,7 @@ public class Door : ActivableBase
     [Header("Position Settings")]
     [SerializeField]
     [Tooltip("Position of the door/bridge when it opens")]
-    private Transform openPosition;
+    protected Transform openPosition;
 
     [Header("Movement Settings")]
     [SerializeField]

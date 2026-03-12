@@ -1,5 +1,12 @@
 fileFormatVersion: 2
-guid: 377c787ff1df23d42a111b02bef0b2c5
+guid: bb4def3467aaf224fa3d84ea39bb882b
+AssetOrigin:
+  serializedVersion: 1
+  productId: 180041
+  packageName: Texture Pack Bricks 'n Blocks
+  packageVersion: 1.0
+  assetPath: Assets/Texture Bricks 'n Blocks/Textures/Brick_shiny_diffuseOriginal.png
+  uploadId: 392399
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -7,7 +14,7 @@ TextureImporter:
   mipmaps:
     mipMapMode: 0
     enableMipMap: 1
-    sRGBTexture: 1
+    sRGBTexture: 0
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
@@ -16,9 +23,9 @@ TextureImporter:
     mipMapFadeDistanceStart: 1
     mipMapFadeDistanceEnd: 3
   bumpmap:
-    convertToNormalMap: 0
+    convertToNormalMap: 1
     externalNormalMap: 0
-    heightScale: 0.25
+    heightScale: 0.2
     normalMapFilter: 0
     flipGreenChannel: 0
   isReadable: 0
@@ -51,10 +58,10 @@ TextureImporter:
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
-  alphaUsage: 1
-  alphaIsTransparency: 1
+  alphaUsage: 2
+  alphaIsTransparency: 0
   spriteTessellationDetail: -1
-  textureType: 0
+  textureType: 1
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
@@ -64,7 +71,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 1
-  swizzle: 50726148
+  swizzle: 50462976
   cookieLightType: 1
   platformSettings:
   - serializedVersion: 4

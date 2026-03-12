@@ -5,10 +5,13 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - mapGrid: {instanceID: 0}
+  - mapOrigin: {instanceID: 0}
   - floorBrush: {fileID: 6487881303263944399, guid: e295b66982aa63246a5b974a92f01908, type: 3}
   - wallBrush: {fileID: 6487881303263944399, guid: 462932b4c840f9943856424c843b771a, type: 3}
-  - floorPrefab: {fileID: 6487881303263944399, guid: 90060c1db4e26244db3c2c7f02206c36, type: 3}
+  - bridgeBrush: {fileID: 6487881303263944399, guid: 2d44087781e04704ca2cc3b900da72af, type: 3}
+  - floorPrefab: {fileID: 6487881303263944399, guid: 69f87aac25ff0c84383470b029104e1e, type: 3}
   - wallPrefab: {fileID: 6487881303263944399, guid: 5e51d708c74e5354da694aa7fd6a29d9, type: 3}
+  - bridgePrefab: {fileID: 3593203627893538802, guid: 4d5b066b6eb869f499089a848151a560, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

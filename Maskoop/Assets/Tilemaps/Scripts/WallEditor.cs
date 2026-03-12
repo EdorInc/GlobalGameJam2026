@@ -3,7 +3,7 @@ using UnityEngine;
 public class WallEditor : MonoBehaviour
 {
     [Header("Custom Settings")]
-    [SerializeField, Min(1)] private int wallHeight = 2;
+    [SerializeField, Min(1)] private int wallHeight = 3;
 
     [ContextMenu("Adjust")]
     public void Adjust()

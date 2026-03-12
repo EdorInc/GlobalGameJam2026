@@ -1,15 +1,17 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using System.IO;
 using static Unity.VisualScripting.Metadata;
 
 public class MapEditor : MonoBehaviour
 {
-    [Header("Map Settings")]
+    [Header("References")]
     [SerializeField] Grid mapGrid;
+    [SerializeField] GameObject mapOrigin;
 
     [Header("Save Settings")]
     [SerializeField] string mapName = "ExampleMap";
@@ -19,12 +21,12 @@ public class MapEditor : MonoBehaviour
     [Header("Brush Prefabs")]
     [SerializeField] GameObject floorBrush;
     [SerializeField] GameObject wallBrush;
+    [SerializeField] GameObject bridgeBrush;
 
     [Header("Final Prefabs")]
     [SerializeField] GameObject floorPrefab;
     [SerializeField] GameObject wallPrefab;
-
-    private GameObject mapPrefab;
+    [SerializeField] GameObject bridgePrefab;
 
     enum WallOrientation
     {
@@ -32,7 +34,7 @@ public class MapEditor : MonoBehaviour
         Vertical
     }
 
-    void EnsureFolder(string folder)
+    void ValidateFolder(string folder)
     {
         if (!AssetDatabase.IsValidFolder(folder))
         {
@@ -41,24 +43,175 @@ public class MapEditor : MonoBehaviour
         }
     }
 
-    string GetUniquePath(string folder, string baseName)
+    bool ValidateRoot()
     {
-        string path = $"{folder}/{baseName}.prefab";
-        int index = 1;
-
-        while (File.Exists(path))
+        if (mapOrigin != null)
         {
-            path = $"{folder}/{baseName}_{index}.prefab";
-            index++;
+            // Debug.Log("Map prefab is already assigned.");
+            return false;
         }
 
-        return path;
+        // Debug.Log("Map prefab is not assigned.");
+        return true;
+    }
+
+    GameObject GenerateRoot()
+    {
+        GameObject root = new GameObject(mapName);
+        root.transform.position = mapGrid.transform.position;
+        root.AddComponent<WallEditor>();
+        return root;
+    }
+
+    void GenerateLevel(Tilemap level, int index, Transform root)
+    {
+        Transform[] levelChildren = level.GetComponentsInChildren<Transform>(true);
+
+        GameObject levelParent = new GameObject($"Level_{index:D2}");
+        levelParent.transform.SetParent(root, false);
+
+        GameObject floorParent = new GameObject("Floor");
+        floorParent.transform.SetParent(levelParent.transform, false);
+
+        GameObject wallParent = new GameObject("Wall");
+        wallParent.transform.SetParent(levelParent.transform, false);
+
+        GameObject bridgeParent = new GameObject("Bridge");
+        bridgeParent.transform.SetParent(levelParent.transform, false);
+
+        GenerateFloors(levelChildren, floorParent.transform);
+        GenerateWalls(level, levelChildren, wallParent.transform);
+        GenerateBridges(levelChildren, bridgeParent.transform);
+    }
+
+    void GenerateFloors(Transform[] levelChildren, Transform floorParent)
+    {
+        foreach (Transform child in levelChildren)
+        {
+            GameObject source = PrefabUtility.GetCorrespondingObjectFromSource(child.gameObject);
+
+            if (source == floorBrush)
+            {
+                Instantiate(
+                    floorPrefab,
+                    child.position,
+                    child.rotation,
+                    floorParent
+                );
+            }
+        }
+    }
+
+    void GenerateWalls(Tilemap level, Transform[] levelChildren, Transform wallParent)
+    {
+        List<Transform> wallBlocks = CollectWallBlocks(level, levelChildren);
+
+        HashSet<Transform> processed = new HashSet<Transform>();
+
+        ProcessWallAxis(
+            wallBlocks,
+            processed,
+            t => new Vector2(t.position.z, t.position.y),
+            t => t.position.x,
+            (a, b) => Mathf.Abs(a.position.x - b.position.x),
+            WallOrientation.Vertical,
+            wallParent
+        );
+
+        ProcessWallAxis(
+            wallBlocks.Where(t => !processed.Contains(t)).ToList(),
+            processed,
+            t => new Vector2(t.position.x, t.position.y),
+            t => t.position.z,
+            (a, b) => Mathf.Abs(a.position.z - b.position.z),
+            WallOrientation.Horizontal,
+            wallParent
+        );
+
+        foreach (Transform t in wallBlocks)
+        {
+            if (processed.Contains(t))
+                continue;
+
+            Instantiate(wallPrefab, t.position, t.rotation, wallParent);
+        }
+    }
+
+    void GenerateBridges(Transform[] levelChildren, Transform bridgesRootParent)
+    {
+        List<Transform> bridgeTiles = new List<Transform>();
+
+        foreach (Transform child in levelChildren)
+        {
+            GameObject source = PrefabUtility.GetCorrespondingObjectFromSource(child.gameObject);
+
+            if (source == bridgeBrush)
+                bridgeTiles.Add(child);
+        }
+
+        HashSet<Transform> visited = new HashSet<Transform>();
+
+        foreach (Transform tile in bridgeTiles)
+        {
+            if (visited.Contains(tile))
+                continue;
+
+            List<Transform> segment = CollectBridgeBlocks(tile, bridgeTiles, visited);
+
+            ProcessBridgeSegment(segment, bridgesRootParent);
+        }
+    }
+
+    [ContextMenu("Generate map")]
+    void GenerateMap()
+    {
+        if (!ValidateRoot())
+            return;
+
+        Tilemap[] levels = mapGrid.GetComponentsInChildren<Tilemap>();
+
+        GameObject root = GenerateRoot();
+
+        for (int i = 0; i < levels.Length; i++)
+        {
+            GenerateLevel(levels[i], i, root.transform);
+        }
+
+        mapGrid.gameObject.SetActive(false);
+        mapOrigin = root;
+        mapOrigin.GetComponent<WallEditor>().Adjust();
+    }
+
+    [ContextMenu("Save map")]
+    void SaveMap()
+    {
+        if (ValidateRoot())
+            return;
+
+        ValidateFolder(mapFolder);
+
+        string mapPath = GetUniquePath(mapFolder, mapName);
+        PrefabUtility.SaveAsPrefabAsset(mapOrigin, mapPath);
+        Debug.Log($"Map saved: {mapPath}");
+    }
+
+    [ContextMenu("Clear map")]
+    void ClearMap()
+    {
+        if (ValidateRoot())
+            return;
+
+        DestroyImmediate(mapOrigin);
+
+        mapOrigin = null;
+
+        mapGrid.gameObject.SetActive(true);
     }
 
     [ContextMenu("Save grid")]
     void SaveGrid()
     {
-        EnsureFolder(gridFolder);
+        ValidateFolder(gridFolder);
 
         string gridPath = GetUniquePath(gridFolder, mapName);
         PrefabUtility.SaveAsPrefabAsset(mapGrid.gameObject, gridPath);
@@ -83,219 +236,193 @@ public class MapEditor : MonoBehaviour
         mapGrid.gameObject.SetActive(true);
     }
 
-    [ContextMenu("Generate map")]
-    void GenerateMap()
+    string GetUniquePath(string folder, string baseName)
     {
-        if (mapPrefab != null)
+        string path = $"{folder}/{baseName}.prefab";
+        int index = 1;
+
+        while (File.Exists(path))
         {
-            Debug.LogError("Map prefab is already assigned.");
-            return;
+            path = $"{folder}/{baseName}_{index}.prefab";
+            index++;
         }
 
-        Tilemap[] levels = mapGrid.GetComponentsInChildren<Tilemap>();
+        return path;
+    }
+    List<Transform> CollectWallBlocks(Tilemap level, Transform[] children)
+    {
+        List<Transform> wallBlocks = new List<Transform>();
 
-        // Root that will contain all levels
-        GameObject root = new GameObject(mapName);
-        root.transform.position = mapGrid.transform.position;
-        WallEditor wallEditor = root.AddComponent<WallEditor>();
-
-        for (int i = 0; i < levels.Length; i++)
+        foreach (Transform child in children)
         {
-            Tilemap level = levels[i];
-            Transform[] levelChildren = level.GetComponentsInChildren<Transform>(true);
+            if (child == level.transform)
+                continue;
 
-            // Create level root
-            GameObject levelParent = new GameObject($"Level_{i:D2}");
-            levelParent.transform.SetParent(root.transform, false);
+            GameObject source = PrefabUtility.GetCorrespondingObjectFromSource(child.gameObject);
 
-            // Create children
-            GameObject floorParent = new GameObject("Floor");
-            floorParent.transform.SetParent(levelParent.transform, false);
-            GameObject wallParent = new GameObject("Wall");
-            wallParent.transform.SetParent(levelParent.transform, false);
+            if (source == wallBrush)
+                wallBlocks.Add(child);
+        }
 
-            // Get all the transforms of the floor blocks in the tilemap
-            foreach (Transform floorChild in levelChildren)
+        return wallBlocks;
+    }
+
+    List<Transform> CollectBridgeBlocks(
+        Transform start,
+        List<Transform> allTiles,
+        HashSet<Transform> visited)
+    {
+        List<Transform> segment = new List<Transform>();
+        Queue<Transform> queue = new Queue<Transform>();
+
+        queue.Enqueue(start);
+        visited.Add(start);
+
+        while (queue.Count > 0)
+        {
+            Transform current = queue.Dequeue();
+            segment.Add(current);
+
+            foreach (Transform other in allTiles)
             {
-                GameObject floorSource = PrefabUtility.GetCorrespondingObjectFromSource(floorChild.gameObject);
+                if (visited.Contains(other))
+                    continue;
 
-                if (floorSource == floorBrush)
+                if (Vector3.Distance(current.position, other.position) < 1.1f)
                 {
-                    // Add a floor prefab with the same position and rotation as the floor block
-                    Instantiate(
-                        floorPrefab,
-                        floorChild.position,
-                        floorChild.rotation,
-                        floorParent.transform // Make the floor block children of a empty called "Floor"
-                    );
+                    visited.Add(other);
+                    queue.Enqueue(other);
                 }
             }
+        }
 
-            // Get all wall blocks in the tilemap
-            List<Transform> wallBlocks = new List<Transform>();
+        return segment;
+    }
 
-            HashSet<Transform> processed = new HashSet<Transform>();
+    void ProcessWallAxis(
+        List<Transform> blocks,
+        HashSet<Transform> processed,
+        Func<Transform, Vector2> groupKey,
+        Func<Transform, float> orderKey,
+        Func<Transform, Transform, float> distance,
+        WallOrientation orientation,
+        Transform wallParent)
+    {
+        var groups = blocks.GroupBy(groupKey);
 
-            // Get all the transforms of the wall blocks in the tilemap
-            foreach (Transform wallChild in levelChildren)
-                {
-                    if (wallChild == level.transform)
-                        continue;
+        foreach (var group in groups)
+        {
+            var ordered = group.OrderBy(orderKey).ToList();
 
-                    GameObject wallSource = PrefabUtility.GetCorrespondingObjectFromSource(wallChild.gameObject);
+            List<Transform> segment = new List<Transform>();
 
-                    if (wallSource == wallBrush)
-                        wallBlocks.Add(wallChild);
-                }
-
-            // Gather all transforms lined on the X axis with more than one block in between them
-            var xGroups = wallBlocks.GroupBy(t => new Vector2(t.position.z, t.position.y));
-
-            foreach (var group in xGroups)
-                {
-                    var ordered = group.OrderBy(t => t.position.x).ToList();
-
-                    List<Transform> segment = new List<Transform>();
-
-                    for (int j = 0; j < ordered.Count; j++)
-                    {
-                        if (segment.Count == 0)
-                            segment.Add(ordered[j]);
-                        else
-                        {
-                            float dx = Mathf.Abs(ordered[j].position.x - segment.Last().position.x);
-
-                            if (Mathf.Approximately(dx, 1f))
-                                segment.Add(ordered[j]);
-                            else
-                            {
-                                ProcessWallSegment(segment, WallOrientation.Vertical);
-                                segment.Clear();
-                                segment.Add(ordered[j]);
-                            }
-                        }
-                    }
-
-                    ProcessWallSegment(segment, WallOrientation.Vertical);
-                }
-
-            // Gather the transforms lined on the Z axis with more than one block in between them
-            var remaining = wallBlocks.Where(t => !processed.Contains(t)).ToList();
-
-            var zGroups = remaining.GroupBy(t => new Vector2(t.position.x, t.position.y));
-
-            foreach (var group in zGroups)
-                {
-                    var ordered = group.OrderBy(t => t.position.z).ToList();
-
-                    List<Transform> segment = new List<Transform>();
-
-                    for (int k = 0; k < ordered.Count; k++)
-                    {
-                        if (segment.Count == 0)
-                            segment.Add(ordered[k]);
-                        else
-                        {
-                            float dz = Mathf.Abs(ordered[k].position.z - segment.Last().position.z);
-
-                            if (Mathf.Approximately(dz, 1f))
-                                segment.Add(ordered[k]);
-                            else
-                            {
-                                ProcessWallSegment(segment, WallOrientation.Horizontal);
-                                segment.Clear();
-                                segment.Add(ordered[k]);
-                            }
-                        }
-                    }
-
-                    ProcessWallSegment(segment, WallOrientation.Horizontal);
-                }
-
-            void ProcessWallSegment(List<Transform> segment, WallOrientation orientation)
+            for (int i = 0; i < ordered.Count; i++)
             {
-                if (segment.Count <= 1)
-                    return;
-
-                Vector3 start = segment.First().position;
-                Vector3 end = segment.Last().position;
-
-                Vector3 center = (start + end) / 2f;
-
-                // Add a wall prefab within the center of the gathered transforms and modify the scale of the wall prefab
-                GameObject wall = Instantiate(wallPrefab, center, Quaternion.identity, wallParent.transform);
-
-                Vector3 scale = wall.transform.localScale;
-                
-                if (orientation == WallOrientation.Vertical) 
-                { 
-                    scale.x = segment.Count; 
-                } 
-                else if (orientation == WallOrientation.Horizontal) 
-                { 
-                    scale.z = segment.Count; 
-                }
-                else 
-                { 
-                    Debug.LogError("Invalid wall orientation");
-                    return;
-                }
-                    
-
-                wall.transform.localScale = scale;
-
-                // Delete the gathered transforms
-                foreach (var t in segment)
+                if (segment.Count == 0)
                 {
-                    processed.Add(t);
+                    segment.Add(ordered[i]);
+                    continue;
+                }
+
+                float d = distance(ordered[i], segment.Last());
+
+                if (Mathf.Approximately(d, 1f))
+                    segment.Add(ordered[i]);
+                else
+                {
+                    ProcessWallSegment(segment, orientation, processed, wallParent);
+                    segment.Clear();
+                    segment.Add(ordered[i]);
                 }
             }
 
-            // Add wall prefabs on the remaining transforms
-            foreach (Transform t in wallBlocks)
-                {
-                    if (processed.Contains(t))
-                        continue;
-
-                    // Make the wall blocks children of a empty called "Wall"
-                    Instantiate(wallPrefab, t.position, t.rotation, wallParent.transform);
-                }
-            }
-
-        mapGrid.gameObject.SetActive(false);
-
-        mapPrefab = root;
+            ProcessWallSegment(segment, orientation, processed, wallParent);
+        }
     }
 
-    [ContextMenu("Save map")]
-    void SaveMap()
+    void ProcessWallSegment(
+        List<Transform> segment,
+        WallOrientation orientation,
+        HashSet<Transform> processed,
+        Transform wallParent)
     {
-        if (mapPrefab == null)
+        if (segment.Count <= 1)
+            return;
+
+        Vector3 start = segment.First().position;
+        Vector3 end = segment.Last().position;
+
+        Vector3 center = (start + end) / 2f;
+
+        GameObject wall = Instantiate(wallPrefab, center, Quaternion.identity, wallParent);
+
+        Vector3 scale = wall.transform.localScale;
+
+        if (orientation == WallOrientation.Vertical)
+            scale.x = segment.Count;
+        else if (orientation == WallOrientation.Horizontal)
+            scale.z = segment.Count;
+        else
         {
-            Debug.LogError("Map prefab is not assigned.");
+            Debug.LogError("Invalid wall orientation");
             return;
         }
 
-        EnsureFolder(mapFolder);
+        wall.transform.localScale = scale;
 
-        string mapPath = GetUniquePath(mapFolder, mapName);
-        PrefabUtility.SaveAsPrefabAsset(mapPrefab, mapPath);
-        Debug.Log($"Map saved: {mapPath}");
+        foreach (var t in segment)
+            processed.Add(t);
     }
 
-    [ContextMenu("Clear map")]
-    void ClearMap()
+    void ProcessBridgeSegment(
+        List<Transform> segment,
+        Transform bridgeParent)
     {
-        if (mapPrefab == null)
-        {
-            Debug.LogError("Map prefab is not assigned.");
+        if (segment.Count <= 1)
             return;
+
+        Vector3 min = segment[0].position;
+        Vector3 max = segment[0].position;
+
+        foreach (Transform t in segment)
+        {
+            min = Vector3.Min(min, t.position);
+            max = Vector3.Max(max, t.position);
         }
 
-        DestroyImmediate(mapPrefab);
+        Vector3 size = max - min;
 
-        mapPrefab = null;
+        bool alongX = size.x > size.z;
+        float length = alongX ? size.x : size.z;
+        float width = alongX ? size.z : size.x; ;
 
-        mapGrid.gameObject.SetActive(true);
+        Vector3 pivot;
+
+        if (alongX)
+        {
+            pivot = new Vector3(min.x - 0.5f, min.y - 0.501f, (min.z + max.z) * 0.5f);
+        }
+        else
+        {
+            pivot = new Vector3((min.x + max.x) * 0.5f, min.y - 0.501f, min.z - 0.5f);
+        }
+
+        Quaternion rotation = alongX
+            ? Quaternion.Euler(0, 90, 0)
+            : Quaternion.identity;
+
+        GameObject bridge = PrefabUtility.InstantiatePrefab(bridgePrefab) as GameObject;
+
+        bridge.transform.SetParent(bridgeParent);
+        bridge.transform.position = pivot;
+        bridge.transform.rotation = rotation;
+
+        Vector3 scale = bridge.transform.localScale;
+
+        scale.z = length + 1;
+        scale.x = width + 1;
+
+        bridge.transform.localScale = scale;
     }
+
 }
