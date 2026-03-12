@@ -84,21 +84,42 @@ public class MapEditor : MonoBehaviour
         GenerateBridges(levelChildren, bridgeParent.transform);
     }
 
-    void GenerateFloors(Transform[] levelChildren, Transform floorParent)
+    void GenerateFloors(Transform[] levelChildren, Transform floorRoot)
     {
+        List<Transform> floorTiles = new List<Transform>();
+
         foreach (Transform child in levelChildren)
         {
             GameObject source = PrefabUtility.GetCorrespondingObjectFromSource(child.gameObject);
 
             if (source == floorBrush)
+                floorTiles.Add(child);
+        }
+
+        HashSet<Transform> visited = new HashSet<Transform>();
+
+        int areaIndex = 1;
+
+        foreach (Transform tile in floorTiles)
+        {
+            if (visited.Contains(tile))
+                continue;
+
+            List<Transform> areaTiles = CollectConnectedFloorBlocks(tile, floorTiles, visited);
+
+            GameObject areaObject = new GameObject($"Area_{areaIndex:00}");
+            areaObject.transform.SetParent(floorRoot);
+
+            foreach (Transform areaTile in areaTiles)
             {
-                Instantiate(
-                    floorPrefab,
-                    child.position,
-                    child.rotation,
-                    floorParent
-                );
+                GameObject floor = PrefabUtility.InstantiatePrefab(floorPrefab) as GameObject;
+
+                floor.transform.position = areaTile.position;
+                floor.transform.rotation = areaTile.rotation;
+                floor.transform.SetParent(areaObject.transform);
             }
+
+            areaIndex++;
         }
     }
 
@@ -249,6 +270,7 @@ public class MapEditor : MonoBehaviour
 
         return path;
     }
+    
     List<Transform> CollectWallBlocks(Tilemap level, Transform[] children)
     {
         List<Transform> wallBlocks = new List<Transform>();
@@ -265,6 +287,38 @@ public class MapEditor : MonoBehaviour
         }
 
         return wallBlocks;
+    }
+
+    List<Transform> CollectConnectedFloorBlocks(
+        Transform start,
+        List<Transform> allTiles,
+        HashSet<Transform> visited)
+    {
+        List<Transform> result = new List<Transform>();
+        Queue<Transform> queue = new Queue<Transform>();
+
+        queue.Enqueue(start);
+        visited.Add(start);
+
+        while (queue.Count > 0)
+        {
+            Transform current = queue.Dequeue();
+            result.Add(current);
+
+            foreach (Transform other in allTiles)
+            {
+                if (visited.Contains(other))
+                    continue;
+
+                if (Vector3.Distance(current.position, other.position) < 1.1f)
+                {
+                    visited.Add(other);
+                    queue.Enqueue(other);
+                }
+            }
+        }
+
+        return result;
     }
 
     List<Transform> CollectBridgeBlocks(
