@@ -130,7 +130,6 @@ public class TileMatrixGenerator : MonoBehaviour
                 GameObject occupiedBy = null;
                 TileType type = TileType.Air;
 
-                // Check ground tile
                 Collider[] hits = Physics.OverlapBox(position - Vector3.up * 0.5f, new Vector3(0.25f, 0.5f, 0.25f));
 
                 foreach (var hit in hits)
@@ -143,22 +142,22 @@ public class TileMatrixGenerator : MonoBehaviour
                     }
                 }
 
-                // If no ground, check for wall above
-                if (type == TileType.Air)
-                {
-                    Collider[] wallHits = Physics.OverlapBox(
-                        position + Vector3.up * 1f,
-                        new Vector3(0.45f, 0.5f, 0.45f)
-                    );
+                Collider[] wallHits = Physics.OverlapBox(position + Vector3.up * 1f, new Vector3(0.45f, 0.5f, 0.45f));
 
-                    foreach (var hit in wallHits)
+                foreach (var hit in wallHits)
+                {
+                    if (hit.CompareTag("Wall"))
                     {
-                        if (hit.CompareTag("Wall"))
-                        {
-                            type = TileType.Wall;
-                            occupiedBy = hit.gameObject;
-                            break;
-                        }
+                        type = TileType.Wall;
+                        occupiedBy = hit.gameObject;
+                        break;
+                    }
+
+                    if (hit.gameObject.GetComponent<Door>() !=  null)
+                    {
+                        type = TileType.Wall;
+                        occupiedBy = hit.gameObject;
+                        break;
                     }
                 }
 
