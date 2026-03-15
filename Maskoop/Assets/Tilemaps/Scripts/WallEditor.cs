@@ -12,13 +12,30 @@ public class WallEditor : MonoBehaviour
 
         foreach (Transform child in GetComponentsInChildren<Transform>(true))
         {
-            if (!child.CompareTag("Wall"))
+            Transform target = child;
+
+            bool isDoor = child.TryGetComponent(out Door door) && door.GetType() == typeof(Door);
+            if (isDoor)
+            {
+                if (child.parent == null)
+                    continue;
+
+                target = child.parent; // operate on the immediate parent
+            }
+
+            bool isWall = target.CompareTag("Wall");
+
+            if (!isWall && !isDoor)
                 continue;
 
-            if (child.parent != null && child.parent.CompareTag("Wall"))
+            if (target.parent != null && target.parent.CompareTag("Wall"))
                 continue;
 
-            child.localScale = new Vector3(child.localScale.x, wallHeight, child.localScale.z);
+            target.localScale = new Vector3(
+                target.localScale.x,
+                wallHeight,
+                target.localScale.z
+            );
         }
     }
 }

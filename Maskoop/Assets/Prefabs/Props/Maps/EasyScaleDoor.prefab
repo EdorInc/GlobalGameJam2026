@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 5130797870758773541}
   - component: {fileID: 3123389677321896776}
   - component: {fileID: 1602845922767268694}
-  - component: {fileID: 1125019678439613271}
+  - component: {fileID: 4351819057482017313}
   m_Layer: 0
   m_Name: MovingDoor
   m_TagString: Untagged
@@ -144,7 +144,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1125019678439613271
+--- !u!114 &4351819057482017313
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

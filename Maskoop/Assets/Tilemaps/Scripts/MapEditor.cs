@@ -22,11 +22,13 @@ public class MapEditor : MonoBehaviour
     [SerializeField] GameObject floorBrush;
     [SerializeField] GameObject wallBrush;
     [SerializeField] GameObject bridgeBrush;
+    [SerializeField] GameObject doorBrush;
 
     [Header("Final Prefabs")]
     [SerializeField] GameObject floorPrefab;
     [SerializeField] GameObject wallPrefab;
     [SerializeField] GameObject bridgePrefab;
+    [SerializeField] GameObject doorPrefab;
 
     enum WallOrientation
     {
@@ -79,9 +81,13 @@ public class MapEditor : MonoBehaviour
         GameObject bridgeParent = new GameObject("Bridge");
         bridgeParent.transform.SetParent(levelParent.transform, false);
 
+        GameObject doorParent = new GameObject("Door");
+        doorParent.transform.SetParent(levelParent.transform, false);
+
         GenerateFloors(levelChildren, floorParent.transform);
         GenerateWalls(level, levelChildren, wallParent.transform);
         GenerateBridges(levelChildren, bridgeParent.transform);
+        GenerateDoors(levelChildren, doorParent.transform);
     }
 
     void GenerateFloors(Transform[] levelChildren, Transform floorRoot)
@@ -93,7 +99,14 @@ public class MapEditor : MonoBehaviour
             GameObject source = PrefabUtility.GetCorrespondingObjectFromSource(child.gameObject);
 
             if (source == floorBrush)
+            {
                 floorTiles.Add(child);
+            }
+
+            if (source == doorBrush)
+            {
+                floorTiles.Add(child);
+            }
         }
 
         HashSet<Transform> visited = new HashSet<Transform>();
@@ -108,6 +121,7 @@ public class MapEditor : MonoBehaviour
             List<Transform> areaTiles = CollectConnectedFloorBlocks(tile, floorTiles, visited);
 
             GameObject areaObject = new GameObject($"Area_{areaIndex:00}");
+            areaObject.AddComponent<TileMatrixGenerator>();
             areaObject.transform.SetParent(floorRoot);
 
             foreach (Transform areaTile in areaTiles)
@@ -180,6 +194,31 @@ public class MapEditor : MonoBehaviour
             List<Transform> segment = CollectBridgeBlocks(tile, bridgeTiles, visited);
 
             ProcessBridgeSegment(segment, bridgesRootParent);
+        }
+    }
+
+    void GenerateDoors(Transform[] levelChildren, Transform doorRootParent)
+    {
+        List<Transform> doorTiles = new List<Transform>();
+
+        foreach (Transform child in levelChildren)
+        {
+            GameObject source = PrefabUtility.GetCorrespondingObjectFromSource(child.gameObject);
+
+            if (source == doorBrush)
+                doorTiles.Add(child);
+        }
+
+        HashSet<Transform> visited = new HashSet<Transform>();
+
+        foreach (Transform tile in doorTiles)
+        {
+            if (visited.Contains(tile))
+                continue;
+
+            List<Transform> segment = CollectDoorBlocks(tile, doorTiles, visited);
+
+            ProcessDoorSegment(segment, doorRootParent);
         }
     }
 
@@ -270,24 +309,6 @@ public class MapEditor : MonoBehaviour
 
         return path;
     }
-    
-    List<Transform> CollectWallBlocks(Tilemap level, Transform[] children)
-    {
-        List<Transform> wallBlocks = new List<Transform>();
-
-        foreach (Transform child in children)
-        {
-            if (child == level.transform)
-                continue;
-
-            GameObject source = PrefabUtility.GetCorrespondingObjectFromSource(child.gameObject);
-
-            if (source == wallBrush)
-                wallBlocks.Add(child);
-        }
-
-        return wallBlocks;
-    }
 
     List<Transform> CollectConnectedFloorBlocks(
         Transform start,
@@ -351,6 +372,145 @@ public class MapEditor : MonoBehaviour
         }
 
         return segment;
+    }
+
+    void ProcessBridgeSegment(List<Transform> segment, Transform bridgeParent)
+    {
+        if (segment.Count <= 1)
+            return;
+
+        Vector3 min = segment[0].position;
+        Vector3 max = segment[0].position;
+
+        foreach (Transform t in segment)
+        {
+            min = Vector3.Min(min, t.position);
+            max = Vector3.Max(max, t.position);
+        }
+
+        Vector3 size = max - min;
+
+        bool alongX = size.x > size.z;
+        float length = alongX ? size.x : size.z;
+        float width = alongX ? size.z : size.x; ;
+
+        Vector3 pivot;
+
+        if (alongX)
+        {
+            pivot = new Vector3(min.x - 0.5f, min.y - 0.501f, (min.z + max.z) * 0.5f);
+        }
+        else
+        {
+            pivot = new Vector3((min.x + max.x) * 0.5f, min.y - 0.501f, min.z - 0.5f);
+        }
+
+        Quaternion rotation = alongX
+            ? Quaternion.Euler(0, 90, 0)
+            : Quaternion.identity;
+
+        GameObject bridge = PrefabUtility.InstantiatePrefab(bridgePrefab) as GameObject;
+
+        bridge.transform.SetParent(bridgeParent);
+        bridge.transform.position = pivot;
+        bridge.transform.rotation = rotation;
+
+        Vector3 scale = bridge.transform.localScale;
+
+        scale.z = length + 1;
+        scale.x = width + 1;
+
+        bridge.transform.localScale = scale;
+    }
+
+    List<Transform> CollectDoorBlocks(
+    Transform start,
+    List<Transform> allTiles,
+    HashSet<Transform> visited)
+    {
+        List<Transform> segment = new List<Transform>();
+        Queue<Transform> queue = new Queue<Transform>();
+
+        queue.Enqueue(start);
+        visited.Add(start);
+
+        while (queue.Count > 0)
+        {
+            Transform current = queue.Dequeue();
+            segment.Add(current);
+
+            foreach (Transform other in allTiles)
+            {
+                if (visited.Contains(other))
+                    continue;
+
+                if (Vector3.Distance(current.position, other.position) < 1.1f)
+                {
+                    visited.Add(other);
+                    queue.Enqueue(other);
+                }
+            }
+        }
+
+        return segment;
+    }
+
+    void ProcessDoorSegment(List<Transform> segment, Transform doorParent)
+    {
+        if (segment.Count <= 1)
+            return;
+
+        Vector3 min = segment[0].position;
+        Vector3 max = segment[0].position;
+
+        foreach (Transform t in segment)
+        {
+            min = Vector3.Min(min, t.position);
+            max = Vector3.Max(max, t.position);
+        }
+
+        Vector3 size = max - min;
+
+        bool alongX = size.x > size.z;
+        float length = alongX ? size.x : size.z;
+        float width = alongX ? size.z : size.x; ;
+
+        Vector3 pivot = (min + max) * 0.5f;
+
+        Quaternion rotation = alongX
+            ? Quaternion.Euler(0, 90, 0)
+            : Quaternion.identity;
+
+        GameObject door = PrefabUtility.InstantiatePrefab(doorPrefab) as GameObject;
+
+        door.transform.SetParent(doorParent);
+        door.transform.position = pivot;
+        door.transform.rotation = rotation;
+
+        Vector3 scale = door.transform.localScale;
+
+        scale.z = length + 1;
+        scale.x = width + 1;
+
+        door.transform.localScale = scale;
+    }
+
+    List<Transform> CollectWallBlocks(Tilemap level, Transform[] children)
+    {
+        List<Transform> wallBlocks = new List<Transform>();
+
+        foreach (Transform child in children)
+        {
+            if (child == level.transform)
+                continue;
+
+            GameObject source = PrefabUtility.GetCorrespondingObjectFromSource(child.gameObject);
+
+            if (source == wallBrush)
+                wallBlocks.Add(child);
+        }
+
+        return wallBlocks;
     }
 
     void ProcessWallAxis(
@@ -427,56 +587,4 @@ public class MapEditor : MonoBehaviour
         foreach (var t in segment)
             processed.Add(t);
     }
-
-    void ProcessBridgeSegment(
-        List<Transform> segment,
-        Transform bridgeParent)
-    {
-        if (segment.Count <= 1)
-            return;
-
-        Vector3 min = segment[0].position;
-        Vector3 max = segment[0].position;
-
-        foreach (Transform t in segment)
-        {
-            min = Vector3.Min(min, t.position);
-            max = Vector3.Max(max, t.position);
-        }
-
-        Vector3 size = max - min;
-
-        bool alongX = size.x > size.z;
-        float length = alongX ? size.x : size.z;
-        float width = alongX ? size.z : size.x; ;
-
-        Vector3 pivot;
-
-        if (alongX)
-        {
-            pivot = new Vector3(min.x - 0.5f, min.y - 0.501f, (min.z + max.z) * 0.5f);
-        }
-        else
-        {
-            pivot = new Vector3((min.x + max.x) * 0.5f, min.y - 0.501f, min.z - 0.5f);
-        }
-
-        Quaternion rotation = alongX
-            ? Quaternion.Euler(0, 90, 0)
-            : Quaternion.identity;
-
-        GameObject bridge = PrefabUtility.InstantiatePrefab(bridgePrefab) as GameObject;
-
-        bridge.transform.SetParent(bridgeParent);
-        bridge.transform.position = pivot;
-        bridge.transform.rotation = rotation;
-
-        Vector3 scale = bridge.transform.localScale;
-
-        scale.z = length + 1;
-        scale.x = width + 1;
-
-        bridge.transform.localScale = scale;
-    }
-
 }

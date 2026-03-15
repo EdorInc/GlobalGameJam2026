@@ -8,15 +8,19 @@ public class TransformList
     public List<Transform> transforms;
 }
 
-public enum TileTYpe{
+[System.Serializable]
+public enum TileType{
     Ground,
     Air,
     Wall
 }
+
+[System.Serializable]
 public class TileData
 {
-    public Transform position;
-    public TileTYpe tileType;
+    public Vector3 position;
+    public TileType tileType;
+    public GameObject occupiedBy;
 }
 
 public class NavMeshManager : MonoBehaviour
@@ -52,20 +56,19 @@ public class NavMeshManager : MonoBehaviour
             foreach(Transform tr in transList.transforms)
             {
                 TileData data = new TileData();
-                data.position = tr;
-                data.tileType = TileTYpe.Ground;
+                data.position = tr.position;
+                data.tileType = TileType.Ground;
                 tiledataAux.Add(data);
-                mapDictionary.Add(new Vector2(data.position.position.x, data.position.position.z),data);
+                mapDictionary.Add(new Vector2(data.position.x, data.position.z),data);
             }
         }
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Vector3 GetRandomPointInMap()
     {
         int i = Random.Range(0, tileMatrix.Count);
         int j = Random.Range(0, tileMatrix[i].Count);
 
-        return tileMatrix[i][j].position.position;
+        return tileMatrix[i][j].position;
     }
 
     public Vector2 WorldToTile(Vector3 worldPosition)
@@ -138,11 +141,11 @@ public class NavMeshManager : MonoBehaviour
         var neighbors = new List<TileData>();
         foreach (Vector3 dir in directions)
         {
-            Vector3 neighborPos = current.position.position + dir;
+            Vector3 neighborPos = current.position + dir;
 
             if (mapDictionary.TryGetValue(WorldToTile(neighborPos), out TileData neighbor))
             {
-                if(neighbor.tileType == TileTYpe.Ground)
+                if(neighbor.tileType == TileType.Ground)
                 {
                     neighbors.Add(neighbor);
                 }
@@ -153,7 +156,7 @@ public class NavMeshManager : MonoBehaviour
 
     float Heuristic(TileData a, TileData b)
     {
-        return Vector3.Distance(a.position.position, b.position.position);
+        return Vector3.Distance(a.position, b.position);
     }
 
 
@@ -165,14 +168,14 @@ public class NavMeshManager : MonoBehaviour
         {
             current = cameFrom[current];
             path.Add(current);
-            positionList.Add(current.position.position);
+            positionList.Add(current.position);
         }
         positionList.Reverse();
         return positionList;
     }
 
     //Dinamic tyles
-    private void SetTileType(Vector3 worldPos, TileTYpe tileType)
+    private void SetTileType(Vector3 worldPos, TileType tileType)
     {
         Vector2 tilePos = WorldToTile(worldPos);
 
@@ -187,11 +190,11 @@ public class NavMeshManager : MonoBehaviour
         bool isChanged = false;
         foreach(TileData tile in mapDictionary.Values)
         {
-            bool isBlocked = Physics.CheckBox(tile.position.position + Vector3.up * 0.6f, new Vector3(0.4f, 0.2f, 0.4f));
-            TileTYpe newType = isBlocked ? TileTYpe.Wall : TileTYpe.Ground;
+            bool isBlocked = Physics.CheckBox(tile.position + Vector3.up * 0.6f, new Vector3(0.4f, 0.2f, 0.4f));
+            TileType newType = isBlocked ? TileType.Wall : TileType.Ground;
             if(newType != tile.tileType)
             {
-                SetTileType(tile.position.position, newType);
+                SetTileType(tile.position, newType);
                 isChanged = true;
             }
         }
@@ -231,29 +234,29 @@ public class NavMeshManager : MonoBehaviour
 
                 switch (tile.tileType)
                 {
-                    case TileTYpe.Ground:
+                    case TileType.Ground:
                         Gizmos.color = Color.green;
                         break;
 
-                    case TileTYpe.Wall:
+                    case TileType.Wall:
                         Gizmos.color = Color.red;
                         break;
 
-                    case TileTYpe.Air:
+                    case TileType.Air:
                         Gizmos.color = Color.cyan;
                         break;
                 }
                 foreach (Vector3 dir in directions)
                 {
-                    Vector3 neighbor = tile.position.position + dir;
+                    Vector3 neighbor = tile.position + dir;
 
                     if (mapDictionary != null &&
                         mapDictionary.ContainsKey(WorldToTile(neighbor)))
                     {
-                        Gizmos.DrawLine(tile.position.position, neighbor);
+                        Gizmos.DrawLine(tile.position, neighbor);
                     }
                 }
-                Gizmos.DrawWireCube(tile.position.position, new Vector3(1f, 0.1f, 1f));
+                Gizmos.DrawWireCube(tile.position, new Vector3(1f, 0.1f, 1f));
             }
         }
     }
