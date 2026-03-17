@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 366764702322250547}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.00000047683716}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -60,9 +60,41 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7606484308797180856}
   - {fileID: 5436443777504520261}
   - {fileID: 6151061213657004271}
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4607736614025202249
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7606484308797180856}
+  m_Layer: 0
+  m_Name: PatrolCenter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7606484308797180856
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4607736614025202249}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -17, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8899345710013336865}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &6724471503533989104
 PrefabInstance:
@@ -74,7 +106,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 580659382976783391, guid: 4ce7ccacae5edf140880fec918175c3a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -17
       objectReference: {fileID: 0}
     - target: {fileID: 580659382976783391, guid: 4ce7ccacae5edf140880fec918175c3a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -116,11 +148,55 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyCharacter
       objectReference: {fileID: 0}
+    - target: {fileID: 6380567856177709302, guid: 4ce7ccacae5edf140880fec918175c3a, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7661920645178879096, guid: 4ce7ccacae5edf140880fec918175c3a, type: 3}
+      propertyPath: moveSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7661920645178879096, guid: 4ce7ccacae5edf140880fec918175c3a, type: 3}
+      propertyPath: turnSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8257370569340961293, guid: 4ce7ccacae5edf140880fec918175c3a, type: 3}
+      propertyPath: patrolCenter
+      value: 
+      objectReference: {fileID: 7606484308797180856}
+    - target: {fileID: 8257370569340961293, guid: 4ce7ccacae5edf140880fec918175c3a, type: 3}
+      propertyPath: patrolRadius
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6380567856177709302, guid: 4ce7ccacae5edf140880fec918175c3a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4571676917816546442}
   m_SourcePrefab: {fileID: 100100000, guid: 4ce7ccacae5edf140880fec918175c3a, type: 3}
+--- !u!1 &422858551407336454 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6380567856177709302, guid: 4ce7ccacae5edf140880fec918175c3a, type: 3}
+  m_PrefabInstance: {fileID: 6724471503533989104}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4571676917816546442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422858551407336454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b61ebd57c79911545b02851184fa762f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDetection
+  outerConeDistance: 5
+  innerConeDistance: 3
+  outerConeAngle: 90
+  innerConeAngle: 60
 --- !u!4 &6151061213657004271 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 580659382976783391, guid: 4ce7ccacae5edf140880fec918175c3a, type: 3}

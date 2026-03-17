@@ -7,6 +7,8 @@ public class EnemyBehaviour : MonoBehaviour
 
     EnemyInputController enemyInput;
 
+    EnemyDetection enemyDetection;
+
     private Vector3 targetPosition;
 
     private List<Vector3> currentPath;
@@ -15,16 +17,19 @@ public class EnemyBehaviour : MonoBehaviour
     private bool waiting = false;
 
     [Header("Patrol Area")]
-    public Vector3 patrolCenter;
+    public Transform patrolCenter;
     public float patrolRadius;
     public float minDistance = 3f; 
-    public float waitTime = 1.5f; 
+    public float waitTime = 1.5f;
 
+    public float distanceToRecalculate = 5;
+    public float distanceToChase = 1;
 
-
+    private Vector3 finalDestination;
     private void Start()
     {
         enemyInput = GetComponent<EnemyInputController>();
+        enemyDetection = GetComponent<EnemyDetection>();
         targetPosition = transform.position;
     }
 
@@ -39,15 +44,59 @@ public class EnemyBehaviour : MonoBehaviour
     }
     void FixedUpdate()
     {
+        
         if (waiting)
         {
             GoToPosition(transform.position);
             return;
         }
 
-        if(Vector3.Distance(targetPosition, transform.position) < 0.1)
+
+        if (enemyDetection.playerInSight)
         {
-            if(currentPath == null || currentPoint >= currentPath.Count)
+            waiting = false;
+
+            if(finalDestination == Vector3.zero)
+            {
+                finalDestination = enemyDetection.GetPlayerLocation();
+                currentPath = NavMeshManager.FindPath(
+                NavMeshManager.WorldToTile(transform.position),
+                NavMeshManager.WorldToTile(finalDestination));
+                currentPoint = 0;
+                targetPosition = currentPath[currentPoint];
+                return;
+            }
+
+            float distanceFromTarget = Vector3.Distance(finalDestination, enemyDetection.GetPlayerLocation());
+
+
+            if (distanceFromTarget > distanceToRecalculate)
+            {
+                finalDestination = enemyDetection.GetPlayerLocation();
+                currentPath = NavMeshManager.FindPath(
+                NavMeshManager.WorldToTile(transform.position),
+                NavMeshManager.WorldToTile(finalDestination));
+                currentPoint = 0;
+                targetPosition = currentPath[currentPoint];
+            }
+
+            float distanceToPlayer = Vector3.Distance(transform.position, enemyDetection.GetPlayerLocation());
+
+            if (distanceToPlayer < distanceToChase)
+            {
+                GoToPosition(enemyDetection.GetPlayerLocation());
+                return;
+            }
+           
+        }
+        else
+        {
+            finalDestination = Vector3.zero;
+        }
+
+        if (Vector3.Distance(targetPosition, transform.position) < 0.1)
+        {
+            if ((currentPath == null || currentPoint >= currentPath.Count) && !enemyDetection.playerInSight)
             {
                 waiting = true;
                 Invoke(nameof(ChooseNextPatrolPoint), waitTime);
@@ -71,8 +120,7 @@ public class EnemyBehaviour : MonoBehaviour
         // recalcular path
         currentPath = NavMeshManager.FindPath(
             NavMeshManager.WorldToTile(transform.position),
-            NavMeshManager.WorldToTile(newTarget)
-        );
+            NavMeshManager.WorldToTile(newTarget));
 
         if (currentPath != null && currentPath.Count > 0)
         {
@@ -110,7 +158,7 @@ public class EnemyBehaviour : MonoBehaviour
         float randomRadius = Random.value * patrolRadius;
         float theta = 2 * Mathf.PI * Random.value;
 
-        Vector3 position = patrolCenter + randomRadius * new Vector3(Mathf.Cos(theta), 0, Mathf.Sin(theta));
+        Vector3 position = patrolCenter.position + randomRadius * new Vector3(Mathf.Cos(theta), 0, Mathf.Sin(theta));
 
         return position;
     }
@@ -152,7 +200,7 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (currentPath == null || currentPath.Count == 0) return;
 
-        Gizmos.color = Color.yellow;
+        Gizmos.color = Color.purple;
 
         for (int i = 0; i < currentPath.Count; i++)
         {
@@ -168,18 +216,7 @@ public class EnemyBehaviour : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(patrolCenter, patrolRadius);
-
-        if (currentPath != null)
-        {
-            Gizmos.color = Color.yellow;
-            for (int i = 0; i < currentPath.Count; i++)
-            {
-                Gizmos.DrawSphere(currentPath[i], 0.15f);
-                if (i < currentPath.Count - 1)
-                    Gizmos.DrawLine(currentPath[i], currentPath[i + 1]);
-            }
-        }
+        Gizmos.DrawWireSphere(patrolCenter.position, patrolRadius);
     }
 
 }

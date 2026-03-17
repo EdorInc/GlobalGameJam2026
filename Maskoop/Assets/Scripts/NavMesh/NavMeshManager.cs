@@ -25,13 +25,13 @@ public class TileData
 
 public class NavMeshManager : MonoBehaviour
 {
-    [SerializeField]
-    public List<TransformList> transformList;
-
     private List<List<TileData>> tileMatrix;
 
     private Dictionary<Vector2, TileData> mapDictionary;
 
+    public TileMatrixGenerator tileMatrixGenerator;
+
+    public LayerMask playerLayer;
 
     private float timer;
 
@@ -49,26 +49,18 @@ public class NavMeshManager : MonoBehaviour
     {
         tileMatrix = new List<List<TileData>>();
         mapDictionary = new Dictionary<Vector2, TileData>();
-        foreach(TransformList transList in transformList)
+        tileMatrixGenerator.GenerateTiles();
+        for (int i = 0; i < tileMatrixGenerator.tiles.GetLength(0); i++)
         {
             List<TileData> tiledataAux = new List<TileData>();
             tileMatrix.Add(tiledataAux);
-            foreach(Transform tr in transList.transforms)
+            for (int j = 0; j < tileMatrixGenerator.tiles.GetLength(1); j++)
             {
-                TileData data = new TileData();
-                data.position = tr.position;
-                data.tileType = TileType.Ground;
+                TileData data = tileMatrixGenerator.tiles[i, j];
                 tiledataAux.Add(data);
-                mapDictionary.Add(new Vector2(data.position.x, data.position.z),data);
+                mapDictionary.Add(new Vector2(data.position.x, data.position.z), data);
             }
         }
-    }
-    public Vector3 GetRandomPointInMap()
-    {
-        int i = Random.Range(0, tileMatrix.Count);
-        int j = Random.Range(0, tileMatrix[i].Count);
-
-        return tileMatrix[i][j].position;
     }
 
     public Vector2 WorldToTile(Vector3 worldPosition)
@@ -123,7 +115,11 @@ public class NavMeshManager : MonoBehaviour
 
     public bool IsTileWalkable(Vector2 tile)
     {
-        return mapDictionary.TryGetValue(tile,out TileData tiledata);
+        if(mapDictionary.TryGetValue(tile, out TileData tiledata))
+        {
+            return tiledata.tileType == TileType.Ground;
+        }
+        return false;
     }
 
     private Vector3[] directions = { 
@@ -190,9 +186,9 @@ public class NavMeshManager : MonoBehaviour
         bool isChanged = false;
         foreach(TileData tile in mapDictionary.Values)
         {
-            bool isBlocked = Physics.CheckBox(tile.position + Vector3.up * 0.6f, new Vector3(0.4f, 0.2f, 0.4f));
+            bool isBlocked = Physics.CheckBox(tile.position + Vector3.up * 0.6f, new Vector3(0.4f, 0.2f, 0.4f),Quaternion.identity,playerLayer);
             TileType newType = isBlocked ? TileType.Wall : TileType.Ground;
-            if(newType != tile.tileType)
+            if(newType != tile.tileType && tile.tileType != TileType.Air)
             {
                 SetTileType(tile.position, newType);
                 isChanged = true;
@@ -207,23 +203,7 @@ public class NavMeshManager : MonoBehaviour
     void OnDrawGizmos()
     {
         if (tileMatrix == null)
-        {
-            if (transformList == null) return;
-
-            foreach (TransformList list in transformList)
-            {
-                if (list.transforms == null) continue;
-
-                foreach (Transform tr in list.transforms)
-                {
-                    if (tr == null) continue;
-
-                    Gizmos.color = Color.green;
-                    Gizmos.DrawWireCube(tr.position, new Vector3(1f, 0.1f, 1f));
-                }
-            }
             return;
-        }
 
 
         foreach (var row in tileMatrix)

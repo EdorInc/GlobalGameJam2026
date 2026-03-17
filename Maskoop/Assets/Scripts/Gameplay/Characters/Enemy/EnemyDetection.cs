@@ -7,6 +7,60 @@ public class EnemyDetection : MonoBehaviour
     [SerializeField] private float innerConeDistance = 3;
     [SerializeField] private float outerConeAngle = 90;
     [SerializeField] private float innerConeAngle = 60;
+    [SerializeField] private LayerMask targetMask;
+
+    public bool playerInSight = false;
+    private GameObject playerTarget;
+    private void Update()
+    {
+        if (playerInSight)
+        {
+
+        }
+        else
+        {
+            Vector3 origin = transform.position + Vector3.up;
+
+            Collider[] hits = Physics.OverlapSphere(origin, outerConeDistance, targetMask);
+
+            foreach (Collider hit in hits)
+            {
+                if (!hit.CompareTag("Player"))
+                {
+                    continue;
+                }
+                Vector3 dirToTarget = (hit.transform.position - origin).normalized;
+
+                float angle = Vector3.Angle(transform.forward, dirToTarget);
+
+
+                if (angle <= innerConeAngle / 2f)
+                {
+                    float distance = Vector3.Distance(origin, hit.transform.position);
+
+                    if (distance <= innerConeDistance)
+                    {
+                        Debug.Log("INNER detection: " + hit.name);
+                        playerInSight = true;
+                        playerTarget = hit.gameObject;
+                    }
+                }
+            }
+        }
+    }
+
+    public Vector3 GetPlayerLocation()
+    {
+        if (playerTarget)
+        {
+            return playerTarget.transform.position;
+        }
+        else
+        {
+            return Vector3.zero;
+        }
+    }
+
 
     private void OnDrawGizmos()
     {
@@ -29,5 +83,7 @@ public class EnemyDetection : MonoBehaviour
         Gizmos.DrawLine(start, start + left);
         Gizmos.DrawLine(start, start + right);
     }
+
+
 
 }
