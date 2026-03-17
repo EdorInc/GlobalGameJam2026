@@ -28,6 +28,25 @@ public class PressurePlate : ActivatorBase
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        bool willActivate = !hasBeenActivated;
+
+        if (canOnlyBeActivatedByPlayer)
+        {
+            willActivate = willActivate && other.gameObject.CompareTag("Player");
+        }
+
+        if (!willActivate)
+        {
+            hasBeenActivated = false;
+
+            SetApparience();
+
+            EventManager.OnButtonPressed?.Invoke(channel);
+        }
+    }
+
     protected override void SetApparience()
     {
         if (hasBeenActivated)
