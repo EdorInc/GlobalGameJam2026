@@ -7,20 +7,32 @@ public class EnemyDetection : MonoBehaviour
     [SerializeField] private float innerConeDistance = 3;
     [SerializeField] private float outerConeAngle = 90;
     [SerializeField] private float innerConeAngle = 60;
+    [SerializeField] private float innerSphereRadius = 4;
     [SerializeField] private LayerMask targetMask;
 
     public bool playerInSight = false;
     private GameObject playerTarget;
     private void Update()
     {
+        Vector3 origin = transform.position + Vector3.up;
         if (playerInSight)
         {
+            Vector3 dirToTarget = (playerTarget.transform.position - origin).normalized;
 
+            float angle = Vector3.Angle(transform.forward, dirToTarget);
+            float distance = Vector3.Distance(origin, playerTarget.transform.position);
+
+
+            if ((angle >= outerConeAngle / 2f || distance >= outerConeDistance ) && distance >= innerSphereRadius)
+            {
+
+                playerInSight = false;
+                playerTarget = null;
+            }
         }
         else
         {
-            Vector3 origin = transform.position + Vector3.up;
-
+            
             Collider[] hits = Physics.OverlapSphere(origin, outerConeDistance, targetMask);
 
             foreach (Collider hit in hits)
@@ -82,6 +94,9 @@ public class EnemyDetection : MonoBehaviour
 
         Gizmos.DrawLine(start, start + left);
         Gizmos.DrawLine(start, start + right);
+
+        if(playerTarget)
+            Gizmos.DrawWireCube(playerTarget.transform.position, new Vector3(1, 1, 1));
     }
 
 

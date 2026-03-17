@@ -24,7 +24,9 @@ public class EnemyBehaviour : MonoBehaviour
 
     public float distanceToRecalculate = 5;
     public float distanceToChase = 1;
+    public float pathRecalculationCooldown = 0.5f;
 
+    private float lastPathRecalculationTime = -Mathf.Infinity;
     private Vector3 finalDestination;
     private void Start()
     {
@@ -56,38 +58,61 @@ public class EnemyBehaviour : MonoBehaviour
         {
             waiting = false;
 
-            if(finalDestination == Vector3.zero)
-            {
-                finalDestination = enemyDetection.GetPlayerLocation();
-                currentPath = NavMeshManager.FindPath(
-                NavMeshManager.WorldToTile(transform.position),
-                NavMeshManager.WorldToTile(finalDestination));
-                currentPoint = 0;
-                targetPosition = currentPath[currentPoint];
-                return;
-            }
 
-            float distanceFromTarget = Vector3.Distance(finalDestination, enemyDetection.GetPlayerLocation());
-
-
-            if (distanceFromTarget > distanceToRecalculate)
-            {
-                finalDestination = enemyDetection.GetPlayerLocation();
-                currentPath = NavMeshManager.FindPath(
-                NavMeshManager.WorldToTile(transform.position),
-                NavMeshManager.WorldToTile(finalDestination));
-                currentPoint = 0;
-                targetPosition = currentPath[currentPoint];
-            }
 
             float distanceToPlayer = Vector3.Distance(transform.position, enemyDetection.GetPlayerLocation());
+
+            Debug.Log("Distance = " + distanceToPlayer);
 
             if (distanceToPlayer < distanceToChase)
             {
                 GoToPosition(enemyDetection.GetPlayerLocation());
                 return;
             }
-           
+
+            if (finalDestination == Vector3.zero)
+            {
+                lastPathRecalculationTime = Time.time;
+
+                finalDestination = enemyDetection.GetPlayerLocation();
+
+                currentPath = NavMeshManager.FindPath(
+                    NavMeshManager.WorldToTile(transform.position),
+                    NavMeshManager.WorldToTile(finalDestination)
+                );
+
+                if (currentPath != null && currentPath.Count > 0)
+                {
+                    currentPoint = 0;
+                    targetPosition = currentPath[currentPoint];
+                }
+
+                return;
+            }
+
+            float distanceFromTarget = Vector3.Distance(finalDestination, enemyDetection.GetPlayerLocation());
+
+
+            if (distanceFromTarget > distanceToRecalculate && Time.time > lastPathRecalculationTime + pathRecalculationCooldown)
+            {
+                lastPathRecalculationTime = Time.time;
+
+                finalDestination = enemyDetection.GetPlayerLocation();
+
+                currentPath = NavMeshManager.FindPath(
+                    NavMeshManager.WorldToTile(transform.position),
+                    NavMeshManager.WorldToTile(finalDestination)
+                );
+
+                if (currentPath != null && currentPath.Count > 0)
+                {
+                    currentPoint = 0;
+                    targetPosition = currentPath[currentPoint];
+                }
+            }
+
+
+
         }
         else
         {
