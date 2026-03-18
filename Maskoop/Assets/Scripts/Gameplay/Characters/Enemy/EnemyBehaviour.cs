@@ -16,22 +16,32 @@ public class EnemyBehaviour : MonoBehaviour
     private int currentPoint = 0;
     private bool waiting = false;
 
+
     [Header("Patrol Area")]
     public Transform patrolCenter;
     public float patrolRadius;
     public float minDistance = 3f; 
     public float waitTime = 1.5f;
+    [Header("ThrowParameters")]
+    public float timeToThrow = 1;
 
+    [Header("Not design attributes (if you modify this values the enemy could stop working)")]
     public float distanceToRecalculate = 5;
     public float distanceToChase = 1;
     public float pathRecalculationCooldown = 0.5f;
+    public float distanceToGrab = 0.6f;
+    public float ignorePlayerTimeAfterThrow = 1.5f;
+
 
     private float lastPathRecalculationTime = -Mathf.Infinity;
     private Vector3 finalDestination;
+    private float ignorePlayerUntil = 0f;
+    private CharacterStateController stateController; 
     private void Start()
     {
         enemyInput = GetComponent<EnemyInputController>();
         enemyDetection = GetComponent<EnemyDetection>();
+        stateController = GetComponent<CharacterStateController>();
         targetPosition = transform.position;
     }
 
@@ -44,6 +54,11 @@ public class EnemyBehaviour : MonoBehaviour
     {
         EventManager.OnNavMeshUpdate -= UpdateNavMeshPath;
     }
+
+    private void EndThrow()
+    {
+        enemyInput.OnThrow(false);
+    }
     void FixedUpdate()
     {
         
@@ -53,20 +68,40 @@ public class EnemyBehaviour : MonoBehaviour
             return;
         }
 
-
-        if (enemyDetection.playerInSight)
+        if(stateController.GetHeldObject() != null)
+        {
+            
+            if (Vector3.Distance(targetPosition, transform.position) < 0.1)
+            {
+                enemyInput.OnThrow(true);
+                ignorePlayerUntil = Time.time + ignorePlayerTimeAfterThrow;
+                GoToPosition(transform.position);
+                Invoke(nameof(EndThrow), timeToThrow);
+            }
+            else
+            {
+                GoToPosition(targetPosition);
+            }
+            return;
+        }
+        else if (enemyDetection.playerInSight && Time.time > ignorePlayerUntil)
         {
             waiting = false;
-
-
 
             float distanceToPlayer = Vector3.Distance(transform.position, enemyDetection.GetPlayerLocation());
 
             Debug.Log("Distance = " + distanceToPlayer);
 
-            if (distanceToPlayer < distanceToChase)
+            if (distanceToPlayer < distanceToGrab)
             {
-                GoToPosition(enemyDetection.GetPlayerLocation());
+                targetPosition = NavMeshManager.FindNearestEdge(transform.position);
+                enemyInput.OnGrab();
+                GoToPosition(transform.position);
+                return;
+            }
+            else if (distanceToPlayer < distanceToChase)
+            {
+                GoToPosition(enemyDetection.GetPlayerLocation());               
                 return;
             }
 

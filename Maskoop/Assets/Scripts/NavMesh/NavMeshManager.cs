@@ -113,6 +113,56 @@ public class NavMeshManager : MonoBehaviour
         return null;
     }
 
+
+    public Vector3 FindNearestEdge(Vector3 targetWorldPos)
+    {
+        Vector2 fromTile = WorldToTile(targetWorldPos);
+
+        if (!mapDictionary.TryGetValue(fromTile, out TileData startTile))
+            return targetWorldPos;
+
+        float bestDist = float.MaxValue;
+        TileData bestTile = null;
+
+        foreach (TileData tile in mapDictionary.Values)
+        {
+            if (tile.tileType != TileType.Ground)
+                continue;
+
+            if (IsEdgeTile(tile))
+            {
+                float dist = Vector3.Distance(startTile.position, tile.position);
+
+                if (dist < bestDist)
+                {
+                    bestDist = dist;
+                    bestTile = tile;
+                }
+            }
+        }
+
+        return bestTile != null ? bestTile.position : targetWorldPos;
+    }
+
+    private bool IsEdgeTile(TileData tile)
+    {
+        foreach (Vector3 dir in directions)
+        {
+            Vector2 neighborPos = WorldToTile(tile.position + dir);
+
+            if (!mapDictionary.TryGetValue(neighborPos, out TileData neighbor))
+            {
+               return true;
+            }
+
+            if (neighbor.tileType == TileType.Air)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
     public bool IsTileWalkable(Vector2 tile)
     {
         if(mapDictionary.TryGetValue(tile, out TileData tiledata))

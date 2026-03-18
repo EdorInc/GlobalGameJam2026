@@ -810,6 +810,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 139435017}
     - target: {fileID: 3443580244990369533, guid: 151c667743bd16c4fa64ce3288db0612, type: 3}
+      propertyPath: distanceToGrab
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3443580244990369533, guid: 151c667743bd16c4fa64ce3288db0612, type: 3}
       propertyPath: distanceToChase
       value: 4
       objectReference: {fileID: 0}
@@ -836,6 +840,10 @@ PrefabInstance:
     - target: {fileID: 4571676917816546442, guid: 151c667743bd16c4fa64ce3288db0612, type: 3}
       propertyPath: targetMask.m_Bits
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 7332700334722119485, guid: 151c667743bd16c4fa64ce3288db0612, type: 3}
+      propertyPath: grabMask.m_Bits
+      value: 567
       objectReference: {fileID: 0}
     - target: {fileID: 7606484308797180856, guid: 151c667743bd16c4fa64ce3288db0612, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1431,9 +1439,13 @@ PrefabInstance:
       propertyPath: simulationObstaclesParent
       value: 
       objectReference: {fileID: 1521649687}
+    - target: {fileID: 3618356756689686015, guid: 13f8a92061617c6438166683dd3d3e71, type: 3}
+      propertyPath: grabMask.m_Bits
+      value: 567
+      objectReference: {fileID: 0}
     - target: {fileID: 3863490123164622529, guid: 13f8a92061617c6438166683dd3d3e71, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.200001
+      value: -12
       objectReference: {fileID: 0}
     - target: {fileID: 3863490123164622529, guid: 13f8a92061617c6438166683dd3d3e71, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1536,6 +1548,10 @@ PrefabInstance:
       propertyPath: simulationObstaclesParent
       value: 
       objectReference: {fileID: 1521649687}
+    - target: {fileID: 6181693315463131830, guid: b60a9515b2028484bae18b35b70e99c8, type: 3}
+      propertyPath: grabMask.m_Bits
+      value: 567
+      objectReference: {fileID: 0}
     - target: {fileID: 7418823080777054901, guid: b60a9515b2028484bae18b35b70e99c8, type: 3}
       propertyPath: m_Name
       value: FunkoPlayer2
