@@ -84,6 +84,7 @@ GameObject:
   - component: {fileID: 6532311188431754760}
   - component: {fileID: -5216866879657366040}
   - component: {fileID: -3770357806278516720}
+  - component: {fileID: 8747963092238407169}
   m_Layer: 0
   m_Name: FunkoCharacter
   m_TagString: Player
@@ -418,7 +419,7 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 08e065c0-c883-49cd-914a-b43948140023
     m_ActionName: 'Player/Roll[/Keyboard/space]'
-  m_NeverAutoSwitchControlSchemes: 0
+  m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
@@ -449,8 +450,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GroundDetector
   groundLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
-  groundCheckDistance: 0.05
+    m_Bits: 8
+  groundCheckDistance: 0.1
 --- !u!114 &3150853996062808696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -477,14 +478,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterController
   moveSpeed: 5
   turnSpeed: 10
-  allowJump: 0
-  jumpSpeed: 3
-  airControlMultiplier: 0.5
+  airControlMultiplier: 1
   rollSpeed: 400
   rollTime: 0.3
   isRolling: 0
   throwingMoveSpeed: 3
   throwingTurnSpeed: 6
+  hitKnockBackForce: 5
+  hitKnockBackUpwardsForce: 6
+  hitStunTime: 0.5
 --- !u!114 &3889285676591165311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -580,6 +582,19 @@ MonoBehaviour:
   maxThrowForce: {x: 8, y: 8}
   minThrowForce: {x: 0, y: 0}
   forceGrowRate: 2
+--- !u!114 &8747963092238407169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6189409550493942852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 933c403a7ecb81e48a873c0cfae4d8c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterStateController
+  characterId: 1
 --- !u!1 &8691217799028268263
 GameObject:
   m_ObjectHideFlags: 0

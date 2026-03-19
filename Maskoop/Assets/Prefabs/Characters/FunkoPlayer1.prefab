@@ -290,42 +290,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: FunkoCharacter1
       objectReference: {fileID: 0}
-    - target: {fileID: 6750556965445416539, guid: befe075e024e9144996dd0d6d51798e4, type: 3}
-      propertyPath: groundCheckDistance
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7439378836434446538, guid: befe075e024e9144996dd0d6d51798e4, type: 3}
-      propertyPath: airControlMultiplier
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6189409550493942852, guid: befe075e024e9144996dd0d6d51798e4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 9126679810225845377}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: befe075e024e9144996dd0d6d51798e4, type: 3}
 --- !u!4 &191673204208894509 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 389435165789757613, guid: befe075e024e9144996dd0d6d51798e4, type: 3}
   m_PrefabInstance: {fileID: 562801501335233152}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5920627994119808708 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6189409550493942852, guid: befe075e024e9144996dd0d6d51798e4, type: 3}
-  m_PrefabInstance: {fileID: 562801501335233152}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &9126679810225845377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5920627994119808708}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 933c403a7ecb81e48a873c0cfae4d8c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CharacterStateController
-  characterId: 1

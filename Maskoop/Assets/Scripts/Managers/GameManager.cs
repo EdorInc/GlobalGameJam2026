@@ -33,9 +33,16 @@ public class GameManager : MonoBehaviour
     [Header("Scenes")]
     [SerializeField] private string titleScene = "TitleScene";
     [SerializeField] private string gameScene = "GameScene";
-    
-    private PlayerInput player1Input;
-    private PlayerInput player2Input;
+
+    [Header("Prefabs")]
+    [SerializeField] private GameObject playerPrefab;
+
+    [Header("Initial spawn Settings")]
+    public Vector3 spawnPosition1 = new Vector3(-3, 1, 0);
+    public Vector3 spawnPosition2 = new Vector3(3, 1, 0);
+
+    private GameObject player1Instance;
+    private GameObject player2Instance;
 
     private void Awake()
     {
@@ -49,13 +56,10 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        SetPlayerInput();
-    }
-
     private void OnEnable()
     {
+        if (Instance != this) return;
+
         GameEvents.OnGoToMenuRequested += LoadTitle;
 
         GameEvents.OnStartRequested += StartGame;
@@ -69,6 +73,8 @@ public class GameManager : MonoBehaviour
 
     private void OnDisable()
     {
+        if (Instance != this) return;
+
         GameEvents.OnGoToMenuRequested -= LoadTitle;
 
         GameEvents.OnStartRequested -= StartGame;
@@ -78,6 +84,14 @@ public class GameManager : MonoBehaviour
         GameEvents.OnExitRequested -= QuitGame;
 
         SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == gameScene)
+        {
+            SpawnPlayers();
+        }
     }
 
     public void LoadTitle()
@@ -123,26 +137,16 @@ public class GameManager : MonoBehaviour
 #endif
     }
 
-    private void SetPlayerInput()
+    private void SpawnPlayers()
     {
-        PlayerInput[] playerInputs = FindObjectsByType<PlayerInput>(FindObjectsSortMode.None);
-
-        if (playerInputs.Length == 0)
+        // Destruir jugadores anteriores si existen
+        if (this.player1Instance != null)
         {
-            Debug.LogWarning("No PlayerInput components found in this scene.");
+            Destroy(this.player1Instance);
         }
-        else
-        {
-            if (playerInputs.Length == 1)
-            {
-                player1Input = playerInputs[0];
-                Debug.LogWarning("Only one PlayerInput found. Player 2 will not be assigned.");
-            }
-            else
-            {
-                player1Input = playerInputs[0];
-                player2Input = playerInputs[1];
-            }
+        if (this.player2Instance != null) 
+        { 
+            Destroy(this.player2Instance); 
         }
 
         var keyboard = Keyboard.current;
@@ -153,10 +157,35 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if (player1Input != null)
-            player1Input.SwitchCurrentControlScheme("Keyboard1", keyboard);
+        // --- PLAYER 1 ---
+        // Al usar PlayerInput.Instantiate permitimos internamente que compartan controlador
+        PlayerInput p1Input = PlayerInput.Instantiate(playerPrefab, 0, controlScheme: "Keyboard1", 0, keyboard);
+        player1Instance = p1Input.transform.root.gameObject;
+        
+        player1Instance.transform.position = spawnPosition1;
+        player1Instance.transform.rotation = Quaternion.identity;
+        
+        // ARREGLO FÍSICAS: Obligar a que el Rigidbody acepte instantáneamente su nueva coordenada
+        Rigidbody rb1 = player1Instance.GetComponentInChildren<Rigidbody>();
+        if (rb1 != null) rb1.position = spawnPosition1;
+        p1Input.transform.localPosition = Vector3.zero;
 
-        if (player2Input != null)
-            player2Input.SwitchCurrentControlScheme("Keyboard2", keyboard);
+        // --- PLAYER 2 ---
+        PlayerInput p2Input = PlayerInput.Instantiate(playerPrefab, 1, controlScheme: "Keyboard2", 1, keyboard);
+        player2Instance = p2Input.transform.root.gameObject;
+        
+        player2Instance.transform.position = spawnPosition2;
+        player2Instance.transform.rotation = Quaternion.identity;
+        
+        Rigidbody rb2 = player2Instance.GetComponentInChildren<Rigidbody>();
+        if (rb2 != null) rb2.position = spawnPosition2;
+        p2Input.transform.localPosition = Vector3.zero;
+
+        // --- SETUP EXTRAS ---
+        player1Instance.GetComponentInChildren<CharacterStateController>().characterId = 0;
+        player2Instance.GetComponentInChildren<CharacterStateController>().characterId = 1;
+
+        player1Instance.GetComponentInChildren<Camera>().rect = new Rect(0, 0, 0.5f, 1);
+        player2Instance.GetComponentInChildren<Camera>().rect = new Rect(0.5f, 0, 0.5f, 1);
     }
 }
