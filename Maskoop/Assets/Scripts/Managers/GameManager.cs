@@ -185,7 +185,11 @@ public class GameManager : MonoBehaviour
         player1Instance.GetComponentInChildren<CharacterStateController>().characterId = 0;
         player2Instance.GetComponentInChildren<CharacterStateController>().characterId = 1;
 
-        player1Instance.GetComponentInChildren<Camera>().rect = new Rect(0, 0, 0.5f, 1);
-        player2Instance.GetComponentInChildren<Camera>().rect = new Rect(0.5f, 0, 0.5f, 1);
+        // --- DYNAMIC SPLIT SCREEN ---
+        DynamicSplitManager splitManager = GetComponent<DynamicSplitManager>();
+        if (splitManager != null)
+        {
+            splitManager.SetupPlayers(player1Instance, player2Instance);
+        }
     }
 }
