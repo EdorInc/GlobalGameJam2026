@@ -45,6 +45,13 @@ public class Throw : MonoBehaviour
 
     private void StartSimulation()
     {
+        if (!simulationObstaclesParent)
+        {
+            Debug.LogWarning("Simulation Obstacles Parent is not assigned. Changing to default trajectory calculation...");
+            useSimulation = false;
+            return;
+        }
+
         Scene simulationScene = SceneManager.GetSceneByName("Simulation");
 
         if (!simulationScene.IsValid())
@@ -186,7 +193,7 @@ public class Throw : MonoBehaviour
     [SerializeField]
     private GameObject landingMarker;
     [SerializeField]
-    private bool useSimulation = true;
+    private bool useSimulation = false;
     [SerializeField] 
     private Transform simulationObstaclesParent;
 
