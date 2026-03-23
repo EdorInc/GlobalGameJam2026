@@ -1,129 +1,75 @@
-using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
+using FMOD.Studio;
 
 public class AudioManager : MonoBehaviour
 {
     [Header("Channels")]
-    [SerializeField] private AudioEventChannel generalAudioChannel;
-    [SerializeField] private AudioEventChannel musicAudioChannel;
+    [SerializeField] private AudioEventChannel sfxChannel;
+    [SerializeField] private AudioEventChannel musicChannel;
 
-    [Header("SFX")]
-    [SerializeField] private AudioSource audioPrefab;
-    [SerializeField] private int poolSize = 5;
+    [Header("Sound Library")]
+    [SerializeField] private SoundLibrary soundLibrary;
 
-    [Header("Music")]
-    [SerializeField] private AudioSource musicSource;
+    private EventInstance musicInstance;
 
-    private List<AudioSource> pool = new List<AudioSource>();
-
-    private SortedList<int, Queue<QueuedSound>> soundQueue = new SortedList<int, Queue<QueuedSound>>();
 
     private void Awake()
     {
-        // Inicializa pool de AudioSources
-        for (int i = 0; i < poolSize; i++)
-        {
-            AudioSource src = Instantiate(audioPrefab, transform);
-            src.gameObject.SetActive(false);
-            pool.Add(src);
-        }
+        AudioSystem.Initialize(sfxChannel, musicChannel, soundLibrary);
     }
-
-
     private void OnEnable()
     {
-        if (generalAudioChannel != null)
-            generalAudioChannel.OnPlaySound += EnqueueSound;
+        if (sfxChannel != null)
+            sfxChannel.OnPlaySound += PlaySFX;
 
-        if (musicAudioChannel != null)
-            musicAudioChannel.OnPlayMusic += PlayMusic;
+        if (musicChannel != null)
+            musicChannel.OnPlayMusic += PlayMusic;
     }
 
     private void OnDisable()
     {
-        if (generalAudioChannel != null)
-            generalAudioChannel.OnPlaySound -= EnqueueSound;
+        if (sfxChannel != null)
+            sfxChannel.OnPlaySound -= PlaySFX;
 
-        if (musicAudioChannel != null)
-            musicAudioChannel.OnPlayMusic -= PlayMusic;
+        if (musicChannel != null)
+            musicChannel.OnPlayMusic -= PlayMusic;
     }
 
-    //MUSIC
-    private void PlayMusic(SoundDefinition music)
+    //  SFX (3D)
+    private void PlaySFX(SoundDefinition sound, Vector3 position)
     {
-        if (musicSource.isPlaying)
+        if (sound == null) return;
+
+        var instance = RuntimeManager.CreateInstance(sound.eventReference);
+
+        instance.set3DAttributes(RuntimeUtils.To3DAttributes(position));
+        instance.setVolume(sound.volume);
+
+        // Optional parameter
+        if (!string.IsNullOrEmpty(sound.parameterName))
         {
-            if (musicSource.clip == music.clips[0])
-                return; // already playing this track
+            instance.setParameterByName(sound.parameterName, sound.parameterValue);
         }
 
-        musicSource.clip = music.clips[0];
-        musicSource.volume = music.volume;
-        musicSource.pitch = 1f;
-        musicSource.loop = music.loop;
-        musicSource.spatialBlend = 0f; // 2D music
-
-        musicSource.Play();
+        instance.start();
+        instance.release(); // Important!
     }
 
-
-    //SFX
-    private void EnqueueSound(SoundDefinition sound, Vector3 position)
+    //  MUSIC (2D)
+    private void PlayMusic(SoundDefinition sound)
     {
-        int priority = sound.priority;
+        if (sound == null) return;
 
-        if (!soundQueue.ContainsKey(priority))
-            soundQueue[priority] = new Queue<QueuedSound>();
-
-        soundQueue[priority].Enqueue(new QueuedSound(sound, position));
-
-        TryPlayNext();
-    }
-
-    private void TryPlayNext()
-    {
-        AudioSource freeSource = pool.Find(s => !s.isPlaying);
-        if (freeSource == null) return;
-
-        foreach (var kvp in soundQueue)
+        // Stop previous music
+        if (musicInstance.isValid())
         {
-            if (kvp.Value.Count > 0)
-            {
-                QueuedSound next = kvp.Value.Dequeue();
-
-                freeSource.transform.position = next.position;
-                freeSource.clip = next.sound.clips[Random.Range(0, next.sound.clips.Length)];
-                freeSource.volume = next.sound.volume;
-                freeSource.pitch = Random.Range(next.sound.pitchRange.x, next.sound.pitchRange.y);
-                freeSource.priority = next.sound.priority;
-                freeSource.spatialBlend = 1f; // 3D
-
-                freeSource.gameObject.SetActive(true);
-                freeSource.Play();
-
-                StartCoroutine(DisableAfterPlay(freeSource));
-                break;
-            }
+            musicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            musicInstance.release();
         }
-    }
 
-    private System.Collections.IEnumerator DisableAfterPlay(AudioSource source)
-    {
-        yield return new WaitForSeconds(source.clip.length);
-        source.gameObject.SetActive(false);
-
-        TryPlayNext();
-    }
-
-    private class QueuedSound
-    {
-        public SoundDefinition sound;
-        public Vector3 position;
-
-        public QueuedSound(SoundDefinition s, Vector3 pos)
-        {
-            sound = s;
-            position = pos;
-        }
+        musicInstance = RuntimeManager.CreateInstance(sound.eventReference);
+        musicInstance.setVolume(sound.volume);
+        musicInstance.start();
     }
 }

@@ -1451,6 +1451,25 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d1ab1e1a959dd2488a1eeb106076dec, type: 3}
+--- !u!1 &1411373152 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3390843273711706615, guid: b60a9515b2028484bae18b35b70e99c8, type: 3}
+  m_PrefabInstance: {fileID: 7310281167859633986}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1411373158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411373152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioListener
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
 --- !u!1 &1419694817
 GameObject:
   m_ObjectHideFlags: 0
@@ -1482,6 +1501,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   titleScene: TitleScene
   gameScene: SampleScene
+  playerPrefab: {fileID: 0}
+  spawnPosition1: {x: -3, y: 1, z: 0}
+  spawnPosition2: {x: 3, y: 1, z: 0}
 --- !u!4 &1419694819
 Transform:
   m_ObjectHideFlags: 0
@@ -1603,6 +1625,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1473939306 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2232498186474130076, guid: 13f8a92061617c6438166683dd3d3e71, type: 3}
+  m_PrefabInstance: {fileID: 1547297277262760468}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1473939312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1473939306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioListener
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
 --- !u!1 &1778304832
 GameObject:
   m_ObjectHideFlags: 0
@@ -1629,6 +1670,53 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.10865, y: 0.81086, z: -0.25672}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1833514424
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1833514426}
+  - component: {fileID: 1833514425}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1833514425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833514424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11dbe157e6d238341a0cdd42ac92ee86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  sfxChannel: {fileID: 11400000, guid: eb9f9560aefe93d45b1babebcde353ac, type: 2}
+  musicChannel: {fileID: 11400000, guid: f2b1a516503485d4d9765a0bf9b044a5, type: 2}
+  soundLibrary: {fileID: 11400000, guid: 38ce1f2e697df87459810a656805b8de, type: 2}
+--- !u!4 &1833514426
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833514424}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.031629995, y: -0.39086002, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2290,6 +2378,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 182194193247839655, guid: 13f8a92061617c6438166683dd3d3e71, type: 3}
+      propertyPath: footsteps
+      value: 
+      objectReference: {fileID: 11400000, guid: 0eb58433253daa4458c81b5f3d68e9ee, type: 2}
     - target: {fileID: 2920155651816199101, guid: 13f8a92061617c6438166683dd3d3e71, type: 3}
       propertyPath: simulationObstaclesParent
       value: 
@@ -2357,7 +2449,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2232498186474130076, guid: 13f8a92061617c6438166683dd3d3e71, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1473939312}
   m_SourcePrefab: {fileID: 100100000, guid: 13f8a92061617c6438166683dd3d3e71, type: 3}
 --- !u!1001 &2982341358879600768
 PrefabInstance:
@@ -2802,6 +2897,10 @@ PrefabInstance:
       propertyPath: simulationObstaclesParent
       value: 
       objectReference: {fileID: 1926420739}
+    - target: {fileID: 7311732234650950382, guid: b60a9515b2028484bae18b35b70e99c8, type: 3}
+      propertyPath: footsteps
+      value: 
+      objectReference: {fileID: 11400000, guid: 0eb58433253daa4458c81b5f3d68e9ee, type: 2}
     - target: {fileID: 7418823080777054901, guid: b60a9515b2028484bae18b35b70e99c8, type: 3}
       propertyPath: m_Name
       value: FunkoPlayer2
@@ -2850,7 +2949,10 @@ PrefabInstance:
     - {fileID: 3994168875246437828, guid: b60a9515b2028484bae18b35b70e99c8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3390843273711706615, guid: b60a9515b2028484bae18b35b70e99c8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1411373158}
   m_SourcePrefab: {fileID: 100100000, guid: b60a9515b2028484bae18b35b70e99c8, type: 3}
 --- !u!1001 &8507756143077597206
 PrefabInstance:
@@ -2976,6 +3078,7 @@ SceneRoots:
   - {fileID: 724600043}
   - {fileID: 1887952664}
   - {fileID: 1419694819}
+  - {fileID: 1833514426}
   - {fileID: 1468074081}
   - {fileID: 1778304833}
   - {fileID: 1547297277262760468}
