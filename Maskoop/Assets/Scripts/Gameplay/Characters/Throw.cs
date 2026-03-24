@@ -166,13 +166,14 @@ public class Throw : MonoBehaviour
         else
         {
             Debug.Log("Thrown object " + grabbedObject.name);
-
+            EventManager.Throw?.Invoke(grabbedObject);
             charging = false;
             grabbedObject = null;
 
             grabComponent.DropObject();
 
             rb.AddForce(transform.forward * currentForceFoward + Vector3.up * currentForceUp, ForceMode.Impulse);
+            
         }
 
         ClearTrajectory();

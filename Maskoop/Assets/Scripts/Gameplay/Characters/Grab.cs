@@ -28,6 +28,17 @@ public class Grab : MonoBehaviour
         characterState = GetComponent<CharacterStateController>();
     }
 
+    private void OnEnable()
+    {
+        EventManager.TryingToBeFree += DropPlayer;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.TryingToBeFree -= DropPlayer;
+    }
+
+
     void LateUpdate()
     {
         if (grabbedObject != null)
@@ -213,6 +224,13 @@ public class Grab : MonoBehaviour
         return false;
     }
 
+    public void DropPlayer(GameObject player)
+    {
+        if (player == grabbedObject)
+        {
+            DropObject();
+        }
+    }
     public void DropObject()
     {
         if (grabbedObject == null)
@@ -250,4 +268,6 @@ public class Grab : MonoBehaviour
         }
         grabbedObject = null;
     }
+
+
 }

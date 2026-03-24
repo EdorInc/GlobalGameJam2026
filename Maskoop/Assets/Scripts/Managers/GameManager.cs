@@ -191,5 +191,9 @@ public class GameManager : MonoBehaviour
         {
             splitManager.SetupPlayers(player1Instance, player2Instance);
         }
+        else
+        {
+            Debug.LogError("SplitManager missing");
+        }
     }
 }
