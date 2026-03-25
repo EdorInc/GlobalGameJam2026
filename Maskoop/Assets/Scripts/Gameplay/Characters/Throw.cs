@@ -166,7 +166,7 @@ public class Throw : MonoBehaviour
         else
         {
             Debug.Log("Thrown object " + grabbedObject.name);
-            EventManager.Throw?.Invoke(grabbedObject);
+            EventManager.Throw?.Invoke(grabbedObject,true,gameObject);
             charging = false;
             grabbedObject = null;
 

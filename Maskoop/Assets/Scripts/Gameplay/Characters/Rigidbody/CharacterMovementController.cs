@@ -51,6 +51,7 @@ public class CharacterMovementController : MonoBehaviour
     private float currentHitTime = 0;
     private bool isStunned = false;
     private float currentMovement = 0;
+    private bool thrownByEnemy = false;
     private bool IsCharging => characterState.IsChargingThrow;
     private bool IsGrounded => groundDetector.IsGrounded;
     private bool CanMove => characterState.CanMove();
@@ -97,11 +98,22 @@ public class CharacterMovementController : MonoBehaviour
         }
     }
 
-    void Thrown(GameObject thrownObject)
+    void Thrown(GameObject thrownObject,bool active,GameObject thrower)
     {
         if (characterState.IsMyPlayer(thrownObject))
         {
-            isBeingThrown = true;
+            if (active)
+            {
+                if (thrower.CompareTag("Enemy"))
+                {
+                    thrownByEnemy = true;
+                }
+                else
+                {
+                    thrownByEnemy = false;
+                }
+            }
+            isBeingThrown = active;
         }
     }
     void RotateTowardsMovementDirection(Vector3 movementVector, float turnSpeedMultiplier = 1.0f)
@@ -132,7 +144,7 @@ public class CharacterMovementController : MonoBehaviour
             EventManager.OnFallEnded?.Invoke(gameObject);
             isBeingThrown = false;
         }
-        if (wasGrounded && !IsGrounded)
+        if (wasGrounded && !IsGrounded && !IsGrabbed)
         {
             EventManager.OnFallStarted?.Invoke(gameObject);
         }
@@ -159,6 +171,13 @@ public class CharacterMovementController : MonoBehaviour
                 else
                 {
                     currentMovement = 0;
+                }
+            }
+            else if (isBeingThrown && !thrownByEnemy)
+            {
+                if(horizontalInput.magnitude > 0f)
+                {
+                    EventManager.TryingToMove?.Invoke(gameObject);
                 }
             }
             return;

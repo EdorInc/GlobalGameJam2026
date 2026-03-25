@@ -12,5 +12,6 @@ public static class EventManager
     public static Action<GameObject,Vector3> OnDamageRecived;
     public static Action<NavMeshManager> OnNavMeshUpdate;
     public static Action<GameObject> TryingToBeFree;
-    public static Action<GameObject> Throw;
+    public static Action<GameObject,bool,GameObject> Throw;
+    public static Action<GameObject> TryingToMove;
 }

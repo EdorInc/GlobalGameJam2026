@@ -28,6 +28,7 @@ public class AirMask : BaseMask
         EventManager.OnFallEnded -= EndFlutter;
         EventManager.OnAirCurrentEnter -= AirCurrentEnter;
         EventManager.OnAirCurrentExit -= AirCurrentExit;
+        EventManager.TryingToMove -= StartFlutter;
         Destroy(windParticlesObject);
     }
 
@@ -43,12 +44,14 @@ public class AirMask : BaseMask
         EventManager.OnFallEnded += EndFlutter;
         EventManager.OnAirCurrentEnter += AirCurrentEnter;
         EventManager.OnAirCurrentExit += AirCurrentExit;
+        EventManager.TryingToMove += StartFlutter;
     }
 
     public void StartFlutter(GameObject target)
     {
         if (characterState.IsMyPlayer(target))
         {
+            EventManager.Throw?.Invoke(target, false,gameObject);
             playerRigidBody = target.GetComponent<Rigidbody>();
             IsFluttering = true;
             playerRigidBody.constraints = RigidbodyConstraints.FreezePositionY;
