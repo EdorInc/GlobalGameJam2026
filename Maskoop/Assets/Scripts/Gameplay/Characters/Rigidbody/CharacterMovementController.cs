@@ -37,6 +37,10 @@ public class CharacterMovementController : MonoBehaviour
     [Tooltip("Time the player wont be able to move after getting hit")]
     [SerializeField] private float hitStunTime = 1;
 
+    [Header("Being grabbed movement")]
+    [Tooltip("Time needed to be let free when grabbed")]
+    [SerializeField] private float movementToBeFree = 1;
+
     private GroundDetector groundDetector;
 
     private CharacterStateController characterState;
@@ -46,6 +50,8 @@ public class CharacterMovementController : MonoBehaviour
     private bool wasGrabbed = false;
     private float currentHitTime = 0;
     private bool isStunned = false;
+    private float currentMovement = 0;
+    private bool thrownByEnemy = false;
     private bool IsCharging => characterState.IsChargingThrow;
     private bool IsGrounded => groundDetector.IsGrounded;
     private bool CanMove => characterState.CanMove();
@@ -68,11 +74,14 @@ public class CharacterMovementController : MonoBehaviour
     private void OnEnable()
     {
         EventManager.OnDamageRecived += ReciveDamage;
+        EventManager.Throw += Thrown;
+
     }
 
     private void OnDisable()
     {
         EventManager.OnDamageRecived -= ReciveDamage;
+        EventManager.Throw -= Thrown;
     }
 
     private void Update()
@@ -89,6 +98,24 @@ public class CharacterMovementController : MonoBehaviour
         }
     }
 
+    void Thrown(GameObject thrownObject,bool active,GameObject thrower)
+    {
+        if (characterState.IsMyPlayer(thrownObject))
+        {
+            if (active)
+            {
+                if (thrower.CompareTag("Enemy"))
+                {
+                    thrownByEnemy = true;
+                }
+                else
+                {
+                    thrownByEnemy = false;
+                }
+            }
+            isBeingThrown = active;
+        }
+    }
     void RotateTowardsMovementDirection(Vector3 movementVector, float turnSpeedMultiplier = 1.0f)
     {
         if (movementVector.sqrMagnitude > 0f)
@@ -112,28 +139,50 @@ public class CharacterMovementController : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        if (wasGrabbed && !IsGrabbed)
-        {
-            isBeingThrown = true;
-        }
         if (!wasGrounded && IsGrounded)
         {
             EventManager.OnFallEnded?.Invoke(gameObject);
             isBeingThrown = false;
         }
-        if (wasGrounded && !IsGrounded)
+        if (wasGrounded && !IsGrounded && !IsGrabbed)
         {
             EventManager.OnFallStarted?.Invoke(gameObject);
         }
 
         wasGrounded = IsGrounded;
         wasGrabbed = IsGrabbed;
+        Vector3 horizontalInput = new Vector3(ForwardInput, 0f, SideInput).normalized;
+
         if (!CanMove || isBeingThrown || isStunned)
         {
+            if (IsGrabbed)
+            {
+                if(horizontalInput.magnitude > 0f)
+                {
+                    currentMovement += horizontalInput.magnitude;
+                    Debug.Log("MOVIENDO");
+
+                    if (currentMovement > movementToBeFree)
+                    {
+                        EventManager.TryingToBeFree?.Invoke(gameObject);
+                        currentMovement = 0;
+                    }
+                }
+                else
+                {
+                    currentMovement = 0;
+                }
+            }
+            else if (isBeingThrown && !thrownByEnemy)
+            {
+                if(horizontalInput.magnitude > 0f)
+                {
+                    EventManager.TryingToMove?.Invoke(gameObject);
+                }
+            }
             return;
         }
         
-        Vector3 horizontalInput = new Vector3(ForwardInput, 0f, SideInput).normalized;
 
         if (currentPlatform != null)
         {
