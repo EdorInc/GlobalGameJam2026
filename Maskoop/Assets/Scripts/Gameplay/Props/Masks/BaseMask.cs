@@ -16,12 +16,12 @@ public abstract class BaseMask : MonoBehaviour
 
     public abstract void FixedUpdateLogic();
 
-    public abstract void OnUnequip();
-
     public virtual void OnEquip(CharacterStateController characterState)
     {
         this.characterState = characterState;
     }
+
+    public abstract void OnUnequip();
 
     public virtual void Respawn()
     {

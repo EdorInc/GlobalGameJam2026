@@ -14,11 +14,21 @@ public class Door : ActivableBase
 
     protected override bool StopCondition()
     {
-        return transform.position.Equals(openPosition.position);
+        // Define a small margin of error (epsilon)
+        const float positionTolerance = 0.01f;
+        bool isAtOpenPosition = Vector3.Distance(transform.position, openPosition.position) < positionTolerance;
+
+        if (isAtOpenPosition)
+        {
+            Debug.Log("Door " + gameObject.name + " is at open position.");
+        }
+
+        return isAtOpenPosition;
     }
 
     protected override void ActivatedAction()
     {
+        Debug.Log("Moving door " + gameObject.name + " towards open position...");
         transform.position = Vector3.MoveTowards(transform.position, openPosition.position, Time.deltaTime * speed);
     }
 

@@ -11,10 +11,6 @@ public class InverseDoor : Door
     {
         Vector3 closedPosition = transform.position;
 
-        // Set the door to the open position and save the closed position for later,
-        // transform.position = openPosition.position;
-        // openPosition.position = closedPosition;
-
         Vector3 finalPosition = openPosition.position;
 
         if (invertPosition)

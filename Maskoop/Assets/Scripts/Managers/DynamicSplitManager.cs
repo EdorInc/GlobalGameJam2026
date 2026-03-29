@@ -36,7 +36,7 @@ public class DynamicSplitManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("UIDocument not assigned in DynamicSplitManager!");
+            Debug.LogError("UIDocument not assigned in DynamicSplitManager!");
         }
     }
 

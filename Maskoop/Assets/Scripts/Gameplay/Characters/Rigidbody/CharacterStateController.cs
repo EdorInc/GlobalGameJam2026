@@ -2,15 +2,13 @@ using UnityEngine;
 
 public class CharacterStateController : MonoBehaviour
 {
+    [Header("Player Info")]
     [Tooltip("Id of the player")]
     public int characterId = -1;
 
-
     public bool IsHoldingObject => heldObject != null;
     public bool IsBeingGrabbed { get; private set; }
-
     public bool IsFloating { get; set; }
-
     public bool IsChargingThrow => throwComponent.charging;
     public bool HasMaskEquipped => currentMask != null;
 

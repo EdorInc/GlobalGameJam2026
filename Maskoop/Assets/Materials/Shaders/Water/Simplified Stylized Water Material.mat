@@ -65,11 +65,11 @@ Material:
     - _Lighting_Smoothness: 0.3
     - _Normals_Scale: 0.05
     - _Normals_Speed: 0
-    - _Normals_Strength: 0.5
+    - _Normals_Strength: 0
     - _QueueControl: 1
     - _QueueOffset: 0
-    - _Refraction_Scale: 0.2
-    - _Refraction_Speed: 0.1
+    - _Refraction_Scale: 0.5
+    - _Refraction_Speed: 0.05
     - _Refraction_Strength: 0.01
     - _Surface_Foam_Color_Blend: 0
     - _Surface_Foam_Direction: 0

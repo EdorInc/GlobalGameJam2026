@@ -13,6 +13,7 @@ public class PressurePlate : ActivatorBase
     private void OnTriggerEnter(Collider other)
     {
         bool willActivate = !hasBeenActivated;
+
         if (canOnlyBeActivatedByPlayer)
         {
             willActivate = willActivate && other.gameObject.CompareTag("Player");
@@ -23,6 +24,8 @@ public class PressurePlate : ActivatorBase
             hasBeenActivated = true;
 
             SetApparience();
+
+            Debug.Log("Activating channel " + channel + " through pressure plate.");
 
             EventManager.OnButtonPressed?.Invoke(channel);
         }
@@ -43,7 +46,10 @@ public class PressurePlate : ActivatorBase
 
             SetApparience();
 
-            EventManager.OnButtonPressed?.Invoke(channel);
+            Debug.Log("Deactivating channel " + channel + " through pressure plate.");
+
+            // TODO - Add a new event for deactivation.
+            // EventManager.OnButtonPressed?.Invoke(channel);
         }
     }
 

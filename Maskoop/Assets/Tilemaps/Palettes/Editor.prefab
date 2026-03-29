@@ -224,9 +224,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3879451581060256555, guid: 2d44087781e04704ca2cc3b900da72af, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3879451581060256555, guid: 2d44087781e04704ca2cc3b900da72af, type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6487881303263944399, guid: 2d44087781e04704ca2cc3b900da72af, type: 3}
       propertyPath: m_Name
       value: BridgeBrush
+      objectReference: {fileID: 0}
+    - target: {fileID: 8925466963963774925, guid: 2d44087781e04704ca2cc3b900da72af, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -360,6 +372,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3552040771392007566, guid: 462932b4c840f9943856424c843b771a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3879451581060256555, guid: 462932b4c840f9943856424c843b771a, type: 3}
       propertyPath: m_DynamicOccludee
       value: 0
@@ -371,6 +387,14 @@ PrefabInstance:
     - target: {fileID: 6487881303263944399, guid: 462932b4c840f9943856424c843b771a, type: 3}
       propertyPath: m_Name
       value: WallBrush
+      objectReference: {fileID: 0}
+    - target: {fileID: 9169423406093924712, guid: 462932b4c840f9943856424c843b771a, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9169423406093924712, guid: 462932b4c840f9943856424c843b771a, type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -430,9 +454,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3552040771392007566, guid: e81b4b727b595cd4d93ad7b10a6eda20, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3879451581060256555, guid: e81b4b727b595cd4d93ad7b10a6eda20, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3879451581060256555, guid: e81b4b727b595cd4d93ad7b10a6eda20, type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6487881303263944399, guid: e81b4b727b595cd4d93ad7b10a6eda20, type: 3}
       propertyPath: m_Name
       value: DoorBrush
+      objectReference: {fileID: 0}
+    - target: {fileID: 9169423406093924712, guid: e81b4b727b595cd4d93ad7b10a6eda20, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9169423406093924712, guid: e81b4b727b595cd4d93ad7b10a6eda20, type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -444,7 +488,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1600805824019372234, guid: e81b4b727b595cd4d93ad7b10a6eda20, type: 3}
   m_PrefabInstance: {fileID: 8448117614150181991}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4898030174807125310
+--- !u!114 &496410573114135433
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

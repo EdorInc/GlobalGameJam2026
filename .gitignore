@@ -130,3 +130,6 @@ Maskoop/Assets/_Recovery.meta
 # If the source bank files are kept outside of the StreamingAssets folder then these can be ignored.
 # Log files can be ignored.
 fmod_editor.log
+/Maskoop/Packages/com.merry-yellow.code-assist
+Maskoop/Packages/packages-lock.json
+Maskoop/AGENTS.md
