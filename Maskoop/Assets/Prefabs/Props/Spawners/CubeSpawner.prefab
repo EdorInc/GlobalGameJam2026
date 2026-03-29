@@ -159,7 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fb079b0ad3771346a23c779aa012be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CubeSpawner
-  cubePrefab: {fileID: 2483545768859000036, guid: 40d4aa8de2fd7604f8721a6aa352549f, type: 3}
+  objectPrefab: {fileID: 2483545768859000036, guid: 40d4aa8de2fd7604f8721a6aa352549f, type: 3}
   spawnPosition: {fileID: 2212517262685057752}
 --- !u!1 &3289249814656193918
 GameObject:

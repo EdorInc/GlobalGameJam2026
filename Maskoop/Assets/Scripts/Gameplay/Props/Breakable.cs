@@ -23,7 +23,7 @@ public class Breakable : MonoBehaviour
 
     private Rigidbody rb;
     private float maxSpeed = 0;
-    private RockSpawner spawner;
+    private BaseSpawner spawner;
 
     void Start()
     {
@@ -34,7 +34,7 @@ public class Breakable : MonoBehaviour
         if (fragmentParent != null) fragmentParent.SetActive(false);
     }
 
-    public void SetSpawner(RockSpawner spawner)
+    public void SetSpawner(BaseSpawner spawner)
     {
         this.spawner = spawner;
     }
@@ -101,13 +101,13 @@ public class Breakable : MonoBehaviour
             }
 
             if (spawner != null)
-                spawner.DestroyRock(fragmentLifespan);
+                spawner.DestroyObject(fragmentLifespan);
             else Destroy(gameObject, fragmentLifespan);
         }
         else
         {
             if (spawner != null)
-                spawner.DestroyRock();
+                spawner.DestroyObject();
             else Destroy(gameObject);
 
         }

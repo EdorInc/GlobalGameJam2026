@@ -477,6 +477,7 @@ GameObject:
   - component: {fileID: 7676925139035191567}
   - component: {fileID: 6885308075491525930}
   - component: {fileID: 4714285465860657251}
+  - component: {fileID: 4031961618772163604}
   m_Layer: 0
   m_Name: Rock
   m_TagString: Rock
@@ -593,6 +594,21 @@ MonoBehaviour:
   fragmentLifespan: 3
   fragmentForceFromCenter: 5
   fragmentForceFromCollision: 2.5
+--- !u!114 &4031961618772163604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836515063631740824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b7d6c44fd5b3e845827b8107cbc3c4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Respawn
+  respawnPosition: {x: 0, y: 1, z: 0}
+  voidDistance: -3
+  willDestroy: 1
 --- !u!1 &3701796733462889199
 GameObject:
   m_ObjectHideFlags: 0
