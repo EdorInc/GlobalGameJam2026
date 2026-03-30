@@ -4,5 +4,7 @@ using UnityEngine;
 public class SoundLibrary : ScriptableObject
 {
     public SoundDefinition footstep;
-
+    public SoundDefinition grab;
+    public SoundDefinition chargeThrow;
+    public SoundDefinition rockBreak;
 }

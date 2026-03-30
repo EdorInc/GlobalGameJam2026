@@ -13,3 +13,6 @@ MonoBehaviour:
   m_Name: SoundLibrary
   m_EditorClassIdentifier: Assembly-CSharp::SoundLibrary
   footstep: {fileID: 11400000, guid: 0eb58433253daa4458c81b5f3d68e9ee, type: 2}
+  grab: {fileID: 11400000, guid: 993483fb6c555d54c82b0f3c9e7f56e8, type: 2}
+  chargeThrow: {fileID: 11400000, guid: 0d765ddaeb2093b4882251c5af63c729, type: 2}
+  rockBreak: {fileID: 11400000, guid: 0cb7af02a7d52e04f8f11e9e6e3e1412, type: 2}

@@ -41,6 +41,7 @@ public class CharacterMovementController : MonoBehaviour
     [Tooltip("Time needed to be let free when grabbed")]
     [SerializeField] private float movementToBeFree = 1;
 
+
     private GroundDetector groundDetector;
 
     private CharacterStateController characterState;
@@ -254,4 +255,5 @@ public class CharacterMovementController : MonoBehaviour
             characterState.ReciveDamage(hitStunTime);
         }
     }
+
 }

@@ -111,5 +111,8 @@ public class Breakable : MonoBehaviour
             else Destroy(gameObject);
 
         }
+
+        //SFX
+        AudioSystem.PlaySFX(AudioSystem.SoundLibrary.rockBreak, transform.position);
     }
 }

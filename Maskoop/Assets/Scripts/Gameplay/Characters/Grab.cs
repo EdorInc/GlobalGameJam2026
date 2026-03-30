@@ -127,7 +127,7 @@ public class Grab : MonoBehaviour
             else
             {
                 Debug.Log("Grabbed object " + grabbedObject.name);
-
+                AudioSystem.PlaySFX(AudioSystem.SoundLibrary.grab, transform.position);
             }
         }
         else

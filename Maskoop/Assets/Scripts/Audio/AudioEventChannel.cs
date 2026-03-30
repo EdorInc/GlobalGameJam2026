@@ -10,11 +10,23 @@ using UnityEngine;
 public class AudioEventChannel : ScriptableObject
 {
     public Action<SoundDefinition, Vector3> OnPlaySound;
+    public Action<SoundDefinition, Vector3, int> OnPlayDynamicSound;
+    public Action<SoundDefinition, int> OnStopDynamicSound;
     public Action<SoundDefinition> OnPlayMusic;
 
     public void RaiseSound(SoundDefinition sound, Vector3 position)
     {
         OnPlaySound?.Invoke(sound, position);
+    }
+
+    public void RaiseDynamicSound(SoundDefinition sound, Vector3 position, int playerId)
+    {
+        OnPlayDynamicSound?.Invoke(sound, position, playerId);
+    }
+
+    public void StopDynamicSound(SoundDefinition sound, int playerId)
+    {
+        OnStopDynamicSound?.Invoke(sound, playerId);
     }
 
     public void RaiseMusic(SoundDefinition sound)
