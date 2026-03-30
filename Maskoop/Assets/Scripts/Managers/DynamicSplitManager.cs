@@ -66,23 +66,35 @@ public class DynamicSplitManager : MonoBehaviour
         followScript1 = camera1.GetComponent<FollowPlayer>();
         followScript2 = camera2.GetComponent<FollowPlayer>();
 
-        if (followScript1 != null) followScript1.target = player1;
-        if (followScript2 != null) followScript2.target = player2;
-
         if (followScript1 != null)
         {
+            followScript1.SetTargetAndInitialize(player1);
             followScript1.SetOtherTarget(player2);
             followScript1.SetZoomSettings(zoomOutOffset, zoomSpeed);
         }
 
-        //if (followScript2 != null)
-        //{
-        //    followScript2.SetOtherTarget(player1);
-        //    followScript2.SetZoomSettings(zoomOutOffset, zoomSpeed);
-        //}
+        if (followScript2 != null)
+        {
+            followScript2.SetTargetAndInitialize(player2);
+            // followScript2.SetOtherTarget(player1);
+            // followScript2.SetZoomSettings(zoomOutOffset, zoomSpeed);
+        }
 
         var listener2 = camera2.GetComponent<AudioListener>();
         if (listener2 != null) Destroy(listener2);
+
+        // Cameras are set to see each other always
+        var seeThrough1 = camera1.GetComponent<SeeThrough>();
+        if (seeThrough1 != null)
+        {
+            seeThrough1.SetPlayers(player1, player2);
+        }
+
+        var seeThrough2 = camera2.GetComponent<SeeThrough>();
+        if (seeThrough2 != null)
+        {
+            seeThrough2.SetPlayers(player2, player1);
+        }
 
         float distance = Vector3.Distance(player1.position, player2.position);
         InitializeCameraState(distance);
@@ -107,6 +119,12 @@ public class DynamicSplitManager : MonoBehaviour
             if (distance > splitDistance)
             {
                 isMerged = false;
+
+                if (followScript2 != null)
+                {
+                    followScript2.SnapToSplitNow();
+                }
+
                 camera2.gameObject.SetActive(true);
                 UpdateSeparatorVisual();
             }

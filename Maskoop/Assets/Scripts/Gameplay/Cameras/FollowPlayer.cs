@@ -3,7 +3,7 @@ using UnityEngine;
 public class FollowPlayer : MonoBehaviour
 {
     [Header("References")]
-    public Transform target;
+    private Transform target;
     private Transform otherTarget;
 
     [Header("Settings")]
@@ -65,12 +65,38 @@ public class FollowPlayer : MonoBehaviour
         this.zoomSpeed = zoomSpeed;
     }
 
+    public void SetTargetAndInitialize(Transform newTarget)
+    {
+        target = newTarget;
+        ReinitializeOffsets();
+    }
+
+    public void SnapToSplitNow()
+    {
+        if (target == null) return;
+        if (!offsetsInitialized) ReinitializeOffsets();
+
+        currentPositionOffset = originalPositionOffset;
+        velocity = Vector3.zero;
+        transform.position = target.position + currentPositionOffset;
+    }
+
     private void EnsureOffsetsInitialized()
     {
         if (offsetsInitialized) return;
 
         originalPositionOffset = transform.position - target.position;
         currentPositionOffset = originalPositionOffset;
+        offsetsInitialized = true;
+    }
+
+    private void ReinitializeOffsets()
+    {
+        if (target == null) return;
+
+        originalPositionOffset = transform.position - target.position;
+        currentPositionOffset = originalPositionOffset;
+        velocity = Vector3.zero;
         offsetsInitialized = true;
     }
 }

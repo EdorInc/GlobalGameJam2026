@@ -5,7 +5,8 @@ using UnityEngine;
 public class SeeThrough : MonoBehaviour
 {
     [Header("References")]
-    public Transform player;
+    private Transform player;
+    private Transform otherPlayer;
 
     private Camera cam;
 
@@ -20,66 +21,32 @@ public class SeeThrough : MonoBehaviour
     public int seeThroughLayer;
 
     // Keeps track of walls currently made see-through
-    private Dictionary<GameObject, int> modifiedWalls = new Dictionary<GameObject, int>();
+    private readonly Dictionary<GameObject, int> modifiedWalls = new Dictionary<GameObject, int>();
 
     void Start()
     {
         cam = GetComponent<Camera>();
-
         if (cam == null)
         {
             Debug.LogError("SeeThrough script must be attached to a Camera.");
             enabled = false;
-            return;
-        }
-
-        if (player == null)
-        {
-            Debug.LogError("Player Transform reference is missing in SeeThrough script.");
-            enabled = false;
-            return;
         }
     }
 
     void Update()
     {
+        if (!enabled || cam == null || player == null) return;
+
         Vector3 origin = cam.transform.position;
-        Vector3 target = player.position;
-        Vector3 direction = target - origin;
-        float distance = direction.magnitude;
-        Vector3 dirNorm = direction.normalized;
-
-        Debug.DrawLine(origin, target, Color.red);
-
         HashSet<GameObject> wallsThisFrame = new HashSet<GameObject>();
 
-        nearSphereDistance = Mathf.Min(nearSphereDistance, distance);
+        // We always process the main player
+        ProcessTarget(origin, player, wallsThisFrame);
 
-        // -------- SphereCast near camera --------
-        Ray ray = new Ray(origin, dirNorm);
-
-        if (useNearSphereCast)
+        // In merged state, also process the other player
+        if (DynamicSplitManager.isMerged && otherPlayer != null)
         {
-            RaycastHit[] nearHits = Physics.SphereCastAll(
-                ray,
-                castSphereRadius,
-                nearSphereDistance,
-                raycastMask
-            );
-
-            foreach (RaycastHit hit in nearHits)
-            {
-                TryAddWall(hit.collider, wallsThisFrame);
-            }
-        }
-
-        // -------- Linecast for the rest --------
-        Vector3 lineStart = origin;
-        if (useNearSphereCast)  lineStart = origin + dirNorm * nearSphereDistance;
-
-        if (Physics.Linecast(lineStart, target, out RaycastHit lineHit, raycastMask))
-        {
-            TryAddWall(lineHit.collider, wallsThisFrame);
+            ProcessTarget(origin, otherPlayer, wallsThisFrame);
         }
 
         // -------- Apply see-through --------
@@ -115,6 +82,65 @@ public class SeeThrough : MonoBehaviour
             SetLayerRecursively(obj, modifiedWalls[obj]);
             modifiedWalls.Remove(obj);
         }
+    }
+
+    private void ProcessTarget(Vector3 origin, Transform targetTransform, HashSet<GameObject> wallsThisFrame)
+    {
+        if (targetTransform == null) return;
+
+        Vector3 target = targetTransform.position;
+        Vector3 direction = target - origin;
+        float distance = direction.magnitude;
+        if (distance <= Mathf.Epsilon) return;
+
+        // Reuse the already computed distance to avoid an extra normalization cost.
+        Vector3 dirNorm = direction / distance;
+
+        Debug.DrawLine(origin, target, Color.red);
+        float effectiveNearDistance = Mathf.Min(nearSphereDistance, distance);
+
+        // -------- SphereCast near camera --------
+        if (useNearSphereCast && effectiveNearDistance > 0f)
+        {
+            RaycastHit[] nearHits = Physics.SphereCastAll(
+                new Ray(origin, dirNorm),
+                castSphereRadius,
+                effectiveNearDistance,
+                raycastMask
+            );
+
+            foreach (RaycastHit hit in nearHits)
+            {
+                TryAddWall(hit.collider, wallsThisFrame);
+            }
+        }
+
+        // -------- Raycast for the rest --------
+        float startOffset = useNearSphereCast ? effectiveNearDistance : 0f;
+        float remainingDistance = distance - startOffset;
+
+        if (remainingDistance <= 0f) return;
+
+        Vector3 rayStart = origin + dirNorm * startOffset;
+
+        // Better than Linecast because it returns all blockers on the segment,
+        // not only the first one, so multiple walls can be handled in a single frame.
+        RaycastHit[] hits = Physics.RaycastAll(
+            new Ray(rayStart, dirNorm),
+            remainingDistance,
+            raycastMask
+        );
+
+        foreach (RaycastHit hit in hits)
+        {
+            TryAddWall(hit.collider, wallsThisFrame);
+        }
+    }
+
+    public void SetPlayers(Transform mainPlayer, Transform secondaryPlayer)
+    {
+        player = mainPlayer;
+        otherPlayer = secondaryPlayer;
     }
 
     void SetLayerRecursively(GameObject obj, int newLayer)
