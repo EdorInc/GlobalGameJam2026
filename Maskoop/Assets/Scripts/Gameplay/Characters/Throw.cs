@@ -137,7 +137,7 @@ public class Throw : MonoBehaviour
             currentForceFoward = minForceFowards;
 
             //SFX
-            AudioSystem.PlayDynamicSFX(AudioSystem.SoundLibrary.chargeThrow, transform.position, 0);
+            AudioSystem.PlayDynamicSFX(AudioSystem.SoundLibrary?.chargeThrow, transform.position, 0);
         }
         else if (!charging && grabbedObject == null)
         {
@@ -177,7 +177,7 @@ public class Throw : MonoBehaviour
         }
         else
         {
-            AudioSystem.StopDynamicSFX(AudioSystem.SoundLibrary.chargeThrow, 0); //TODO cambiar por playerId cuando sepa como
+            AudioSystem.StopDynamicSFX(AudioSystem.SoundLibrary?.chargeThrow, 0); //TODO cambiar por playerId cuando sepa como
 
             Debug.Log("Thrown object " + grabbedObject.name);
             EventManager.Throw?.Invoke(grabbedObject,true,gameObject);

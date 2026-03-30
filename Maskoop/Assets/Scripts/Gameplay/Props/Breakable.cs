@@ -113,6 +113,6 @@ public class Breakable : MonoBehaviour
         }
 
         //SFX
-        AudioSystem.PlaySFX(AudioSystem.SoundLibrary.rockBreak, transform.position);
+        AudioSystem.PlaySFX(AudioSystem.SoundLibrary?.rockBreak, transform.position);
     }
 }
