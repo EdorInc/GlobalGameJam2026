@@ -1350,7 +1350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cce4bd90f8a16444837c0b1a546903e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameScreenController
-  gameDuration: 30
+  gameDuration: 999
   pauseScreenName: pause-ui
   winScreenName: win-ui
   loseScreenName: lose-ui
@@ -1593,6 +1593,14 @@ PrefabInstance:
     - target: {fileID: 228944724330065337, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767527281953958782, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: spawnPosition1.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767527281953958782, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: spawnPosition2.x
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4073580171776634626, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
       propertyPath: gameUIDocument
