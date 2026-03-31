@@ -10,10 +10,47 @@ public class Throw : MonoBehaviour
     private Grab grabComponent;
     private Equip equipComponent;
     private LineRenderer trajectoryRenderer;
-    
+
+    private Scene simulationScene;
+    private PhysicsScene physicsScene;
+    private readonly Dictionary<Transform, Transform> spawnedObjects = new Dictionary<Transform, Transform>();
+
     [HideInInspector]
     public GameObject grabbedObject;
 
+    [HideInInspector]
+    public bool charging = false;
+
+    [Header("Trajectory Settings")]
+    [SerializeField]
+    [Tooltip("Maximum time in seconds to simulate or draw the throw trajectory.")]
+    private float maxTime = 5.0f;
+    [SerializeField]
+    [Tooltip("Number of trajectory points to ignore at the end of the path.")]
+    private int endPointsIgnored = 1;
+    [SerializeField]
+    [Tooltip("GameObject used to visually mark the predicted landing position of the thrown object.")]
+    private GameObject landingMarker;
+    [SerializeField]
+    [Tooltip("If true, uses a physics simulation scene to calculate the trajectory. If false, uses a mathematical prediction.")]
+    private bool useSimulation = false;
+    [SerializeField]
+    [Tooltip("Parent transform containing all objects to be included as obstacles in the simulation scene.")]
+    private Transform simulationObstaclesParent;
+
+    private float minForceFowards = 0;
+    private float minForceUp = 0;
+    private float maxForceFoward = 8;
+    private float maxForceUp = 8;
+    private float forceGrowRate = 2;
+
+    private float currentForceFoward;
+    private float currentForceUp;
+
+    //[Header("Vibration Settings")]
+    float lowVibrationIntensity = 0.1f;
+    float highVibrationIntensity = 0.1f;
+    float vibrationDuration = 0.01f;
 
     void Start()
     {
@@ -43,46 +80,6 @@ public class Throw : MonoBehaviour
         }
     }
 
-    private void StartSimulation()
-    {
-        if (!simulationObstaclesParent)
-        {
-            Debug.LogWarning("Simulation Obstacles Parent is not assigned. Changing to default trajectory calculation...");
-            useSimulation = false;
-            return;
-        }
-
-        Scene simulationScene = SceneManager.GetSceneByName("Simulation");
-
-        if (!simulationScene.IsValid())
-        {
-            simulationScene = SceneManager.CreateScene("Simulation", new CreateSceneParameters(LocalPhysicsMode.Physics3D));
-
-            physicsScene = simulationScene.GetPhysicsScene();
-
-            foreach (Transform obj in simulationObstaclesParent)
-            {
-                var ghostObj = Instantiate(obj.gameObject, obj.position, obj.rotation);
-                Renderer[] ghostRenderers = ghostObj.GetComponentsInChildren<Renderer>();
-                foreach (Renderer r in ghostRenderers) r.enabled = false;
-                SceneManager.MoveGameObjectToScene(ghostObj, simulationScene);
-                if (!ghostObj.isStatic) spawnedObjects.Add(obj, ghostObj.transform);
-            }
-        }
-        else
-        {
-            physicsScene = simulationScene.GetPhysicsScene();
-        }
-    }
-
-    [Header("Vibration Settings")]
-    [SerializeField]
-    float lowVibrationIntensity = 0.1f;
-    [SerializeField]
-    float highVibrationIntensity = 0.1f;
-    [SerializeField]
-    float vibrationDuration = 0.01f;
-
     private void Vibrate(float low, float high, float duration)
     {
         // if (this.gameObject == ReferenceManager.Instance.GetPlayerOne())
@@ -105,16 +102,6 @@ public class Throw : MonoBehaviour
         //     }
         // }
     }
-
-    private float minForceFowards = 0;
-    private float minForceUp = 0;
-    private float maxForceFoward = 8;
-    private float maxForceUp = 8;
-    private float forceGrowRate = 2;
-
-    private float currentForceFoward;
-    private float currentForceUp;
-    public bool charging = false;
 
     public void ChargeObject()
     {
@@ -192,22 +179,6 @@ public class Throw : MonoBehaviour
 
         ClearTrajectory();
     }
-
-    [Header("Trajectory Settings")]
-    [SerializeField]
-    private float maxTime = 5.0f;
-    [SerializeField]
-    private int endPointsIgnored = 1;
-    [SerializeField]
-    private GameObject landingMarker;
-    [SerializeField]
-    private bool useSimulation = false;
-    [SerializeField] 
-    private Transform simulationObstaclesParent;
-
-    private Scene simulationScene;
-    private PhysicsScene physicsScene;
-    private readonly Dictionary<Transform, Transform> spawnedObjects = new Dictionary<Transform, Transform>();
     
     public void DrawTrajectory(float impulseStrengthFoward, float impulseStrengthUp)
     {
@@ -239,6 +210,38 @@ public class Throw : MonoBehaviour
         else
         {
             CalculateTrajectory(launchPosition, launchVelocity);
+        }
+    }
+
+    private void StartSimulation()
+    {
+        if (!simulationObstaclesParent)
+        {
+            Debug.LogWarning("Simulation Obstacles Parent is not assigned. Changing to default trajectory calculation...");
+            useSimulation = false;
+            return;
+        }
+
+        Scene simulationScene = SceneManager.GetSceneByName("Simulation");
+
+        if (!simulationScene.IsValid())
+        {
+            simulationScene = SceneManager.CreateScene("Simulation", new CreateSceneParameters(LocalPhysicsMode.Physics3D));
+
+            physicsScene = simulationScene.GetPhysicsScene();
+
+            foreach (Transform obj in simulationObstaclesParent)
+            {
+                var ghostObj = Instantiate(obj.gameObject, obj.position, obj.rotation);
+                Renderer[] ghostRenderers = ghostObj.GetComponentsInChildren<Renderer>();
+                foreach (Renderer r in ghostRenderers) r.enabled = false;
+                SceneManager.MoveGameObjectToScene(ghostObj, simulationScene);
+                if (!ghostObj.isStatic) spawnedObjects.Add(obj, ghostObj.transform);
+            }
+        }
+        else
+        {
+            physicsScene = simulationScene.GetPhysicsScene();
         }
     }
 

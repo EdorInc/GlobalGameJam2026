@@ -6,8 +6,12 @@ public class GroundDetector : MonoBehaviour
     private Collider col;
 
     [Header("Ground Detection Settings")]
-    [SerializeField] private LayerMask groundLayerMask;
-    [SerializeField] private float groundCheckDistance = 0.1f;
+    [SerializeField]
+    [Tooltip("Layer(s) considered as ground for detection. If set to Nothing, ground detection will never activate.")]
+    private LayerMask groundLayerMask;
+    [SerializeField]
+    [Tooltip("Distance below the collider to check for ground contact.")]
+    private float groundCheckDistance = 0.1f;
 
     public bool IsGrounded { get; private set; }
     public GameObject MovingPlatform { get; private set; }
