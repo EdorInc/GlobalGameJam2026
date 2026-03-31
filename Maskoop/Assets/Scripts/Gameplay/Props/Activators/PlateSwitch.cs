@@ -16,7 +16,7 @@ public class PlateSwitch : BaseSwitch
 
     protected float deactivatedWidth;
 
-    public int weightsOnPlate = 0;
+    protected int weightsOnPlate = 0;
 
     private new void Awake()
     {

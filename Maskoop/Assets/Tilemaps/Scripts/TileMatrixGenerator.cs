@@ -153,7 +153,7 @@ public class TileMatrixGenerator : MonoBehaviour
                         break;
                     }
 
-                    if (hit.gameObject.GetComponent<Door>() !=  null)
+                    if (hit.gameObject.GetComponent<SlidingActivable>() !=  null)
                     {
                         type = TileType.Wall;
                         occupiedBy = hit.gameObject;

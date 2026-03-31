@@ -1,15 +1,14 @@
 using UnityEngine;
 
-public class InverseDoor : Door
+public class InverseSlidingActivable : SlidingActivable
 {
-    private Vector3 closedPosition;
-
     [Header("Direction Settings")]
+    [Tooltip("Whether the calculated end position is forward or backwards to adact to the map layout.")]
     [SerializeField] bool invertPosition = false;
 
-    void Start()
+    protected new void Start()
     {
-        Vector3 closedPosition = transform.position;
+        base.Start();
 
         Vector3 finalPosition = openPosition.position;
 

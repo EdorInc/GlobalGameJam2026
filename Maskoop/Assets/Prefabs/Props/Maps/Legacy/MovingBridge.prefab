@@ -153,13 +153,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3258457623961463925}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40e1261b2c0d7ee45844803fb29f6df7, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a3e8ceab0b03cf42b52687d666e32b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Door
-  channel: 2
+  channel: 1
   activatorsNeeded: 1
   openPosition: {fileID: 2251888142169713379}
-  speed: 5
+  speed: 2
 --- !u!1 &3593203627893538802
 GameObject:
   m_ObjectHideFlags: 0

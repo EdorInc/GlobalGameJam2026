@@ -14,7 +14,7 @@ public class WallEditor : MonoBehaviour
         {
             Transform target = child;
 
-            bool isDoor = child.TryGetComponent(out Door door) && door.GetType() == typeof(Door);
+            bool isDoor = child.TryGetComponent(out SlidingActivable door) && door.GetType() == typeof(SlidingActivable);
             if (isDoor)
             {
                 if (child.parent == null)
