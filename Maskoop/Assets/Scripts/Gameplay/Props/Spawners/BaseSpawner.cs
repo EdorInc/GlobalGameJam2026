@@ -40,7 +40,7 @@ public class BaseSpawner : MonoBehaviour
         Invoke(nameof(DestroyAndRespawnObject), respawnDelay);
     }
 
-    private void DestroyAndRespawnObject()
+    protected void DestroyAndRespawnObject()
     {
         if (objectSpawned == null)
             return;
