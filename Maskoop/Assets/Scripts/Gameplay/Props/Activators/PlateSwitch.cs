@@ -6,6 +6,9 @@ public class PlateSwitch : BaseSwitch
     [Tooltip("Whether the pressure plate can only be activated by the player.")]
     [SerializeField] protected bool playerExclusive = true;
 
+    [Tooltip("Whether the pressure plate remains activated after the player leaves.")]
+    [SerializeField] protected bool keepActivated = false;
+
     [Header("Apparience Settings")]
     [Tooltip("Provisinal material to use when the target is activated.")]
     [SerializeField] protected Material activatedMaterial;
@@ -81,7 +84,11 @@ public class PlateSwitch : BaseSwitch
             weightsOnPlate = 0;
 
             Debug.Log("The last weight left the plate, deactivating...");
-            Deactivate();
+
+            if(!keepActivated)
+            {
+                Deactivate();
+            }       
         }
     }
 
