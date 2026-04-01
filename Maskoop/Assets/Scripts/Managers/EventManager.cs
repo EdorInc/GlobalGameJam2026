@@ -10,6 +10,7 @@ public static class EventManager
     public static Action<GameObject> OnFallEnded;
     public static Action<Collider, Vector3> OnAirCurrentEnter;
     public static Action<Collider> OnAirCurrentExit;
+    public static Action<Collider> OnLitOnFire;
     public static Action<GameObject,Vector3> OnDamageRecived;
     public static Action<NavMeshManager> OnNavMeshUpdate;
     public static Action<GameObject> TryingToBeFree;

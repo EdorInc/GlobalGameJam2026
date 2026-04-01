@@ -9,6 +9,8 @@ public class CharacterStateController : MonoBehaviour
     public bool IsHoldingObject => heldObject != null;
     public bool IsBeingGrabbed { get; private set; }
     public bool IsFloating { get; set; }
+    public bool IsOnFire { get; set; }
+    public void SetOnFire(bool value) { IsOnFire = value; }
     public bool IsChargingThrow => throwComponent.charging;
     public bool HasMaskEquipped => currentMask != null;
 

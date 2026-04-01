@@ -41,6 +41,15 @@ public class CharacterMovementController : MonoBehaviour
     [Tooltip("Time needed to be let free when grabbed")]
     [SerializeField] private float movementToBeFree = 1;
 
+    [Header("On Fire")]
+    [Tooltip("Time the player loses control when set on fire")]
+    [SerializeField] private float onFireStunTime = 2.0f;
+
+    [Tooltip("Time the player loses control when set on fire")]
+    [SerializeField] private float onFireSpeed = 5.0f;
+
+    private bool isOnFire = false;
+    private float currentOnFireTime = 0.0f;
 
     private GroundDetector groundDetector;
 
@@ -59,6 +68,7 @@ public class CharacterMovementController : MonoBehaviour
 
     private bool IsGrabbed => characterState.IsBeingGrabbed;
     private bool IsFloating => characterState.IsFloating;
+    private bool IsOnFire => characterState.IsOnFire;
 
     public float ForwardInput { get; set; }
     public float SideInput { get; set; }
@@ -76,7 +86,6 @@ public class CharacterMovementController : MonoBehaviour
     {
         EventManager.OnDamageRecived += ReciveDamage;
         EventManager.Throw += Thrown;
-
     }
 
     private void OnDisable()
@@ -96,6 +105,17 @@ public class CharacterMovementController : MonoBehaviour
         {
             currentHitTime = 0;
             isStunned = false;
+        }
+
+        if (isOnFire)
+        {
+            currentOnFireTime += Time.deltaTime;
+        }
+
+        if (currentOnFireTime > onFireStunTime)
+        {
+            currentOnFireTime = 0;
+            isOnFire = false;
         }
     }
 
@@ -183,7 +203,6 @@ public class CharacterMovementController : MonoBehaviour
             }
             return;
         }
-        
 
         if (currentPlatform != null)
         {
@@ -237,7 +256,22 @@ public class CharacterMovementController : MonoBehaviour
             rigidbody.linearVelocity = airMovementVector;
         }
 
-       
+        if (isOnFire)
+        {
+            float originalSpeed = (!IsCharging) ? moveSpeed : throwingMoveSpeed;
+            Vector3 baseMovement = horizontalInput * originalSpeed;
+
+            Vector3 forcedForward = transform.forward * onFireSpeed;
+            forcedForward.y = 0f;
+
+            Vector3 finalVelocity = baseMovement + forcedForward;
+
+            finalVelocity.y = rigidbody.linearVelocity.y;
+
+            rigidbody.linearVelocity = finalVelocity;
+
+            RotateTowardsMovementDirection(finalVelocity, 1.0f);
+        }
 
     }
 
@@ -253,6 +287,15 @@ public class CharacterMovementController : MonoBehaviour
             Debug.Log("HITED");
             currentHitTime = 0;
             characterState.ReciveDamage(hitStunTime);
+        }
+    }
+
+    public void IsBurning(Collider other)
+    {
+        if (characterState.IsOnFire)
+        {
+            isOnFire = true;
+            currentOnFireTime = 0.0f;
         }
     }
 
