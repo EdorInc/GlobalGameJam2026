@@ -31,12 +31,14 @@ public abstract class BaseActivable : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.OnButtonPressed += OnActivatorRecived; 
+        EventManager.OnButtonPressed += OnActivatorRecived;
+        EventManager.OnButtonUnPressed += OnActivatorRemoved;
     }
 
     private void OnDisable()
     {
         EventManager.OnButtonPressed -= OnActivatorRecived;
+        EventManager.OnButtonUnPressed -= OnActivatorRemoved;
     }
 
     void Update()
@@ -73,6 +75,20 @@ public abstract class BaseActivable : MonoBehaviour
             {
                 currentState = ActivableState.Activating;
                 Debug.Log("All activators received for channel " + channel + " on object " + gameObject.name);
+            }
+        }
+    }
+
+    public void OnActivatorRemoved(int channel)
+    {
+        if (this.channel == channel)
+        {
+            activatorsNeeded++;
+
+            if (activatorsNeeded > 0)
+            {
+                currentState = ActivableState.Deactivating;
+                Debug.Log("Deactivating channel " + channel + " on object " + gameObject.name);
             }
         }
     }

@@ -55,7 +55,8 @@ public class SlidingActivable : BaseActivable
 
     protected override void DeactivateAnimation()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Moving door " + gameObject.name + " towards closed position...");
+        transform.position = Vector3.MoveTowards(transform.position, closedPosition, Time.deltaTime * speed);
     }
 
 }
