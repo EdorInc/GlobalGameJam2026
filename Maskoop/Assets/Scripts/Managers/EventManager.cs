@@ -3,6 +3,7 @@ using System;
 public static class EventManager
 {
     public static Action<int> OnButtonPressed;
+    public static Action<int> OnButtonUnPressed;
     public static Action<GameObject> OnCantPerforAction;
     public static Action OnVictory;
     public static Action<GameObject> OnFallStarted;

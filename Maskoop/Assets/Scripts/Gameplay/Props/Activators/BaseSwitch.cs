@@ -36,6 +36,8 @@ public abstract class BaseSwitch : MonoBehaviour
         currentState = SwitchState.Inactive;
     
         Refresh();
+
+        EventManager.OnButtonUnPressed?.Invoke(channel);
     }
 
     protected virtual void Overtime()
