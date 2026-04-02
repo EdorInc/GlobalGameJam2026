@@ -488,7 +488,7 @@ MonoBehaviour:
   hitKnockBackUpwardsForce: 6
   hitStunTime: 0.5
   movementToBeFree: 1
-  onFireStunTime: 2
+  onFireTime: 2
   onFireSpeed: 5
 --- !u!114 &8747963092238407169
 MonoBehaviour:
@@ -516,6 +516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Grab
   grabbedObject: {fileID: 0}
+  highlightedObject: {fileID: 0}
   grabForwardOffset: 0.1
   grabUpOffset: 0.5
   grabRaycastMode: 0
@@ -523,8 +524,9 @@ MonoBehaviour:
   grabRadius: 0.3
   grabMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 567
   grabbedPosition: {fileID: 4716550642206044445}
+  showGrabGizmos: 1
 --- !u!114 &3407257806615490877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -594,6 +596,8 @@ MonoBehaviour:
   maxThrowForce: {x: 3.5, y: 4}
   minThrowForce: {x: 0, y: 0}
   forceGrowRate: 5
+  highlightLayer: 9
+  highlightOnLook: 0
 --- !u!1 &8691217799028268263
 GameObject:
   m_ObjectHideFlags: 0

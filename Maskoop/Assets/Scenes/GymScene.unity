@@ -2198,6 +2198,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlueMask
       objectReference: {fileID: 0}
+    - target: {fileID: 6079786050083026125, guid: 7a489049e5346bf408c85671b29dc7bf, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470669002063117906, guid: 7a489049e5346bf408c85671b29dc7bf, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8984076046065328007, guid: 7a489049e5346bf408c85671b29dc7bf, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

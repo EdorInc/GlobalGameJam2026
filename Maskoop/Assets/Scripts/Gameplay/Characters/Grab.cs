@@ -1,6 +1,7 @@
-using System.Net;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.UI.Image;
 
 public class Grab : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class Grab : MonoBehaviour
 
     [HideInInspector]
     public GameObject grabbedObject = null;
+
+    [HideInInspector]
+    public GameObject highlightedObject = null;
 
     [Header("Grab Settings")]
     [SerializeField]
@@ -44,6 +48,11 @@ public class Grab : MonoBehaviour
     [Tooltip("Transform representing the position and rotation where the grabbed object will be held.")]
     private Transform grabbedPosition;
 
+    [Header("Debug Settings")]
+    [SerializeField]
+    [Tooltip("Draw grab ray gizmos in the Scene view for debugging.")]
+    private bool showGrabGizmos = true;
+
     private Equip equipComponent;
     private CharacterStateController characterState;
 
@@ -63,6 +72,11 @@ public class Grab : MonoBehaviour
         EventManager.TryingToBeFree -= DropPlayer;
     }
 
+    void Update()
+    {
+        HighlightObject();
+    }
+
     void LateUpdate()
     {
         if (grabbedObject != null)
@@ -78,17 +92,8 @@ public class Grab : MonoBehaviour
         }
     }
 
-    public void GrabObject()
+    public GameObject FindObject()
     {
-        if (grabbedObject != null)
-        {
-            Debug.Log("Already grabbing an object.");
-
-            DropObject();
-
-            return;
-        }
-
         // Raycast a sphere to find nearby objects to grab
         Vector3 origin = transform.position + transform.forward.normalized * grabForwardOffset + Vector3.up * grabUpOffset;
         Vector3 direction = transform.forward.normalized;
@@ -96,7 +101,7 @@ public class Grab : MonoBehaviour
         RaycastHit hit;
         bool hitFound;
 
-        switch(grabRaycastMode)
+        switch (grabRaycastMode)
         {
             case GrabRaycastMode.Cone:
                 hitFound = RaycastCone(origin, direction, grabRange, grabRadius, out hit);
@@ -110,30 +115,75 @@ public class Grab : MonoBehaviour
                 break;
         }
 
-        // Custom cast to detect objects in front
-        if (hitFound)
+        return hitFound ? hit.collider.gameObject : null;
+    }
+
+    public void HighlightObject()
+    {
+        if (grabbedObject != null)
         {
-            Grabbable grabbable = hit.collider.GetComponent<Grabbable>();
+            return;
+        }
+
+        GameObject grabbableObject = FindObject();
+
+        if (grabbableObject != highlightedObject)
+        {
+            if (grabbableObject)
+            {
+                grabbableObject.GetComponent<Grabbable>().Highlight(true);
+            }
+
+            if (highlightedObject)
+            {
+                highlightedObject.GetComponent<Grabbable>().Highlight(false);
+            }
+
+            highlightedObject = grabbableObject;
+            Debug.Log("New grabbable object in range: " + (highlightedObject != null ? highlightedObject.name : "None"));
+        }
+    }
+
+    public void GrabObject()
+    {
+        if (grabbedObject != null)
+        {
+            Debug.Log("Already grabbing an object.");
+
+            DropObject();
+
+            return;
+        }
+
+        // GameObject grabbableObject = FindObject();
+
+        // Custom cast to detect objects in front
+        if (highlightedObject != null)
+        {
+            highlightedObject.GetComponent<Grabbable>().Highlight(false);
+            grabbedObject = highlightedObject;
+
+            Grabbable grabbable = grabbedObject.GetComponent<Grabbable>();
 
             if (grabbable == null)
             {
-                Debug.Log("Hit object " + hit.collider.name + " is not grabbable.");
+                Debug.Log("Hit object " + grabbedObject.name + " is not grabbable.");
                 return;
             }
 
-            Rigidbody rb = hit.collider.GetComponent<Rigidbody>();
+            Rigidbody rb = grabbedObject.GetComponent<Rigidbody>();
 
             if (rb == null)
             {
-                Debug.Log("Hit object " + hit.collider.name + " has not Rigidbody.");
+                Debug.Log("Hit object " + grabbedObject.name + " has not Rigidbody.");
                 return;
             }
 
-            Collider collider = hit.collider.GetComponent<Collider>();
+            Collider collider = grabbedObject.GetComponent<Collider>();
 
             if (collider == null)
             {
-                Debug.Log("Hit object " + hit.collider.name + " has not Collider.");
+                Debug.Log("Hit object " + grabbedObject.name + " has not Collider.");
                 return;
             }
 
@@ -142,11 +192,7 @@ public class Grab : MonoBehaviour
 
             collider.enabled = false;
 
-            grabbedObject = grabbable.gameObject;
-
             grabbable.IsGrabbed = true;
-
-            
 
             if (grabbable.gameObject.CompareTag("Player"))
             {
@@ -183,7 +229,12 @@ public class Grab : MonoBehaviour
     {
         hit = default;
 
-        Debug.DrawLine(rayOrigin, rayOrigin + rayDirection * range, debugColor, 0.1f);
+#if UNITY_EDITOR
+        if (showGrabGizmos)
+        {
+            Debug.DrawLine(rayOrigin, rayOrigin + rayDirection * range, debugColor, 0f, false);
+        }
+#endif
 
         if (Physics.Raycast(rayOrigin, rayDirection, out hit, range, grabMask))
         {
@@ -221,13 +272,7 @@ public class Grab : MonoBehaviour
             return true;
 
         // Cross pattern offsets
-        Vector3[] offsets = new Vector3[]
-        {
-        origin + transform.up * radius,       // above
-        origin - transform.up * radius,       // below
-        origin + transform.right * radius,    // right
-        origin - transform.right * radius     // left
-        };
+        Vector3[] offsets = GetCrossOffsets(origin, transform, radius);
 
         Color debugColor = Color.yellow;
 
@@ -263,14 +308,8 @@ public class Grab : MonoBehaviour
         if (TryRaycast(origin, direction, range, Color.red, out hit))
             return true;
 
-        // Cross pattern offsets
-        Vector3[] endOffsets = new Vector3[]
-        {
-        end + transform.up * radius,       // above
-        end - transform.up * radius,       // below
-        end + transform.right * radius,    // right
-        end - transform.right * radius     // left
-        };
+        // Circular pattern offsets
+        Vector3[] endOffsets = GetConeOffsets(end, transform, radius);
 
         Color debugColor = Color.yellow;
 
@@ -330,6 +369,46 @@ public class Grab : MonoBehaviour
             grabbedObject.GetComponent<CharacterStateController>().SetBeingGrabbed(false);
         }
         grabbedObject = null;
+    }
+
+    /// <summary>
+    /// Returns offsets for the cross raycast pattern.
+    /// </summary>
+    private static Vector3[] GetCrossOffsets(Vector3 origin, Transform t, float radius)
+    {
+        return new Vector3[]
+        {
+            origin + t.up * radius,
+            origin - t.up * radius,
+            origin + t.right * radius,
+            origin - t.right * radius,
+            origin + t.up * (radius * 0.5f),
+            origin - t.up * (radius * 0.5f),
+            origin + t.right * (radius * 0.5f),
+            origin - t.right * (radius * 0.5f)
+        };
+    }
+
+    /// <summary>
+    /// Returns offsets for the cone raycast pattern.
+    /// </summary>
+    private static Vector3[] GetConeOffsets(Vector3 end, Transform t, float radius)
+    {
+        return new Vector3[]
+        {
+            end + t.up * radius,
+            end - t.up * radius,
+            end + t.right * radius,
+            end - t.right * radius,
+            end + t.up * (radius * 0.5f),
+            end - t.up * (radius * 0.5f),
+            end + t.right * (radius * 0.5f),
+            end - t.right * (radius * 0.5f),
+            end + (t.up + t.right).normalized * radius,
+            end + (t.up - t.right).normalized * radius,
+            end + (-t.up + t.right).normalized * radius,
+            end + (-t.up - t.right).normalized * radius
+        };
     }
 
 }

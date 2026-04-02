@@ -22,11 +22,23 @@ public class Grabbable : GroundDetector
     [Tooltip("Rate at which the throw force increases while charging.")]
     public float forceGrowRate = 2;
 
+    [Header("Highlight Settings")]
+    [Tooltip("Layer to use when the object is highlighted.")]
+    [SerializeField] private int highlightLayer = 9;
+
+    [Tooltip("If true, the object will be highlighted when the player looks at it.")]
+    [SerializeField] private bool highlightOnLook = true;
+
+    private bool IsHighlighted = false;
+
+    [HideInInspector]
+    public bool IsGrabbed { get; set; }
+
+    private int originalLayer;
+
     private Rigidbody rigidBody;
 
     private Quaternion originalRotation;
-
-    public bool IsGrabbed { get; set; }
 
     protected override void Start()
     {
@@ -35,6 +47,24 @@ public class Grabbable : GroundDetector
         rigidBody = GetComponent<Rigidbody>();
 
         originalRotation = transform.rotation;
+        originalLayer = gameObject.layer;
+    }
+
+    public void Highlight(bool highlight)
+    {
+        IsHighlighted = highlight;
+
+        if (highlightOnLook) 
+        {
+            if (IsHighlighted)
+            {
+                SetLayerRecursively(gameObject, highlightLayer);
+            }
+            else
+            {
+                SetLayerRecursively(gameObject, originalLayer);
+            }
+        }
     }
 
     void Update()
@@ -46,6 +76,15 @@ public class Grabbable : GroundDetector
         {
             rigidBody.isKinematic = false;
             ResetFrozenRotation();
+        }
+    }
+
+    void SetLayerRecursively(GameObject obj, int newLayer)
+    {
+        obj.layer = newLayer;
+        foreach (Transform child in obj.transform)
+        {
+            SetLayerRecursively(child.gameObject, newLayer);
         }
     }
 

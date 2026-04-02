@@ -19,8 +19,8 @@ TagManager:
   - UI
   - SeeThrough
   - OcclussionMask
-  - ShadowReceiver
-  - Player
+  - 
+  - HighlightOutline
   - 
   - 
   - 

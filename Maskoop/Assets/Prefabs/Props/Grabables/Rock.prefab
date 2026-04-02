@@ -572,6 +572,10 @@ MonoBehaviour:
   maxThrowForce: {x: 13, y: 0}
   minThrowForce: {x: 0, y: 0}
   forceGrowRate: 5
+  highlightLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  highlightOnLook: 1
 --- !u!114 &4714285465860657251
 MonoBehaviour:
   m_ObjectHideFlags: 0
