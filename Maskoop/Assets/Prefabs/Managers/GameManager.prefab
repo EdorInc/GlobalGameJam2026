@@ -64,7 +64,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   mergeDistance: 5
   splitDistance: 7
-  transitionSpeed: 3
-  zoomOutOffset: 0
+  transitionSpeed: 5
+  zoomOutOffset: 2
   zoomSpeed: 2
   gameUIDocument: {fileID: 0}
