@@ -43,9 +43,8 @@ public class CharacterMovementController : MonoBehaviour
 
     [Header("On Fire")]
     [Tooltip("Time the player loses control when set on fire")]
-    [SerializeField] private float onFireStunTime = 2.0f;
-
-    [Tooltip("Time the player loses control when set on fire")]
+    [SerializeField] private float onFireTime = 2.0f;
+    [Tooltip("Speed the player loses control when set on fire")]
     [SerializeField] private float onFireSpeed = 5.0f;
 
     private bool isOnFire = false;
@@ -86,12 +85,14 @@ public class CharacterMovementController : MonoBehaviour
     {
         EventManager.OnDamageRecived += ReciveDamage;
         EventManager.Throw += Thrown;
+        EventManager.OnLitOnFire += IsBurning;
     }
 
     private void OnDisable()
     {
         EventManager.OnDamageRecived -= ReciveDamage;
         EventManager.Throw -= Thrown;
+        EventManager.OnLitOnFire -= IsBurning;
     }
 
     private void Update()
@@ -112,7 +113,7 @@ public class CharacterMovementController : MonoBehaviour
             currentOnFireTime += Time.deltaTime;
         }
 
-        if (currentOnFireTime > onFireStunTime)
+        if (currentOnFireTime > onFireTime)
         {
             currentOnFireTime = 0;
             isOnFire = false;
@@ -290,9 +291,9 @@ public class CharacterMovementController : MonoBehaviour
         }
     }
 
-    public void IsBurning(Collider other)
+    public void IsBurning(Collider player)
     {
-        if (characterState.IsOnFire)
+        if (characterState.IsMyPlayer(player.gameObject) && !characterState.IsOnFire)
         {
             isOnFire = true;
             currentOnFireTime = 0.0f;

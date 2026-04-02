@@ -9,11 +9,6 @@ public class OnFire : MonoBehaviour
     {
         if (other.CompareTag("Player") && IsOnFire)
         {
-            CharacterMovementController controller = other.GetComponent<CharacterMovementController>();
-            if (controller != null)
-            {
-                controller.IsBurning(other);
-            }
             EventManager.OnLitOnFire?.Invoke(other);
         }
     }
