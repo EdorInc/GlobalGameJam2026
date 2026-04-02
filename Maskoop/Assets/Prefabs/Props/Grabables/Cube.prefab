@@ -104,9 +104,8 @@ MonoBehaviour:
   holdOffset: {x: 0, y: 0, z: 0}
   holdRotation: {x: 0, y: 0, z: 0, w: 1}
   resetRotationInAir: 0
-  originalRotation: {x: 0, y: 0, z: 0, w: 0}
-  maxThrowForce: {x: 4, y: 4}
-  minThrowForce: {x: 1, y: 0}
+  maxThrowForce: {x: 3.5, y: 4}
+  minThrowForce: {x: 0, y: 0}
   forceGrowRate: 5
 --- !u!114 &-6151222093157379451
 MonoBehaviour:

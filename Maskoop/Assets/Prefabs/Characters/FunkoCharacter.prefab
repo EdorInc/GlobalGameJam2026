@@ -482,12 +482,14 @@ MonoBehaviour:
   rollSpeed: 400
   rollTime: 0.3
   isRolling: 0
-  throwingMoveSpeed: 3
-  throwingTurnSpeed: 6
+  throwingMoveSpeed: 1
+  throwingTurnSpeed: 3
   hitKnockBackForce: 5
   hitKnockBackUpwardsForce: 6
   hitStunTime: 0.5
   movementToBeFree: 1
+  onFireStunTime: 2
+  onFireSpeed: 5
 --- !u!114 &8747963092238407169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,7 +518,7 @@ MonoBehaviour:
   grabbedObject: {fileID: 0}
   grabForwardOffset: 0.1
   grabUpOffset: 0.5
-  useGrabCross: 0
+  grabRaycastMode: 0
   grabRange: 0.8
   grabRadius: 0.3
   grabMask:
@@ -536,9 +538,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Throw
   grabbedObject: {fileID: 0}
-  lowVibrationIntensity: 0.1
-  highVibrationIntensity: 0.1
-  vibrationDuration: 0.01
   charging: 0
   maxTime: 10
   endPointsIgnored: 1
@@ -592,10 +591,9 @@ MonoBehaviour:
   holdOffset: {x: 0, y: 0, z: 0}
   holdRotation: {x: 0, y: 0, z: 0, w: 1}
   resetRotationInAir: 0
-  originalRotation: {x: 0, y: 0, z: 0, w: 0}
-  maxThrowForce: {x: 8, y: 8}
+  maxThrowForce: {x: 3.5, y: 4}
   minThrowForce: {x: 0, y: 0}
-  forceGrowRate: 2
+  forceGrowRate: 5
 --- !u!1 &8691217799028268263
 GameObject:
   m_ObjectHideFlags: 0

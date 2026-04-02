@@ -568,11 +568,10 @@ MonoBehaviour:
   groundCheckDistance: 0.1
   holdOffset: {x: 0, y: 0, z: 0}
   holdRotation: {x: 0, y: 0, z: 0, w: 1}
-  resetRotationInAir: 0
-  originalRotation: {x: 0, y: 0, z: 0, w: 0}
-  maxThrowForce: {x: 20, y: 2}
-  minThrowForce: {x: 5, y: 0}
-  forceGrowRate: 10
+  resetRotationInAir: 1
+  maxThrowForce: {x: 13, y: 0}
+  minThrowForce: {x: 0, y: 0}
+  forceGrowRate: 5
 --- !u!114 &4714285465860657251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -591,7 +590,7 @@ MonoBehaviour:
   useFragment: 1
   intactMesh: {fileID: 5791487881469884956}
   fragmentParent: {fileID: 7428613251658525416}
-  fragmentLifespan: 3
+  fragmentLifespan: 1
   fragmentForceFromCenter: 5
   fragmentForceFromCollision: 2.5
 --- !u!114 &4031961618772163604
@@ -607,7 +606,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Respawn
   respawnPosition: {x: 0, y: 1, z: 0}
-  voidDistance: -3
+  voidDistance: -8
   willDestroy: 1
 --- !u!1 &3701796733462889199
 GameObject:
