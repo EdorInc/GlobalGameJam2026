@@ -9,9 +9,18 @@ public class TargetSwitch : BaseSwitch
     [Tooltip("Provisinal width to use when the target is activated.")]
     [SerializeField] protected float activatedWidth = 0.1f;
 
+    [Header("Timer Settings")]
+    [Tooltip("Timer for switch to deactivate")]
+    [SerializeField] protected float activatedTimer = 2.0f;
+
+    protected float timeActivated = 0;
+    protected bool resetNeeded = true;
+
     protected Material deactivatedMaterial;
 
     protected float deactivatedWidth;
+
+    protected bool blinkActive = true;
 
     private new void Awake()
     {
@@ -23,11 +32,36 @@ public class TargetSwitch : BaseSwitch
         Refresh();
     }
 
+    private void Update()
+    {
+        SwitchTimer();
+    } 
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Rock") && currentState != SwitchState.Active)
         {
             Activate();
+        }
+    }
+
+    private void SwitchTimer()
+    {
+        if (resetNeeded)
+        {
+            timeActivated = 0;
+            resetNeeded = false;
+        }
+
+        if (currentState == SwitchState.Active)
+        {
+            timeActivated += Time.deltaTime;
+            Debug.Log("Time passed: " + timeActivated + " Time it needs: " + activatedTimer);
+            if (timeActivated > activatedTimer)
+            {
+                Deactivate();
+                resetNeeded = true;
+            }
         }
     }
 
