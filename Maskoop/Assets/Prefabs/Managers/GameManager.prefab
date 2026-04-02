@@ -65,4 +65,6 @@ MonoBehaviour:
   mergeDistance: 5
   splitDistance: 7
   transitionSpeed: 3
+  zoomOutOffset: 0
+  zoomSpeed: 2
   gameUIDocument: {fileID: 0}
