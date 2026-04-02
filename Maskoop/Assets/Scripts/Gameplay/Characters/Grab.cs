@@ -146,7 +146,7 @@ public class Grab : MonoBehaviour
 
             grabbable.IsGrabbed = true;
 
-            characterState.SetHeldObject(grabbable);
+            
 
             if (grabbable.gameObject.CompareTag("Player"))
             {
@@ -159,6 +159,7 @@ public class Grab : MonoBehaviour
             }
             else
             {
+                characterState.SetHeldObject(grabbable);
                 Debug.Log("Grabbed object " + grabbedObject.name);
                 AudioSystem.PlaySFX(AudioSystem.SoundLibrary?.grab, transform.position);
             }

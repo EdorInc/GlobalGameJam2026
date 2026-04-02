@@ -95,10 +95,9 @@ public class CharacterStateController : MonoBehaviour
 
     public void ReciveDamage(float hitTime)
     {
-        if (HasMaskEquipped)
+        if (IsHoldingObject)
         {
-            UnequipMask();
-            Invoke(nameof(DelayDrop), hitTime);
+            Invoke(nameof(DelayDrop), 0);
         }
     }
 
