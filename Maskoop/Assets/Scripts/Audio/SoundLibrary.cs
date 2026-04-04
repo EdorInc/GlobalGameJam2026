@@ -7,4 +7,7 @@ public class SoundLibrary : ScriptableObject
     public SoundDefinition grab;
     public SoundDefinition chargeThrow;
     public SoundDefinition rockBreak;
+    public SoundDefinition throwRelease;
+    public SoundDefinition falling;
+    public SoundDefinition fallImpact;
 }

@@ -61,6 +61,8 @@ public class CharacterMovementController : MonoBehaviour
     private bool isStunned = false;
     private float currentMovement = 0;
     private bool thrownByEnemy = false;
+    private bool wasFalling = false;
+
     private bool IsCharging => characterState.IsChargingThrow;
     private bool IsGrounded => groundDetector.IsGrounded;
     private bool CanMove => characterState.CanMove();
@@ -242,12 +244,12 @@ public class CharacterMovementController : MonoBehaviour
                 rigidbody.linearVelocity = finalVelocity;
 
                 RotateTowardsMovementDirection(movementVector, 1.0f);
-            }
+            }        
 
-                
         }
         else
         {
+
             Vector3 airMovementVector = horizontalInput * (moveSpeed * airControlMultiplier);
 
             RotateTowardsMovementDirection(airMovementVector, airControlMultiplier);

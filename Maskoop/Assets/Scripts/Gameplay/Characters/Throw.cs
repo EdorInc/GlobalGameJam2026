@@ -166,6 +166,8 @@ public class Throw : MonoBehaviour
         {
             AudioSystem.StopDynamicSFX(AudioSystem.SoundLibrary?.chargeThrow, 0); //TODO cambiar por playerId cuando sepa como
 
+            AudioSystem.PlaySFX(AudioSystem.SoundLibrary?.throwRelease, transform.position);
+
             Debug.Log("Thrown object " + grabbedObject.name);
             EventManager.Throw?.Invoke(grabbedObject,true,gameObject);
             charging = false;
