@@ -19,6 +19,6 @@ MonoBehaviour:
       Data3: -1584451681
       Data4: -114757635
     Path: event:/Falling Impact
-  volume: 1
+  volume: 0.492
   parameterName: 
   parameterValue: 0

@@ -165,6 +165,7 @@ public class CharacterMovementController : MonoBehaviour
     {
         if (!wasGrounded && IsGrounded)
         {
+            print(characterState.characterId);
             EventManager.OnFallEnded?.Invoke(gameObject);
             isBeingThrown = false;
         }

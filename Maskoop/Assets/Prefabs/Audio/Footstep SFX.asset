@@ -19,6 +19,6 @@ MonoBehaviour:
       Data3: -1484878960
       Data4: 198218123
     Path: event:/Footsteps
-  volume: 1
+  volume: 0.382
   parameterName: 
   parameterValue: 0

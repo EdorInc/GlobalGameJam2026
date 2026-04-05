@@ -19,6 +19,6 @@ MonoBehaviour:
       Data3: -436454765
       Data4: -1108036073
     Path: event:/Charge
-  volume: 1
+  volume: 0.66
   parameterName: Charge
   parameterValue: 0.5

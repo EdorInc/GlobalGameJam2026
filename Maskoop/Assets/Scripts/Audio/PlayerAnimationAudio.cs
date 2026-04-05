@@ -46,6 +46,8 @@ public class PlayerAnimationAudio : MonoBehaviour
 
     public void PlayFallSound(GameObject obj)
     {
+        if (obj != transform.parent.gameObject)
+            return;
 
         if (stateController != null)
         {
@@ -57,8 +59,12 @@ public class PlayerAnimationAudio : MonoBehaviour
 
     public void PlayFallImpactSound(GameObject obj)
     {
+        if (obj != transform.parent.gameObject)
+            return;
+
         if (stateController != null)
             AudioSystem.StopDynamicSFX(AudioSystem.SoundLibrary?.falling, stateController.characterId);
+
         AudioSystem.PlaySFX(AudioSystem.SoundLibrary?.fallImpact, transform.position);
     }
 

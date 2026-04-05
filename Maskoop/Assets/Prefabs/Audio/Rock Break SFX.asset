@@ -19,6 +19,6 @@ MonoBehaviour:
       Data3: -36899152
       Data4: -1592945195
     Path: event:/RockBreak
-  volume: 1
+  volume: 0.631
   parameterName: 
   parameterValue: 0

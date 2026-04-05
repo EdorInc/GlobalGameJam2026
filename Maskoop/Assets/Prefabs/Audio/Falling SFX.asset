@@ -19,6 +19,6 @@ MonoBehaviour:
       Data3: 174207926
       Data4: 552159192
     Path: event:/Falling Down
-  volume: 1
+  volume: 0.264
   parameterName: 
   parameterValue: 0

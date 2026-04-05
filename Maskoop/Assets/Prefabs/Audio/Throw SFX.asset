@@ -19,6 +19,6 @@ MonoBehaviour:
       Data3: 286157989
       Data4: -1522975989
     Path: event:/Throw
-  volume: 1
+  volume: 0.7
   parameterName: 
   parameterValue: 0
