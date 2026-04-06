@@ -15,7 +15,7 @@ MonoBehaviour:
   m_Active: 1
   settings:
     passTag: SeeThrough
-    Event: 600
+    Event: 150
     filterSettings:
       RenderQueueType: 0
       LayerMask:
@@ -111,7 +111,7 @@ MonoBehaviour:
     failOperation: 0
     zFailOperation: 0
   m_ShadowTransparentReceive: 1
-  m_RenderingMode: 2
+  m_RenderingMode: 3
   m_DepthPrimingMode: 0
   m_CopyDepthMode: 0
   m_DepthAttachmentFormat: 0
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Active: 1
   settings:
     passTag: OcclussionMask
-    Event: 600
+    Event: 150
     filterSettings:
       RenderQueueType: 0
       LayerMask:
