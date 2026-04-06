@@ -1,6 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Template name="LoseTemplate" src="project://database/Assets/UI/Templates/LoseTemplate.uxml?fileID=9197481963319205126&amp;guid=642c947003927604e83bfdfc1633753a&amp;type=3#LoseTemplate"/>
     <ui:Template name="PauseTemplate" src="project://database/Assets/UI/Templates/PauseTemplate.uxml?fileID=9197481963319205126&amp;guid=55ff63d6ceb378e4a8630c51a6cacf60&amp;type=3#PauseTemplate"/>
+    <ui:Template name="VideoTutorialTemplate" src="project://database/Assets/UI/Templates/VideoTutorialTemplate.uxml?fileID=9197481963319205126&amp;guid=8800d422e4c4be14b80594a2b6b21954&amp;type=3#VideoTutorialTemplate"/>
     <ui:Template name="WinTemplate" src="project://database/Assets/UI/Templates/WinTemplate.uxml?fileID=9197481963319205126&amp;guid=5d41eb22aeb63304c9041e72575b2e42&amp;type=3#WinTemplate"/>
     <Style src="project://database/Assets/UI/Themes/DefaultTheme.uss?fileID=7433441132597879392&amp;guid=abd6d9976d619a646a1faab02692b347&amp;type=3#DefaultTheme"/>
     <ui:VisualElement name="root" style="flex-grow: 1;">
@@ -16,6 +17,7 @@
         </ui:VisualElement>
         <ui:Instance template="WinTemplate" name="win-ui" style="width: 100%; height: 100%; display: none; position: absolute;"/>
         <ui:Instance template="PauseTemplate" name="pause-ui" style="height: 100%; width: 100%; display: none; position: absolute;"/>
+        <ui:Instance template="VideoTutorialTemplate" name="tutorial-video" enabled="false"/>
         <ui:Instance template="LoseTemplate" name="lose-ui" style="width: 100%; height: 100%; display: none; position: absolute;"/>
     </ui:VisualElement>
 </ui:UXML>

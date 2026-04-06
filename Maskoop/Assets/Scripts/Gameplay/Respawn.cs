@@ -28,9 +28,10 @@ public class Respawn : MonoBehaviour
     public Quaternion respawnRotation;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
+        respawnRotation = Quaternion.identity;
     }
 
     public void SetSpawner(BaseSpawner spawner)
@@ -67,7 +68,7 @@ public class Respawn : MonoBehaviour
     public void RespawnFunction()
     {
         rigidbody.position = respawnPosition;
-        if(respawnRotation != null)
+        if(respawnRotation != Quaternion.identity)
         {
             rigidbody.rotation = respawnRotation;
             rigidbody.linearVelocity = Vector3.zero;
