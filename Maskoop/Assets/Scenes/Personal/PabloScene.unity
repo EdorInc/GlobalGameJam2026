@@ -229,8 +229,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SimultaneousTargetSwitch
   channel: 1
+  keepActivated: 0
   activatedMaterial: {fileID: 2100000, guid: 4a73b30bee4c0b24e8bff9d5f01ae37b, type: 2}
+  pendingMaterial: {fileID: 0}
   activatedWidth: 0.1
+  activatedTimer: 2
   alwaysDeactivate: 0
   activeTime: 1
   blinkingTime: 1
@@ -2707,7 +2710,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5577740657496986545, guid: 23a0bc30208ec374eb4c4b632711f421, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5
+      value: -1.12
       objectReference: {fileID: 0}
     - target: {fileID: 5577740657496986545, guid: 23a0bc30208ec374eb4c4b632711f421, type: 3}
       propertyPath: m_LocalPosition.z
