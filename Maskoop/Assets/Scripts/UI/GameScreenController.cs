@@ -34,12 +34,17 @@ public class GameScreenController : MonoBehaviour
     [SerializeField] private string loseRestartButtonName = "restart-button";
     [SerializeField] private string loseMenuButtonName = "quit-button";
 
+    [Header("Tutorial References")]
+    [SerializeField] private string videoScreenName = "tutorial-video";
+    [SerializeField] private RenderTexture videoTexture;
+
     [Header("Debug")]
     [SerializeField] private UIState initialState = UIState.Gameplay;
 
     private VisualElement pauseScreen;
     private VisualElement winScreen;
     private VisualElement loseScreen;
+    private VisualElement videoScreen;
 
     private Button resumeButton;
     private Button restartButton;
@@ -113,6 +118,20 @@ public class GameScreenController : MonoBehaviour
 
         currentTime = gameDuration;
         UpdateTimer();
+
+
+        //Video tutorial
+
+        videoScreen = root.Q<VisualElement>(videoScreenName);
+        if(videoScreen == null)
+        {
+            Debug.LogError($"Video screen with name '{videoScreenName}' not found in the UI.");
+            return;
+        }
+
+        var videoElement = root.Q<Image>("tutorial-video");
+
+        videoElement.image = videoTexture;
     }
 
     private void Update()

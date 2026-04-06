@@ -1806,6 +1806,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f8f5c677ed3ca9499f92725cf4a9f9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AirMask
+  timeBeforeRespawn: 5
+  timeFlickering: 2
+  baseflickerInterval: 0.2
   flutterDrag: 3
   flutterTime: 1
   flutterSpeedReduction: 0.5
@@ -1822,9 +1825,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b7d6c44fd5b3e845827b8107cbc3c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Respawn
-  respawnPosition: {x: 2.5, y: 1, z: 2.5}
+  respawnPosition: {x: 0, y: 0, z: 0}
   voidDistance: -3
   willDestroy: 0
+  groundCheckMargin: 2
+  numRayChecks: 4
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  rayDistance: 5
+  showDebugRays: 1
+  respawnRotation: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1907491579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907491566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 486ae9b69cfbf494ea402f7193819b2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GroundDetector
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  groundCheckDistance: 0.1
 --- !u!1001 &1983643440
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2145,6 +2172,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6079786050083026125, guid: d8b28f6bedeb6b04ab619f0043d165a8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1907491573}
+    - targetCorrespondingSourceObject: {fileID: 6079786050083026125, guid: d8b28f6bedeb6b04ab619f0043d165a8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1907491579}
   m_SourcePrefab: {fileID: 100100000, guid: d8b28f6bedeb6b04ab619f0043d165a8, type: 3}
 --- !u!1001 &513445030926072222
 PrefabInstance:
