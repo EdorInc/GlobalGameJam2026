@@ -16,16 +16,19 @@ public abstract class BaseActivable : MonoBehaviour
     [Tooltip("Channel to use to connect to buttons. Buttons need to have the same channel to activate this object")]
     protected int channel = 1;
     [SerializeField]
-    [Tooltip("Whether the activable will remain active")]
-    protected bool keepActivated = false;
+    [Tooltip("Whether the activable will remain active after completing the animation")]
+    protected bool keepActivatedOnCompletion = false;
+    [SerializeField]
+    [Tooltip("Whether the activable will remain active once all activator needed are pressed")]
+    protected bool keepActivatedOnSimultaneousPress = false;
     [SerializeField]
     [Tooltip("Amount of activators needed to activate this object")]
     protected int activatorsNeeded = 1;
-
     protected int activatorsLeft = 1;
 
     protected ActivableState currentState = ActivableState.Inactive;
 
+    protected bool areButtonsLocked = false;
 
     protected void Start()
     {
@@ -70,12 +73,21 @@ public abstract class BaseActivable : MonoBehaviour
         }
     }
 
-    public void OnActivation()
+    protected void Lock()
     {
-        if (keepActivated)
+        if (!areButtonsLocked)
         {
             Debug.Log("Switches on channel " + channel + " are being locked...");
             EventManager.OnButtonLock?.Invoke(channel);
+            areButtonsLocked = true;
+        }
+    }
+
+    public void OnActivation()
+    {
+        if (keepActivatedOnCompletion)
+        {
+            Lock();
         }
     }
 
@@ -88,6 +100,11 @@ public abstract class BaseActivable : MonoBehaviour
 
             if (activatorsNeeded == 0)
             {
+                if(keepActivatedOnSimultaneousPress)
+                {
+                    Lock();
+                }
+
                 currentState = ActivableState.Activating;
                 // Debug.Log("All activators received for channel " + channel + " on object " + gameObject.name);
             }

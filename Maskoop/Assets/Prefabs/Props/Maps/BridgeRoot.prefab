@@ -126,7 +126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InverseDoor
   channel: 2
-  keepActivated: 1
+  keepActivatedOnCompletion: 1
+  keepActivatedOnSimultaneousPress: 0
   activatorsNeeded: 1
   openPosition: {fileID: 2251888142169713379}
   speed: 2

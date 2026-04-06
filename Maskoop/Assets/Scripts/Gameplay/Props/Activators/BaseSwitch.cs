@@ -111,6 +111,11 @@ public abstract class BaseSwitch : MonoBehaviour
 
     protected void Refresh()
     {
+        if (!enabled)
+        {
+            return;
+        }
+
         switch (currentState)
         {
             case SwitchState.Active:

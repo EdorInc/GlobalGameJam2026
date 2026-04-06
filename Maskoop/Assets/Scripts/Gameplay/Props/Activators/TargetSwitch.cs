@@ -36,8 +36,6 @@ public class TargetSwitch : BaseSwitch
     {
         base.OnDisable();
 
-        // Debug.Log("Shutting down the switch on " + gameObject.name + " and stopping any active timers.");
-
         if (deactivateCoroutine != null)
         {
             StopCoroutine(deactivateCoroutine);
@@ -56,26 +54,6 @@ public class TargetSwitch : BaseSwitch
             Overtime();
         }
     }
-
-    // private void SwitchTimer()
-    // {
-    //     if (resetNeeded)
-    //     {
-    //         timeActivated = 0;
-    //         resetNeeded = false;
-    //     }
-    // 
-    //     if (currentState == SwitchState.Active)
-    //     {
-    //         timeActivated += Time.deltaTime;
-    //         Debug.Log("Time passed: " + timeActivated + " Time it needs: " + activatedTimer);
-    //         if (timeActivated > activatedTimer)
-    //         {
-    //             Deactivate();
-    //             resetNeeded = true;
-    //         }
-    //     }
-    // }
 
     protected override void Overtime()
     {

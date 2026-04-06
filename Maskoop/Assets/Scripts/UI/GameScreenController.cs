@@ -14,6 +14,7 @@ public class GameScreenController : MonoBehaviour
     [SerializeField] private string pauseScreenName = "pause-ui";
     [SerializeField] private string winScreenName = "win-ui";
     [SerializeField] private string loseScreenName = "lose-ui";
+    [SerializeField] private string videoScreenName = "tutorial-ui";
 
     [Header("HUD References")]
     [SerializeField] private string timerLabelName = "timer-label";
@@ -35,7 +36,6 @@ public class GameScreenController : MonoBehaviour
     [SerializeField] private string loseMenuButtonName = "quit-button";
 
     [Header("Tutorial References")]
-    [SerializeField] private string videoScreenName = "tutorial-video";
     [SerializeField] private RenderTexture videoTexture;
 
     [Header("Debug")]
