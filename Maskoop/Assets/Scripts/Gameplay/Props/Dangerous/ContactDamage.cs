@@ -4,7 +4,7 @@ public class ContactDamage : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-       
+        throw new System.NotImplementedException("The collider must not be a trigger!");
     }
 
     private void OnCollisionEnter(Collision collision)

@@ -279,7 +279,6 @@ public class CharacterMovementController : MonoBehaviour
 
     }
 
-
     public void ReciveDamage(GameObject player, Vector3 hitPosition)
     {
         if (characterState.IsMyPlayer(player))
@@ -288,7 +287,6 @@ public class CharacterMovementController : MonoBehaviour
 
             rigidbody.AddForce(knockBackDirection * hitKnockBackForce + Vector3.up * hitKnockBackUpwardsForce, ForceMode.Impulse);
             isStunned = true;
-            Debug.Log("HITED");
             currentHitTime = 0;
             characterState.ReciveDamage(hitStunTime);
         }
