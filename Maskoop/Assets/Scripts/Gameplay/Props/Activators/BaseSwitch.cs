@@ -13,6 +13,9 @@ public abstract class BaseSwitch : MonoBehaviour
     [Tooltip("Channel to use to connect to activables. Activables need to have the same channel be send a message")]
     [SerializeField] protected int channel = 1;
 
+    [Tooltip("Whether the pressure plate remains activated after the player leaves.")]
+    [SerializeField] protected bool keepActivated = false;
+
     protected SwitchState currentState = SwitchState.Inactive;
 
     protected MeshRenderer meshRenderer;
@@ -40,9 +43,7 @@ public abstract class BaseSwitch : MonoBehaviour
 
             Refresh();
 
-            //Debug.Log("The switch on " + gameObject.name + " has been locked.");
-
-            // Disable this script permanently
+            // Disable this script permanently.
             enabled = false;
         }
     }
@@ -50,6 +51,9 @@ public abstract class BaseSwitch : MonoBehaviour
     /// <summary>
  	/// Activates the switch, sets its state to Active, refreshes its appearance, and invokes the OnButtonPressed event.
  	/// </summary>
+    /// <remarks>
+    /// If keepActivated is true this will disable the component after activating.
+    /// </remarks>
     protected virtual void Activate()
     {
         currentState = SwitchState.Active;
@@ -57,6 +61,12 @@ public abstract class BaseSwitch : MonoBehaviour
         Refresh();
 
         EventManager.OnButtonPressed?.Invoke(channel);
+
+        if (keepActivated)
+        {
+            // Disable this script permanently.
+            enabled = false;
+        }
     }
 
     /// <summary>
@@ -74,16 +84,29 @@ public abstract class BaseSwitch : MonoBehaviour
     /// <summary>
     /// Sets the switch state to Pending, refreshes its appearance, and optionally invokes the OnButtonPressed event if coming from Inactive.
     /// </summary>
+    /// <remarks>
+    /// If keepActivated is true Pending is treated as Active.
+    /// </remarks>
     protected virtual void Overtime()
     {
-        if (currentState == SwitchState.Inactive)
+        if (keepActivated)
         {
-            EventManager.OnButtonPressed?.Invoke(channel);
+            Debug.LogWarning("Skipping to Active state...");
+
+            // If keep activated skip the pending state.
+            Activate();
         }
+        else
+        {
+            if (currentState == SwitchState.Inactive)
+            {
+                EventManager.OnButtonPressed?.Invoke(channel);
+            }
 
-        currentState = SwitchState.Pending;
+            currentState = SwitchState.Pending;
 
-        Refresh();
+            Refresh();
+        }
     }
 
     protected void Refresh()

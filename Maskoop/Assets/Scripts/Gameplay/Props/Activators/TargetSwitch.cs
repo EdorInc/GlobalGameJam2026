@@ -81,11 +81,17 @@ public class TargetSwitch : BaseSwitch
     {
         base.Overtime();
 
+        if(!enabled)
+        {
+            return;
+        }
+
         // Reset the timer if already running
         if (deactivateCoroutine != null)
         {
             StopCoroutine(deactivateCoroutine);
         }
+
         deactivateCoroutine = StartCoroutine(DeactivateAfterDelay());
     }
 

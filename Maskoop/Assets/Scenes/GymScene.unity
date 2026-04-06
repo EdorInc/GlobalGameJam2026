@@ -359,7 +359,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7814919379879521700, guid: a51fd6da4fb6cbe4c90535a58ad95813, type: 3}
       propertyPath: m_Name
-      value: PressurePlate (1)
+      value: PressurePlate02
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1112,7 +1112,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7814919379879521700, guid: 7058b4fb72f143245af6ee5bde77a598, type: 3}
       propertyPath: m_Name
-      value: Target (2)
+      value: Target03
       objectReference: {fileID: 0}
     - target: {fileID: 8808554726973932140, guid: 7058b4fb72f143245af6ee5bde77a598, type: 3}
       propertyPath: channel
@@ -1120,7 +1120,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8808554726973932140, guid: 7058b4fb72f143245af6ee5bde77a598, type: 3}
       propertyPath: activatedTimer
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1217,11 +1217,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7814919379879521700, guid: 7058b4fb72f143245af6ee5bde77a598, type: 3}
       propertyPath: m_Name
-      value: Target (1)
+      value: Target02
       objectReference: {fileID: 0}
     - target: {fileID: 8808554726973932140, guid: 7058b4fb72f143245af6ee5bde77a598, type: 3}
       propertyPath: channel
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8808554726973932140, guid: 7058b4fb72f143245af6ee5bde77a598, type: 3}
+      propertyPath: keepActivated
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8808554726973932140, guid: 7058b4fb72f143245af6ee5bde77a598, type: 3}
       propertyPath: activatedTimer
@@ -1632,7 +1636,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7814919379879521700, guid: a51fd6da4fb6cbe4c90535a58ad95813, type: 3}
       propertyPath: m_Name
-      value: PressurePlate
+      value: PressurePlate01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2986,6 +2990,10 @@ PrefabInstance:
       propertyPath: channel
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1156351442273747856, guid: a51fd6da4fb6cbe4c90535a58ad95813, type: 3}
+      propertyPath: keepActivated
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 806114925009333865, guid: a51fd6da4fb6cbe4c90535a58ad95813, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.5
@@ -3028,7 +3036,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7814919379879521700, guid: a51fd6da4fb6cbe4c90535a58ad95813, type: 3}
       propertyPath: m_Name
-      value: PressurePlate
+      value: PressurePlate01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3094,7 +3102,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7814919379879521700, guid: a51fd6da4fb6cbe4c90535a58ad95813, type: 3}
       propertyPath: m_Name
-      value: PressurePlate (3)
+      value: PressurePlate04
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4598,7 +4606,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7814919379879521700, guid: a51fd6da4fb6cbe4c90535a58ad95813, type: 3}
       propertyPath: m_Name
-      value: PressurePlate (2)
+      value: PressurePlate03
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5474,7 +5482,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7814919379879521700, guid: a51fd6da4fb6cbe4c90535a58ad95813, type: 3}
       propertyPath: m_Name
-      value: PressurePlate (1)
+      value: PressurePlate02
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5846,7 +5854,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7814919379879521700, guid: 7058b4fb72f143245af6ee5bde77a598, type: 3}
       propertyPath: m_Name
-      value: Target
+      value: Target01
       objectReference: {fileID: 0}
     - target: {fileID: 8808554726973932140, guid: 7058b4fb72f143245af6ee5bde77a598, type: 3}
       propertyPath: channel
