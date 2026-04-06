@@ -86,14 +86,14 @@ public class CharacterMovementController : MonoBehaviour
     private void OnEnable()
     {
         EventManager.OnDamageRecived += ReciveDamage;
-        EventManager.Throw += Thrown;
+        EventManager.OnThrow += Thrown;
         EventManager.OnLitOnFire += IsBurning;
     }
 
     private void OnDisable()
     {
         EventManager.OnDamageRecived -= ReciveDamage;
-        EventManager.Throw -= Thrown;
+        EventManager.OnThrow -= Thrown;
         EventManager.OnLitOnFire -= IsBurning;
     }
 
@@ -165,7 +165,7 @@ public class CharacterMovementController : MonoBehaviour
     {
         if (!wasGrounded && IsGrounded)
         {
-            print(characterState.characterId);
+            //Debug.Log("Player " + characterState.characterId + " landed.");
             EventManager.OnFallEnded?.Invoke(gameObject);
             isBeingThrown = false;
         }
@@ -189,7 +189,7 @@ public class CharacterMovementController : MonoBehaviour
 
                     if (currentMovement > movementToBeFree)
                     {
-                        EventManager.TryingToBeFree?.Invoke(gameObject);
+                        EventManager.OnTryingToBeFree?.Invoke(gameObject);
                         currentMovement = 0;
                     }
                 }
@@ -202,7 +202,7 @@ public class CharacterMovementController : MonoBehaviour
             {
                 if(horizontalInput.magnitude > 0f)
                 {
-                    EventManager.TryingToMove?.Invoke(gameObject);
+                    EventManager.OnTryingToMove?.Invoke(gameObject);
                 }
             }
             return;

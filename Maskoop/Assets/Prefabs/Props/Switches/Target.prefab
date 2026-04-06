@@ -191,4 +191,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Target
   channel: 1
   activatedMaterial: {fileID: 2100000, guid: 4a73b30bee4c0b24e8bff9d5f01ae37b, type: 2}
+  pendingMaterial: {fileID: 2100000, guid: 661e4678ce2e54743b48dce8d800b701, type: 2}
   activatedWidth: 0.1
+  activatedTimer: 2

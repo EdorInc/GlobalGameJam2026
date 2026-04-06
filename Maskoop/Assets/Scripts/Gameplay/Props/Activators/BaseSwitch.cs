@@ -6,7 +6,7 @@ public abstract class BaseSwitch : MonoBehaviour
     {
         Inactive,
         Active,
-        Deactivating
+        Pending
     }
 
     [Header("Connection Settings")]
@@ -22,6 +22,34 @@ public abstract class BaseSwitch : MonoBehaviour
         meshRenderer = GetComponentInChildren<MeshRenderer>();
     }
 
+    protected void OnEnable()
+    {
+        EventManager.OnButtonLock += OnLockReceived;
+    }
+
+    protected void OnDisable()
+    {
+        EventManager.OnButtonLock -= OnLockReceived;
+    }
+
+    protected virtual void OnLockReceived(int receivedChannel)
+    {
+        if (receivedChannel == channel)
+        {
+            currentState = SwitchState.Active;
+
+            Refresh();
+
+            //Debug.Log("The switch on " + gameObject.name + " has been locked.");
+
+            // Disable this script permanently
+            enabled = false;
+        }
+    }
+
+    /// <summary>
+ 	/// Activates the switch, sets its state to Active, refreshes its appearance, and invokes the OnButtonPressed event.
+ 	/// </summary>
     protected virtual void Activate()
     {
         currentState = SwitchState.Active;
@@ -31,6 +59,9 @@ public abstract class BaseSwitch : MonoBehaviour
         EventManager.OnButtonPressed?.Invoke(channel);
     }
 
+    /// <summary>
+    /// Deactivates the switch, sets its state to Inactive, refreshes its appearance, and invokes the OnButtonUnPressed event.
+    /// </summary>
     protected virtual void Deactivate()
     {
         currentState = SwitchState.Inactive;
@@ -40,9 +71,17 @@ public abstract class BaseSwitch : MonoBehaviour
         EventManager.OnButtonUnPressed?.Invoke(channel);
     }
 
+    /// <summary>
+    /// Sets the switch state to Pending, refreshes its appearance, and optionally invokes the OnButtonPressed event if coming from Inactive.
+    /// </summary>
     protected virtual void Overtime()
     {
-        currentState = SwitchState.Deactivating;
+        if (currentState == SwitchState.Inactive)
+        {
+            EventManager.OnButtonPressed?.Invoke(channel);
+        }
+
+        currentState = SwitchState.Pending;
 
         Refresh();
     }
@@ -57,8 +96,8 @@ public abstract class BaseSwitch : MonoBehaviour
             case SwitchState.Inactive:
                 SetInactive();
                 break;
-            case SwitchState.Deactivating:
-                SetDeactivating();
+            case SwitchState.Pending:
+                SetOvertime();
                 break;
             default:
                 Debug.LogError("Target is in an unknown state.");
@@ -70,5 +109,5 @@ public abstract class BaseSwitch : MonoBehaviour
 
     protected abstract void SetInactive();
 
-    protected abstract void SetDeactivating();
+    protected abstract void SetOvertime();
 }

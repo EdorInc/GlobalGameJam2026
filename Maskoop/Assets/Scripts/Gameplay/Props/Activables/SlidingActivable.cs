@@ -23,7 +23,7 @@ public class SlidingActivable : BaseActivable
     protected override bool StopCondition()
     {
         Vector3 endPosition = openPosition.position;
-        if (currentState == ActivableState.Deactivating)
+        if (currentState == ActivableState.Deactivating || currentState == ActivableState.Active)
         {
             endPosition = closedPosition;
         }
@@ -36,11 +36,11 @@ public class SlidingActivable : BaseActivable
         {
             if (currentState == ActivableState.Activating)
             {
-                Debug.Log("Door " + gameObject.name + " is at open position.");
+                Debug.Log(gameObject.name + " is at open position.");
             }
             else if (currentState == ActivableState.Deactivating)
             {
-                Debug.Log("Door " + gameObject.name + " is at closed position.");
+                Debug.Log(gameObject.name + " is at closed position.");
             }
         }
 
@@ -49,13 +49,13 @@ public class SlidingActivable : BaseActivable
 
     protected override void ActivateAnimation()
     {
-        Debug.Log("Moving door " + gameObject.name + " towards open position...");
+        // Debug.Log("Moving " + gameObject.name + " towards open position...");
         transform.position = Vector3.MoveTowards(transform.position, openPosition.position, Time.deltaTime * speed);
     }
 
     protected override void DeactivateAnimation()
     {
-        Debug.Log("Moving door " + gameObject.name + " towards closed position...");
+        // Debug.Log("Moving " + gameObject.name + " towards closed position...");
         transform.position = Vector3.MoveTowards(transform.position, closedPosition, Time.deltaTime * speed);
     }
 

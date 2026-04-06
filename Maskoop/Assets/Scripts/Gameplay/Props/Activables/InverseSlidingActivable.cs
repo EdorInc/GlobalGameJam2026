@@ -21,5 +21,6 @@ public class InverseSlidingActivable : SlidingActivable
         // Swap positions
         transform.position = finalPosition;
         openPosition.position = closedPosition;
+        closedPosition = finalPosition;
     }
 }

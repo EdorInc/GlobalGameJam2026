@@ -168,8 +168,8 @@ public class Throw : MonoBehaviour
 
             AudioSystem.PlaySFX(AudioSystem.SoundLibrary?.throwRelease, transform.position);
 
-            Debug.Log("Thrown object " + grabbedObject.name);
-            EventManager.Throw?.Invoke(grabbedObject,true,gameObject);
+            Debug.Log("Thrown " + grabbedObject.name);
+            EventManager.OnThrow?.Invoke(grabbedObject,true,gameObject);
             charging = false;
             grabbedObject = null;
 
@@ -360,7 +360,7 @@ public class Throw : MonoBehaviour
 
     public void ClearTrajectory()
     {
-        Debug.Log("Clearing trajectory");
+        // Debug.Log("Clearing trajectory");
 
         trajectoryRenderer.positionCount = 0;
         landingMarker.SetActive(false);

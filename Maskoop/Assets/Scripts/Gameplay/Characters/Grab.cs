@@ -64,12 +64,12 @@ public class Grab : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.TryingToBeFree += DropPlayer;
+        EventManager.OnTryingToBeFree += DropPlayer;
     }
 
     private void OnDisable()
     {
-        EventManager.TryingToBeFree -= DropPlayer;
+        EventManager.OnTryingToBeFree -= DropPlayer;
     }
 
     void Update()
@@ -140,7 +140,11 @@ public class Grab : MonoBehaviour
             }
 
             highlightedObject = grabbableObject;
-            Debug.Log("New grabbable object in range: " + (highlightedObject != null ? highlightedObject.name : "None"));
+
+            if(highlightedObject != null)
+            {
+                Debug.Log("New grabbable object in range: " + (highlightedObject != null ? highlightedObject.name : "None"));
+            }
         }
     }
 
@@ -206,7 +210,7 @@ public class Grab : MonoBehaviour
             else
             {
                 characterState.SetHeldObject(grabbable);
-                Debug.Log("Grabbed object " + grabbedObject.name);
+                Debug.Log("Grabbed " + grabbedObject.name);
                 AudioSystem.PlaySFX(AudioSystem.SoundLibrary?.grab, transform.position);
             }
         }

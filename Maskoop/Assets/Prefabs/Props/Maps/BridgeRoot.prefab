@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7439245606783702003}
   - component: {fileID: 5248770769166524788}
   - component: {fileID: 8239081328430421454}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Bridge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,6 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InverseDoor
   channel: 2
+  keepActivated: 1
   activatorsNeeded: 1
   openPosition: {fileID: 2251888142169713379}
   speed: 2

@@ -33,6 +33,11 @@ public class PlateSwitch : BaseSwitch
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!enabled)
+        {
+            return;
+        }
+
         bool willActivate = false;
 
         if (playerExclusive)
@@ -57,13 +62,22 @@ public class PlateSwitch : BaseSwitch
 
         if (willActivate)
         {
-            Debug.Log("The plate switch is now active.");
+            // Debug.Log("The plate switch is now active.");
             Activate();
         }
     }
 
+    /// <remarks>
+    /// Respawned elements (such as cubes, rocks, and masks) may not trigger this event when they are destroyed or removed from the scene,
+    /// potentially causing the plate to remain activated.
+    /// </remarks>
     private void OnTriggerExit(Collider other)
     {
+        if (!enabled)
+        {
+            return;
+        }
+
         if (playerExclusive)
         {
             bool isPlayer = other.gameObject.CompareTag("Player");
@@ -83,10 +97,10 @@ public class PlateSwitch : BaseSwitch
             // To avoid possible bugs with multiple objects on the plate, we reset the counter to 0 when it goes negative.
             weightsOnPlate = 0;
 
-            Debug.Log("The last weight left the plate, deactivating...");
-
             if(!keepActivated)
             {
+                Debug.Log("The last weight left the plate, deactivating...");
+
                 Deactivate();
             }       
         }
@@ -104,7 +118,7 @@ public class PlateSwitch : BaseSwitch
         transform.localScale = new Vector3(transform.localScale.x, deactivatedWidth, transform.localScale.z);
     }
 
-    protected override void SetDeactivating()
+    protected override void SetOvertime()
     {
         throw new System.NotImplementedException();
     }

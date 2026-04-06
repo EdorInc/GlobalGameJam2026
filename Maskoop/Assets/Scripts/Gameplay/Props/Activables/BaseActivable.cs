@@ -16,6 +16,9 @@ public abstract class BaseActivable : MonoBehaviour
     [Tooltip("Channel to use to connect to buttons. Buttons need to have the same channel to activate this object")]
     protected int channel = 1;
     [SerializeField]
+    [Tooltip("Whether the activable will remain active")]
+    protected bool keepActivated = false;
+    [SerializeField]
     [Tooltip("Amount of activators needed to activate this object")]
     protected int activatorsNeeded = 1;
 
@@ -50,6 +53,9 @@ public abstract class BaseActivable : MonoBehaviour
                 if (StopCondition())
                 {
                     currentState = ActivableState.Active;
+
+                    // Call the function with the activation logic
+                    OnActivation();
                 }
                 break;
             case ActivableState.Deactivating:
@@ -64,17 +70,26 @@ public abstract class BaseActivable : MonoBehaviour
         }
     }
 
+    public void OnActivation()
+    {
+        if (keepActivated)
+        {
+            Debug.Log("Switches on channel " + channel + " are being locked...");
+            EventManager.OnButtonLock?.Invoke(channel);
+        }
+    }
+
     public void OnActivatorRecived(int channel)
     {
         if (this.channel == channel)
         {
             activatorsNeeded--;
-            Debug.Log("Activating channel " + channel + " on object " + gameObject.name);
+            Debug.Log("Activating channel " + channel + " on " + gameObject.name + ".");
 
             if (activatorsNeeded == 0)
             {
                 currentState = ActivableState.Activating;
-                Debug.Log("All activators received for channel " + channel + " on object " + gameObject.name);
+                // Debug.Log("All activators received for channel " + channel + " on object " + gameObject.name);
             }
         }
     }
@@ -88,7 +103,7 @@ public abstract class BaseActivable : MonoBehaviour
             if (activatorsNeeded > 0)
             {
                 currentState = ActivableState.Deactivating;
-                Debug.Log("Deactivating channel " + channel + " on object " + gameObject.name);
+                // Debug.Log("Deactivating channel " + channel + " on object " + gameObject.name);
             }
         }
     }

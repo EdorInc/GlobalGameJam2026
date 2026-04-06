@@ -27,7 +27,7 @@ public class SimultaneousTargetSwitch : TargetSwitch
                 Overtime();
             }
         }
-        else if(currentState == SwitchState.Deactivating)
+        else if(currentState == SwitchState.Pending)
         {
             HandleBlinking();
             currentBlinkingTime -= Time.deltaTime;
@@ -43,7 +43,7 @@ public class SimultaneousTargetSwitch : TargetSwitch
         currentActiveTime = activeTime;
     }
 
-    protected override void SetDeactivating()
+    protected override void SetOvertime()
     {
         currentBlinkingTime = blinkingTime;
         blinkTimer = blinkInterval;
