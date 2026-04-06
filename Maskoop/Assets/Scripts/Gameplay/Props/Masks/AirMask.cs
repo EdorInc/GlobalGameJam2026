@@ -30,6 +30,7 @@ public class AirMask : BaseMask
         EventManager.OnAirCurrentExit -= AirCurrentExit;
         EventManager.OnTryingToMove -= StartFlutter;
         Destroy(windParticlesObject);
+        base.OnUnequip();
     }
 
     public override void UpdateLogic()

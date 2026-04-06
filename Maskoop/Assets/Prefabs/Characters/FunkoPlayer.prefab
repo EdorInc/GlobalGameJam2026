@@ -236,6 +236,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6547426620647289602}
     m_Modifications:
+    - target: {fileID: -5216866879657366040, guid: befe075e024e9144996dd0d6d51798e4, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: -3770357806278516720, guid: befe075e024e9144996dd0d6d51798e4, type: 3}
       propertyPath: highlightOnLook
       value: 0
