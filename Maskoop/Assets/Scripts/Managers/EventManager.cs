@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using UnityEngine.Video;
 
 /// <summary>
 /// Centralized static event manager for game-wide events.
@@ -80,6 +81,17 @@ public static class EventManager
     /// Invoked when a victory condition is met.
     /// </summary>
     public static Action OnVictory;
+
+    /// <summary>
+    /// Invoked when entering a tutorialTrigger
+    /// </summary>
+    public static Action<string, Sprite, VideoClip> OnTutorialTriggerEnter;
+
+    /// <summary>
+    /// Invoked when exiting a tutorialTrigger
+    /// </summary>
+    public static Action OnTutorialTriggerExit;
+
 
     // -------------------- Status Events --------------------
 
