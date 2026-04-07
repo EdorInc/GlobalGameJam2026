@@ -27,11 +27,14 @@ public class Respawn : MonoBehaviour
     private BaseSpawner spawner;
     public Quaternion respawnRotation;
 
+    private GroundDetector groundDetector;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
         respawnRotation = Quaternion.identity;
+        groundDetector = GetComponent<GroundDetector>();
     }
 
     public void SetSpawner(BaseSpawner spawner)
@@ -82,6 +85,14 @@ public class Respawn : MonoBehaviour
 
     private bool IsGroundAppropriate(Vector3 position)
     {
+        if(groundDetector == null)
+        {
+            return false;
+        }
+        if (!groundDetector.IsGrounded)
+        {
+            return false;
+        }
         if (!Physics.Raycast(position, Vector3.down, rayDistance, groundLayer))
         {
             return false;

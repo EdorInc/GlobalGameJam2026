@@ -71,13 +71,21 @@ public class CharacterMovementController : MonoBehaviour
     private bool IsFloating => characterState.IsFloating;
     private bool IsOnFire => characterState.IsOnFire;
 
+    private float stunCounter = 0;
+
     public float ForwardInput { get; set; }
     public float SideInput { get; set; }
 
     new private Rigidbody rigidbody;
 
+    private Respawn respawnComponent;
+
+    private Vector3 lastPosition = Vector3.zero;
+    private float timeStillInAir = 0;
+
     private void Start()
     {
+        respawnComponent = GetComponent<Respawn>();
         characterState = GetComponent<CharacterStateController>();
         rigidbody = GetComponent<Rigidbody>();
         groundDetector = GetComponent<GroundDetector>();
@@ -163,11 +171,13 @@ public class CharacterMovementController : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
+        CheckForStucked();
         if (!wasGrounded && IsGrounded)
         {
             //Debug.Log("Player " + characterState.characterId + " landed.");
             EventManager.OnFallEnded?.Invoke(gameObject);
             isBeingThrown = false;
+            stunCounter = 0;
         }
         if (wasGrounded && !IsGrounded && !IsGrabbed)
         {
@@ -281,7 +291,7 @@ public class CharacterMovementController : MonoBehaviour
 
     public void ReciveDamage(GameObject player, Vector3 hitPosition)
     {
-        if (characterState.IsMyPlayer(player))
+        if (characterState.IsMyPlayer(player) && !isStunned)
         {
             Vector3 knockBackDirection = (transform.position - hitPosition).normalized;
 
@@ -289,7 +299,14 @@ public class CharacterMovementController : MonoBehaviour
             isStunned = true;
             currentHitTime = 0;
             characterState.ReciveDamage(hitStunTime);
-        }
+
+            stunCounter++;
+            if (stunCounter == 3)
+            {
+                respawnComponent.RespawnFunction();
+                rigidbody.linearVelocity = Vector3.zero;
+            }
+        }        
     }
 
     public void IsBurning(Collider player)
@@ -299,6 +316,27 @@ public class CharacterMovementController : MonoBehaviour
             isOnFire = true;
             currentOnFireTime = 0.0f;
         }
+    }
+
+    private void CheckForStucked()
+    {
+        if (!IsGrounded)
+        {
+            if(Vector3.Distance( lastPosition,transform.position) < 0.05)
+            {
+                timeStillInAir += Time.deltaTime;
+            }
+            else
+            {
+                timeStillInAir = 0;
+            }
+
+            if(timeStillInAir > 1)
+            {
+                respawnComponent.RespawnFunction();
+            }
+        }
+        lastPosition = transform.position;
     }
 
 }

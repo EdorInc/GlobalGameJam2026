@@ -1,0 +1,18 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Themes/DefaultTheme.uss?fileID=7433441132597879392&amp;guid=abd6d9976d619a646a1faab02692b347&amp;type=3#DefaultTheme"/>
+    <ui:VisualElement name="background-image" class="image-background" style="background-image: none; -unity-background-image-tint-color: rgb(255, 255, 255); background-size: 100% 100%; -unity-slice-type: sliced; margin-top: 0; margin-right: 0; margin-left: 0;">
+        <ui:VisualElement name="level-name-container" class="container-menu" style="justify-content: center; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; background-position-y: center; height: 30%;">
+            <ui:Label text="Level 1 - First steps" name="level-name-label" class="text-title" style="flex-grow: 1; text-shadow: 0 10px 2px rgba(0, 0, 0, 0.29); aspect-ratio: auto; align-self: center; align-content: center; flex-shrink: 0; margin-top: 0; margin-bottom: 0; -unity-text-align: upper-center; font-size: 98px; padding-top: 50px; padding-right: 70px; padding-left: 70px; color: rgb(85, 85, 85); -unity-text-outline-width: 0;"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="level-stats-container" style="flex-grow: 1; align-items: center; flex-direction: row; justify-content: center; width: 100%; height: 10%; align-self: auto; max-height: 64px; min-height: 64px;">
+            <ui:Label text="03:01:005" style="-unity-font-definition: url(&quot;project://database/Assets/UI/Fonts/rocks-serif/gomarice_rocks_serif.ttf?fileID=12800000&amp;guid=fbc97c39081110c4fbb781eb4f13a1b6&amp;type=3#gomarice_rocks_serif&quot;); color: rgb(85, 85, 85); margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0%; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; font-size: 48px; align-self: center;"/>
+            <ui:Image source="project://database/Assets/UI/Images/Tikki%20Mask.jpeg?fileID=2800000&amp;guid=d4ccf37a91743714195f777d97655748&amp;type=3#Tikki Mask" name="Star2" tint-color="rgb(0, 0, 0)" style="width: 64px; height: 64px; color: rgb(0, 0, 0);"/>
+            <ui:Image source="project://database/Assets/UI/Images/Tikki%20Mask.jpeg?fileID=2800000&amp;guid=d4ccf37a91743714195f777d97655748&amp;type=3#Tikki Mask" name="Star3" tint-color="rgb(0, 0, 0)" style="width: 64px; height: 64px;"/>
+            <ui:Image source="project://database/Assets/UI/Images/Tikki%20Mask.jpeg?fileID=2800000&amp;guid=d4ccf37a91743714195f777d97655748&amp;type=3#Tikki Mask" name="Star1" tint-color="rgb(123, 123, 123)" style="width: 64px; height: 64px;"/>
+        </ui:VisualElement>
+        <ui:ScrollView vertical-scroller-visibility="AlwaysVisible" horizontal-scroller-visibility="AlwaysVisible" mode="Horizontal" style="height: 50%;"/>
+        <ui:VisualElement name="button-container" class="container-button-vertical" style="height: 10%; flex-grow: 1.5; flex-shrink: 0; justify-content: flex-start; align-self: stretch; align-items: stretch;">
+            <ui:Button text="Start" name="play-button" class="text-button button-hexagon" style="border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0); max-height: 70px; width: auto; min-width: 400px; margin-top: 7px; height: 71px;"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

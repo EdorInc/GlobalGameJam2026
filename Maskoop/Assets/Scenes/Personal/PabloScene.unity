@@ -1789,69 +1789,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1907491566 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6079786050083026125, guid: d8b28f6bedeb6b04ab619f0043d165a8, type: 3}
-  m_PrefabInstance: {fileID: 2116083841}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1907491572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1907491566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f8f5c677ed3ca9499f92725cf4a9f9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AirMask
-  timeBeforeRespawn: 5
-  timeFlickering: 2
-  baseflickerInterval: 0.2
-  flutterDrag: 3
-  flutterTime: 1
-  flutterSpeedReduction: 0.5
-  windParticlesPrefab: {fileID: 126614193649380581, guid: a649f3bf66d6fa94e9f3af5ab7c148d7, type: 3}
---- !u!114 &1907491573
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1907491566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b7d6c44fd5b3e845827b8107cbc3c4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Respawn
-  respawnPosition: {x: 0, y: 0, z: 0}
-  voidDistance: -3
-  willDestroy: 0
-  groundCheckMargin: 2
-  numRayChecks: 4
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  rayDistance: 5
-  showDebugRays: 1
-  respawnRotation: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &1907491579
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1907491566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 486ae9b69cfbf494ea402f7193819b2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GroundDetector
-  groundLayerMask:
-    serializedVersion: 2
-    m_Bits: 8
-  groundCheckDistance: 0.1
 --- !u!1001 &1983643440
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2158,23 +2095,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GreenMask
       objectReference: {fileID: 0}
-    - target: {fileID: 6079786050083026125, guid: d8b28f6bedeb6b04ab619f0043d165a8, type: 3}
-      propertyPath: m_TagString
-      value: Mask
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6079786050083026125, guid: d8b28f6bedeb6b04ab619f0043d165a8, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1907491572}
-    - targetCorrespondingSourceObject: {fileID: 6079786050083026125, guid: d8b28f6bedeb6b04ab619f0043d165a8, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1907491573}
-    - targetCorrespondingSourceObject: {fileID: 6079786050083026125, guid: d8b28f6bedeb6b04ab619f0043d165a8, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1907491579}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8b28f6bedeb6b04ab619f0043d165a8, type: 3}
 --- !u!1001 &513445030926072222
 PrefabInstance:
