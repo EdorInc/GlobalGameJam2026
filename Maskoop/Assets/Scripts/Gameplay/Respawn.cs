@@ -3,28 +3,43 @@ using UnityEngine;
 public class Respawn : MonoBehaviour
 {
     [Header("Respawn Settings")]
+    [Tooltip("Position where the object will respawn after falling below the void distance.")]
     public Vector3 respawnPosition;
+    [Tooltip("Height threshold below which the object will respawn or be destroyed.")]
     public float voidDistance = -3;
+    [Tooltip("If true, the object will be destroyed instead of respawned when falling below the void distance.")]
     public bool willDestroy = false;
 
-    [Tooltip("Margen para verificar suelo en todas direcciones")]
+
+    [Header("Ground Settings")]
+    [Tooltip("Margin used to check for ground in all directions around the object.")]
     [SerializeField]
     private float groundCheckMargin = 2f;
-    [Tooltip("Número de raycasts por dirección")]
+    [Tooltip("Number of raycasts to perform in each direction for ground checking.")]
     [SerializeField]
     private int numRayChecks = 4;
-    [Tooltip("Capa del suelo")]
+    [Tooltip("Layer mask used to identify ground surfaces.")]
     [SerializeField]
     private LayerMask groundLayer;
-    [Tooltip("Distancia máxima del raycast hacia abajo")]
+    [Tooltip("Maximum distance for downward raycasts when checking for ground.")]
     [SerializeField]
     private float rayDistance = 5f;
+    [Tooltip("The area to check if player is ground appropriate")]
+    [SerializeField]
+    private Vector3[] areaCheck;
 
-    [Header("Debug")]
+    [Header("Debug Settngs")]
+    [Tooltip("Show debug rays in the scene for ground checking.")]
     [SerializeField] private bool showDebugRays = true;
+    [Tooltip("If true, a visual marker for the respawn position will be created in the scene.")]
+    [SerializeField] private bool createVisualRespawnPosition = false;
 
-    new private Rigidbody rigidbody;
+    private Transform visualRespawnPositon;
+
+    private Rigidbody rigidBody;
     private BaseSpawner spawner;
+
+    [HideInInspector]
     public Quaternion respawnRotation;
 
     private GroundDetector groundDetector;
@@ -32,9 +47,21 @@ public class Respawn : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        rigidBody = GetComponent<Rigidbody>();
         respawnRotation = Quaternion.identity;
         groundDetector = GetComponent<GroundDetector>();
+    }
+
+    void Start()
+    {
+        // Create a new game object to visualize the respawn position if enabled
+        if (createVisualRespawnPosition && visualRespawnPositon == null)
+        {
+            string parentName = gameObject.name;
+            GameObject visualRespawnGO = new GameObject($"{parentName}_VisualRespawnPosition");
+            visualRespawnGO.transform.position = respawnPosition;
+            visualRespawnPositon = visualRespawnGO.transform;
+        }
     }
 
     public void SetSpawner(BaseSpawner spawner)
@@ -42,71 +69,76 @@ public class Respawn : MonoBehaviour
         this.spawner = spawner;
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Updates the respawn position and moves the visual respawn marker to the new position.
+    /// </summary>
+    /// <param name="newPosition">The new respawn position.</param>
+    public void UpdateRespawnPosition(Vector3 newPosition)
+    {
+        respawnPosition = newPosition;
+        if (visualRespawnPositon != null)
+        {
+            visualRespawnPositon.position = newPosition;
+        }
+    }
+
     void Update()
     {
-        if (rigidbody.position.y < voidDistance)
+        if (rigidBody.position.y < voidDistance)
         {
             if (willDestroy == false)
             {
                 RespawnFunction();
             }
-            else if (willDestroy == true && spawner != null)
+            else
             {
-                spawner.DestroyObject();
+                if (spawner != null)
+                {
+                    spawner.DestroyObject();
+                }
+                else
+                {
+                    DestroyFunction();
+                }
             } 
-            else if(willDestroy == true)
-            {
-                Destroy();
-            }
         }
 
         if (IsGroundAppropriate(transform.position) && this.gameObject.CompareTag("Player"))
         {
-            respawnPosition = transform.position;
+            UpdateRespawnPosition(transform.position);
         }
 
     }
 
     public void RespawnFunction()
     {
-        rigidbody.position = respawnPosition;
+        rigidBody.position = respawnPosition;
         if(respawnRotation != Quaternion.identity)
         {
-            rigidbody.rotation = respawnRotation;
-            rigidbody.linearVelocity = Vector3.zero;
+            rigidBody.rotation = respawnRotation;
+            rigidBody.linearVelocity = Vector3.zero;
         }
     }
 
-    void Destroy()
+    void DestroyFunction()
     {
         Destroy(gameObject);
     }
 
+    // TODO Find the farthest point from the edge not just whether you are on perfect ground.
     private bool IsGroundAppropriate(Vector3 position)
     {
         if(groundDetector == null)
         {
             return false;
         }
+
         if (!groundDetector.IsGrounded)
         {
             return false;
         }
-        if (!Physics.Raycast(position, Vector3.down, rayDistance, groundLayer))
-        {
-            return false;
-        }
 
-        Vector3[] directions = new Vector3[]
-        {
-            Vector3.forward,
-            Vector3.back,
-            Vector3.left,
-            Vector3.right
-        };
-
-        foreach (Vector3 direction in directions)
+        foreach (Vector3 direction in areaCheck)
         {
             if (!CheckGroundInDirection(position, direction))
             {
@@ -146,9 +178,10 @@ public class Respawn : MonoBehaviour
                 Debug.DrawRay(checkPosition, Vector3.down * rayDistance, Color.cyan, 0.1f);
             }
 
+            // No ground detected in this direction, return false
             if (!Physics.Raycast(ray, rayDistance, groundLayer))
             {
-                return false; // No hay suelo en esta dirección
+                return false;
             }
         }
 

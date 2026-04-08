@@ -581,7 +581,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   rayDistance: 5
+  areaCheck:
+  - {x: 0, y: 0, z: 1}
+  - {x: 0, y: 0, z: -1}
+  - {x: -1, y: 0, z: 0}
+  - {x: 1, y: 0, z: 0}
   showDebugRays: 1
+  createVisualRespawnPosition: 0
   respawnRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &-3770357806278516720
 MonoBehaviour:
@@ -1059,3 +1065,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5a527537f9771849bdbe0d9b31890be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  fallSFXVelocity: -3
+  impactCooldown: 0.2

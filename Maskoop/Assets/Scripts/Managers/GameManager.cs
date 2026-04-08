@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using System;
 using UnityEngine.InputSystem;
 
+// TODO Move this to the EventManager
 public static class GameEvents
 {
     public static event Action OnGoToMenuRequested;
@@ -33,8 +34,13 @@ public class GameManager : MonoBehaviour
     [Header("Scenes")]
     [Tooltip("Name of the scene to load for the title screen.")]
     [SerializeField] private string titleScene = "TitleScene";
-    [Tooltip("Name of the scene to load for the main gameplay.")]
-    [SerializeField] private string gameScene = "GameScene";
+    [Tooltip("Names of the scenes to load for each level.")]
+    [SerializeField] private string[] levelScenes = { "Level1", "Level2", "Level3" };
+
+    [Header("Level Settings")]
+    [SerializeField] private string currentLevelScene;
+
+    private int currentLevelIndex = 0;
 
     [Header("Player Settings")]
     [Tooltip("Prefab to use when spawning player characters.")]
@@ -91,10 +97,21 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
+    private bool IsLevelScene(string sceneName)
+    {
+        if (levelScenes == null) return false;
+        foreach (var level in levelScenes)
+        {
+            if (level == sceneName) return true;
+        }
+        return false;
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == gameScene)
+        if (IsLevelScene(scene.name))
         {
+            currentLevelScene = scene.name;
             SpawnPlayers();
         }
     }
@@ -106,18 +123,75 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(titleScene);
     }
 
+    public void LoadCurrentLevel()
+    {
+        if (levelScenes != null && levelScenes.Length > 0 && currentLevelIndex >= 0 && currentLevelIndex < levelScenes.Length)
+        {
+            SceneManager.LoadScene(levelScenes[currentLevelIndex]);
+        }
+        else
+        {
+            Debug.LogError("Invalid level index or no levels defined.");
+        }
+    }
+
+    /// <summary>
+    /// Loads the level at the specified index in the levelScenes array.
+    /// </summary>
+    /// <param name="levelIndex">The index of the level to load.</param>
+    public void LoadLevel(int levelIndex)
+    {
+        if (levelScenes != null && levelScenes.Length > 0 && levelIndex >= 0 && levelIndex < levelScenes.Length)
+        {
+            currentLevelIndex = levelIndex;
+            LoadCurrentLevel();
+        }
+        else
+        {
+            Debug.LogError($"Invalid level index {levelIndex}.");
+        }
+    }
+
+    public void LoadNextLevel()
+    {
+        if (levelScenes != null && currentLevelIndex < levelScenes.Length - 1)
+        {
+            currentLevelIndex++;
+            LoadCurrentLevel();
+        }
+        else
+        {
+            Debug.LogWarning("No more levels. Returning to title.");
+            LoadTitle();
+        }
+    }
+
+    public void LoadPreviousLevel()
+    {
+        if (levelScenes != null && currentLevelIndex > 0)
+        {
+            currentLevelIndex--;
+            LoadCurrentLevel();
+        }
+        else
+        {
+            Debug.LogWarning("This was the first level. Returning to title.");
+            LoadTitle();
+        }
+    }
+
     public void StartGame()
     {
         Debug.Log("Starting game...");
         Time.timeScale = 1f;
-        SceneManager.LoadScene(gameScene);
+        LoadCurrentLevel();
     }
 
     public void RestartGame()
     {
         Debug.Log("Restarting game...");
         Time.timeScale = 1f;
-        SceneManager.LoadScene(gameScene);
+        LoadCurrentLevel();
     }
 
     public void PauseGame()
@@ -163,16 +237,19 @@ public class GameManager : MonoBehaviour
         }
 
         // --- PLAYER 1 ---
-        // Al usar PlayerInput.Instantiate permitimos internamente que compartan controlador
+        // Al usar PlayerInput.Instantiate permitimos internamente que compartan controlador.
         PlayerInput p1Input = PlayerInput.Instantiate(playerPrefab, 0, controlScheme: "Keyboard1", 0, keyboard);
         player1Instance = p1Input.transform.root.gameObject;
         
         player1Instance.transform.position = playerOneSpawn.position;
         player1Instance.transform.rotation = Quaternion.identity;
         
-        // ARREGLO FÍSICAS: Obligar a que el Rigidbody acepte instantáneamente su nueva coordenada
+        // Obligar a que el Rigidbody acepte instantáneamente su nueva coordenada.
         Rigidbody rb1 = player1Instance.GetComponentInChildren<Rigidbody>();
-        if (rb1 != null) rb1.position = playerOneSpawn.position;
+        if (rb1 != null)
+        {
+            rb1.position = playerOneSpawn.position;
+        }
         p1Input.transform.localPosition = Vector3.zero;
 
         // --- PLAYER 2 ---
@@ -181,9 +258,13 @@ public class GameManager : MonoBehaviour
         
         player2Instance.transform.position = playerTwoSpawn.position;
         player2Instance.transform.rotation = Quaternion.identity;
-        
+
+        // Obligar a que el Rigidbody acepte instantáneamente su nueva coordenada.
         Rigidbody rb2 = player2Instance.GetComponentInChildren<Rigidbody>();
-        if (rb2 != null) rb2.position = playerTwoSpawn.position;
+        if (rb2 != null)
+        {
+            rb2.position = playerTwoSpawn.position;
+        }
         p2Input.transform.localPosition = Vector3.zero;
 
         // --- SETUP EXTRAS ---
