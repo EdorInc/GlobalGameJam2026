@@ -31,15 +31,20 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [Header("Scenes")]
+    [Tooltip("Name of the scene to load for the title screen.")]
     [SerializeField] private string titleScene = "TitleScene";
+    [Tooltip("Name of the scene to load for the main gameplay.")]
     [SerializeField] private string gameScene = "GameScene";
 
-    [Header("Prefabs")]
+    [Header("Player Settings")]
+    [Tooltip("Prefab to use when spawning player characters.")]
     [SerializeField] private GameObject playerPrefab;
 
-    [Header("Initial spawn Settings")]
-    public Vector3 spawnPosition1 = new Vector3(-3, 1, 0);
-    public Vector3 spawnPosition2 = new Vector3(3, 1, 0);
+    [Header("Spawn Settings")]
+    [Tooltip("Transform indicating the spawn position for the first player.")]
+    [SerializeField] private Transform playerOneSpawn;
+    [Tooltip("Transform indicating the spawn position for the second player.")]
+    [SerializeField] private Transform playerTwoSpawn;
 
     private GameObject player1Instance;
     private GameObject player2Instance;
@@ -162,23 +167,23 @@ public class GameManager : MonoBehaviour
         PlayerInput p1Input = PlayerInput.Instantiate(playerPrefab, 0, controlScheme: "Keyboard1", 0, keyboard);
         player1Instance = p1Input.transform.root.gameObject;
         
-        player1Instance.transform.position = spawnPosition1;
+        player1Instance.transform.position = playerOneSpawn.position;
         player1Instance.transform.rotation = Quaternion.identity;
         
         // ARREGLO FÍSICAS: Obligar a que el Rigidbody acepte instantáneamente su nueva coordenada
         Rigidbody rb1 = player1Instance.GetComponentInChildren<Rigidbody>();
-        if (rb1 != null) rb1.position = spawnPosition1;
+        if (rb1 != null) rb1.position = playerOneSpawn.position;
         p1Input.transform.localPosition = Vector3.zero;
 
         // --- PLAYER 2 ---
         PlayerInput p2Input = PlayerInput.Instantiate(playerPrefab, 1, controlScheme: "Keyboard2", 1, keyboard);
         player2Instance = p2Input.transform.root.gameObject;
         
-        player2Instance.transform.position = spawnPosition2;
+        player2Instance.transform.position = playerTwoSpawn.position;
         player2Instance.transform.rotation = Quaternion.identity;
         
         Rigidbody rb2 = player2Instance.GetComponentInChildren<Rigidbody>();
-        if (rb2 != null) rb2.position = spawnPosition2;
+        if (rb2 != null) rb2.position = playerTwoSpawn.position;
         p2Input.transform.localPosition = Vector3.zero;
 
         // --- SETUP EXTRAS ---
