@@ -331,7 +331,7 @@ public class Grab : MonoBehaviour
 
     public void DropPlayer(GameObject player)
     {
-        if (player == grabbedObject)
+        if (player == grabbedObject && !characterState.IsChargingThrow)
         {
             DropObject();
         }

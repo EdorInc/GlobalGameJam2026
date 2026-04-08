@@ -320,7 +320,7 @@ public class CharacterMovementController : MonoBehaviour
 
     private void CheckForStucked()
     {
-        if (!IsGrounded)
+        if (!IsGrounded && !IsGrabbed)
         {
             if(Vector3.Distance( lastPosition,transform.position) < 0.05)
             {
