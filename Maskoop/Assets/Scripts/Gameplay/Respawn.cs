@@ -10,6 +10,7 @@ public class Respawn : MonoBehaviour
     [Tooltip("If true, the object will be destroyed instead of respawned when falling below the void distance.")]
     public bool willDestroy = false;
 
+
     [Header("Ground Settings")]
     [Tooltip("Margin used to check for ground in all directions around the object.")]
     [SerializeField]
@@ -23,6 +24,9 @@ public class Respawn : MonoBehaviour
     [Tooltip("Maximum distance for downward raycasts when checking for ground.")]
     [SerializeField]
     private float rayDistance = 5f;
+    [Tooltip("The area to check if player is ground appropriate")]
+    [SerializeField]
+    private Vector3[] areaCheck;
 
     [Header("Debug Settngs")]
     [Tooltip("Show debug rays in the scene for ground checking.")]
@@ -134,22 +138,7 @@ public class Respawn : MonoBehaviour
             return false;
         }
 
-        // TODO Why the doble check?
-        if (!Physics.Raycast(position, Vector3.down, rayDistance, groundLayer))
-        {
-            return false;
-        }
-
-        // TODO Change this to make the area adjustable.
-        Vector3[] directions = new Vector3[]
-        {
-            Vector3.forward,
-            Vector3.back,
-            Vector3.left,
-            Vector3.right
-        };
-
-        foreach (Vector3 direction in directions)
+        foreach (Vector3 direction in areaCheck)
         {
             if (!CheckGroundInDirection(position, direction))
             {
