@@ -16,7 +16,7 @@ public class DynamicSplitManager : MonoBehaviour
 
     [Header("UI References")]
     [Tooltip("Assign the GameObject that holds the UIDocument for the Game Screen")]
-    public UIDocument gameUIDocument; // Reference to access the separator
+    private UIDocument gameUIDocument; // Reference to access the separator
 
     private Transform player1;
     private Transform player2;
@@ -32,6 +32,7 @@ public class DynamicSplitManager : MonoBehaviour
 
     private void Start()
     {
+        FindCanvas();
         // We don't depend from Start anymore, but we try to resolve here as well.
         TryResolveSeparatorElement();
     }
@@ -47,7 +48,7 @@ public class DynamicSplitManager : MonoBehaviour
         UpdateCameraTransition();
 
         // If the UI wasn't ready at the start, we apply the separator visibility as soon as we can resolve it.
-        if (separatorElement == null && TryResolveSeparatorElement())
+        if (separatorElement == null && FindCanvas() && TryResolveSeparatorElement())
         {
             UpdateSeparatorVisual();
         }
@@ -55,6 +56,9 @@ public class DynamicSplitManager : MonoBehaviour
 
     public void SetupPlayers(GameObject p1Root, GameObject p2Root)
     {
+        gameUIDocument = null;
+        separatorElement = null;
+
         // Ignore the general root. Find the Transform of the child character that actually moves.
         player1 = p1Root.GetComponentInChildren<CharacterStateController>().transform;
         player2 = p2Root.GetComponentInChildren<CharacterStateController>().transform;
@@ -160,16 +164,24 @@ public class DynamicSplitManager : MonoBehaviour
 
     private bool TryResolveSeparatorElement()
     {
-        if (separatorElement != null) return true;
+        // Si ya existe y sigue vivo en un panel, reutilizar
+        if (separatorElement != null && separatorElement.panel != null)
+            return true;
 
-        if (gameUIDocument != null)
-        {
-            var root = gameUIDocument.rootVisualElement;
-            if (root == null) return false;
+        separatorElement = null;
 
-            separatorElement = root.Q<VisualElement>("separator");
-        }
+        // Resolver UIDocument cuando falte
+        if (gameUIDocument == null)
+            gameUIDocument = FindFirstObjectByType<UIDocument>();
 
+        if (gameUIDocument == null)
+            return false;
+
+        var root = gameUIDocument.rootVisualElement;
+        if (root == null)
+            return false;
+
+        separatorElement = root.Q<VisualElement>("separator");
         return separatorElement != null;
     }
 
@@ -177,5 +189,11 @@ public class DynamicSplitManager : MonoBehaviour
     {
         if (!TryResolveSeparatorElement()) return;
         separatorElement.style.display = isMerged ? DisplayStyle.None : DisplayStyle.Flex;
+    }
+
+    private bool FindCanvas()
+    {
+        gameUIDocument = FindFirstObjectByType<UIDocument>();
+        return gameUIDocument != null;
     }
 }
