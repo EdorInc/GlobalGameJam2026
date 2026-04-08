@@ -20,7 +20,7 @@ public static class GameEvents
 
     public static void StartRequested() => OnStartRequested?.Invoke();
     public static void RestartRequested() => OnRestartRequested?.Invoke();
-    
+
     public static void ExitRequested() => OnExitRequested?.Invoke();
 
     public static void PauseRequested() => OnPauseRequested?.Invoke();
@@ -46,11 +46,8 @@ public class GameManager : MonoBehaviour
     [Tooltip("Prefab to use when spawning player characters.")]
     [SerializeField] private GameObject playerPrefab;
 
-    [Header("Spawn Settings")]
-    [Tooltip("Transform indicating the spawn position for the first player.")]
-    [SerializeField] private Transform playerOneSpawn;
-    [Tooltip("Transform indicating the spawn position for the second player.")]
-    [SerializeField] private Transform playerTwoSpawn;
+    private Transform playerOneSpawn;
+    private Transform playerTwoSpawn;
 
     private GameObject player1Instance;
     private GameObject player2Instance;
@@ -112,6 +109,13 @@ public class GameManager : MonoBehaviour
         if (IsLevelScene(scene.name))
         {
             currentLevelScene = scene.name;
+
+            if (!ResolvePlayerSpawnsFromScene())
+            {
+                Debug.LogError($"Spawn points not found in scene '{scene.name}'.");
+                return;
+            }
+
             SpawnPlayers();
         }
     }
@@ -223,9 +227,9 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.player1Instance);
         }
-        if (this.player2Instance != null) 
-        { 
-            Destroy(this.player2Instance); 
+        if (this.player2Instance != null)
+        {
+            Destroy(this.player2Instance);
         }
 
         var keyboard = Keyboard.current;
@@ -240,10 +244,10 @@ public class GameManager : MonoBehaviour
         // Al usar PlayerInput.Instantiate permitimos internamente que compartan controlador.
         PlayerInput p1Input = PlayerInput.Instantiate(playerPrefab, 0, controlScheme: "Keyboard1", 0, keyboard);
         player1Instance = p1Input.transform.root.gameObject;
-        
+
         player1Instance.transform.position = playerOneSpawn.position;
         player1Instance.transform.rotation = Quaternion.identity;
-        
+
         // Obligar a que el Rigidbody acepte instantáneamente su nueva coordenada.
         Rigidbody rb1 = player1Instance.GetComponentInChildren<Rigidbody>();
         if (rb1 != null)
@@ -255,7 +259,7 @@ public class GameManager : MonoBehaviour
         // --- PLAYER 2 ---
         PlayerInput p2Input = PlayerInput.Instantiate(playerPrefab, 1, controlScheme: "Keyboard2", 1, keyboard);
         player2Instance = p2Input.transform.root.gameObject;
-        
+
         player2Instance.transform.position = playerTwoSpawn.position;
         player2Instance.transform.rotation = Quaternion.identity;
 
@@ -281,5 +285,41 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogError("SplitManager missing");
         }
+    }
+
+    private bool ResolvePlayerSpawnsFromScene()
+    {
+        playerOneSpawn = null;
+        playerTwoSpawn = null;
+
+        var spawnPoints = FindObjectsByType<PlayerSpawnPoint>(FindObjectsSortMode.None);
+
+        foreach (var spawnPoint in spawnPoints)
+        {
+            if (!spawnPoint.isActiveAndEnabled) continue;
+
+            if (spawnPoint.PlayerSlot == PlayerSlot.Player1)
+            {
+                if (playerOneSpawn != null)
+                {
+                    Debug.LogWarning("Duplicate Player1 spawn found. Using first found.");
+                    continue;
+                }
+
+                playerOneSpawn = spawnPoint.transform;
+            }
+            else if (spawnPoint.PlayerSlot == PlayerSlot.Player2)
+            {
+                if (playerTwoSpawn != null)
+                {
+                    Debug.LogWarning("Duplicate Player2 spawn found. Using first found.");
+                    continue;
+                }
+
+                playerTwoSpawn = spawnPoint.transform;
+            }
+        }
+
+        return playerOneSpawn != null && playerTwoSpawn != null;
     }
 }
