@@ -73,10 +73,11 @@ public class AirMask : BaseMask
                     target.transform.position.z
                 );
 
+                Quaternion rotation = Quaternion.Euler(90f, 0f, 0f);
                 windParticlesObject = Instantiate(
                     windParticlesPrefab,
                     feetPosition,
-                    Quaternion.identity,
+                    rotation,
                     target.transform
                 );
             }

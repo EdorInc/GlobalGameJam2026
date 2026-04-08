@@ -320,7 +320,7 @@ public class CharacterMovementController : MonoBehaviour
 
     private void CheckForStucked()
     {
-        if (!IsGrounded && !IsGrabbed)
+        if (!IsGrounded && !IsGrabbed && !IsFloating)
         {
             if(Vector3.Distance( lastPosition,transform.position) < 0.05)
             {
@@ -331,7 +331,7 @@ public class CharacterMovementController : MonoBehaviour
                 timeStillInAir = 0;
             }
 
-            if(timeStillInAir > 1)
+            if(timeStillInAir > 4)
             {
                 respawnComponent.RespawnFunction();
             }
