@@ -546,6 +546,7 @@ MonoBehaviour:
   landingMarker: {fileID: 8691217799028268263}
   useSimulation: 0
   simulationObstaclesParent: {fileID: 0}
+  maxForceHoldDuration: 0.5
 --- !u!114 &6532311188431754760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,6 +575,14 @@ MonoBehaviour:
   respawnPosition: {x: 0, y: 2, z: 0}
   voidDistance: -3
   willDestroy: 0
+  groundCheckMargin: 2
+  numRayChecks: 4
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  rayDistance: 5
+  showDebugRays: 1
+  respawnRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &-3770357806278516720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -593,7 +602,7 @@ MonoBehaviour:
   holdOffset: {x: 0, y: 0, z: 0}
   holdRotation: {x: 0, y: 0, z: 0, w: 1}
   resetRotationInAir: 0
-  maxThrowForce: {x: 3.5, y: 4}
+  maxThrowForce: {x: 4, y: 5}
   minThrowForce: {x: 0, y: 0}
   forceGrowRate: 5
   highlightLayer: 9
