@@ -52,6 +52,13 @@ public class Throw : MonoBehaviour
     float highVibrationIntensity = 0.1f;
     float vibrationDuration = 0.01f;
 
+    [Header("Force Oscillation Settings")]
+    [SerializeField]
+    [Tooltip("Duration in seconds to hold the maximum force before it starts decreasing.")]
+    private float maxForceHoldDuration = 0.5f;
+    private float maxForceHoldTimer = 0f;
+    private bool decreasingForce = false;
+
     void Start()
     {
         StartSimulation();
@@ -137,12 +144,47 @@ public class Throw : MonoBehaviour
     {
         if (charging && grabbedObject != null)
         {
-            currentForceFoward += forceGrowRate * Time.deltaTime;
-            currentForceUp += forceGrowRate * Time.deltaTime;
-            currentForceFoward = Mathf.Min(currentForceFoward, maxForceFoward);
-            currentForceUp = Mathf.Min(currentForceUp, maxForceUp);
+            float delta = forceGrowRate * Time.deltaTime;
 
-            AudioSystem.UpdateSFXParameter(AudioSystem.SoundLibrary?.chargeThrow, "Charge", (currentForceFoward - minForceFowards) / (maxForceFoward - minForceFowards));
+            if (!decreasingForce)
+            {
+                // Fase de crecimiento
+                currentForceFoward = Mathf.Min(currentForceFoward + delta, maxForceFoward);
+                currentForceUp = Mathf.Min(currentForceUp + delta, maxForceUp);
+
+                // Al llegar al máximo, empieza la espera
+                if (Mathf.Approximately(currentForceFoward, maxForceFoward) &&
+                    Mathf.Approximately(currentForceUp, maxForceUp))
+                {
+                    maxForceHoldTimer += Time.deltaTime;
+
+                    if (maxForceHoldTimer >= maxForceHoldDuration)
+                    {
+                        decreasingForce = true;
+                        maxForceHoldTimer = 0f;
+                    }
+                }
+                else
+                {
+                    maxForceHoldTimer = 0f;
+                }
+            }
+            else
+            {
+                // Fase de decrecimiento
+                currentForceFoward = Mathf.Max(currentForceFoward - delta, 0f);
+                currentForceUp = Mathf.Max(currentForceUp - delta, 0f);
+
+                // Al llegar a 0, vuelve a crecer inmediatamente
+                if (Mathf.Approximately(currentForceFoward, 0f) &&
+                    Mathf.Approximately(currentForceUp, 0f))
+                {
+                    decreasingForce = false;
+                }
+            }
+
+            float charge01 = maxForceFoward > 0f ? currentForceFoward / maxForceFoward : 0f;
+            AudioSystem.UpdateSFXParameter(AudioSystem.SoundLibrary?.chargeThrow, "Charge", charge01);
         }
 
         DrawTrajectory(currentForceFoward, currentForceUp);
