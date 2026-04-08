@@ -9,6 +9,9 @@ public static class GameEvents
 {
     public static event Action OnGoToMenuRequested;
 
+    // TODO Provisional event to start a level from the level selection screen
+    public static event Action<int> OnLevelSelectedRequested;
+
     public static event Action OnStartRequested;
     public static event Action OnRestartRequested;
     public static event Action OnExitRequested;
@@ -17,6 +20,8 @@ public static class GameEvents
     public static event Action OnResumeRequested;
 
     public static void GoToMenuRequested() => OnGoToMenuRequested?.Invoke();
+
+    public static void LevelSelectedRequested(int levelIndex) => OnLevelSelectedRequested?.Invoke(levelIndex);
 
     public static void StartRequested() => OnStartRequested?.Invoke();
     public static void RestartRequested() => OnRestartRequested?.Invoke();
@@ -34,6 +39,8 @@ public class GameManager : MonoBehaviour
     [Header("Scenes")]
     [Tooltip("Name of the scene to load for the title screen.")]
     [SerializeField] private string titleScene = "TitleScene";
+    [Tooltip("Provisional name of the scene to load for the level selection.")]
+    [SerializeField] private string levelSelectionScene = "LevelSelectionScene";
     [Tooltip("Names of the scenes to load for each level.")]
     [SerializeField] private string[] levelScenes = { "Level1", "Level2", "Level3" };
 
@@ -73,7 +80,10 @@ public class GameManager : MonoBehaviour
 
         GameEvents.OnGoToMenuRequested += LoadTitle;
 
-        GameEvents.OnStartRequested += StartGame;
+        // TODO Provisional bind to start game
+        GameEvents.OnStartRequested += LoadLevelSelection;
+        GameEvents.OnLevelSelectedRequested += LoadLevel;
+
         GameEvents.OnRestartRequested += RestartGame;
         GameEvents.OnPauseRequested += PauseGame;
         GameEvents.OnResumeRequested += ResumeGame;
@@ -88,7 +98,10 @@ public class GameManager : MonoBehaviour
 
         GameEvents.OnGoToMenuRequested -= LoadTitle;
 
-        GameEvents.OnStartRequested -= StartGame;
+        // TODO Provisional bind to start game
+        GameEvents.OnStartRequested -= LoadLevelSelection;
+        GameEvents.OnLevelSelectedRequested -= LoadLevel;
+
         GameEvents.OnRestartRequested -= RestartGame;
         GameEvents.OnPauseRequested -= PauseGame;
         GameEvents.OnResumeRequested -= ResumeGame;
@@ -121,6 +134,14 @@ public class GameManager : MonoBehaviour
         Debug.Log("Loading title scene...");
         Time.timeScale = 1f;
         SceneManager.LoadScene(titleScene);
+    }
+
+
+    public void LoadLevelSelection()
+    {
+        Debug.Log("Loading level selection scene...");
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(levelSelectionScene);
     }
 
     public void LoadCurrentLevel()

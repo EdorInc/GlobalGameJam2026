@@ -6,8 +6,8 @@
         </ui:VisualElement>
         <ui:VisualElement name="level-grid-top" style="flex-grow: 1; width: 100%; height: 20%; flex-direction: row; align-self: center; margin-bottom: 40px;">
             <ui:VisualElement name="level-grid-top-left" style="flex-grow: 1; width: 50%; height: 100%; flex-direction: column; justify-content: center; align-self: flex-start; align-items: center;">
-                <ui:VisualElement name="level-button" style="flex-grow: 1; align-items: center; height: 70%; width: auto;">
-                    <ui:Button text="" name="level-button">
+                <ui:VisualElement name="LevelButton01" style="flex-grow: 1; align-items: center; height: 70%; width: auto;">
+                    <ui:Button text="" name="LevelButton01">
                         <ui:Image source="project://database/Assets/UI/Images/Tikki%20Mask.jpeg?fileID=2800000&amp;guid=d4ccf37a91743714195f777d97655748&amp;type=3#Tikki Mask" name="level1-image" tint-color="rgb(0, 0, 0)" style="width: 90px; height: auto;"/>
                     </ui:Button>
                 </ui:VisualElement>
@@ -18,8 +18,8 @@
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="level-grid-top-right" style="flex-grow: 1; width: 50%; height: 100%; flex-direction: column; justify-content: center; align-self: flex-start; align-items: center;">
-                <ui:VisualElement name="level-button" style="flex-grow: 1; align-items: center; height: 70%; width: auto;">
-                    <ui:Button text="" name="level-button">
+                <ui:VisualElement name="LevelButton02" style="flex-grow: 1; align-items: center; height: 70%; width: auto;">
+                    <ui:Button text="" name="LevelButton02">
                         <ui:Image source="project://database/Assets/UI/Images/Tikki%20Mask.jpeg?fileID=2800000&amp;guid=d4ccf37a91743714195f777d97655748&amp;type=3#Tikki Mask" name="level1-image" tint-color="rgb(0, 0, 0)" style="width: 90px; height: auto;"/>
                     </ui:Button>
                 </ui:VisualElement>
@@ -32,8 +32,8 @@
         </ui:VisualElement>
         <ui:VisualElement name="level-grid-bottom" style="flex-grow: 1; width: 100%; height: 20%; flex-direction: row; align-self: center; margin-left: 0; margin-bottom: 40px;">
             <ui:VisualElement name="level-grid-bottom-left" style="flex-grow: 1; width: 50%; height: 100%; flex-direction: column; justify-content: center; align-self: flex-start; align-items: center;">
-                <ui:VisualElement name="level-button" style="flex-grow: 1; align-items: center; height: 70%; width: auto;">
-                    <ui:Button text="" name="level-button">
+                <ui:VisualElement name="LevelButton03" style="flex-grow: 1; align-items: center; height: 70%; width: auto;">
+                    <ui:Button text="" name="LevelButton03">
                         <ui:Image source="project://database/Assets/UI/Images/Tikki%20Mask.jpeg?fileID=2800000&amp;guid=d4ccf37a91743714195f777d97655748&amp;type=3#Tikki Mask" name="level1-image" tint-color="rgb(0, 0, 0)" style="width: 90px; height: auto;"/>
                     </ui:Button>
                 </ui:VisualElement>
@@ -44,8 +44,8 @@
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="level-grid-bottom-right" style="flex-grow: 1; width: 50%; height: 100%; flex-direction: column; justify-content: center; align-self: flex-start; align-items: center;">
-                <ui:VisualElement name="level-button" style="flex-grow: 1; align-items: center; height: 70%; width: auto;">
-                    <ui:Button text="" name="level-button">
+                <ui:VisualElement name="LevelButton04" style="flex-grow: 1; align-items: center; height: 70%; width: auto;">
+                    <ui:Button text="" name="LevelButton04">
                         <ui:Image source="project://database/Assets/UI/Images/Tikki%20Mask.jpeg?fileID=2800000&amp;guid=d4ccf37a91743714195f777d97655748&amp;type=3#Tikki Mask" name="level1-image" tint-color="rgb(0, 0, 0)" style="width: 90px; height: auto;"/>
                     </ui:Button>
                 </ui:VisualElement>

@@ -4,22 +4,55 @@ using UnityEngine.SceneManagement;
 
 public class LevelSelectionScreenController : MonoBehaviour
 {
-    [SerializeField] private string levelButtonName = "LevelButton";
+    [Header("Provisional Level Settings")]
+    [SerializeField] private string levelButton01Name = "LevelButton01";
+    [SerializeField] private string levelButton02Name = "LevelButton02";
+    [SerializeField] private string levelButton03Name = "LevelButton03";
+    [SerializeField] private string levelButton04Name = "LevelButton04";
 
-    private Button levelButton;
+    private Button levelButton01;
+    private Button levelButton02;
+    private Button levelButton03;
+    private Button levelButton04;
 
     private void Awake()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
 
-        levelButton = root.Q<Button>(levelButtonName);
-
-        if (levelButton == null)
+        levelButton01 = root.Q<Button>(levelButton01Name);
+        if (!BindButton(levelButton01, levelButton01Name, 1))
         {
-            Debug.LogError($"Level button with name '{levelButtonName}' not found in the UI.");
             return;
         }
 
-        //levelButton.clicked += () => GameEvents.StartRequested();
+        levelButton02 = root.Q<Button>(levelButton02Name);
+        if (!BindButton(levelButton02, levelButton02Name, 2))
+        {
+            return;
+        }
+
+        levelButton03 = root.Q<Button>(levelButton03Name);
+        if (!BindButton(levelButton03, levelButton03Name, 3))
+        {
+            return;
+        }
+
+        levelButton04 = root.Q<Button>(levelButton04Name);
+        if (!BindButton(levelButton04, levelButton04Name, 4))
+        {
+            return;
+        }
+    }
+
+    private bool BindButton(Button button, string buttonName, int levelIndex)
+    {
+        if (button == null)
+        {
+            Debug.LogError($"Level button with name '{buttonName}' not found in the UI.");
+            return false;
+        }
+
+        button.clicked += () => GameEvents.LevelSelectedRequested(levelIndex);
+        return true;
     }
 }
