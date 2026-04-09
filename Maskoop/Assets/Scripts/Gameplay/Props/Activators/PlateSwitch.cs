@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Collections.Generic;
+
 using UnityEngine;
 
 public class PlateSwitch : BaseSwitch
@@ -13,10 +16,17 @@ public class PlateSwitch : BaseSwitch
     [SerializeField] protected float activatedWidth = 0.1f;
 
     protected Material deactivatedMaterial;
-
     protected float deactivatedWidth;
 
-    protected int weightsOnPlate = 0;
+    [SerializeField]
+    private readonly HashSet<GameObject> objectsOnPlate = new HashSet<GameObject>();
+
+#if UNITY_EDITOR
+    [Header("Debug Settings")]
+    [Tooltip("List of objects currently detected on the plate, for debugging purposes.")]
+    [SerializeField] private List<GameObject> debugObjectsOnPlate = new List<GameObject>();
+#endif
+
 
     private new void Awake()
     {
@@ -35,31 +45,19 @@ public class PlateSwitch : BaseSwitch
             return;
         }
 
-        bool willActivate = false;
-
         if (playerExclusive)
         {
-            bool isPlayer = other.gameObject.CompareTag("Player");
-
-            if (isPlayer)
+            if (!other.gameObject.CompareTag("Player"))
             {
-                willActivate = currentState != SwitchState.Active;
-
-                Debug.Log("Player stepped on the plate, added a weight.");  
-                weightsOnPlate++;
+                Debug.LogWarning("Ignoring object '" + other.gameObject.name + "' on plate switch because it is not tagged as 'Player'.");
+                return;
             }
         }
-        else
-        {
-            willActivate = currentState != SwitchState.Active;
 
-            Debug.Log("An object stepped on the plate, added a weight.");
-            weightsOnPlate++;
-        }
+        objectsOnPlate.Add(other.gameObject);
 
-        if (willActivate)
+        if (currentState != SwitchState.Active)
         {
-            // Debug.Log("The plate switch is now active.");
             Activate();
         }
     }
@@ -75,27 +73,62 @@ public class PlateSwitch : BaseSwitch
             return;
         }
 
-        if (playerExclusive)
-        {
-            bool isPlayer = other.gameObject.CompareTag("Player");
+        objectsOnPlate.Remove(other.gameObject);
 
-            if (isPlayer)
-            {
-                weightsOnPlate--;
-            }
-        } 
-        else
+        if (objectsOnPlate.Count == 0)
         {
-            weightsOnPlate--;
+            Deactivate();
+        }
+    }
+
+    private void Update()
+    {
+        // Check for objects that have been destroyed or teleported away
+        objectsOnPlate.RemoveWhere(obj => obj == null || !IsObjectStillOnPlate(obj));
+
+#if UNITY_EDITOR
+        debugObjectsOnPlate.Clear();
+        debugObjectsOnPlate.AddRange(objectsOnPlate);
+#endif
+
+        if (objectsOnPlate.Count == 0 && currentState == SwitchState.Active)
+        {
+            Debug.Log("Deactivating plate switch due to no objects detected on plate.");
+            Deactivate();
+        }
+    }
+
+    /// <summary>
+    /// Determines whether the specified GameObject is still physically overlapping this plate's collider.
+    /// Returns false if the object or its collider is missing, or if the bounds do not intersect.
+    /// Used to detect objects that have been teleported, destroyed, or otherwise removed without triggering OnTriggerExit.
+    /// </summary>
+    /// <param name="obj">The GameObject to check.</param>
+    /// <returns>True if the object's collider is still overlapping the plate's collider; otherwise, false.</returns>
+    private bool IsObjectStillOnPlate(GameObject obj)
+    {
+        if (obj == null)
+        {
+            return false;
         }
 
-        if (weightsOnPlate <= 0)
-        {
-            // To avoid possible bugs with multiple objects on the plate, we reset the counter to 0 when it goes negative.
-            weightsOnPlate = 0;
+        Collider col = obj.GetComponent<Collider>();
 
-            Deactivate();   
+        if (col == null)
+        {
+            return false;
         }
+
+        // Check if the collider is still overlapping this plate's collider
+        Collider plateCollider = GetComponent<Collider>();
+
+        if (plateCollider == null)
+        {
+            return false;
+        }
+
+        // Use bounds check as a simple overlap test
+        return plateCollider.bounds.Intersects(col.bounds);
     }
 
     protected override void SetActive()

@@ -40,7 +40,6 @@ public abstract class BaseMask : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(transform.rotation);
         if (!characterState && groundDetector.IsGrounded)
         {
             if(transform.position.x != respawnComponent.respawnPosition.x && transform.position.z != respawnComponent.respawnPosition.z)

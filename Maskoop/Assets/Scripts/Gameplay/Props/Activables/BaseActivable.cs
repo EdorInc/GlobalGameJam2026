@@ -24,6 +24,7 @@ public abstract class BaseActivable : MonoBehaviour
     [SerializeField]
     [Tooltip("Amount of activators needed to activate this object")]
     protected int activatorsNeeded = 1;
+
     protected int activatorsLeft = 1;
 
     protected ActivableState currentState = ActivableState.Inactive;
@@ -95,10 +96,11 @@ public abstract class BaseActivable : MonoBehaviour
     {
         if (this.channel == channel)
         {
-            activatorsNeeded--;
+            ActivatorOn();
+
             Debug.Log("Activating channel " + channel + " on " + gameObject.name + ".");
 
-            if (activatorsNeeded == 0)
+            if (activatorsLeft == 0)
             {
                 if(keepActivatedOnSimultaneousPress)
                 {
@@ -115,13 +117,33 @@ public abstract class BaseActivable : MonoBehaviour
     {
         if (this.channel == channel)
         {
-            activatorsNeeded++;
+            ActivatorOff();
 
-            if (activatorsNeeded > 0)
+            if (activatorsLeft > 0)
             {
                 currentState = ActivableState.Deactivating;
                 // Debug.Log("Deactivating channel " + channel + " on object " + gameObject.name);
             }
+        }
+    }
+
+    private void ActivatorOn()
+    {
+        activatorsLeft--;
+
+        if (activatorsLeft < 0)
+        {
+            activatorsLeft = 0;
+        }
+    }
+
+    private void ActivatorOff()
+    {
+        activatorsLeft++;
+
+        if (activatorsLeft > activatorsNeeded)
+        {
+            activatorsLeft = activatorsNeeded;
         }
     }
 

@@ -286,13 +286,21 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        // --- PLAYER 1 ---
         // Al usar PlayerInput.Instantiate permitimos internamente que compartan controlador.
+
+        // --- PLAYER 1 ---
         PlayerInput p1Input = PlayerInput.Instantiate(playerPrefabOne, 0, controlScheme: "Keyboard1", 0, keyboard);
         player1Instance = p1Input.transform.root.gameObject;
 
         player1Instance.transform.position = playerOneSpawn.position;
         player1Instance.transform.rotation = Quaternion.identity;
+
+        Respawn player1Respawn = player1Instance.GetComponent<Respawn>();
+
+        if (player1Respawn != null)
+        {
+            player1Respawn.respawnPosition = playerOneSpawn.position;
+        }
 
         // Obligar a que el Rigidbody acepte instantáneamente su nueva coordenada.
         Rigidbody rb1 = player1Instance.GetComponentInChildren<Rigidbody>();
@@ -308,6 +316,13 @@ public class GameManager : MonoBehaviour
 
         player2Instance.transform.position = playerTwoSpawn.position;
         player2Instance.transform.rotation = Quaternion.identity;
+
+        Respawn player2Respawn = player2Instance.GetComponent<Respawn>();
+
+        if (player2Respawn != null)
+        {
+            player2Respawn.respawnPosition = playerTwoSpawn.position;
+        }
 
         // Obligar a que el Rigidbody acepte instantáneamente su nueva coordenada.
         Rigidbody rb2 = player2Instance.GetComponentInChildren<Rigidbody>();
