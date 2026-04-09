@@ -46,14 +46,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   titleScene: TitleScene
+  levelSelectionScene: LevelSelectionScene
   levelScenes:
   - Level1
   - Level2
-  - Level3
   currentLevelScene: 
-  playerPrefab: {fileID: 2365696635727678705, guid: 0b72423bf4814c6489e9e31d4275c2d3, type: 3}
-  playerOneSpawn: {fileID: 0}
-  playerTwoSpawn: {fileID: 0}
+  playerPrefabOne: {fileID: 2365696635727678705, guid: 740b32566cef9304bbd9ebf96d621259, type: 3}
+  playerPrefabTwo: {fileID: 2365696635727678705, guid: 3c43eb48f1cf0474c965533e25d007cc, type: 3}
 --- !u!114 &4073580171776634626
 MonoBehaviour:
   m_ObjectHideFlags: 0

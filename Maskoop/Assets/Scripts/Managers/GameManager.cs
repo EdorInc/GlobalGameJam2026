@@ -50,8 +50,14 @@ public class GameManager : MonoBehaviour
     private int currentLevelIndex = 0;
 
     [Header("Player Settings")]
-    [Tooltip("Prefab to use when spawning player characters.")]
-    [SerializeField] private GameObject playerPrefab;
+    //[Tooltip("Prefab to use when spawning player characters.")]
+    // [SerializeField] private GameObject playerPrefab;
+
+    [Tooltip("Prefab to use when spawning player one character.")]
+    [SerializeField] private GameObject playerPrefabOne;
+
+    [Tooltip("Prefab to use when spawning player two character.")]
+    [SerializeField] private GameObject playerPrefabTwo;
 
     private Transform playerOneSpawn;
     private Transform playerTwoSpawn;
@@ -282,7 +288,7 @@ public class GameManager : MonoBehaviour
 
         // --- PLAYER 1 ---
         // Al usar PlayerInput.Instantiate permitimos internamente que compartan controlador.
-        PlayerInput p1Input = PlayerInput.Instantiate(playerPrefab, 0, controlScheme: "Keyboard1", 0, keyboard);
+        PlayerInput p1Input = PlayerInput.Instantiate(playerPrefabOne, 0, controlScheme: "Keyboard1", 0, keyboard);
         player1Instance = p1Input.transform.root.gameObject;
 
         player1Instance.transform.position = playerOneSpawn.position;
@@ -297,7 +303,7 @@ public class GameManager : MonoBehaviour
         p1Input.transform.localPosition = Vector3.zero;
 
         // --- PLAYER 2 ---
-        PlayerInput p2Input = PlayerInput.Instantiate(playerPrefab, 1, controlScheme: "Keyboard2", 1, keyboard);
+        PlayerInput p2Input = PlayerInput.Instantiate(playerPrefabTwo, 1, controlScheme: "Keyboard2", 1, keyboard);
         player2Instance = p2Input.transform.root.gameObject;
 
         player2Instance.transform.position = playerTwoSpawn.position;
