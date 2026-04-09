@@ -545,6 +545,10 @@ PrefabInstance:
       propertyPath: 'levelScenes.Array.data[0]'
       value: Lvl_1
       objectReference: {fileID: 0}
+    - target: {fileID: 1767527281953958782, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: 'levelScenes.Array.data[1]'
+      value: Lvl_2
+      objectReference: {fileID: 0}
     - target: {fileID: 2781072783592629310, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9.5
