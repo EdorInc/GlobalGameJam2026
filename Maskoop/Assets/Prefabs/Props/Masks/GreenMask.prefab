@@ -143,7 +143,7 @@ MonoBehaviour:
   timeFlickering: 2
   baseflickerInterval: 0.2
   flutterDrag: 8
-  flutterTime: 1
+  flutterTime: 1.5
   flutterSpeedReduction: 0.7
   windParticlesPrefab: {fileID: 126614193649380581, guid: a649f3bf66d6fa94e9f3af5ab7c148d7, type: 3}
 --- !u!114 &7494446273893596332

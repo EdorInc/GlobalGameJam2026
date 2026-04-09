@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cca82e283d4f374d9cb516aad6c3838, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AirCurrents
-  force: {x: 0, y: 20, z: 0}
+  force: {x: 0, y: 50, z: 0}
   isVertical: 1
   ps: {fileID: 7296101137264589470}
 --- !u!1001 &2519808961769353853
