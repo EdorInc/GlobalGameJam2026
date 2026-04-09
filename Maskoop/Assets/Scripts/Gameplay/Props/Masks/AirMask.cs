@@ -22,6 +22,8 @@ public class AirMask : BaseMask
     private GameObject windParticlesObject;
     private Vector3 currentSpeed = Vector3.zero;
 
+    private bool isVerticalCurrent = false;
+
     public override void OnUnequip()
     {
         EventManager.OnFallStarted -= StartFlutter;
@@ -121,7 +123,7 @@ public class AirMask : BaseMask
         if(currentSpeed != Vector3.zero)
         {
             playerRigidBody?.AddForce(currentSpeed);
-            if (IsFluttering)
+            if (IsFluttering && isVerticalCurrent)
             {
                 ResetFlutter();
             }
@@ -133,11 +135,12 @@ public class AirMask : BaseMask
 
     }
 
-    public void AirCurrentEnter(Collider collider, Vector3 force)
+    public void AirCurrentEnter(Collider collider, Vector3 force, bool isVertical)
     {
+        isVerticalCurrent = isVertical;
         if (characterState.IsMyPlayer(collider.gameObject))
         {
-            if (IsFluttering)
+            if (IsFluttering && isVertical)
             {
                 ResetFlutter();
             }
@@ -147,13 +150,12 @@ public class AirMask : BaseMask
         } 
     }
 
-    public void AirCurrentExit(Collider collider)
+    public void AirCurrentExit(Collider collider, bool isVertical)
     {
         if (characterState.IsMyPlayer(collider.gameObject))
         {
             currentSpeed = Vector3.zero;
-            if(!IsFluttering)
-                playerRigidBody = null;
+            StartFlutter(collider.gameObject);
             Debug.Log("SALIDO");
         }
     }
