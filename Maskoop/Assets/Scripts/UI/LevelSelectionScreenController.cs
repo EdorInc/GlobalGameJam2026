@@ -7,13 +7,9 @@ public class LevelSelectionScreenController : MonoBehaviour
     [Header("Provisional Level Settings")]
     [SerializeField] private string levelButton01Name = "LevelButton01";
     [SerializeField] private string levelButton02Name = "LevelButton02";
-    [SerializeField] private string levelButton03Name = "LevelButton03";
-    [SerializeField] private string levelButton04Name = "LevelButton04";
 
     private Button levelButton01;
     private Button levelButton02;
-    private Button levelButton03;
-    private Button levelButton04;
 
     private void Awake()
     {
@@ -27,18 +23,6 @@ public class LevelSelectionScreenController : MonoBehaviour
 
         levelButton02 = root.Q<Button>(levelButton02Name);
         if (!BindButton(levelButton02, levelButton02Name, 2))
-        {
-            return;
-        }
-
-        levelButton03 = root.Q<Button>(levelButton03Name);
-        if (!BindButton(levelButton03, levelButton03Name, 3))
-        {
-            return;
-        }
-
-        levelButton04 = root.Q<Button>(levelButton04Name);
-        if (!BindButton(levelButton04, levelButton04Name, 4))
         {
             return;
         }

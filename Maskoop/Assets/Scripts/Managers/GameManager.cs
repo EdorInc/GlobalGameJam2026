@@ -131,6 +131,25 @@ public class GameManager : MonoBehaviour
 
             SpawnPlayers();
         }
+        else if (scene.name == titleScene || scene.name == levelSelectionScene)
+        {
+            // If title or level selection scene, do nothing special.
+            currentLevelScene = scene.name;
+        }
+        else
+        {
+            // If unknown scene log a warning and try to resolve spawns and spawn players anyway.
+            Debug.LogWarning($"Scene '{scene.name}' is not registered as a level, title, or level selection scene. Attempting to resolve spawns and spawn players...");
+            currentLevelScene = scene.name;
+
+            if (!ResolvePlayerSpawnsFromScene())
+            {
+                Debug.LogError($"Spawn points not found in scene '{scene.name}'.");
+                return;
+            }
+
+            SpawnPlayers();
+        }
     }
 
     public void LoadTitle()
