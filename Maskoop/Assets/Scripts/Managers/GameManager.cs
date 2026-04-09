@@ -279,19 +279,34 @@ public class GameManager : MonoBehaviour
         }
 
         var keyboard = Keyboard.current;
+        var gamepads = Gamepad.all;
 
-        if (keyboard == null)
+        if (keyboard == null && gamepads.Count == 0)
         {
+            Debug.LogWarning("No input devices detected.");
             Debug.LogWarning("No keyboard detected. Control schemes not switched.");
             return;
         }
 
         // Al usar PlayerInput.Instantiate permitimos internamente que compartan controlador.
+<<<<<<< Updated upstream
 
         // --- PLAYER 1 ---
         PlayerInput p1Input = PlayerInput.Instantiate(playerPrefabOne, 0, controlScheme: "Keyboard1", 0, keyboard);
         player1Instance = p1Input.transform.root.gameObject;
+=======
+        PlayerInput p1Input;
+        if (gamepads.Count > 0)
+        {
+            p1Input = PlayerInput.Instantiate(playerPrefab, 0, controlScheme: "Gamepad", 0, gamepads[0]);
+        }
+        else
+        {
+            p1Input = PlayerInput.Instantiate(playerPrefab, 0, controlScheme: "Keyboard1", 0, keyboard);
+        }
+>>>>>>> Stashed changes
 
+        player1Instance = p1Input.transform.root.gameObject;
         player1Instance.transform.position = playerOneSpawn.position;
         player1Instance.transform.rotation = Quaternion.identity;
 
@@ -311,7 +326,21 @@ public class GameManager : MonoBehaviour
         p1Input.transform.localPosition = Vector3.zero;
 
         // --- PLAYER 2 ---
+<<<<<<< Updated upstream
         PlayerInput p2Input = PlayerInput.Instantiate(playerPrefabTwo, 1, controlScheme: "Keyboard2", 1, keyboard);
+=======
+        PlayerInput p2Input;
+        if (gamepads.Count > 1)
+        {
+            p2Input = PlayerInput.Instantiate(playerPrefab, 1, controlScheme: "Gamepad", 1, gamepads[1]);
+        }
+        else
+        {
+            string schemeToUse = (gamepads.Count > 0) ? "Keyboard1" : "Keyboard2";
+            p2Input = PlayerInput.Instantiate(playerPrefab, 1, controlScheme: schemeToUse, 1, keyboard);
+        }
+
+>>>>>>> Stashed changes
         player2Instance = p2Input.transform.root.gameObject;
 
         player2Instance.transform.position = playerTwoSpawn.position;
@@ -382,5 +411,14 @@ public class GameManager : MonoBehaviour
         }
 
         return playerOneSpawn != null && playerTwoSpawn != null;
+    }
+    public void OnDeviceLost(PlayerInput player)
+    {
+        GameEvents.PauseRequested();
+    }
+
+    public void OnDeviceRegained(PlayerInput player)
+    {
+        GameEvents.ResumeRequested();
     }
 }
