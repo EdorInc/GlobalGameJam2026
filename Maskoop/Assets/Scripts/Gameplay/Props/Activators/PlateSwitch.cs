@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Collections.Generic;
-
 using UnityEngine;
 
 public class PlateSwitch : BaseSwitch
@@ -8,6 +6,8 @@ public class PlateSwitch : BaseSwitch
     [Header("Activation Settings")]
     [Tooltip("Whether the pressure plate can only be activated by the player.")]
     [SerializeField] protected bool playerExclusive = true;
+    [Tooltip("")]
+    [SerializeField] protected LayerMask includedLayersInCheck = ~0;
 
     [Header("Apparience Settings")]
     [Tooltip("Provisinal material to use when the target is activated.")]
@@ -18,7 +18,6 @@ public class PlateSwitch : BaseSwitch
     protected Material deactivatedMaterial;
     protected float deactivatedWidth;
 
-    [SerializeField]
     private readonly HashSet<GameObject> objectsOnPlate = new HashSet<GameObject>();
 
 #if UNITY_EDITOR
@@ -38,6 +37,24 @@ public class PlateSwitch : BaseSwitch
         Refresh();
     }
 
+    private void RemoveWeight(GameObject weight)
+    {
+        objectsOnPlate.Remove(weight);
+        if (objectsOnPlate.Count == 0)
+        {
+            Deactivate();
+        }
+    }
+
+    private void AddWeight(GameObject weight)
+    {
+        objectsOnPlate.Add(weight);
+        if (currentState != SwitchState.Active)
+        {
+            Activate();
+        }
+    }   
+
     private void OnTriggerEnter(Collider other)
     {
         if (!enabled)
@@ -54,12 +71,7 @@ public class PlateSwitch : BaseSwitch
             }
         }
 
-        objectsOnPlate.Add(other.gameObject);
-
-        if (currentState != SwitchState.Active)
-        {
-            Activate();
-        }
+        AddWeight(other.gameObject);
     }
 
     /// <remarks>
@@ -73,18 +85,46 @@ public class PlateSwitch : BaseSwitch
             return;
         }
 
-        objectsOnPlate.Remove(other.gameObject);
-
-        if (objectsOnPlate.Count == 0)
-        {
-            Deactivate();
-        }
+        RemoveWeight(other.gameObject);
     }
 
     private void Update()
     {
-        // Check for objects that have been destroyed or teleported away
+        // Remove objects that have been destroyed or teleported away
         objectsOnPlate.RemoveWhere(obj => obj == null || !IsObjectStillOnPlate(obj));
+
+        // Detect new objects that have spawned or teleported inside the trigger but were not registered
+        Collider plateCollider = GetComponent<Collider>();
+        if (plateCollider != null)
+        {
+            Collider[] overlapping = Physics.OverlapBox(
+                plateCollider.bounds.center,
+                plateCollider.bounds.extents,
+                plateCollider.transform.rotation,
+                includedLayersInCheck, // all layers
+                QueryTriggerInteraction.Collide
+            );
+
+            foreach (var col in overlapping)
+            {
+                GameObject obj = col.gameObject;
+
+                if (obj == null || obj == gameObject)
+                {
+                    continue;
+                }
+
+                if (playerExclusive && !obj.CompareTag("Player"))
+                {
+                    continue;
+                }
+
+                if (!objectsOnPlate.Contains(obj))
+                {
+                    AddWeight(obj);
+                }
+            }
+        }
 
 #if UNITY_EDITOR
         debugObjectsOnPlate.Clear();

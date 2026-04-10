@@ -4,10 +4,10 @@ using System.Collections;
 public class TargetSwitch : BaseSwitch
 {
     [Header("Apparience Settings")]
-    [Tooltip("Provisinal material to use when the target is activated.")]
+    [Tooltip("Provisional material to use when the target is activated.")]
     [SerializeField] protected Material activatedMaterial;
 
-    [Tooltip("Provisinal material to use when the target is pending.")]
+    [Tooltip("Provisional material to use when the target is pending.")]
     [SerializeField] protected Material pendingMaterial;
 
     [Tooltip("Provisinal width to use when the target is activated.")]
@@ -17,10 +17,31 @@ public class TargetSwitch : BaseSwitch
     [Tooltip("Timer for switch to deactivate")]
     [SerializeField] protected float activatedTimer = 2.0f;
 
+    [Tooltip("Timer for switch to deactivate after overtime")]
+    [SerializeField] protected float overtimeTimer = 1.0f;
+
+    [Header("Blink Settings")]
+    [Tooltip("Time between blinks when the target is pending.")]
+    [SerializeField] protected float blinkInterval = 0.2f;
+
+    protected float blinkElapsed = 0f;
+
+    protected bool isBlinking = false;
+    protected bool blinkingState = false;
+
     protected Material deactivatedMaterial;
     protected float deactivatedWidth;
 
     private Coroutine deactivateCoroutine;
+
+    private void OnValidate()
+    {
+        // Ensure overtimeTimer is always less than activatedTimer
+        if (overtimeTimer >= activatedTimer)
+        {
+            overtimeTimer = Mathf.Max(0f, activatedTimer - 0.01f);
+        }
+    }
 
     private new void Awake()
     {
@@ -73,9 +94,43 @@ public class TargetSwitch : BaseSwitch
         deactivateCoroutine = StartCoroutine(DeactivateAfterDelay());
     }
 
+    /// <summary>
+    /// Blinks the target using the overtime material until deactivation.
+    /// </summary>
+    private IEnumerator Blink()
+    {
+        float blinkDuration = overtimeTimer;
+        float startTime = Time.time;
+
+        while (Time.time - startTime < blinkDuration && currentState == SwitchState.Pending)
+        {
+            blinkingState = !blinkingState;
+            meshRenderer.material = blinkingState ? pendingMaterial : deactivatedMaterial;
+            yield return new WaitForSeconds(blinkInterval);
+        }
+
+        // Ensure the material is set to inactive just before deactivation
+        meshRenderer.material = deactivatedMaterial;
+    }
+
     private IEnumerator DeactivateAfterDelay()
     {
-        yield return new WaitForSeconds(activatedTimer);
+        float elapsed = 0f;
+        bool isBlinking = false;
+
+        // Wait until overtimeTimer is reached, then start blinking
+        while (elapsed < activatedTimer)
+        {
+            if (!isBlinking && elapsed >= activatedTimer - overtimeTimer)
+            {
+                isBlinking = true;
+                StartCoroutine(Blink());
+            }
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
         Deactivate();
         deactivateCoroutine = null;
     }

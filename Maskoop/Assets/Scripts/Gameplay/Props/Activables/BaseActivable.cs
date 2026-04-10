@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class BaseActivable : MonoBehaviour
@@ -25,6 +26,9 @@ public abstract class BaseActivable : MonoBehaviour
     [Tooltip("Amount of activators needed to activate this object")]
     protected int activatorsNeeded = 1;
 
+#if UNITY_EDITOR
+    [SerializeField]
+#endif
     protected int activatorsLeft = 1;
 
     protected ActivableState currentState = ActivableState.Inactive;
@@ -131,10 +135,10 @@ public abstract class BaseActivable : MonoBehaviour
     {
         activatorsLeft--;
 
-        if (activatorsLeft < 0)
-        {
-            activatorsLeft = 0;
-        }
+        // if (activatorsLeft < 0)
+        // {
+        //     activatorsLeft = 0;
+        // }
     }
 
     private void ActivatorOff()

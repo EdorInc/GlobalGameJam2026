@@ -105,7 +105,11 @@ public class AirMask : BaseMask
         }
         characterState.IsFloating = false;
         lastSpeed = Vector3.zero;
-        windParticlesObject.SetActive(false);
+
+        if (windParticlesObject != null)
+        {
+            windParticlesObject.SetActive(false);
+        }
     }
 
     public override void FixedUpdateLogic()
