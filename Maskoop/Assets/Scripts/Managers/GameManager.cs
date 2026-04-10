@@ -136,6 +136,8 @@ public class GameManager : MonoBehaviour
             }
 
             SpawnPlayers();
+
+            AudioSystem.PlayMusic(AudioSystem.MusicLibrary?.mainTheme);
         }
         else if (scene.name == titleScene || scene.name == levelSelectionScene)
         {

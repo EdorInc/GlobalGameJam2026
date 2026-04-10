@@ -13,13 +13,16 @@ public class AudioManager : MonoBehaviour
     [Header("Sound Library")]
     [SerializeField] private SoundLibrary soundLibrary;
 
+    [Header("Music Library")]
+    [SerializeField] private MusicLibrary musicLibrary;
+
     private EventInstance musicInstance;
 
     private Dictionary<int, Dictionary<SoundDefinition, EventInstance>> dynamicSFX = new Dictionary<int, Dictionary<SoundDefinition, EventInstance>>();
 
     private void Awake()
     {
-        AudioSystem.Initialize(sfxChannel, musicChannel, soundLibrary, this);
+        AudioSystem.Initialize(sfxChannel, musicChannel, soundLibrary, musicLibrary, this);
     }
     private void OnEnable()
     {
@@ -31,7 +34,10 @@ public class AudioManager : MonoBehaviour
         }
 
         if (musicChannel != null)
+        {
             musicChannel.OnPlayMusic += PlayMusic;
+            musicChannel.OnStopMusic += StopMusic;
+        }
     }
 
     private void OnDisable()
@@ -44,7 +50,10 @@ public class AudioManager : MonoBehaviour
         }
 
         if (musicChannel != null)
+        {
             musicChannel.OnPlayMusic -= PlayMusic;
+            musicChannel.OnStopMusic -= StopMusic;
+        }
     }
 
     //  SFX (3D)
@@ -112,6 +121,19 @@ public class AudioManager : MonoBehaviour
         musicInstance.setVolume(sound.volume);
         musicInstance.start();
 
+    }
+
+    private void StopMusic()
+    {
+        if (musicInstance.isValid())
+        {
+           
+            musicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+
+            musicInstance.release();
+
+            musicInstance.clearHandle();
+        }
     }
 
     public void UpdateSoundDefinitionParameters(SoundDefinition sound, string parameterName, object parameterValue)

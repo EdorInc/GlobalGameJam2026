@@ -7,13 +7,16 @@ public static class AudioSystem
 
     public static SoundLibrary SoundLibrary;
 
+    public static MusicLibrary MusicLibrary;
+
     private static AudioManager AudioManager;
 
-    public static void Initialize(AudioEventChannel sfx, AudioEventChannel music, SoundLibrary library, AudioManager audio)
+    public static void Initialize(AudioEventChannel sfx, AudioEventChannel music, SoundLibrary library, MusicLibrary musicLibrary ,AudioManager audio)
     {
         sfxChannel = sfx;
         musicChannel = music;
         SoundLibrary = library;
+        MusicLibrary = musicLibrary;
         AudioManager = audio;
     }
 
@@ -35,6 +38,11 @@ public static class AudioSystem
     public static void PlayMusic(SoundDefinition sound)
     {
         musicChannel?.RaiseMusic(sound);
+    }
+    
+    public static void StopMusic()
+    {
+        musicChannel?.StopMusic();
     }
 
     public static void UpdateSFXParameter(SoundDefinition sound, string parameterName, object parameterValue)

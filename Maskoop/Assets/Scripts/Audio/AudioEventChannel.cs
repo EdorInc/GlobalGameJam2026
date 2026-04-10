@@ -13,6 +13,7 @@ public class AudioEventChannel : ScriptableObject
     public Action<SoundDefinition, Vector3, int> OnPlayDynamicSound;
     public Action<SoundDefinition, int> OnStopDynamicSound;
     public Action<SoundDefinition> OnPlayMusic;
+    public Action OnStopMusic;
 
     public void RaiseSound(SoundDefinition sound, Vector3 position)
     {
@@ -32,5 +33,10 @@ public class AudioEventChannel : ScriptableObject
     public void RaiseMusic(SoundDefinition sound)
     {
         OnPlayMusic?.Invoke(sound);
+    }
+
+    public void StopMusic()
+    {
+        OnStopMusic?.Invoke();
     }
 }

@@ -499,6 +499,7 @@ MonoBehaviour:
   sfxChannel: {fileID: 11400000, guid: eb9f9560aefe93d45b1babebcde353ac, type: 2}
   musicChannel: {fileID: 11400000, guid: f2b1a516503485d4d9765a0bf9b044a5, type: 2}
   soundLibrary: {fileID: 11400000, guid: 38ce1f2e697df87459810a656805b8de, type: 2}
+  musicLibrary: {fileID: 11400000, guid: ae192420469dfee4180e9229765023d8, type: 2}
 --- !u!4 &912757281
 Transform:
   m_ObjectHideFlags: 0
