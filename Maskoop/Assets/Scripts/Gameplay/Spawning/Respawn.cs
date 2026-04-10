@@ -104,7 +104,7 @@ public class Respawn : MonoBehaviour
             } 
         }
 
-        if (IsGroundAppropriate(transform.position) && this.gameObject.CompareTag("Player"))
+        if (IsGroundAppropriate(transform.position) && (this.gameObject.CompareTag("Player") || this.gameObject.CompareTag("Mask")))
         {
             UpdateRespawnPosition(transform.position);
         }
