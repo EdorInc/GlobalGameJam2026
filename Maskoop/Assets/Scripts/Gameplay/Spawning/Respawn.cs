@@ -62,6 +62,7 @@ public class Respawn : MonoBehaviour
             visualRespawnGO.transform.position = respawnPosition;
             visualRespawnPositon = visualRespawnGO.transform;
         }
+        respawnPosition = transform.position;
     }
 
     public void SetSpawner(BaseSpawner spawner)

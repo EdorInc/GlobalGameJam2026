@@ -34,10 +34,12 @@ public class AirCurrents : MonoBehaviour
         Vector3 worldSize = Vector3.Scale(size, lossyScale);
 
         // Apply to particle shape
-        
+
+        ps.transform.position = trigger.bounds.center;
+
         if (isVertical)
         {
-            shape.scale = new Vector3(worldSize.z, worldSize.x, worldSize.y);
+            shape.scale = new Vector3(worldSize.x, worldSize.z, worldSize.y);
             shape.rotation = new Vector3(270, 0, 0);
         }
     }

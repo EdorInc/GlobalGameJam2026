@@ -16,13 +16,13 @@ public class LevelSelectionScreenController : MonoBehaviour
         var root = GetComponent<UIDocument>().rootVisualElement;
 
         levelButton01 = root.Q<Button>(levelButton01Name);
-        if (!BindButton(levelButton01, levelButton01Name, 1))
+        if (!BindButton(levelButton01, levelButton01Name, 0))
         {
             return;
         }
 
         levelButton02 = root.Q<Button>(levelButton02Name);
-        if (!BindButton(levelButton02, levelButton02Name, 2))
+        if (!BindButton(levelButton02, levelButton02Name, 1))
         {
             return;
         }
