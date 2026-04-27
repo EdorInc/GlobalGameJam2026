@@ -476,8 +476,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4977ccd6024c934bb7461d2b80a028b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterController
-  moveSpeed: 5
-  turnSpeed: 10
+  moveSpeed: 4
+  turnSpeed: 40
   airControlMultiplier: 1
   rollSpeed: 400
   rollTime: 0.3
@@ -487,7 +487,7 @@ MonoBehaviour:
   hitKnockBackForce: 5
   hitKnockBackUpwardsForce: 6
   hitStunTime: 0.5
-  movementToBeFree: 1
+  movementToBeFree: 3
   onFireTime: 2
   onFireSpeed: 5
 --- !u!114 &8747963092238407169

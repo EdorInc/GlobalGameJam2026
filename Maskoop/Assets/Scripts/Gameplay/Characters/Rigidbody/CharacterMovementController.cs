@@ -152,12 +152,10 @@ public class CharacterMovementController : MonoBehaviour
     {
         if (movementVector.sqrMagnitude > 0f)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(movementVector, Vector3.up);
-            transform.rotation = Quaternion.Slerp(
-                transform.rotation,
-                targetRotation,
-                ((!IsCharging) ? turnSpeed : throwingTurnSpeed) * turnSpeedMultiplier * Time.deltaTime
-            );
+            float turnSpeedUsed = IsCharging ? throwingTurnSpeed : turnSpeed;
+            Vector3 desiredForward = Vector3.RotateTowards(transform.forward, movementVector, turnSpeedUsed * Time.deltaTime, 0f);
+            Quaternion targetRotation = Quaternion.LookRotation(desiredForward);
+            rigidbody.MoveRotation(targetRotation);
         }
     }
 
@@ -195,7 +193,6 @@ public class CharacterMovementController : MonoBehaviour
                 if(horizontalInput.magnitude > 0f)
                 {
                     currentMovement += horizontalInput.magnitude;
-                    Debug.Log("MOVIENDO");
 
                     if (currentMovement > movementToBeFree)
                     {
@@ -251,8 +248,15 @@ public class CharacterMovementController : MonoBehaviour
                 Vector3 movementVector = horizontalInput * ((!IsCharging) ? moveSpeed : throwingMoveSpeed);
 
                 Vector3 finalVelocity = movementVector;
-               
-                rigidbody.linearVelocity = finalVelocity;
+
+                if (!IsCharging)
+                {
+                    rigidbody.linearVelocity = finalVelocity;
+                }
+                else
+                {
+                    rigidbody.linearVelocity = Vector3.zero;
+                }
 
                 RotateTowardsMovementDirection(movementVector, 1.0f);
             }        
