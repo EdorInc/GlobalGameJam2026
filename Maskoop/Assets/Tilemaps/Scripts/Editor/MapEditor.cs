@@ -5,8 +5,6 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static Unity.VisualScripting.Metadata;
-
 public class MapEditor : MonoBehaviour
 {
     [Header("References")]

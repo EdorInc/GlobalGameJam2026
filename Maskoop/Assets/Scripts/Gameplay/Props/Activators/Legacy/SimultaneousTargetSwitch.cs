@@ -9,9 +9,7 @@ public class SimultaneousTargetSwitch : TargetSwitch
     [SerializeField] protected float activeTime = 1f;
     [Tooltip("Time the switch is blinking for before deactivating.")]
     [SerializeField] protected float blinkingTime = 1f;
-    [Tooltip("Time between blinks.")]
-    [SerializeField] private float blinkInterval = 0.2f;
-
+   
     protected float blinkTimer = 0;
     protected bool isBlinkOn = false;
     protected float currentActiveTime = Mathf.Infinity;
@@ -46,7 +44,7 @@ public class SimultaneousTargetSwitch : TargetSwitch
     protected override void SetOvertime()
     {
         currentBlinkingTime = blinkingTime;
-        blinkTimer = blinkInterval;
+        blinkTimer = blinkIntervals;
         isBlinkOn = false;
     }
 
@@ -56,7 +54,7 @@ public class SimultaneousTargetSwitch : TargetSwitch
 
         if (blinkTimer <= 0f)
         {
-            blinkTimer = blinkInterval;
+            blinkTimer = blinkIntervals;
             isBlinkOn = !isBlinkOn;
 
             meshRenderer.material = isBlinkOn ? deactivatedMaterial : activatedMaterial;

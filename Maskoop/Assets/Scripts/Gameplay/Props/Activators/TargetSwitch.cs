@@ -22,7 +22,7 @@ public class TargetSwitch : BaseSwitch
 
     [Header("Blink Settings")]
     [Tooltip("Time between blinks when the target is pending.")]
-    [SerializeField] protected float blinkInterval = 0.2f;
+    [SerializeField] protected float blinkIntervals = 0.2f;
 
     protected float blinkElapsed = 0f;
 
@@ -106,7 +106,7 @@ public class TargetSwitch : BaseSwitch
         {
             blinkingState = !blinkingState;
             meshRenderer.material = blinkingState ? pendingMaterial : deactivatedMaterial;
-            yield return new WaitForSeconds(blinkInterval);
+            yield return new WaitForSeconds(blinkIntervals);
         }
 
         // Ensure the material is set to inactive just before deactivation
