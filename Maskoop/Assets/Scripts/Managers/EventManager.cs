@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using UnityEngine.Video;
+using UnityEngine.Splines;
 
 /// <summary>
 /// Centralized static event manager for game-wide events.
@@ -70,6 +71,13 @@ public static class EventManager
     /// Parameter: collider.
     /// </summary>
     public static Action<Collider,bool> OnAirCurrentExit;
+
+
+    /// <summary>
+    /// Invoked when a collider enters a pipe entry.
+    /// Parameter: collider, spline.
+    /// </summary>
+    public static Action<Collider, SplineContainer> OnPipeEntryPoint;
 
     /// <summary>
     /// Invoked when a collider is lit on fire.

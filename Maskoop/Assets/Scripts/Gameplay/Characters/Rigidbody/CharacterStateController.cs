@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class CharacterStateController : MonoBehaviour
@@ -9,6 +10,9 @@ public class CharacterStateController : MonoBehaviour
     public bool IsHoldingObject => heldObject != null;
     public bool IsBeingGrabbed { get; private set; }
     public bool IsFloating { get; set; }
+
+    public Renderer BodyRenderer;
+
     public bool IsOnFire { get; set; }
     public void SetOnFire(bool value) { IsOnFire = value; }
     public bool IsChargingThrow => throwComponent.charging;
@@ -42,6 +46,11 @@ public class CharacterStateController : MonoBehaviour
     public Grabbable GetHeldObject()
     {
         return heldObject;
+    }
+
+    internal Renderer GetBodyRenderer()
+    {
+        return BodyRenderer;
     }
 
     public void SetBeingGrabbed(bool value)
