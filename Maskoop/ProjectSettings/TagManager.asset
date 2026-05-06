@@ -10,6 +10,7 @@ TagManager:
   - MovingPlatform
   - Mask
   - Enemy
+  - Ground
   layers:
   - Default
   - TransparentFX
