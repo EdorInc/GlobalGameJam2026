@@ -17,7 +17,8 @@ public class TileMatrixGenerator : MonoBehaviour
 
     [Header("Debug Settings")]
     public float tileSize = 0.75f;          
-    public float gizmoHeight = 0.1f;     
+    public float gizmoHeight = 0.1f;
+    public float gizmoOffset = 1.0f;
 
     [Header("Debug")]
     [SerializeField] private TileRow[] _tiles;
@@ -62,7 +63,7 @@ public class TileMatrixGenerator : MonoBehaviour
                 if (tile == null)
                     continue;
 
-                Vector3 pos = tile.position + Vector3.up * gizmoHeight * 0.5f;
+                Vector3 pos = tile.position + Vector3.up * (gizmoHeight * 0.5f + gizmoOffset);
 
                 switch (tile.tileType)
                 {
@@ -130,6 +131,7 @@ public class TileMatrixGenerator : MonoBehaviour
                 GameObject occupiedBy = null;
                 TileType type = TileType.Air;
 
+                // Check for ground below
                 Collider[] hits = Physics.OverlapBox(position - Vector3.up * 0.5f, new Vector3(0.25f, 0.5f, 0.25f));
 
                 foreach (var hit in hits)
@@ -142,6 +144,7 @@ public class TileMatrixGenerator : MonoBehaviour
                     }
                 }
 
+                // Check for walls around
                 Collider[] wallHits = Physics.OverlapBox(position + Vector3.up * 1f, new Vector3(0.45f, 0.5f, 0.45f));
 
                 foreach (var hit in wallHits)

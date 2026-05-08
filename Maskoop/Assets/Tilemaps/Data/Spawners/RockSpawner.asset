@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d1e6f89d978ebf4bb854265783acfeb, type: 3}
+  m_Name: RockSpawner
+  m_EditorClassIdentifier: Assembly-CSharp-Editor::BlockDefinitionSO
+  m_blockId: rock spawner
+  m_displayName: Rock Spawner
+  m_previewTexture: {fileID: 0}
+  m_prefab: {fileID: 2808657674286783061, guid: c76c3d5302c6a634bb286ee7c23819ff, type: 3}

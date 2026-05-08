@@ -9,6 +9,11 @@ using UnityEngine.UIElements;
 public class MapEditorWindow : EditorWindow
 {
     /// <summary>
+    /// Session-state key used to remember the currently selected map asset.
+    /// </summary>
+    private const string k_mapGuidKey = "MapEditor_MapGuid";
+
+    /// <summary>
     /// The map asset currently assigned to the editor.
     /// </summary>
     private MapDataSO m_currentMap;
@@ -161,17 +166,15 @@ public class MapEditorWindow : EditorWindow
     {
         EditorGUILayout.LabelField("Map", EditorStyles.boldLabel);
 
-        // Lets the user assign a map asset directly from the Project window.
         var newMap = (MapDataSO)EditorGUILayout.ObjectField("Current Map", m_currentMap, typeof(MapDataSO), false);
         if (newMap != m_currentMap)
-        {
-            m_currentMap = newMap;
-            MapEditorTool.SetMap(m_currentMap);
-            MapRenderer.RebuildAll(m_currentMap);
-        }
+            SetCurrentMap(newMap);
 
         if (GUILayout.Button("New Map"))
             CreateNewMap();
+
+        if (m_currentMap != null && GUILayout.Button("Close Map"))
+            CloseMap();
     }
 
     /// <summary>
@@ -291,6 +294,34 @@ public class MapEditorWindow : EditorWindow
         m_currentMap = map;
         MapEditorTool.SetMap(m_currentMap);
     }
+
+
+    /// <summary>
+    /// Closes the current map and clears the rendered scene state.
+    /// </summary>
+    private void CloseMap()
+    {
+        SetCurrentMap(null);
+    }
+
+
+    /// <summary>
+    /// Assigns the active map, persists it in session state, and refreshes the renderer.
+    /// </summary>
+    /// <param name="map">The map to assign, or <c>null</c> to close the current map.</param>
+    private void SetCurrentMap(MapDataSO map)
+    {
+        m_currentMap = map;
+        MapEditorTool.SetMap(m_currentMap);
+
+        string guid = m_currentMap != null ? AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(m_currentMap)) : "";
+        SessionState.SetString(k_mapGuidKey, guid);
+
+        MapRenderer.RebuildAll(m_currentMap);
+        Repaint();
+        SceneView.RepaintAll();
+    }
+
 
     /// <summary>
     /// Clears every cell in the current map while keeping its dimensions.

@@ -67,6 +67,9 @@ public static class MapEditorTool
         // Persist the asset GUID so we can restore it after focus loss
         string guid = map != null ? AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(map)) : "";
         SessionState.SetString(k_mapGuidKey, guid);
+
+        if (map == null)
+            DestroyGhost();
     }
 
     private static void TryRestoreMap()
@@ -87,7 +90,11 @@ public static class MapEditorTool
     {
         TryRestoreMap();
 
-        if (s_currentMap == null) return;
+        if (s_currentMap == null)
+        {
+            DestroyGhost();
+            return;
+        }
 
         HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));
 

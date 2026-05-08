@@ -22,12 +22,17 @@ public static class MapRenderer
     /// </summary>
     private const string k_groundTag = "Ground";
 
+
     /// <summary>
     /// Rebuilds every rendered block instance in the scene from the supplied map data.
     /// </summary>
     public static void RebuildAll(MapDataSO map)
     {
-        if (map == null) return;
+        if (map == null)
+        {
+            DestroyRoot();
+            return;
+        }
 
         DestroyRoot();
         var root = GetOrCreateRoot();
@@ -82,6 +87,7 @@ public static class MapRenderer
         BuildWallHierarchy(map, blockLookup, root, wallCells);
     }
 
+
     /// <summary>
     /// Saves the currently rendered map blocks as a new prefab asset.
     /// </summary>
@@ -104,37 +110,6 @@ public static class MapRenderer
         Debug.Log($"Map saved as prefab at {path}");
     }
 
-    /*
-     * /// <summary>
-     * /// Refreshes the rendered block instance for a single cell.
-     * /// </summary>
-     * public static void RefreshCell(MapDataSO map, Vector3Int cell)
-     * {
-     *     var root = GetOrCreateRoot();
-     * 
-     *     // Remove any existing instance at this cell before respawning updated content.
-     *     var existing = root.transform.Find(CellName(cell));
-     *     if (existing != null)
-     *         Object.DestroyImmediate(existing.gameObject);
-     * 
-     *     var data = map.GetCell(cell.x, cell.y, cell.z);
-     *     if (data.IsEmpty) return;
-     * 
-     *     // Resolve the cell's block ID back to a block definition and spawn its prefab.
-     *     string[] guids = AssetDatabase.FindAssets($"t:BlockDefinitionSO");
-     *     foreach (string guid in guids)
-     *     {
-     *         string path = AssetDatabase.GUIDToAssetPath(guid);
-     *         var def = AssetDatabase.LoadAssetAtPath<BlockDefinitionSO>(path);
-     *         if (def.BlockId == data.BlockId)
-     *         {
-     *             SpawnBlock(def, cell, root);
-     *             break;
-     *         }
-     *     }
-     * }
-     */
-
 
     /// <summary>
     /// Refreshes the rendered block instance for a single cell.
@@ -144,7 +119,7 @@ public static class MapRenderer
         // A full rebuild keeps the hierarchy correct.
         RebuildAll(map);
     }
-  
+
 
     /// <summary>
     /// Instantiates a prefab for the given block definition and parents it under the map root.
@@ -159,6 +134,7 @@ public static class MapRenderer
         instance.transform.position = cell;
     }
 
+
     /// <summary>
     /// Gets the existing map root GameObject, or creates it if none exists.
     /// </summary>
@@ -172,6 +148,7 @@ public static class MapRenderer
         return root;
     }
 
+
     /// <summary>
     /// Destroys the current map root GameObject if it exists.
     /// </summary>
@@ -182,11 +159,13 @@ public static class MapRenderer
             Object.DestroyImmediate(root);
     }
 
+
     /// <summary>
     /// Builds a unique scene object name for a cell coordinate.
     /// </summary>
     /// <returns>A stable name in the format <c>block_x_y_z</c>.</returns>
     private static string CellName(Vector3Int cell) => $"block_{cell.x}_{cell.y}_{cell.z}";
+
 
     /// <summary>
     /// Builds the per-layer hierarchy with grouped floor areas and any uncategorized blocks.
@@ -214,8 +193,9 @@ public static class MapRenderer
                 var areas = FindFloorAreas(floorCells);
                 for (int i = 0; i < areas.Count; i++)
                 {
-                    var areaParent = new GameObject($"Area_{i}");
+                    var areaParent = new GameObject($"Floor_{i}");
                     areaParent.transform.SetParent(layerParent.transform);
+                    areaParent.AddComponent<TileMatrixGenerator>();
                     SpawnCells(map, lookup, areas[i], areaParent);
                 }
             }
@@ -225,6 +205,7 @@ public static class MapRenderer
                 SpawnCells(map, lookup, others, layerParent);
         }
     }
+
 
     /// <summary>
     /// Builds the "Walls" hierarchy with each axis-aligned wall run as its own group.
@@ -251,6 +232,7 @@ public static class MapRenderer
         }
     }
 
+
     /// <summary>
     /// Builds a lookup from block ID to its <see cref="BlockDefinitionSO"/> asset.
     /// </summary>
@@ -270,6 +252,7 @@ public static class MapRenderer
         return lookup;
     }
 
+
     /// <summary>
     /// Spawns prefab instances for each cell coordinate under the supplied parent.
     /// </summary>
@@ -282,6 +265,7 @@ public static class MapRenderer
                 SpawnBlock(def, cell, parent);
         }
     }
+
 
     /// <summary>
     /// Finds connected components of ground tiles within a single Y layer using 4-way adjacency.
@@ -318,6 +302,7 @@ public static class MapRenderer
         return areas;
     }
 
+
     /// <summary>
     /// Adds a candidate cell to the BFS queue if it belongs to the source set and has not been visited.
     /// </summary>
@@ -327,6 +312,7 @@ public static class MapRenderer
         visited.Add(cell);
         queue.Enqueue(cell);
     }
+
 
     /// <summary>
     /// Splits wall cells into maximal runs along a single axis (X first, then Z).
@@ -398,6 +384,7 @@ public static class MapRenderer
         return finalGroups;
     }
 
+
     /// <summary>
     /// Greedy run extension along a single axis from a starting cell, in both directions.
     /// </summary>
@@ -427,6 +414,7 @@ public static class MapRenderer
         return run;
     }
 
+
     /// <summary>
     /// Builds a key that identifies a horizontal run by axis, fixed coord, and range,
     /// so runs on different Y levels can be matched and merged vertically.
@@ -453,6 +441,7 @@ public static class MapRenderer
         // Singleton block keyed by (x, z) so vertical pillars merge.
         return $"P|{first.x}|{first.z}";
     }
+
 
     /// <summary>
     /// Returns "X", "Z", or "Y" depending on the dominant axis of a wall group.
