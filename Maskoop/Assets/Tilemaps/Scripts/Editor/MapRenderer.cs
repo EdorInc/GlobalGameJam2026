@@ -129,7 +129,10 @@ public static class MapRenderer
         if (def.Prefab == null) return;
 
         var instance = (GameObject)PrefabUtility.InstantiatePrefab(def.Prefab);
-        instance.name = CellName(cell);
+
+        string blockId = string.IsNullOrWhiteSpace(def.BlockId) ? "Block" : def.BlockId.Trim().Replace(" ", "_");
+
+        instance.name = $"{blockId}_{cell.x}_{cell.y}_{cell.z}";
         instance.transform.SetParent(root.transform);
         instance.transform.position = cell;
     }
@@ -158,13 +161,6 @@ public static class MapRenderer
         if (root != null)
             Object.DestroyImmediate(root);
     }
-
-
-    /// <summary>
-    /// Builds a unique scene object name for a cell coordinate.
-    /// </summary>
-    /// <returns>A stable name in the format <c>block_x_y_z</c>.</returns>
-    private static string CellName(Vector3Int cell) => $"block_{cell.x}_{cell.y}_{cell.z}";
 
 
     /// <summary>
