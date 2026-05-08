@@ -5,6 +5,7 @@ public class WaterMask : BaseMask
 {
     [Header("Material Settings")]
     public Material waterMaterial;
+    public Renderer maskRenderer;
     private Material previousMaterial;
 
     private SplineContainer currentSpline;
@@ -13,6 +14,8 @@ public class WaterMask : BaseMask
     private float positionInPipe = 0;
     private Rigidbody playerRb;
     private CharacterMovementController characteMovement;
+
+    private bool directMovement = true;
     public override void OnEquip(CharacterStateController characterState)
     {
         base.OnEquip(characterState);
@@ -39,11 +42,25 @@ public class WaterMask : BaseMask
     {
         if (!movingInPipe || currentSpline == null) return;
 
-        positionInPipe += 0.3f * Time.fixedDeltaTime;
-
-        if(positionInPipe > 1)
+        if (directMovement)
         {
-            ExitPipe();
+            positionInPipe += 0.3f * Time.fixedDeltaTime;
+
+            if (positionInPipe > 1)
+            {
+                ExitPipe();
+                return;
+            }
+        }
+        else
+        {
+            positionInPipe -= 0.3f * Time.fixedDeltaTime;
+
+            if (positionInPipe < 0)
+            {
+                ExitPipe();
+                return;
+            }
         }
 
         Vector3 position = currentSpline.EvaluatePosition(positionInPipe);
@@ -53,17 +70,22 @@ public class WaterMask : BaseMask
         playerRb.MoveRotation(Quaternion.LookRotation(forward));
     }
 
-    private void PipeEntered(Collider player,SplineContainer spline)
+    private void PipeEntered(Collider player,SplineContainer spline,bool entry)
     {
         if (characterState.IsMyPlayer(player.gameObject))
         {
-            if (spline && movingInPipe)
+            if (!currentSpline && !movingInPipe)
             {
-                ExitPipe();
-            }
-            else 
-            {
-                EnterPipe( player,  spline);
+                EnterPipe(player, spline);
+                directMovement = entry;
+                if (!directMovement)
+                {
+                    positionInPipe = 1;
+                }
+                else
+                {
+                    positionInPipe = 0;
+                }
             }
         }
     }
@@ -71,22 +93,25 @@ public class WaterMask : BaseMask
     private void ExitPipe()
     {
         movingInPipe = false;
-        currentSpline = null;
-        playerRb = null;
+        currentSpline = null;   
         characteMovement.enabled = true;
         playerRb.isKinematic = false;
         playerRb.interpolation = RigidbodyInterpolation.Interpolate;
+        playerRb = null;
+        characterState.BodyRenderer.enabled = true;
+        maskRenderer.enabled = false;
     }
 
     private void EnterPipe(Collider player, SplineContainer spline)
     {
         movingInPipe = true;
         currentSpline = spline;
-        positionInPipe = 0;
         playerRb = player.gameObject.GetComponent<Rigidbody>();
         characteMovement = player.gameObject.GetComponent<CharacterMovementController>();
         characteMovement.enabled = false;
         playerRb.isKinematic = true;
         playerRb.interpolation = RigidbodyInterpolation.None;
+        characterState.BodyRenderer.enabled = false;
+        maskRenderer.enabled = false;
     }
 }

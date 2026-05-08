@@ -8,7 +8,9 @@ public class TubeSpawner : MonoBehaviour
 {
     public SplineContainer spline;
     public GameObject tubePrefab;
+    public GameObject verticaltubePrefab;
     public GameObject sideTurnPrefab;
+
     public int segments = 20;
 
     public PipeEntryPoint directEntry;
@@ -35,6 +37,11 @@ public class TubeSpawner : MonoBehaviour
 
     private void OnSplineChanged(Spline spline, int knotIndex, SplineModification modificationType)
     {
+        if(spline != this.spline.Spline)
+        {
+            return;
+        }
+
         CalculateSegments();
 
         Generate();
@@ -57,7 +64,7 @@ public class TubeSpawner : MonoBehaviour
             numberOfTubes += (int)MathF.Floor(distance);
         }
 
-        //segments = numberOfTubes + knots.Count - 2;
+        segments = numberOfTubes + knots.Count - 2;
     }
 
     List<Vector3> GetSplineKnotsPositions()
@@ -118,6 +125,51 @@ public class TubeSpawner : MonoBehaviour
             return Quaternion.identity;
         }
     }
+
+    Quaternion CalculateVerticalTurn(float turnAngle,Vector3 dir, Vector3 prevDir)
+    {
+        //Turn to vertical
+        if(dir.y > 0.5)
+        {
+            if (prevDir.z > 0.5)
+            {
+                return Quaternion.Euler(new Vector3(0, 180, 90));
+            }
+            if (prevDir.z < -0.5)
+            {
+                return Quaternion.Euler(new Vector3(0, 0, 90));
+            }
+            if (prevDir.x > 0.5)
+            {
+                return Quaternion.Euler(new Vector3(0, 270, 90));
+            }
+            if (prevDir.x < -0.5)
+            {
+                return Quaternion.Euler(new Vector3(0, 90, 90));
+            }
+        }
+        //Turn from vertical
+        else
+        {
+            if (dir.z > 0.5)
+            {
+                return Quaternion.Euler(new Vector3(0, 0, 270));
+            }
+            if (dir.z < -0.5)
+            {
+                return Quaternion.Euler(new Vector3(0, 180, 270));
+            }
+            if (dir.x > 0.5)
+            {
+                return Quaternion.Euler(new Vector3(0, 90, 270));
+            }
+            if (dir.x < -0.5)
+            {
+                return Quaternion.Euler(new Vector3(0, 270, 270));
+            }
+        }
+        return Quaternion.identity;
+    }
     void Generate()
     {
         while (transform.childCount > 0)
@@ -125,16 +177,15 @@ public class TubeSpawner : MonoBehaviour
 
         bool started = false;
 
+        GameObject prefabUse = tubePrefab;
+
         Vector3 prevPos = Vector3.zero;
         Vector3 prevDir = Vector3.forward;
 
-        for (int i = 0; i < segments; i++)
+        for (int i = 1; i < segments - 1; i++)
         {
+            prefabUse = tubePrefab;
             float t = i / (float)(segments - 1);
-            if(i == 40)
-            {
-                int a = 0;
-            }
 
             Vector3 pos = spline.EvaluatePosition(t);
             Vector3 tangent = spline.EvaluateTangent(t);
@@ -157,7 +208,14 @@ public class TubeSpawner : MonoBehaviour
                 if (Mathf.Abs(turnAngle) > 1f)
                 {
                     isTurn = true;
-                    rot = CalculateRotationOfCorner(turnAngle, dir);
+                    if(dir.y > 0.5 || prevDir.y > 0.5)
+                    {
+                        rot = CalculateVerticalTurn(turnAngle, dir, prevDir);
+                    }
+                    else
+                    {
+                        rot = CalculateRotationOfCorner(turnAngle, dir);
+                    }
                 }
             }
 
@@ -187,6 +245,7 @@ public class TubeSpawner : MonoBehaviour
                 else if (distY > distX && distY > distZ)
                 {
                     pos = new Vector3(prevPos.x, pos.y, prevPos.z);
+                    rot = Quaternion.Euler(new Vector3(90, 0, 0));
                 }
                 else
                 {
@@ -194,7 +253,7 @@ public class TubeSpawner : MonoBehaviour
                 }
             }
 
-            Instantiate(tubePrefab, SnapToGrid(pos), rot, transform);
+            Instantiate(prefabUse, SnapToGrid(pos), rot, transform);
 
             prevDir = dir;
             prevPos = pos;
