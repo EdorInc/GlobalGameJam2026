@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 using System;
+using Gameplay.Cameras;
 using UnityEngine.InputSystem;
 
 // TODO Move this to the EventManager
@@ -364,15 +365,24 @@ public class GameManager : MonoBehaviour
         player2Instance.GetComponentInChildren<CharacterStateController>().characterId = 1;
 
         // --- DYNAMIC SPLIT SCREEN ---
-        DynamicSplitManager splitManager = GetComponent<DynamicSplitManager>();
-        if (splitManager != null)
-        {
-            splitManager.SetupPlayers(player1Instance, player2Instance);
-        }
-        else
-        {
-            Debug.LogError("SplitManager missing");
-        }
+        // DynamicSplitManager splitManager = GetComponent<DynamicSplitManager>();
+        // if (splitManager != null)
+        // {
+        //     splitManager.SetupPlayers(player1Instance, player2Instance);
+        // }
+        // else
+        // {
+        //     Debug.LogError("SplitManager missing");
+        // }
+        
+        // --- NON SPLIT CAMERA ---
+        // Buscamos la cámara en la escena para coger su followScript y asignarle ambos jugadores como target.
+        NonSplitCameraController cameraController = FindAnyObjectByType<NonSplitCameraController>();
+        if (cameraController == null) return;
+
+        Transform player1Target = player1Instance.GetComponentInChildren<CharacterStateController>().transform;
+        Transform player2Target = player2Instance.GetComponentInChildren<CharacterStateController>().transform;
+        cameraController.SetTargets(player1Target, player2Target);
     }
 
     private bool ResolvePlayerSpawnsFromScene()
