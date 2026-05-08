@@ -24,6 +24,7 @@ public class WaterMask : BaseMask
 
         characterState.GetBodyRenderer().material = waterMaterial;
 
+        EventManager.OnWaterWall += GoThroughWall;
         EventManager.OnPipeEntryPoint += PipeEntered;
     }
 
@@ -31,6 +32,7 @@ public class WaterMask : BaseMask
     {
         characterState.GetBodyRenderer().material = previousMaterial;
         EventManager.OnPipeEntryPoint -= PipeEntered;
+        EventManager.OnWaterWall -= GoThroughWall;
     }
 
     public override void UpdateLogic()
@@ -113,5 +115,23 @@ public class WaterMask : BaseMask
         playerRb.interpolation = RigidbodyInterpolation.None;
         characterState.BodyRenderer.enabled = false;
         maskRenderer.enabled = false;
+    }
+
+
+    private void GoThroughWall(Collision collision, Transform wallTransform)
+    {
+        Debug.Log("MUROOOOOOO");
+
+
+        Vector3 playerPosition = collision.gameObject.transform.position;
+        Vector3 wallPosition = collision.contacts[0].point;
+
+        Vector3 dir = wallPosition - playerPosition;
+        float distance  = Vector3.Distance(playerPosition, wallPosition);
+
+        Vector3 newPosition = wallPosition + dir * distance * 2;
+
+        collision.gameObject.transform.position = new Vector3( newPosition.x, playerPosition.y, newPosition.z);
+
     }
 }

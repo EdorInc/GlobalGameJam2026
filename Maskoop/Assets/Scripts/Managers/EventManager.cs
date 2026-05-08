@@ -79,6 +79,13 @@ public static class EventManager
     /// </summary>
     public static Action<Collider, SplineContainer, bool> OnPipeEntryPoint;
 
+
+    /// <summary>
+    /// Invoked when a collider enters a pipe entry.
+    /// Parameter: collider, spline.
+    /// </summary>
+    public static Action<Collision, Transform> OnWaterWall;
+
     /// <summary>
     /// Invoked when a collider is lit on fire.
     /// Parameter: collider.
