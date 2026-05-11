@@ -132,23 +132,70 @@ public static class MapEditorTool
         return new Vector3Int(x, s_currentLayer, z);
     }
 
+    private static bool s_isDirty = false;
+    private static Vector3Int? s_lastPaintedCell;
+
     /// <summary>
     /// Processes mouse input for placing or erasing blocks.
     /// </summary>
     private static void HandleInput(Vector3Int cell)
     {
         Event e = Event.current;
+        if (e.button != 0 || e.alt) return;
 
-        if (e.button == 0 && !e.alt && (e.type == EventType.MouseDown || e.type == EventType.MouseDrag))
+        if (e.type == EventType.MouseDown)
         {
-            if (s_isErasing)
-                EraseBlock(cell);
-            else
-                PlaceBlock(cell);
-
+            PaintCell(cell);
+            s_lastPaintedCell = cell;
             e.Use();
         }
+        else if (e.type == EventType.MouseDrag)
+        {
+            if (s_lastPaintedCell.HasValue)
+                PaintLine(s_lastPaintedCell.Value, cell);
+            else
+                PaintCell(cell);
+
+            s_lastPaintedCell = cell;
+            e.Use();
+        }
+        else if (e.type == EventType.MouseUp)
+        {
+            if (s_isDirty)
+            {
+                MapRenderer.RebuildAll(s_currentMap);
+                s_isDirty = false;
+            }
+            s_lastPaintedCell = null;
+        }
     }
+
+    private static void PaintCell(Vector3Int cell)
+    {
+        if (s_isErasing) EraseBlock(cell);
+        else PlaceBlock(cell);
+    }
+
+    private static void PaintLine(Vector3Int from, Vector3Int to)
+    {
+        int x0 = from.x, z0 = from.z;
+        int x1 = to.x, z1 = to.z;
+        int dx = Mathf.Abs(x1 - x0);
+        int dz = Mathf.Abs(z1 - z0);
+        int sx = x0 < x1 ? 1 : -1;
+        int sz = z0 < z1 ? 1 : -1;
+        int err = dx - dz;
+
+        while (true)
+        {
+            PaintCell(new Vector3Int(x0, to.y, z0));
+            if (x0 == x1 && z0 == z1) break;
+            int e2 = 2 * err;
+            if (e2 > -dz) { err -= dz; x0 += sx; }
+            if (e2 < dx) { err += dx; z0 += sz; }
+        }
+    }
+
 
     /// <summary>
     /// Places the selected block into the specified cell.
@@ -164,7 +211,8 @@ public static class MapEditorTool
             IsEmpty = false
         });
         EditorUtility.SetDirty(s_currentMap);
-        MapRenderer.RefreshCell(s_currentMap, cell);
+        MapRenderer.SpawnSingle(s_currentMap, cell);
+        s_isDirty = true;
     }
 
     /// <summary>
@@ -177,7 +225,8 @@ public static class MapEditorTool
         Undo.RecordObject(s_currentMap, "Erase Block");
         s_currentMap.SetCell(cell.x, cell.y, cell.z, new MapCellData { IsEmpty = true });
         EditorUtility.SetDirty(s_currentMap);
-        MapRenderer.RefreshCell(s_currentMap, cell);
+        MapRenderer.RemoveSingle(cell);
+        s_isDirty = true;
     }
 
     /// <summary>
@@ -211,11 +260,11 @@ public static class MapEditorTool
         float y = s_currentLayer;
         Handles.color = new Color(1f, 1f, 1f, 0.2f);
 
-        for (int x = 0; x <= s_currentMap.Width; x++)
-            Handles.DrawLine(new Vector3(x, y, 0), new Vector3(x, y, s_currentMap.Depth));
+        for (float x = 0; x <= s_currentMap.Width; x++)
+            Handles.DrawLine(new Vector3(x + 0.5f, y, - 0.5f), new Vector3(x + 0.5f, y, s_currentMap.Depth - 0.5f));
 
-        for (int z = 0; z <= s_currentMap.Depth; z++)
-            Handles.DrawLine(new Vector3(0, y, z), new Vector3(s_currentMap.Width, y, z));
+        for (float z = 0; z <= s_currentMap.Depth; z++)
+            Handles.DrawLine(new Vector3(0.5f, y, z - 0.5f), new Vector3(s_currentMap.Width + 0.5f, y, z - 0.5f));
     }
 
     private static List<Material> s_ghostMaterials = new();

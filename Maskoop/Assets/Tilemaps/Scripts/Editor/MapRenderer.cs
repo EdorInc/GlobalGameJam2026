@@ -117,6 +117,7 @@ public static class MapRenderer
     public static void RefreshCell(MapDataSO map, Vector3Int cell)
     {
         // A full rebuild keeps the hierarchy correct.
+        s_liveBlocks.Clear();
         RebuildAll(map);
     }
 
@@ -129,12 +130,11 @@ public static class MapRenderer
         if (def.Prefab == null) return;
 
         var instance = (GameObject)PrefabUtility.InstantiatePrefab(def.Prefab);
-
         string blockId = string.IsNullOrWhiteSpace(def.BlockId) ? "Block" : def.BlockId.Trim().Replace(" ", "_");
-
         instance.name = $"{blockId}_{cell.x}_{cell.y}_{cell.z}";
         instance.transform.SetParent(root.transform);
         instance.transform.position = cell;
+        s_liveBlocks[cell] = instance;
     }
 
 
@@ -460,5 +460,46 @@ public static class MapRenderer
 
         if (dx == 0 && dz == 0) return "Y";
         return dx >= dz ? "X" : "Z";
+    }
+
+    private static readonly Dictionary<Vector3Int, GameObject> s_liveBlocks = new();
+    private static Dictionary<string, BlockDefinitionSO> s_lookupCache;
+
+    public static void InvalidateLookup() => s_lookupCache = null;
+
+    private static Dictionary<string, BlockDefinitionSO> GetBlockLookup()
+    {
+        if (s_lookupCache == null) s_lookupCache = BuildBlockLookup();
+        return s_lookupCache;
+    }
+
+    public static void SpawnSingle(MapDataSO map, Vector3Int cell)
+    {
+        if (map == null || !map.IsValidCoord(cell.x, cell.y, cell.z)) return;
+
+        RemoveSingle(cell);
+
+        var data = map.GetCell(cell.x, cell.y, cell.z);
+        if (data.IsEmpty || string.IsNullOrEmpty(data.BlockId)) return;
+
+        var lookup = GetBlockLookup();
+        if (!lookup.TryGetValue(data.BlockId, out var def) || def.Prefab == null) return;
+
+        var root = GetOrCreateRoot();
+        var instance = (GameObject)PrefabUtility.InstantiatePrefab(def.Prefab);
+        string blockId = string.IsNullOrWhiteSpace(def.BlockId) ? "Block" : def.BlockId.Trim().Replace(" ", "_");
+        instance.name = $"{blockId}_{cell.x}_{cell.y}_{cell.z}";
+        instance.transform.SetParent(root.transform);
+        instance.transform.position = cell;
+        s_liveBlocks[cell] = instance;
+    }
+
+    public static void RemoveSingle(Vector3Int cell)
+    {
+        if (s_liveBlocks.TryGetValue(cell, out var existing))
+        {
+            if (existing != null) Object.DestroyImmediate(existing);
+            s_liveBlocks.Remove(cell);
+        }
     }
 }
