@@ -261,10 +261,10 @@ public static class MapEditorTool
         Handles.color = new Color(1f, 1f, 1f, 0.2f);
 
         for (float x = 0; x <= s_currentMap.Width; x++)
-            Handles.DrawLine(new Vector3(x + 0.5f, y, - 0.5f), new Vector3(x + 0.5f, y, s_currentMap.Depth - 0.5f));
+            Handles.DrawLine(new Vector3(x - 0.5f, y, - 0.5f), new Vector3(x - 0.5f, y, s_currentMap.Depth - 0.5f));
 
         for (float z = 0; z <= s_currentMap.Depth; z++)
-            Handles.DrawLine(new Vector3(0.5f, y, z - 0.5f), new Vector3(s_currentMap.Width + 0.5f, y, z - 0.5f));
+            Handles.DrawLine(new Vector3(-0.5f, y, z - 0.5f), new Vector3(s_currentMap.Width - 0.5f, y, z - 0.5f));
     }
 
     private static List<Material> s_ghostMaterials = new();
