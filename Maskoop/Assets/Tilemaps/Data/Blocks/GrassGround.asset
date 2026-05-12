@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d1e6f89d978ebf4bb854265783acfeb, type: 3}
+  m_Name: GrassGround
+  m_EditorClassIdentifier: Assembly-CSharp-Editor::BlockDefinitionSO
+  m_blockId: grass ground
+  m_displayName: Grass Ground
+  m_previewTexture: {fileID: 2800000, guid: 9a3284ea1788368489adbe2090d2466c, type: 3}
+  m_prefab: {fileID: 6487881303263944399, guid: 55efa6ca05579e545aad4068f47163cf, type: 3}
