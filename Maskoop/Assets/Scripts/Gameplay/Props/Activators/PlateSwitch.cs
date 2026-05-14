@@ -71,7 +71,7 @@ public class PlateSwitch : BaseSwitch
 
                 if (!objectsOnPlate.Contains(obj))
                 {
-                    AddWeight(obj);
+                    objectsOnPlate.Add(obj);
                 }
             }
         }
