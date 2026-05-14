@@ -109,6 +109,13 @@ namespace Gameplay.Cameras
         {
             target = newTarget;
             otherTarget = newOtherTarget;
+
+            var seeThrough = GetComponent<SeeThrough>();
+            if (seeThrough != null)
+            {
+                seeThrough.SetPlayers(target, otherTarget);
+            }
+
             InitializeDefaults();
         }
 

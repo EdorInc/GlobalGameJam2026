@@ -5,7 +5,9 @@ using UnityEngine;
 public class SeeThrough : MonoBehaviour
 {
     [Header("References")]
+    [SerializeField]
     private Transform player;
+    [SerializeField]
     private Transform otherPlayer;
 
     private Camera cam;
@@ -21,6 +23,7 @@ public class SeeThrough : MonoBehaviour
     public int seeThroughLayer;
 
     // Keeps track of walls currently made see-through
+    [SerializeField]
     private readonly Dictionary<GameObject, int> modifiedWalls = new Dictionary<GameObject, int>();
 
     void Start()
@@ -44,23 +47,13 @@ public class SeeThrough : MonoBehaviour
         ProcessTarget(origin, player, wallsThisFrame);
 
         // In merged state, also process the other player
-        if (DynamicSplitManager.isMerged && otherPlayer != null)
+        if (otherPlayer != null)
         {
             ProcessTarget(origin, otherPlayer, wallsThisFrame);
         }
 
-        // -------- Apply see-through --------
-        foreach (GameObject obj in wallsThisFrame)
-        {
-            if (!modifiedWalls.ContainsKey(obj))
-            {
-                // Debug.Log($"Making wall '{obj.name}' see-through.");
-                modifiedWalls[obj] = obj.layer;
-                SetLayerRecursively(obj, seeThroughLayer);
-            }
-        }
-
         // -------- Restore walls --------
+
         List<GameObject> toRestore = new List<GameObject>();
 
         foreach (var pair in modifiedWalls)
@@ -70,7 +63,9 @@ public class SeeThrough : MonoBehaviour
             if (wall == null || !wallsThisFrame.Contains(wall))
             {
                 if (wall != null)
+                {
                     wall.layer = pair.Value;
+                }
 
                 toRestore.Add(wall);
             }
@@ -78,28 +73,48 @@ public class SeeThrough : MonoBehaviour
 
         foreach (GameObject obj in toRestore)
         {
-            // Debug.Log($"Restoring wall '{obj?.name ?? "null"}' to original layer.");
             SetLayerRecursively(obj, modifiedWalls[obj]);
             modifiedWalls.Remove(obj);
+        }
+
+        // -------- Apply see-through --------
+
+        foreach (GameObject obj in wallsThisFrame)
+        {
+            if (!modifiedWalls.ContainsKey(obj))
+            {
+                modifiedWalls[obj] = obj.layer;
+                SetLayerRecursively(obj, seeThroughLayer);
+            }
         }
     }
 
     private void ProcessTarget(Vector3 origin, Transform targetTransform, HashSet<GameObject> wallsThisFrame)
     {
-        if (targetTransform == null) return;
+        if (targetTransform == null)
+        {
+            return;
+        }
 
         Vector3 target = targetTransform.position;
         Vector3 direction = target - origin;
+
         float distance = direction.magnitude;
-        if (distance <= Mathf.Epsilon) return;
+
+        if (distance <= Mathf.Epsilon)
+        {
+            return;
+        }
 
         // Reuse the already computed distance to avoid an extra normalization cost.
         Vector3 dirNorm = direction / distance;
 
         Debug.DrawLine(origin, target, Color.red);
+
         float effectiveNearDistance = Mathf.Min(nearSphereDistance, distance);
 
         // -------- SphereCast near camera --------
+
         if (useNearSphereCast && effectiveNearDistance > 0f)
         {
             RaycastHit[] nearHits = Physics.SphereCastAll(
@@ -116,15 +131,18 @@ public class SeeThrough : MonoBehaviour
         }
 
         // -------- Raycast for the rest --------
+
         float startOffset = useNearSphereCast ? effectiveNearDistance : 0f;
         float remainingDistance = distance - startOffset;
 
-        if (remainingDistance <= 0f) return;
+        if (remainingDistance <= 0f)
+        {
+            return;
+        }
 
         Vector3 rayStart = origin + dirNorm * startOffset;
 
-        // Better than Linecast because it returns all blockers on the segment,
-        // not only the first one, so multiple walls can be handled in a single frame.
+        // Better than Linecast because it returns all blockers on the segment, not only the first one, so multiple walls can be handled in a single frame.
         RaycastHit[] hits = Physics.RaycastAll(
             new Ray(rayStart, dirNorm),
             remainingDistance,
@@ -149,6 +167,7 @@ public class SeeThrough : MonoBehaviour
 
         foreach (Transform child in obj.transform)
         {
+            Debug.Log("Child found: " + child.name);
             SetLayerRecursively(child.gameObject, newLayer);
         }
     }
@@ -156,19 +175,31 @@ public class SeeThrough : MonoBehaviour
     void TryAddWall(Collider collider, HashSet<GameObject> walls)
     {
         if (collider == null)
+        {
             return;
+        }
 
         GameObject obj = collider.gameObject;
 
         if (!obj.CompareTag(wallTag))
         {
-            // Debug.LogWarning($"Object '{obj.name}' hit by SeeThrough raycast does not have the tag '{wallTag}'. Skipping.");
             return;
         }
 
-        // Debug.Log($"SeeThrough hit wall: {obj.name}");
+        // Climb up the hierarchy to find the highest parent that is also tagged as a Wall
+        Transform current = obj.transform;
+        Transform highestWall = current;
 
-        walls.Add(obj);
+        while (current.parent != null)
+        {
+            current = current.parent;
+            if (current.CompareTag(wallTag))
+            {
+                highestWall = current;
+            }
+        }
+
+        walls.Add(highestWall.gameObject);
     }
 
 
