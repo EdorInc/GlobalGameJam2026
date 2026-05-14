@@ -5,8 +5,8 @@ public class PlateSwitch : BaseSwitch
 {
     [Header("Activation Settings")]
     [Tooltip("Whether the pressure plate can only be activated by the player.")]
-    [SerializeField] protected bool playerExclusive = true;
-    [Tooltip("")]
+    [SerializeField] protected bool isPlayerExclusive = true;
+    [Tooltip("Layer mask to specify which layers should be considered when checking for objects on the plate. By default, all layers are included.")]
     [SerializeField] protected LayerMask includedLayersInCheck = ~0;
 
     [Header("Apparience Settings")]
@@ -55,53 +55,21 @@ public class PlateSwitch : BaseSwitch
         }
     }   
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!enabled)
-        {
-            return;
-        }
-
-        if (playerExclusive)
-        {
-            if (!other.gameObject.CompareTag("Player"))
-            {
-                Debug.LogWarning("Ignoring object '" + other.gameObject.name + "' on plate switch because it is not tagged as 'Player'.");
-                return;
-            }
-        }
-
-        AddWeight(other.gameObject);
-    }
-
-    /// <remarks>
-    /// Respawned elements (such as cubes, rocks, and masks) may not trigger this event when they are destroyed or removed from the scene,
-    /// potentially causing the plate to remain activated.
-    /// </remarks>
-    private void OnTriggerExit(Collider other)
-    {
-        if (!enabled)
-        {
-            return;
-        }
-
-        RemoveWeight(other.gameObject);
-    }
-
     private void Update()
     {
         // Remove objects that have been destroyed or teleported away
-        objectsOnPlate.RemoveWhere(obj => obj == null || !IsObjectStillOnPlate(obj));
+        objectsOnPlate.RemoveWhere(obj => !IsObjectStillOnPlate(obj));
 
         // Detect new objects that have spawned or teleported inside the trigger but were not registered
         Collider plateCollider = GetComponent<Collider>();
+
         if (plateCollider != null)
         {
             Collider[] overlapping = Physics.OverlapBox(
                 plateCollider.bounds.center,
                 plateCollider.bounds.extents,
                 plateCollider.transform.rotation,
-                includedLayersInCheck, // all layers
+                includedLayersInCheck,
                 QueryTriggerInteraction.Collide
             );
 
@@ -114,7 +82,7 @@ public class PlateSwitch : BaseSwitch
                     continue;
                 }
 
-                if (playerExclusive && !obj.CompareTag("Player"))
+                if (isPlayerExclusive && !obj.CompareTag("Player"))
                 {
                     continue;
                 }
@@ -135,6 +103,12 @@ public class PlateSwitch : BaseSwitch
         {
             Debug.Log("Deactivating plate switch due to no objects detected on plate.");
             Deactivate();
+        }
+
+        if(objectsOnPlate.Count > 0 && currentState != SwitchState.Active)
+        {
+            Debug.Log("Activating plate switch due to objects detected on plate.");
+            Activate();
         }
     }
 

@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1989244975792666779}
-  - component: {fileID: 8312179544909713829}
   m_Layer: 0
   m_Name: GymPlatform
   m_TagString: Untagged
@@ -33,19 +32,6 @@ Transform:
   - {fileID: 3749269739992951403}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8312179544909713829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 71286748453126757}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72b225d6dfe1b7340826c6ceb2bae4df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WallEditor
-  wallHeight: 3
 --- !u!1 &3448569089643593453
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,6 +303,7 @@ MonoBehaviour:
   margin: 3
   tileSize: 0.75
   gizmoHeight: 0.1
+  gizmoOffset: 1
   _tiles: []
 --- !u!1 &5699816166225187685
 GameObject:
