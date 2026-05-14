@@ -37,24 +37,6 @@ public class PlateSwitch : BaseSwitch
         Refresh();
     }
 
-    private void RemoveWeight(GameObject weight)
-    {
-        objectsOnPlate.Remove(weight);
-        if (objectsOnPlate.Count == 0)
-        {
-            Deactivate();
-        }
-    }
-
-    private void AddWeight(GameObject weight)
-    {
-        objectsOnPlate.Add(weight);
-        if (currentState != SwitchState.Active)
-        {
-            Activate();
-        }
-    }   
-
     private void Update()
     {
         // Remove objects that have been destroyed or teleported away
