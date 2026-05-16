@@ -264,6 +264,10 @@ PrefabInstance:
       propertyPath: BodyRenderer
       value: 
       objectReference: {fileID: 2134576935149877939}
+    - target: {fileID: 8747963092238407169, guid: befe075e024e9144996dd0d6d51798e4, type: 3}
+      propertyPath: EyesRenderer
+      value: 
+      objectReference: {fileID: 5777129513861088746}
     - target: {fileID: 8801386802802069486, guid: befe075e024e9144996dd0d6d51798e4, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -284,6 +288,11 @@ PrefabInstance:
 --- !u!137 &2134576935149877939 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 4968761913887501472, guid: befe075e024e9144996dd0d6d51798e4, type: 3}
+  m_PrefabInstance: {fileID: 6443275350886094355}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &5777129513861088746 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 668609052309525497, guid: befe075e024e9144996dd0d6d51798e4, type: 3}
   m_PrefabInstance: {fileID: 6443275350886094355}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &6632836825690486462 stripped

@@ -4,7 +4,7 @@ using UnityEngine.Splines;
 
 public class PipeEntryPoint : MonoBehaviour
 {
-    public SplineContainer spline;
+    public TubeSpawner spline;
 
     private float timeFromLast = 0;
 

@@ -12,6 +12,7 @@ public class CharacterStateController : MonoBehaviour
     public bool IsFloating { get; set; }
 
     public Renderer BodyRenderer;
+    public Renderer EyesRenderer;
 
     public bool IsOnFire { get; set; }
     public void SetOnFire(bool value) { IsOnFire = value; }
@@ -36,6 +37,19 @@ public class CharacterStateController : MonoBehaviour
     private void FixedUpdate()
     {
         currentMask?.FixedUpdateLogic();
+    }
+
+    public void DisableRender()
+    {
+        BodyRenderer.enabled = false;
+        EyesRenderer.enabled = false;
+
+    }
+
+    public void EnableRenderer()
+    {
+        BodyRenderer.enabled = true;
+        EyesRenderer.enabled = true;
     }
 
     public void SetHeldObject(Grabbable obj)
