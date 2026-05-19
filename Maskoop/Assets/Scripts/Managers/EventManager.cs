@@ -77,7 +77,7 @@ public static class EventManager
     /// Invoked when a collider enters a pipe entry.
     /// Parameter: collider, spline.
     /// </summary>
-    public static Action<Collider, SplineContainer, bool> OnPipeEntryPoint;
+    public static Action<Collider, TubeSpawner, bool> OnPipeEntryPoint;
 
 
     /// <summary>

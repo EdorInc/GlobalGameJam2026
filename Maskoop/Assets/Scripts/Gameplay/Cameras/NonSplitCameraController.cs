@@ -55,13 +55,12 @@ namespace Gameplay.Cameras
 
         private void LateUpdate()
         {
-            if (target == null || otherTarget == null)
-            {
-                return;
-            }
-
             if (!initialized)
             {
+                if (target == null || otherTarget == null)
+                {
+                    return;
+                }
                 InitializeDefaults();
             }
 
@@ -72,6 +71,7 @@ namespace Gameplay.Cameras
             float effectiveSmoothTime = Mathf.Max(0.01f, smoothTime / dynamicSpeed);
 
             Vector3 desiredPosition = midpoint + defaultOffset;
+            desiredPosition.y = defaultPosition.y;
             Quaternion desiredRotation = defaultRotation;
 
             if (usePositionRotationWiden)

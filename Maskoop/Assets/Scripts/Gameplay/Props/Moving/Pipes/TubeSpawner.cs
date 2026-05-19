@@ -17,8 +17,12 @@ public class TubeSpawner : MonoBehaviour
     public PipeEntryPoint reverseEntry;
 
     public int gridSize = 1;
+
+    public List<Vector3> positionList;
+
     private void Start()
     {
+        positionList = new List<Vector3>();
         CalculateSegments();
         Generate();
         directEntry.transform.position = this.spline.EvaluatePosition(0f);
@@ -182,7 +186,9 @@ public class TubeSpawner : MonoBehaviour
         Vector3 prevPos = Vector3.zero;
         Vector3 prevDir = Vector3.forward;
 
-        for (int i = 1; i < segments - 1; i++)
+        positionList = new List<Vector3>();
+
+        for (int i = 0; i < segments; i++)
         {
             prefabUse = tubePrefab;
             float t = i / (float)(segments - 1);
@@ -222,6 +228,7 @@ public class TubeSpawner : MonoBehaviour
             if (isTurn)
             {
                 Instantiate(sideTurnPrefab, SnapToGrid(pos), rot, transform);
+                positionList.Add(SnapToGrid(pos));
 
                 prevDir = dir;
                 prevPos = pos;
@@ -252,6 +259,11 @@ public class TubeSpawner : MonoBehaviour
                     pos = new Vector3(prevPos.x, prevPos.y, pos.z);
                 }
             }
+            positionList.Add(SnapToGrid(pos));
+            if (i == 0 || i == segments - 1)
+            {
+                continue;
+            }
 
             Instantiate(prefabUse, SnapToGrid(pos), rot, transform);
 
@@ -261,12 +273,12 @@ public class TubeSpawner : MonoBehaviour
         }
     }
 
-    Vector3 SnapToGrid(Vector3 pos)
+    public static Vector3 SnapToGrid(Vector3 pos)
     {
         return new Vector3(
-            Mathf.Round(pos.x / gridSize) * gridSize,
-            Mathf.Round(pos.y / gridSize) * gridSize,
-            Mathf.Round(pos.z / gridSize) * gridSize
+            Mathf.Round(pos.x),
+            Mathf.Round(pos.y),
+            Mathf.Round(pos.z)
         );
     }
 }
