@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp-Editor::BlockDefinitionSO
   m_blockId: dirt ground
   m_displayName: Dirt Ground
-  m_previewTexture: {fileID: 2800000, guid: 22d65c168f862704abdacd2f4316d801, type: 3}
+  m_previewTexture: {fileID: 2800000, guid: 09b83b0472217ef49b0741fba2528ccc, type: 3}
   m_prefab: {fileID: 6487881303263944399, guid: 0c1786244f62f4e48abcfc05475a155a, type: 3}

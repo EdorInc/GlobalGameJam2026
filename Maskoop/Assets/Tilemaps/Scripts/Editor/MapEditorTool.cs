@@ -44,6 +44,13 @@ public static class MapEditorTool
     static MapEditorTool()
     {
         SceneView.duringSceneGui += OnSceneGUI;
+        Undo.undoRedoPerformed += OnUndoRedoPerformed;
+    }
+
+    private static void OnUndoRedoPerformed()
+    {
+        if (s_currentMap != null)
+            MapRenderer.RebuildAll(s_currentMap);
     }
 
     public static void SetBlock(BlockDefinitionSO block) => s_selectedBlock = block;
@@ -83,6 +90,8 @@ public static class MapEditorTool
         s_currentMap = AssetDatabase.LoadAssetAtPath<MapDataSO>(path);
     }
 
+    private static int s_undoGroup = -1;
+
     /// <summary>
     /// Handles Scene view input, preview rendering, and grid drawing.
     /// </summary>
@@ -103,8 +112,7 @@ public static class MapEditorTool
         UpdateGhostPreview(hoveredCell);
         DrawGridGizmos();
 
-        if (hoveredCell.HasValue)
-            HandleInput(hoveredCell.Value);
+        HandleInput(hoveredCell);
     }
 
     /// <summary>
@@ -138,25 +146,29 @@ public static class MapEditorTool
     /// <summary>
     /// Processes mouse input for placing or erasing blocks.
     /// </summary>
-    private static void HandleInput(Vector3Int cell)
+    private static void HandleInput(Vector3Int? cell)
     {
         Event e = Event.current;
         if (e.button != 0 || e.alt) return;
 
-        if (e.type == EventType.MouseDown)
+        if (e.type == EventType.MouseDown && cell.HasValue)
         {
-            PaintCell(cell);
-            s_lastPaintedCell = cell;
+            Undo.IncrementCurrentGroup();
+            Undo.SetCurrentGroupName(s_isErasing ? "Erase Blocks" : "Paint Blocks");
+            s_undoGroup = Undo.GetCurrentGroup();
+
+            PaintCell(cell.Value);
+            s_lastPaintedCell = cell.Value;
             e.Use();
         }
-        else if (e.type == EventType.MouseDrag)
+        else if (e.type == EventType.MouseDrag && cell.HasValue)
         {
             if (s_lastPaintedCell.HasValue)
-                PaintLine(s_lastPaintedCell.Value, cell);
+                PaintLine(s_lastPaintedCell.Value, cell.Value);
             else
-                PaintCell(cell);
+                PaintCell(cell.Value);
 
-            s_lastPaintedCell = cell;
+            s_lastPaintedCell = cell.Value;
             e.Use();
         }
         else if (e.type == EventType.MouseUp)
@@ -165,6 +177,12 @@ public static class MapEditorTool
             {
                 MapRenderer.RebuildAll(s_currentMap);
                 s_isDirty = false;
+            }
+
+            if (s_undoGroup >= 0)
+            {
+                Undo.CollapseUndoOperations(s_undoGroup);
+                s_undoGroup = -1;
             }
             s_lastPaintedCell = null;
         }

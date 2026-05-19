@@ -25,11 +25,43 @@ MonoBehaviour:
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
+  - BlockId: 
+    IsEmpty: 0
+  - BlockId: 
+    IsEmpty: 0
+  - BlockId: 
+    IsEmpty: 0
+  - BlockId: 
+    IsEmpty: 0
+  - BlockId: 
+    IsEmpty: 0
+  - BlockId: 
+    IsEmpty: 0
+  - BlockId: 
+    IsEmpty: 0
+  - BlockId: 
+    IsEmpty: 0
+  - BlockId: 
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
+  - BlockId: 
+    IsEmpty: 0
+  - BlockId: 
+    IsEmpty: 0
+  - BlockId: 
+    IsEmpty: 0
+  - BlockId: 
+    IsEmpty: 0
+  - BlockId: 
+    IsEmpty: 0
+  - BlockId: 
+    IsEmpty: 0
+  - BlockId: 
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
@@ -47,14 +79,14 @@ MonoBehaviour:
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
-  - BlockId: default wall
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
+    IsEmpty: 0
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -65,16 +97,14 @@ MonoBehaviour:
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
-  - BlockId: default wall
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -85,16 +115,14 @@ MonoBehaviour:
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
-  - BlockId: default wall
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -105,16 +133,14 @@ MonoBehaviour:
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
-  - BlockId: default ground
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -128,7 +154,7 @@ MonoBehaviour:
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -143,12 +169,10 @@ MonoBehaviour:
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
-  - BlockId: default wall
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -161,14 +185,14 @@ MonoBehaviour:
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -183,18 +207,16 @@ MonoBehaviour:
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
-  - BlockId: default ground
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -202,13 +224,13 @@ MonoBehaviour:
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -219,19 +241,17 @@ MonoBehaviour:
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
-  - BlockId: default wall
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
@@ -241,14 +261,12 @@ MonoBehaviour:
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
-  - BlockId: default wall
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -263,18 +281,16 @@ MonoBehaviour:
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
-  - BlockId: default ground
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -282,7 +298,7 @@ MonoBehaviour:
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -293,25 +309,23 @@ MonoBehaviour:
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
-  - BlockId: default wall
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
@@ -321,21 +335,19 @@ MonoBehaviour:
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
-  - BlockId: default wall
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
@@ -344,17 +356,17 @@ MonoBehaviour:
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -362,11 +374,11 @@ MonoBehaviour:
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
-  - BlockId: rock spawner
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -375,14 +387,14 @@ MonoBehaviour:
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -399,23 +411,21 @@ MonoBehaviour:
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
-  - BlockId: default wall
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
@@ -424,17 +434,17 @@ MonoBehaviour:
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -442,9 +452,9 @@ MonoBehaviour:
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: ground taget switch
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -462,10 +472,10 @@ MonoBehaviour:
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
@@ -479,10 +489,8 @@ MonoBehaviour:
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
-  - BlockId: default wall
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -504,17 +512,17 @@ MonoBehaviour:
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -522,7 +530,7 @@ MonoBehaviour:
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -542,12 +550,12 @@ MonoBehaviour:
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
@@ -559,10 +567,8 @@ MonoBehaviour:
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
-  - BlockId: default wall
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -590,11 +596,11 @@ MonoBehaviour:
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -602,13 +608,13 @@ MonoBehaviour:
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -622,13 +628,13 @@ MonoBehaviour:
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -639,16 +645,14 @@ MonoBehaviour:
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
-  - BlockId: default wall
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -670,11 +674,11 @@ MonoBehaviour:
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default ground
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -687,8 +691,6 @@ MonoBehaviour:
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
-  - BlockId: default wall
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -708,7 +710,7 @@ MonoBehaviour:
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -728,7 +730,7 @@ MonoBehaviour:
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -765,16 +767,14 @@ MonoBehaviour:
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
+    IsEmpty: 0
   - BlockId: 
-    IsEmpty: 1
-  - BlockId: default wall
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -788,13 +788,13 @@ MonoBehaviour:
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
@@ -808,11 +808,11 @@ MonoBehaviour:
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0
-  - BlockId: default wall
+  - BlockId: 
     IsEmpty: 0

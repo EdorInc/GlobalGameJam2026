@@ -12033,7 +12033,7 @@ MonoBehaviour:
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
-    IsEmpty: 0
+    IsEmpty: 1
   - BlockId: 
     IsEmpty: 0
   - BlockId: 
