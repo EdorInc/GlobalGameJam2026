@@ -78,10 +78,10 @@ Material:
     - _Surface_Foam_Blend: 1
     - _Surface_Foam_Color_Blend: 0
     - _Surface_Foam_Cutoff: 0.131
-    - _Surface_Foam_Direction: 0
-    - _Surface_Foam_Distortion: 0
-    - _Surface_Foam_Speed: 0
-    - _Surface_Foam_Tiling: 1
+    - _Surface_Foam_Direction: 1
+    - _Surface_Foam_Distortion: 0.4
+    - _Surface_Foam_Speed: 0.05
+    - _Surface_Foam_Tiling: 14.5
     - _Wave_Length: 1.5
     - _Wave_Speed: 0.2
     - _Wave_Steepness: 0.05
@@ -95,7 +95,7 @@ Material:
     - _Shallow_Color: {r: 0.6039216, g: 0.8018868, b: 0.7984465, a: 1}
     - _Shore_Color: {r: 0, g: 0, b: 0, a: 0}
     - _Specular_Color: {r: 1, g: 0.5916522, b: 0, a: 0.15686275}
-    - _Surface_Foam_Color: {r: 0, g: 0, b: 0, a: 0}
+    - _Surface_Foam_Color: {r: 1, g: 1, b: 1, a: 0}
     - _Wave_Directions: {r: 0, g: 0.5, b: 1, a: 0.2}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
