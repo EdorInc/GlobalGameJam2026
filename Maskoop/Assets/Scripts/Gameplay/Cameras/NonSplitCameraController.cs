@@ -17,6 +17,10 @@ namespace Gameplay.Cameras
         [SerializeField] private float maxPlayerDistance = 8f;
         [Tooltip("Distance between players at which the camera reaches its maximum widen state.")]
         [SerializeField] private float maxWidenDistance = 14f;
+        
+        [Header("Height")]
+        [Tooltip("Maximum height at which the camera can be placed.")]
+        [SerializeField] private float maxCameraHeight = 16f;
 
         [Header("Widen (Position/Rotation)")]
         [Tooltip("If true, widen by moving/rotating the camera toward the max pose.")]
@@ -47,6 +51,9 @@ namespace Gameplay.Cameras
         private bool initialized;
         private float lastDistance;
         private Vector3 positionVelocity;
+        private GroundDetector ground1;
+        private GroundDetector ground2;
+        private bool heightUnlocked;
 
         private void Awake()
         {
@@ -79,6 +86,23 @@ namespace Gameplay.Cameras
                 Vector3 desiredOffset = Vector3.Lerp(defaultOffset, widenedOffset, widenT);
                 desiredPosition = midpoint + desiredOffset;
                 desiredRotation = Quaternion.Slerp(defaultRotation, Quaternion.Euler(widenedCameraEuler), widenT);
+            }
+            
+            bool bothGrounded = ground1 != null && ground2 != null && ground1.IsGrounded && ground2.IsGrounded;
+            if (!heightUnlocked && bothGrounded)
+            {
+                heightUnlocked = true;
+            }
+            
+            if (!heightUnlocked) 
+            {
+                // Mientras no estén grounded, mantener la altura inicial
+                desiredPosition.y = defaultPosition.y;
+            }
+            else
+            {
+                // Una vez grounded, seguir el midpoint pero con tope de altura
+                desiredPosition.y = Mathf.Min(desiredPosition.y, maxCameraHeight);
             }
 
             transform.position = Vector3.SmoothDamp(
@@ -115,6 +139,10 @@ namespace Gameplay.Cameras
             {
                 seeThrough.SetPlayers(target, otherTarget);
             }
+            
+            ground1 = target.GetComponentInParent<GroundDetector>() ?? target.GetComponentInChildren<GroundDetector>();
+            ground2 = otherTarget.GetComponentInParent<GroundDetector>() ?? otherTarget.GetComponentInChildren<GroundDetector>();
+            heightUnlocked = false;
 
             InitializeDefaults();
         }
