@@ -33,7 +33,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3490537177383912981}
@@ -143,6 +143,9 @@ MonoBehaviour:
   timeFlickering: 2
   baseflickerInterval: 0.2
   waterMaterial: {fileID: 2100000, guid: 1ff64b3b795bc5e419521c04fdac7acd, type: 2}
+  maskRenderer: {fileID: 7470669002063117906}
+  playerInPipePrefab: {fileID: 1499764819886089207, guid: 82c145c6dac5fda4991c7b10f699cb6c, type: 3}
+  speed: 5
 --- !u!114 &2648263749171324702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,6 +291,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f8ba46274a1f0c4db840564ab49531e, type: 3}
+--- !u!23 &7470669002063117906 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 2f8ba46274a1f0c4db840564ab49531e, type: 3}
+  m_PrefabInstance: {fileID: 8101043625449546454}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8639603092391822653 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2f8ba46274a1f0c4db840564ab49531e, type: 3}
