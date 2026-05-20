@@ -21,6 +21,8 @@ public class WaterMask : BaseMask
     private int tubeIndex = 0;
     private Rigidbody playerRb;
     private CharacterMovementController characteMovement;
+    private List<Collider> ignoredWalls = new();
+    private float previousSpeedMultiplier = 1f;
 
     private bool directMovement = true;
     public override void OnEquip(CharacterStateController characterState)
@@ -28,18 +30,40 @@ public class WaterMask : BaseMask
         base.OnEquip(characterState);
 
         previousMaterial = characterState.GetBodyRenderer().material;
-
         characterState.GetBodyRenderer().material = waterMaterial;
 
-        EventManager.OnWaterWall += GoThroughWall;
+        EventManager.OnWaterWallEnter += EnterWaterWall;
+        EventManager.OnWaterWallExit += ExitWaterWall;
+
         EventManager.OnPipeEntryPoint += PipeEntered;
+
+        IgnoreAllWaterWalls(true);
     }
 
     public override void OnUnequip()
     {
         characterState.GetBodyRenderer().material = previousMaterial;
+
         EventManager.OnPipeEntryPoint -= PipeEntered;
-        EventManager.OnWaterWall -= GoThroughWall;
+
+        EventManager.OnWaterWallEnter -= EnterWaterWall;
+        EventManager.OnWaterWallExit -= ExitWaterWall;
+
+        IgnoreAllWaterWalls(false);
+    }
+
+    private void IgnoreAllWaterWalls(bool ignore)
+    {
+        Collider playerCollider = characterState.GetComponent<Collider>();
+
+        WaterWall[] walls = FindObjectsByType<WaterWall>(FindObjectsSortMode.InstanceID);
+
+        foreach (WaterWall wall in walls)
+        {
+            Collider wallCollider = wall.GetComponent<Collider>();
+
+            Physics.IgnoreCollision(playerCollider, wallCollider, ignore);
+        }
     }
 
     public override void UpdateLogic()
@@ -148,23 +172,26 @@ public class WaterMask : BaseMask
     }
 
 
-    private void GoThroughWall(Collision collision, Transform wallTransform)
+    private void EnterWaterWall(Collider player, float multiplier)
     {
+        if (!characterState.IsMyPlayer(player.gameObject))
+            return;
 
-        Vector3 playerPosition = collision.gameObject.transform.position;
-        Vector3 wallPosition = collision.contacts[0].point;
+        CharacterMovementController movement =
+            player.GetComponent<CharacterMovementController>();
 
-        Vector3 dir = wallPosition - playerPosition;
-        float distance  = Vector3.Distance(playerPosition, wallPosition);
-
-        Vector3 newPosition = wallPosition + dir * distance * 2;
-
-        collision.gameObject.transform.position = new Vector3( newPosition.x, playerPosition.y, newPosition.z);
-
+        movement.SetSpeedMultiplier(multiplier);
     }
 
-    private void StartAnimation()
+    private void ExitWaterWall(Collider player)
     {
-        characterState.DisableRender();
+        if (!characterState.IsMyPlayer(player.gameObject))
+            return;
+
+        CharacterMovementController movement =
+            player.GetComponent<CharacterMovementController>();
+
+        movement.SetSpeedMultiplier(1f);
     }
+
 }

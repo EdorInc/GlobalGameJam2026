@@ -65,6 +65,7 @@ public class CharacterMovementController : MonoBehaviour
     private bool thrownByEnemy = false;
     private bool wasFalling = false;
     private bool movementStoped = false;
+    private float speedMultiplier = 1;
 
     private bool IsCharging => characterState.IsChargingThrow;
     private bool IsGrounded => groundDetector.IsGrounded;
@@ -175,6 +176,11 @@ public class CharacterMovementController : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(desiredForward);
             rigidbody.MoveRotation(targetRotation);
         }
+    }
+
+    internal void SetSpeedMultiplier(float multiplier)
+    {
+        speedMultiplier = multiplier;
     }
 
     public void ApplyRoll()
@@ -319,6 +325,8 @@ public class CharacterMovementController : MonoBehaviour
 
             RotateTowardsMovementDirection(finalVelocity, 1.0f);
         }
+
+        rigidbody.linearVelocity *= speedMultiplier;
 
     }
 
