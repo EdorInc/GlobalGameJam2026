@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: 0.7071068, w: -0.7071068}
   m_LocalPosition: {x: 5.0000005, y: 2.77, z: 2.2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 0.3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 293872813150462582}
@@ -192,7 +192,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5168124344146135267, guid: 2d34ffe5689006544b088201a1719ed7, type: 3}
       propertyPath: VelocityModule.y.scalar
-      value: -2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5168124344146135267, guid: 2d34ffe5689006544b088201a1719ed7, type: 3}
       propertyPath: VelocityModule.z.scalar
@@ -208,7 +208,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5168124344146135267, guid: 2d34ffe5689006544b088201a1719ed7, type: 3}
       propertyPath: VelocityModule.y.minScalar
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5168124344146135267, guid: 2d34ffe5689006544b088201a1719ed7, type: 3}
       propertyPath: VelocityModule.z.minScalar
@@ -236,7 +236,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5168124344146135267, guid: 2d34ffe5689006544b088201a1719ed7, type: 3}
       propertyPath: InitialModule.startSpeed.scalar
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5168124344146135267, guid: 2d34ffe5689006544b088201a1719ed7, type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
@@ -252,7 +252,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5168124344146135267, guid: 2d34ffe5689006544b088201a1719ed7, type: 3}
       propertyPath: InitialModule.startSpeed.minScalar
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5168124344146135267, guid: 2d34ffe5689006544b088201a1719ed7, type: 3}
       propertyPath: InitialModule.startColor.maxColor.a
@@ -260,7 +260,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5168124344146135267, guid: 2d34ffe5689006544b088201a1719ed7, type: 3}
       propertyPath: InitialModule.gravityModifier.scalar
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 5168124344146135267, guid: 2d34ffe5689006544b088201a1719ed7, type: 3}
       propertyPath: InitialModule.startSpeed.minMaxState

@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -52,6 +53,7 @@ public class CharacterMovementController : MonoBehaviour
 
     private GroundDetector groundDetector;
 
+    
     private CharacterStateController characterState;
     private GameObject currentPlatform => groundDetector.MovingPlatform;
     private bool wasGrounded = false;
@@ -62,6 +64,7 @@ public class CharacterMovementController : MonoBehaviour
     private float currentMovement = 0;
     private bool thrownByEnemy = false;
     private bool wasFalling = false;
+    private bool movementStoped = false;
 
     private bool IsCharging => characterState.IsChargingThrow;
     private bool IsGrounded => groundDetector.IsGrounded;
@@ -105,6 +108,17 @@ public class CharacterMovementController : MonoBehaviour
         EventManager.OnLitOnFire -= IsBurning;
     }
 
+    internal void StopMovement()
+    {
+        movementStoped = true;
+    }
+
+    internal void ResumeMovement()
+    {
+        movementStoped = false;
+    }
+
+
     private void Update()
     {
         if(isStunned)
@@ -146,6 +160,10 @@ public class CharacterMovementController : MonoBehaviour
                 }
             }
             isBeingThrown = active;
+        }
+        if (characterState.IsMyPlayer(thrower))
+        {
+            ResumeMovement();
         }
     }
     void RotateTowardsMovementDirection(Vector3 movementVector, float turnSpeedMultiplier = 1.0f)
@@ -245,20 +263,31 @@ public class CharacterMovementController : MonoBehaviour
             if(!isRolling)
             {
                 // Apply a forward or backward velocity based on player input
-                Vector3 movementVector = horizontalInput * ((!IsCharging) ? moveSpeed : throwingMoveSpeed);
+                Vector3 movementVector = horizontalInput;
 
-                Vector3 finalVelocity = movementVector;
 
-                if (!IsCharging)
+                RotateTowardsMovementDirection(movementVector, 1.0f);
+
+                if (IsCharging)
                 {
-                    rigidbody.linearVelocity = finalVelocity;
+                    if (movementStoped)
+                    {
+                        movementVector *= 0;
+                    }
+                    else{
+                        movementVector *= throwingMoveSpeed;
+                    }
                 }
                 else
                 {
-                    rigidbody.linearVelocity = Vector3.zero;
+                    movementVector *= moveSpeed;
                 }
 
-                RotateTowardsMovementDirection(movementVector, 1.0f);
+                Vector3 finalVelocity = movementVector;
+
+                rigidbody.linearVelocity = finalVelocity;
+
+                
             }        
 
         }

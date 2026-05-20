@@ -24,6 +24,15 @@ public class CharacterStateController : MonoBehaviour
     private Throw throwComponent;
     private Grab grabComponent;
 
+    private void OnEnable()
+    {
+        EventManager.OnRespawn += OnRespawn;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.OnRespawn -= OnRespawn;
+    }
     private void Start()
     {
         throwComponent = GetComponent<Throw>();
@@ -39,6 +48,16 @@ public class CharacterStateController : MonoBehaviour
         currentMask?.FixedUpdateLogic();
     }
 
+    private void OnRespawn(GameObject player)
+    {
+        if (IsMyPlayer(player))
+        {
+            if (IsHoldingObject)
+            {
+                //grabComponent.DropObject();
+            }
+        } 
+    }
     public void DisableRender()
     {
         BodyRenderer.enabled = false;

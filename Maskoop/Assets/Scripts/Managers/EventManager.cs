@@ -115,6 +115,11 @@ public static class EventManager
     /// Parameters: damaged GameObject, damage source position.
     /// </summary>
     public static Action<GameObject, Vector3> OnDamageRecived;
+    /// <summary>
+    /// Invoked when a GameObject respawns
+    /// Parameters: respawned GameObject.
+    /// </summary>
+    public static Action<GameObject> OnRespawn;
 
     // -------------------- Navigation Events --------------------
 

@@ -68,8 +68,8 @@ public class NavMeshManager : MonoBehaviour
         Vector3 p = worldPosition;
 
         return new Vector2(
-            Mathf.Floor(p.x) + 0.5f,
-            Mathf.Floor(p.z) + 0.5f
+            Mathf.Floor(p.x),
+            Mathf.Floor(p.z)
         );
     }
 

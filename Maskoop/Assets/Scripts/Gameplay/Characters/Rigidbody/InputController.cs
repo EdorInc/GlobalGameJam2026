@@ -70,74 +70,15 @@ public class InputController : MonoBehaviour
         }
     }
 
-    /*
-    private RigidbodyCharacterController charController;
-    private Grab grabComponent;
-    private Throw throwComponent;
-    private EquipUnequipController equipUnequipComponent;
-    private PlayerInput playerInput;
-
-    private InputAction moveAction;
-    private InputAction jumpAction;
-
-    private InputAction grabAction;
-    private InputAction dropAction;
-
-    private InputAction throwAction;
-
-    private InputAction equipAction;
-
-    private void Awake()
+    public void OnStop(CallbackContext ctx)
     {
-        charController = GetComponent<RigidbodyCharacterController>();
-        grabComponent = GetComponent<Grab>();
-        throwComponent = GetComponent<Throw>();
-        equipUnequipComponent = GetComponent<EquipUnequipController>();
-
-        playerInput = GetComponent<PlayerInput>();
-
-        moveAction = playerInput.actions["Move"];
-        jumpAction = playerInput.actions["Jump"];
-        grabAction = playerInput.actions["Grab"];
-        dropAction = playerInput.actions["Drop"];
-        throwAction = playerInput.actions["Throw"];
-        equipAction = playerInput.actions["Equip"];
-
-        throwAction.started += OnThrowStarted;
-        throwAction.canceled += OnThrowReleased;
+        if (ctx.started)
+        {
+            playerController.StopMovement();
+        }
+        else if (ctx.canceled)
+        {
+            playerController.ResumeMovement();
+        }
     }
-
-    private void FixedUpdate()
-    {
-        Vector2 move = moveAction.ReadValue<Vector2>();
-
-        int vertical = Mathf.RoundToInt(move.y);
-        int horizontal = Mathf.RoundToInt(move.x);
-
-        bool jump = jumpAction.IsPressed();
-
-        charController.ForwardInput = horizontal;
-        charController.SideInput = vertical;
-        charController.JumpInput = jump;
-
-        bool grab = grabAction.IsPressed();
-        bool drop = dropAction.IsPressed();
-        bool equip = equipAction.IsPressed();
-
-        if (grab) grabComponent.GrabObject();
-        else if (drop) grabComponent.DropObject();
-
-        if (equip) equipUnequipComponent.ChangeEquipState();
-    }
-
-    private void OnThrowStarted(InputAction.CallbackContext ctx)
-    {
-        throwComponent.ChargeObject();
-    }
-
-    private void OnThrowReleased(InputAction.CallbackContext ctx)
-    {
-        throwComponent.ThrowObject();
-    }
-    */
 }

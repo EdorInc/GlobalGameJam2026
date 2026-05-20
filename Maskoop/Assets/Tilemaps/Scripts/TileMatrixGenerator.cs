@@ -166,7 +166,7 @@ public class TileMatrixGenerator : MonoBehaviour
 
                 tiles[x, z] = new TileData
                 {
-                    position = position,
+                    position = position + Vector3.up,
                     tileType = type,
                     occupiedBy = occupiedBy
                 };
