@@ -351,6 +351,11 @@ public class Grab : MonoBehaviour
             }
         }
 
+        if (characterState.IsChargingThrow)
+        {
+            return;
+        }
+
         Collider collider = grabbedObject.GetComponent<Collider>();
 
         if (collider != null)

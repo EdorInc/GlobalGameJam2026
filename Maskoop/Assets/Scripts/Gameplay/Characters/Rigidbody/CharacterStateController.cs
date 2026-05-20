@@ -143,8 +143,18 @@ public class CharacterStateController : MonoBehaviour
         }
     }
 
-    private void DelayDrop()
+    public void DelayDrop()
     {
-        grabComponent.DropObject();
+        if (IsHoldingObject)
+        {
+            if (IsChargingThrow)
+            {
+                throwComponent.ThrowObject();
+            }
+            else
+            {
+                grabComponent.DropObject();
+            }
+        }
     }
 }

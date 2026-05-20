@@ -177,10 +177,12 @@ public class WaterMask : BaseMask
         if (!characterState.IsMyPlayer(player.gameObject))
             return;
 
-        CharacterMovementController movement =
+        characteMovement =
             player.GetComponent<CharacterMovementController>();
 
-        movement.SetSpeedMultiplier(multiplier);
+        characterState.DelayDrop();
+
+        characteMovement.SetSpeedMultiplier(multiplier);
     }
 
     private void ExitWaterWall(Collider player)
@@ -188,10 +190,8 @@ public class WaterMask : BaseMask
         if (!characterState.IsMyPlayer(player.gameObject))
             return;
 
-        CharacterMovementController movement =
-            player.GetComponent<CharacterMovementController>();
-
-        movement.SetSpeedMultiplier(1f);
+        characteMovement.SetSpeedMultiplier(1f);
+        characteMovement = null;
     }
 
 }
