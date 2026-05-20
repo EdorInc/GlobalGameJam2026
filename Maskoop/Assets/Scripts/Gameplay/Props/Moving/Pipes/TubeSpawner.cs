@@ -25,8 +25,6 @@ public class TubeSpawner : MonoBehaviour
         positionList = new List<Vector3>();
         CalculateSegments();
         Generate();
-        directEntry.transform.position = this.spline.EvaluatePosition(0f);
-        reverseEntry.transform.position = this.spline.EvaluatePosition(1f);
     }
 
     private void OnEnable()
@@ -49,8 +47,6 @@ public class TubeSpawner : MonoBehaviour
         CalculateSegments();
 
         Generate();
-        directEntry.transform.position = this.spline.EvaluatePosition(0f);
-        reverseEntry.transform.position = this.spline.EvaluatePosition(1f);
     }
 
     private void CalculateSegments()
