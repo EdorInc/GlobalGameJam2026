@@ -81,4 +81,14 @@ public class InputController : MonoBehaviour
             playerController.ResumeMovement();
         }
     }
+
+    public void OnCancelThrow(CallbackContext ctx)
+    {
+        if (ctx.started)
+        {
+            throwComponent.CancelThrow();
+        }
+    }
+
+
 }

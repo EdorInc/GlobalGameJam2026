@@ -192,7 +192,7 @@ public class Throw : MonoBehaviour
 
     public void ThrowObject()
     {
-        if (!grabbedObject || !grabComponent.grabbedObject)
+        if (!grabbedObject || !grabComponent.grabbedObject || !charging)
         {
             Debug.Log("No object to throw.");
             return;
@@ -406,6 +406,31 @@ public class Throw : MonoBehaviour
 
         trajectoryRenderer.positionCount = 0;
         landingMarker.SetActive(false);
+    }
+
+    public void CancelThrow()
+    {
+        if (!charging)
+            return;
+
+        charging = false;
+
+        currentForceFoward = 0f;
+        currentForceUp = 0f;
+
+        decreasingForce = false;
+        maxForceHoldTimer = 0f;
+
+        AudioSystem.StopDynamicSFX(AudioSystem.SoundLibrary?.chargeThrow, 0);
+
+        ClearTrajectory();
+
+        if (grabbedObject.CompareTag("Mask"))
+        {
+            equipComponent.ChangeEquipState();
+        }
+
+
     }
 
     private void EndTrajectory(Vector3 position, Vector3 normal, Quaternion? rotation = null)

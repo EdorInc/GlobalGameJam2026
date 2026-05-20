@@ -54,7 +54,11 @@ public class CharacterStateController : MonoBehaviour
         {
             if (IsHoldingObject)
             {
-                //grabComponent.DropObject();
+                if (IsChargingThrow)
+                {
+                    throwComponent.CancelThrow();
+                }
+                grabComponent.DropObject();
             }
         } 
     }
@@ -149,7 +153,7 @@ public class CharacterStateController : MonoBehaviour
         {
             if (IsChargingThrow)
             {
-                throwComponent.ThrowObject();
+                throwComponent.CancelThrow();
             }
             else
             {

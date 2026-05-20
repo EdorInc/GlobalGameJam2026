@@ -31,6 +31,7 @@ public class AirMask : BaseMask
         EventManager.OnAirCurrentEnter -= AirCurrentEnter;
         EventManager.OnAirCurrentExit -= AirCurrentExit;
         EventManager.OnTryingToMove -= StartFlutter;
+        ResetFlutter();
         Destroy(windParticlesObject);
         base.OnUnequip();
     }
