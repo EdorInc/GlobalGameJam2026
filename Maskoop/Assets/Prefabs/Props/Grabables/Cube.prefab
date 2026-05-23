@@ -107,9 +107,7 @@ MonoBehaviour:
   maxThrowForce: {x: 3.5, y: 4}
   minThrowForce: {x: 0, y: 0}
   forceGrowRate: 5
-  highlightLayer:
-    serializedVersion: 2
-    m_Bits: 512
+  highlightLayer: 9
   highlightOnLook: 1
 --- !u!114 &-6151222093157379451
 MonoBehaviour:
@@ -126,6 +124,16 @@ MonoBehaviour:
   respawnPosition: {x: 0, y: 1, z: 0}
   voidDistance: -3
   willDestroy: 1
+  groundCheckMargin: 2
+  numRayChecks: 4
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  rayDistance: 5
+  areaCheck: []
+  showDebugRays: 1
+  createVisualRespawnPosition: 0
+  respawnRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!33 &5890099164501477332
 MeshFilter:
   m_ObjectHideFlags: 0
