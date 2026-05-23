@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 1046204137106339779}
   - component: {fileID: 1287761861270924614}
   - component: {fileID: -5015479517582884354}
+  - component: {fileID: 4797410636319142762}
+  - component: {fileID: 8919352105783077952}
+  - component: {fileID: 3777751225703217900}
   m_Layer: 0
   m_Name: RedMask
   m_TagString: Untagged
@@ -107,9 +110,7 @@ MonoBehaviour:
   maxThrowForce: {x: 6, y: 4}
   minThrowForce: {x: 0, y: 0}
   forceGrowRate: 5
-  highlightLayer:
-    serializedVersion: 2
-    m_Bits: 512
+  highlightLayer: 9
   highlightOnLook: 1
 --- !u!114 &-5015479517582884354
 MonoBehaviour:
@@ -126,6 +127,62 @@ MonoBehaviour:
   equipOffset: 0.3
   equipVerticalOffset: 0.3
   equipOffsetRotation: {x: -0.49987787, y: 0.5001221, z: -0.49987787, w: -0.5001221}
+--- !u!114 &4797410636319142762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6079786050083026125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77f91474cada6fb48aa713739c4d1962, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FireMask
+  timeBeforeRespawn: 5
+  timeFlickering: 2
+  baseflickerInterval: 0.2
+--- !u!114 &8919352105783077952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6079786050083026125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b7d6c44fd5b3e845827b8107cbc3c4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Respawn
+  respawnPosition: {x: 0, y: 0, z: 0}
+  voidDistance: -3
+  willDestroy: 0
+  groundCheckMargin: 2
+  numRayChecks: 4
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  rayDistance: 5
+  areaCheck: []
+  showDebugRays: 1
+  createVisualRespawnPosition: 0
+  respawnRotation: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3777751225703217900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6079786050083026125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 486ae9b69cfbf494ea402f7193819b2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GroundDetector
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  groundCheckDistance: 0.1
 --- !u!1 &7561135809734292149
 GameObject:
   m_ObjectHideFlags: 0

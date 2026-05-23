@@ -72,6 +72,17 @@ public static class EventManager
     /// </summary>
     public static Action<Collider,bool> OnAirCurrentExit;
 
+    /// <summary>
+    /// Invoked when a collider enters a fire.
+    /// Parameter: collider.
+    /// </summary>
+    public static Action<Collider, bool> OnFireEnter;
+
+    /// <summary>
+    /// Invoked when a collider exits a fire.
+    /// Parameter: collider.
+    /// </summary>
+    public static Action<Collider, bool> OnFireExit;
 
     /// <summary>
     /// Invoked when a collider enters a pipe entry.

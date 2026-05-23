@@ -9,7 +9,19 @@ public class OnFire : MonoBehaviour
     {
         if (other.CompareTag("Player") && IsOnFire)
         {
-            EventManager.OnLitOnFire?.Invoke(other);
+            CharacterStateController state = other.GetComponent<CharacterStateController>();
+
+            if (state != null)
+            {
+                BaseMask currentMask = state.GetCurrentMask();
+
+                bool hasFireMask = currentMask is FireMask;
+
+                if (!hasFireMask)
+                {
+                    EventManager.OnLitOnFire?.Invoke(other);
+                }
+            }
         }
     }
 }
