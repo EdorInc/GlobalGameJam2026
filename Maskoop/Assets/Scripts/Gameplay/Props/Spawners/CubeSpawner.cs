@@ -6,7 +6,7 @@ public class CubeSpawner : BaseSpawner
     [Header("Conection Settings")]
     [SerializeField]
     [Tooltip("Channel to use to connect to buttons. Buttons need to have the same channel to activate this object.")]
-    protected int channel = 1;
+    protected int channel = -1;
 
     private void OnEnable()
     {

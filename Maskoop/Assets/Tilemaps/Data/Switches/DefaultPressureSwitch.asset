@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d1e6f89d978ebf4bb854265783acfeb, type: 3}
   m_Name: DefaultPressureSwitch
   m_EditorClassIdentifier: Assembly-CSharp-Editor::BlockDefinitionSO
-  m_blockId: default pressure swicth
+  m_blockId: default pressure switch
   m_displayName: Pressure Plate
   m_previewTexture: {fileID: 0}
   m_prefab: {fileID: 7814919379879521700, guid: a51fd6da4fb6cbe4c90535a58ad95813, type: 3}

@@ -473,6 +473,10 @@ PrefabInstance:
       propertyPath: keepActivatedOnCompletion
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2632870395602302919, guid: 55dc95a95e2a2a6419d53bfb97325519, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 13c84fc1fdde62a4bbb6206cfaa83a08, type: 2}
     - target: {fileID: 3548853647924361369, guid: 55dc95a95e2a2a6419d53bfb97325519, type: 3}
       propertyPath: m_LocalPosition.x
       value: -17.639688

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d1e6f89d978ebf4bb854265783acfeb, type: 3}
   m_Name: DefaultTargetSwitch
   m_EditorClassIdentifier: Assembly-CSharp-Editor::BlockDefinitionSO
-  m_blockId: default target swicth
+  m_blockId: default target switch
   m_displayName: Target
   m_previewTexture: {fileID: 0}
   m_prefab: {fileID: 7814919379879521700, guid: 7058b4fb72f143245af6ee5bde77a598, type: 3}
