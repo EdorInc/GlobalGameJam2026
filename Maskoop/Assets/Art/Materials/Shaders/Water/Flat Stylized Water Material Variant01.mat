@@ -37,9 +37,17 @@ Material:
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs: []
+    m_TexEnvs:
+    - _Surface_Foam_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - WORLD_SPACE_UV: 1
+    - _Intersection_Foam_Depth: 1.91
+    - _Intersection_Foam_Direction: 1
+    - _Intersection_Foam_Fade: 0.563
     - _Lighting_Hardness: 0.3
     - _Lighting_Smoothness: 0.075
     - _Refraction_Scale: 0.4
@@ -49,6 +57,6 @@ Material:
     m_Colors:
     - _Horizon_Color: {r: 0, g: 0, b: 0, a: 0}
     - _Specular_Color: {r: 1, g: 0.8126813, b: 0, a: 0.15686275}
-    - _Surface_Foam_Color: {r: 0, g: 0, b: 0, a: 0.047058824}
+    - _Surface_Foam_Color: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

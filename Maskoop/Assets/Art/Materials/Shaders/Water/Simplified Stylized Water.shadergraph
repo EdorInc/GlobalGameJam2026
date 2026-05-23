@@ -1907,8 +1907,8 @@
     "m_ObjectId": "0f2da41ca2ae455c9ce33cbe7680eaa2",
     "m_Title": "Refracted UV",
     "m_Position": {
-        "x": -3126.999755859375,
-        "y": -1973.9996337890625
+        "x": -3127.0,
+        "y": -1974.0
     }
 }
 
@@ -2590,8 +2590,8 @@
     "m_ObjectId": "2405771c62e44faa97c63051c025bcb6",
     "m_Title": "Blended Normals",
     "m_Position": {
-        "x": -3572.999755859375,
-        "y": -2262.999755859375
+        "x": -3573.0,
+        "y": -2263.0
     }
 }
 
@@ -3002,7 +3002,7 @@
     "m_Title": "Lighting",
     "m_Position": {
         "x": -2166.0,
-        "y": -2262.999755859375
+        "y": -2263.0
     }
 }
 
@@ -3937,10 +3937,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -2334.0,
-            "y": -88.50003814697266,
-            "width": 203.5,
-            "height": 34.00004196166992
+            "x": -2625.000244140625,
+            "y": -93.99999237060547,
+            "width": 203.0,
+            "height": 33.99996566772461
         }
     },
     "m_Slots": [
@@ -4163,8 +4163,8 @@
     "m_ObjectId": "4581f27f7b9d419f84520c8ba0672770",
     "m_Title": "Underwater Color",
     "m_Position": {
-        "x": -1801.0001220703125,
-        "y": -1450.999755859375
+        "x": -1801.0,
+        "y": -1451.0
     }
 }
 
@@ -4239,7 +4239,7 @@
     "m_Title": "Refracted UV",
     "m_Position": {
         "x": -2997.0,
-        "y": -1447.999755859375
+        "y": -1448.0
     }
 }
 
@@ -5842,7 +5842,7 @@
     "m_Title": "Intersection Foam",
     "m_Position": {
         "x": -2354.0,
-        "y": 14.00020980834961
+        "y": 14.0
     }
 }
 
@@ -6957,8 +6957,8 @@
     "m_ObjectId": "99939e672fbc4e0f870b9d27948a800c",
     "m_Title": "Intersection Foam Mask",
     "m_Position": {
-        "x": -2359.0,
-        "y": -341.9998474121094
+        "x": -2650.0,
+        "y": -342.0
     }
 }
 
@@ -8046,8 +8046,8 @@
     "m_ObjectId": "be34f468e9c94adea836b89dd150495f",
     "m_Title": "Exponential Fog",
     "m_Position": {
-        "x": -575.0001220703125,
-        "y": -1217.999755859375
+        "x": -575.0,
+        "y": -1218.0
     }
 }
 
@@ -9476,10 +9476,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -2275.5,
-            "y": -234.5000457763672,
+            "x": -2566.000244140625,
+            "y": -240.0,
             "width": 145.0,
-            "height": 128.50001525878907
+            "height": 128.0
         }
     },
     "m_Slots": [
@@ -9502,7 +9502,7 @@
             }
         ]
     },
-    "m_ScreenSpaceType": 0
+    "m_ScreenSpaceType": 1
 }
 
 {

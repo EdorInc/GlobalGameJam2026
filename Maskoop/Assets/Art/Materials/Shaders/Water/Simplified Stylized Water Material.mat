@@ -54,23 +54,24 @@ Material:
     - WORLD_SPACE_UV: 1
     - _Depth_Fade_Distance: 0.4
     - _Horizon_Distance: 40
-    - _Intersection_Foam_Color_Blend: 0
-    - _Intersection_Foam_Cutoff: 1
-    - _Intersection_Foam_Depth: 0.3
-    - _Intersection_Foam_Direction: 0.1
-    - _Intersection_Foam_Fade: 1
-    - _Intersection_Foam_Speed: 0.1
-    - _Intersection_Foam_Tiling: 3
+    - _Intersection_Foam_Color_Blend: 0.516
+    - _Intersection_Foam_Cutoff: 0.174
+    - _Intersection_Foam_Depth: 1.26
+    - _Intersection_Foam_Direction: 0.122
+    - _Intersection_Foam_Fade: 0.36
+    - _Intersection_Foam_Speed: 0.169
+    - _Intersection_Foam_Tiling: 21.8
     - _Lighting_Hardness: 0.1
     - _Lighting_Smoothness: 0.3
     - _Normals_Scale: 0.05
     - _Normals_Speed: 0
     - _Normals_Strength: 0
+    - _Ortographic_Intersection_Foam: 1
     - _QueueControl: 1
-    - _QueueOffset: 0
-    - _Refraction_Scale: 0.5
+    - _QueueOffset: 50
+    - _Refraction_Scale: 0.177
     - _Refraction_Speed: 0.05
-    - _Refraction_Strength: 0.01
+    - _Refraction_Strength: 0.0074
     - _Surface_Foam_Color_Blend: 0
     - _Surface_Foam_Direction: 0
     - _Surface_Foam_Distortion: 0
@@ -82,7 +83,7 @@ Material:
     m_Colors:
     - _Deep_Color: {r: 0, g: 0.45243695, b: 0.59607846, a: 0.78431374}
     - _Horizon_Color: {r: 1, g: 0.47058824, b: 0, a: 1}
-    - _Intersection_Foam_Color: {r: 1, g: 1, b: 1, a: 0.39215687}
+    - _Intersection_Foam_Color: {r: 1, g: 0.07781964, b: 0, a: 1}
     - _Shallow_Color: {r: 0.45882338, g: 0.8, b: 0.8, a: 0.39215687}
     - _Specular_Color: {r: 1, g: 1, b: 1, a: 0.19607843}
     - _Surface_Foam_Color: {r: 1, g: 1, b: 1, a: 0}
