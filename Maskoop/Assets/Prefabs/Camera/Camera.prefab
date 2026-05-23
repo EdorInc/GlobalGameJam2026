@@ -71,7 +71,7 @@ Camera:
   far clip plane: 1000
   field of view: 50
   orthographic: 0
-  orthographic size: 5
+  orthographic size: 4
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -143,6 +143,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 309a189efa42f174dbbb3cec9f17e129, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SeeThrough
+  player: {fileID: 0}
+  otherPlayer: {fileID: 0}
   castSphereRadius: 0.5
   useNearSphereCast: 1
   nearSphereDistance: 1.5
@@ -178,9 +180,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Cameras.NonSplitCameraController
   smoothTime: 0.1
-  maxPlayerDistance: 8
-  maxWidenDistance: 14
-  usePositionRotationWiden: 1
+  maxPlayerDistance: 6
+  maxWidenDistance: 18
+  maxCameraHeight: 16
+  usePositionRotationWiden: 0
   widenedCameraPosition: {x: 0, y: 0, z: 0}
   widenedCameraEuler: {x: 0, y: 0, z: 0}
   useFovWiden: 1
