@@ -254,7 +254,7 @@ GameObject:
   - component: {fileID: 8938948936386033260}
   - component: {fileID: 4203997119111725341}
   m_Layer: 0
-  m_Name: block_stone_torch_LOD_group
+  m_Name: TorchPedestal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

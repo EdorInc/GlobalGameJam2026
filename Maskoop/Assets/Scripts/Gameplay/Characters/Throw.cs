@@ -38,8 +38,8 @@ public class Throw : MonoBehaviour
     [Tooltip("Parent transform containing all objects to be included as obstacles in the simulation scene.")]
     private Transform simulationObstaclesParent;
 
-    private float minForceFowards = 0;
-    private float minForceUp = 0;
+    private float minForceFowards = 1;
+    private float minForceUp = 1;
     private float maxForceFoward = 8;
     private float maxForceUp = 8;
     private float forceGrowRate = 2;
@@ -172,12 +172,12 @@ public class Throw : MonoBehaviour
             else
             {
                 // Fase de decrecimiento
-                currentForceFoward = Mathf.Max(currentForceFoward - delta, 0f);
-                currentForceUp = Mathf.Max(currentForceUp - delta, 0f);
+                currentForceFoward = Mathf.Max(currentForceFoward - delta, minForceFowards);
+                currentForceUp = Mathf.Max(currentForceUp - delta, minForceUp);
 
                 // Al llegar a 0, vuelve a crecer inmediatamente
-                if (Mathf.Approximately(currentForceFoward, 0f) &&
-                    Mathf.Approximately(currentForceUp, 0f))
+                if (Mathf.Approximately(currentForceFoward, minForceFowards) && 
+                    Mathf.Approximately(currentForceUp, minForceUp))
                 {
                     decreasingForce = false;
                 }

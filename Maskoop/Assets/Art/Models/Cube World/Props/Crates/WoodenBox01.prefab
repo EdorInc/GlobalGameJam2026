@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 4207257272733908}
   - component: {fileID: 205799227297982880}
   m_Layer: 0
-  m_Name: wooden_box_1
+  m_Name: WoodenBox01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

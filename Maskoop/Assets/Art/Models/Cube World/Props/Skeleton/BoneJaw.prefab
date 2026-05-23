@@ -254,7 +254,7 @@ GameObject:
   - component: {fileID: 5415189233415775660}
   - component: {fileID: 971794847680352989}
   m_Layer: 0
-  m_Name: bone_jaw_LOD_group
+  m_Name: BoneJaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

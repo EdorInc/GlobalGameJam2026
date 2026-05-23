@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 422595471996251546}
   - component: {fileID: 4865932683211496171}
   m_Layer: 0
-  m_Name: bone_ribcage_LOD_group
+  m_Name: BoneRibcage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

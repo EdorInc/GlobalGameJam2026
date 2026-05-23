@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1600805824019372234}
   - component: {fileID: 6681515492089343596}
+  - component: {fileID: 2750111667803566040}
   m_Layer: 0
   m_Name: StoneWall
   m_TagString: Wall
@@ -45,6 +46,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d62efb70b07a09b41b7a3ffb49e84b24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextureScaler
+--- !u!65 &2750111667803566040
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6487881303263944399}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1001 &7862774287182727747
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -100,39 +122,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1543387582766662530, guid: 4824ffea9b86b4b4195f5a6495628ce9, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1104113738817648610}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4824ffea9b86b4b4195f5a6495628ce9, type: 3}
 --- !u!4 &8304296825203200891 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2170988427074214200, guid: 4824ffea9b86b4b4195f5a6495628ce9, type: 3}
   m_PrefabInstance: {fileID: 7862774287182727747}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8679871733262731713 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1543387582766662530, guid: 4824ffea9b86b4b4195f5a6495628ce9, type: 3}
-  m_PrefabInstance: {fileID: 7862774287182727747}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &1104113738817648610
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8679871733262731713}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}

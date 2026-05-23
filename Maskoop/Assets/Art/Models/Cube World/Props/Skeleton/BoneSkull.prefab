@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 5251628746599466452}
   - component: {fileID: 1061608352788001445}
   m_Layer: 0
-  m_Name: bone_skull_LOD_group
+  m_Name: BoneSkull
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
