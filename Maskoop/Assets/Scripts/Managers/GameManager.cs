@@ -138,7 +138,7 @@ public class GameManager : MonoBehaviour
 
             SpawnPlayers();
 
-            AudioSystem.PlayMusic(AudioSystem.MusicLibrary?.mainTheme);
+            //AudioSystem.PlayMusic(AudioSystem.MusicLibrary?.level2);
         }
         else if (scene.name == titleScene || scene.name == levelSelectionScene)
         {
@@ -158,6 +158,8 @@ public class GameManager : MonoBehaviour
             }
 
             SpawnPlayers();
+
+           // AudioSystem.PlayMusic(AudioSystem.MusicLibrary?.level2);
         }
     }
 

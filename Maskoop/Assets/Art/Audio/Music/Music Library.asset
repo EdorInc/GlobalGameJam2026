@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Music Library
   m_EditorClassIdentifier: Assembly-CSharp::MusicLibrary
   mainTheme: {fileID: 11400000, guid: a6280d99830cd484dac5f8fa6b7e6c34, type: 2}
+  level2: {fileID: 11400000, guid: 59285c86cfd3bd14c9edb9c258786fae, type: 2}
