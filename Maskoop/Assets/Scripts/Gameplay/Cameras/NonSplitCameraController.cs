@@ -35,6 +35,8 @@ namespace Gameplay.Cameras
         [SerializeField] private bool useFovWiden = true;
         [Tooltip("Maximum FOV when fully widened.")]
         [SerializeField] private float maxFov = 70f;
+        [Tooltip("Maximum orthographic size when fully widened (only for orthographic cameras).")]
+        [SerializeField] private float maxOrthoSize = 12f;
 
         [Header("Speed")]
         [Tooltip("Minimum transition speed when players move slowly.")]
@@ -46,6 +48,7 @@ namespace Gameplay.Cameras
         private Vector3 defaultPosition;
         private Quaternion defaultRotation;
         private float defaultFov;
+        private float defaultOrthoSize;
         private Vector3 defaultOffset;
         private Vector3 widenedOffset;
         private bool initialized;
@@ -120,12 +123,24 @@ namespace Gameplay.Cameras
 
             if (useFovWiden && cachedCamera != null)
             {
-                float desiredFov = Mathf.Lerp(defaultFov, maxFov, widenT);
-                cachedCamera.fieldOfView = Mathf.Lerp(
-                    cachedCamera.fieldOfView,
-                    desiredFov,
-                    Time.deltaTime * dynamicSpeed
-                );
+                if (cachedCamera.orthographic)
+                {
+                    float desiredSize = Mathf.Lerp(defaultOrthoSize, maxOrthoSize, widenT);
+                    cachedCamera.orthographicSize = Mathf.Lerp(
+                        cachedCamera.orthographicSize,
+                        desiredSize,
+                        Time.deltaTime * dynamicSpeed
+                    );
+                }
+                else
+                {
+                    float desiredFov = Mathf.Lerp(defaultFov, maxFov, widenT);
+                    cachedCamera.fieldOfView = Mathf.Lerp(
+                        cachedCamera.fieldOfView,
+                        desiredFov,
+                        Time.deltaTime * dynamicSpeed
+                    );
+                }
             }
         }
 
@@ -159,6 +174,7 @@ namespace Gameplay.Cameras
             if (cachedCamera != null)
             {
                 defaultFov = cachedCamera.fieldOfView;
+                defaultOrthoSize = cachedCamera.orthographicSize;
             }
 
             Vector3 midpoint = (target.position + otherTarget.position) * 0.5f;
