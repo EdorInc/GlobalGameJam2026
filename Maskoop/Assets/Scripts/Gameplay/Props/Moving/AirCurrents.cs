@@ -1,31 +1,51 @@
+using Newtonsoft.Json.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class AirCurrents : MonoBehaviour
 {
-
     [Header("Force Settings")]
-    [SerializeField] private Vector3 force = Vector3.zero;
-    [SerializeField] private bool isVertical = false;
+    [SerializeField] private float force = 50.0f;
 
+    [Header("Particle Settings")]
     private BoxCollider trigger;
-    [SerializeField] private ParticleSystem ps;
+    [SerializeField] private ParticleSystem particles;
 
-    private ParticleSystem.ShapeModule shape;
+    private float m_length = 1.0f;
+    private float m_headSize = 0.2f;
+
+    private ParticleSystem.ShapeModule particlesShape;
 
     private void Start()
     {
         trigger = GetComponent<BoxCollider>();
     }
 
+    void OnDrawGizmos()
+    {
+        Vector3 arrowHead;
+        Vector3 arrowRim;
+        Gizmos.color = Color.red;
+
+        arrowHead = transform.position + m_length * transform.up;
+        arrowRim = transform.position + m_length * 0.66f * transform.up;
+
+        Gizmos.DrawLine(transform.position, arrowHead);
+        Gizmos.DrawLineStrip(new Vector3[3] { arrowRim + transform.right * m_length * m_headSize, arrowHead, arrowRim - transform.right * m_length * m_headSize }, true);
+        Gizmos.DrawLineStrip(new Vector3[3] { arrowRim + transform.forward * m_length * m_headSize, arrowHead, arrowRim - transform.forward * m_length * m_headSize }, true);
+    }
+
     private void OnEnable()
     {
-        if (ps != null)
-            shape = ps.shape;
+        if (particles != null)
+        {
+            particlesShape = particles.shape;
+        }
     }
 
     private void Update()
     {
-        if (trigger == null || ps == null) return;
+        if (trigger == null || particles == null) return;
 
         Vector3 size = trigger.size;
         Vector3 lossyScale = trigger.transform.lossyScale;
@@ -34,20 +54,16 @@ public class AirCurrents : MonoBehaviour
         Vector3 worldSize = Vector3.Scale(size, lossyScale);
 
         // Apply to particle shape
-        ps.transform.position = trigger.bounds.center;
-
-        if (isVertical)
-        {
-            shape.scale = new Vector3(worldSize.x, worldSize.z, worldSize.y);
-            shape.rotation = new Vector3(270, 0, 0);
-        }
+        particles.transform.position = trigger.bounds.center;
+        particlesShape.scale = new Vector3(worldSize.x, worldSize.z, worldSize.y);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            EventManager.OnAirCurrentEnter?.Invoke(other,force,isVertical);
+            Vector3 forceVector = transform.up * force;
+            EventManager.OnAirCurrentEnter?.Invoke(other, forceVector);
         }
     }
 
@@ -55,7 +71,7 @@ public class AirCurrents : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            EventManager.OnAirCurrentExit?.Invoke(other,isVertical);
+            EventManager.OnAirCurrentExit?.Invoke(other);
         }
     }
 }
