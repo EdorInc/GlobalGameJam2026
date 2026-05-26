@@ -323,12 +323,22 @@ public class CharacterMovementController : MonoBehaviour
         }
     }
 
-    public void ApplyBurn(Collider player)
+    public void ApplyBurn(Collider playerStep, Collision playerGrab)
     {
-        if (m_characterState.IsMyPlayer(player.gameObject) && !m_characterState.IsOnFire)
+        if (playerStep == null)
         {
-            m_characterState.SetOnFire(true);
-            m_currentOnFireTime = 0.0f;
+            if (m_characterState.IsMyPlayer(playerGrab.gameObject) && !m_characterState.IsOnFire)
+            {
+                m_characterState.SetOnFire(true);
+                m_currentOnFireTime = 0.0f;
+            }
+        } else if (playerGrab == null)
+        {
+            if (m_characterState.IsMyPlayer(playerStep.gameObject) && !m_characterState.IsOnFire)
+            {
+                m_characterState.SetOnFire(true);
+                m_currentOnFireTime = 0.0f;
+            }
         }
     }
 

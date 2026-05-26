@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4567778571592856439}
   - component: {fileID: 2814111262465208137}
   - component: {fileID: -6151222093157379451}
+  - component: {fileID: 2124727603700262427}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Cube
@@ -133,6 +134,19 @@ MonoBehaviour:
   showDebugRays: 1
   createVisualRespawnPosition: 0
   respawnRotation: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2124727603700262427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2483545768859000036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7243c78de3bb543815409ef8d8126a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnFire
+  IsOnFire: 0
 --- !u!1001 &4545191551367330893
 PrefabInstance:
   m_ObjectHideFlags: 0

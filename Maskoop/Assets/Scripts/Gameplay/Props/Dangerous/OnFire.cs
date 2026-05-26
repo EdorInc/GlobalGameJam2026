@@ -19,7 +19,27 @@ public class OnFire : MonoBehaviour
 
                 if (!hasFireMask)
                 {
-                    EventManager.OnLitOnFire?.Invoke(other);
+                    EventManager.OnLitOnFire?.Invoke(other, null);
+                }
+            }
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            CharacterStateController state = collision.gameObject.GetComponent<CharacterStateController>();
+
+            if (state != null)
+            {
+                BaseMask currentMask = state.GetCurrentMask();
+
+                bool hasFireMask = currentMask is FireMask;
+
+                if (!hasFireMask)
+                {
+                    EventManager.OnLitOnFire?.Invoke(null, collision);
                 }
             }
         }
