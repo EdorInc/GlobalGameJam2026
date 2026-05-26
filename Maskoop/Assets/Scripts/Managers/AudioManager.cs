@@ -16,6 +16,8 @@ public class AudioManager : MonoBehaviour
     [Header("Music Library")]
     [SerializeField] private MusicLibrary musicLibrary;
 
+    public SoundDefinition levelTrack;
+
     private EventInstance musicInstance;
 
     private Dictionary<int, Dictionary<SoundDefinition, EventInstance>> dynamicSFX = new Dictionary<int, Dictionary<SoundDefinition, EventInstance>>();
@@ -24,6 +26,12 @@ public class AudioManager : MonoBehaviour
     {
         AudioSystem.Initialize(sfxChannel, musicChannel, soundLibrary, musicLibrary, this);
     }
+
+    private void Start()
+    {
+        PlayMusic(levelTrack);
+    }
+
     private void OnEnable()
     {
         if (sfxChannel != null)
