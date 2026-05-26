@@ -294,6 +294,7 @@ public class CharacterMovementController : MonoBehaviour
             ResumeMovement();
         }
     }
+
     public void ApplyDash()
     {
         m_currentRollTime = 0f;
