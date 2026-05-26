@@ -78,7 +78,7 @@ public class PlayerAnimationAudio : MonoBehaviour
                 return;
 
 
-            AudioSystem.PlayDynamicSFX(AudioSystem.SoundLibrary?.falling, transform.position, stateController.characterId);
+            AudioSystem.PlayDynamicSFX(AudioSystem.SoundLibrary?.falling, transform.position, stateController.CharacterId);
 
             fallingSoundPlaying = true;
         }
@@ -102,7 +102,7 @@ public class PlayerAnimationAudio : MonoBehaviour
             return;
 
         if (stateController != null)
-            AudioSystem.StopDynamicSFX(AudioSystem.SoundLibrary?.falling, stateController.characterId);
+            AudioSystem.StopDynamicSFX(AudioSystem.SoundLibrary?.falling, stateController.CharacterId);
 
         checkingForFallingSound = false;
         fallingSoundPlaying = false;

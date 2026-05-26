@@ -2,125 +2,107 @@ using UnityEngine;
 
 public class AnimationController : MonoBehaviour
 {
-    private Animator animator;
+    // Animation parameter name constants — centralized to prevent typos
+    private const string k_isMovingParam = "IsMoving";
+    private const string k_isJumpingParam = "IsJumping";
+    private const string k_isGroundedParam = "IsGrounded";
+    private const string k_isFallingParam = "IsFalling";
+    private const string k_isRollingParam = "IsRolling";
+    private const string k_cantPerformActionParam = "CantPerformAction";
+    private const string k_isGrabbedParam = "IsGrabbed";
+    private const string k_hasInputParam = "HasInput";
+    private const string k_isFloatingParam = "IsFloating";
 
-    private int isMovingHash;
-    private int isJumpingHash;
-    private int isGroundedHash;
-    private int moveSpeedHash;
-    private int isFallingHash;
-    private int isRollingHash;
-    private int cantPerformActionHash;
-    private int isGrabbedHash;
-    private int hasInputHash;
-    private int isFloatingHash;
+    private int m_isMovingHash;
+    private int m_isJumpingHash;
+    private int m_isGroundedHash;
+    private int m_isFallingHash;
+    private int m_isRollingHash;
+    private int m_cantPerformActionHash;
+    private int m_isGrabbedHash;
+    private int m_hasInputHash;
+    private int m_isFloatingHash;
 
-    private string isMovingParameter = "IsMoving";
-    private string isJumpingParameter = "IsJumping";
-    private string isGroundedParameter = "IsGrounded";
-    private string isFalingParameter = "IsFalling";
-    private string moveSpeedParameter = "MovingAnimationSpeed";
-    private string isRollingParameter = "IsRolling";
-    private string cantPerformActionParameter = "CantPerformAction";
-    private string isGrabbedParameter = "IsGrabbed";
-    private string hasInputParameter = "HasInput";
-    private string isFloatingParameter = "IsFloating";
+    // All state reads go through CharacterStateController
+    private bool IsGrounded => m_characterState.IsGrounded;
+    private bool IsRolling => m_characterState.IsRolling;
+    private bool IsGrabbed => m_characterState.IsBeingGrabbed;
+    private bool IsFloating => m_characterState.IsFloating;
 
-    private GroundDetector groundDetector;
-    private CharacterMovementController characterMovementController;
-    private CharacterStateController characterState;
+    private Animator m_animator;
+    private Rigidbody m_rigidbody;
+    private CharacterStateController m_characterState;
 
-    private bool IsGrounded => groundDetector.IsGrounded;
-    private bool IsRolling => characterMovementController.isRolling;
-    private bool IsGrabbed => characterState.IsBeingGrabbed;
-    private bool IsCharging => characterState.IsChargingThrow;
+    private void Awake()
+    {
+        m_rigidbody = GetComponent<Rigidbody>();
+        m_characterState = GetComponent<CharacterStateController>();
 
-    private bool IsFloating => characterState.IsFloating;
+        if (!TryGetComponent<Animator>(out m_animator))
+        {
+            m_animator = GetComponentInChildren<Animator>();
+            if (m_animator == null)
+            {
+                Debug.LogError($"Animator not found on {gameObject.name} or its children.", this);
+            }
+        }
 
-    new private Rigidbody rigidbody;
+        m_isMovingHash = Animator.StringToHash(k_isMovingParam);
+        m_isJumpingHash = Animator.StringToHash(k_isJumpingParam);
+        m_isGroundedHash = Animator.StringToHash(k_isGroundedParam);
+        m_isFallingHash = Animator.StringToHash(k_isFallingParam);
+        m_isRollingHash = Animator.StringToHash(k_isRollingParam);
+        m_cantPerformActionHash = Animator.StringToHash(k_cantPerformActionParam);
+        m_hasInputHash = Animator.StringToHash(k_hasInputParam);
+        m_isGrabbedHash = Animator.StringToHash(k_isGrabbedParam);
+        m_isFloatingHash = Animator.StringToHash(k_isFloatingParam);
+    }
 
     private void OnEnable()
     {
         EventManager.OnCantPerforAction += SetCantPerformAction;
     }
+
     private void OnDisable()
     {
         EventManager.OnCantPerforAction -= SetCantPerformAction;
     }
 
-    private void Start()
+    private void Update()
     {
-        rigidbody = GetComponent<Rigidbody>();
-        groundDetector = GetComponent<GroundDetector>();
-        animator = GetComponent<Animator>();
-        characterMovementController = GetComponent<CharacterMovementController>();
-        characterState = GetComponent<CharacterStateController>();
+        bool isRigidbodyJumping = m_rigidbody.linearVelocity.y > 0f;
+        bool isRigidbodyMoving = new Vector3(m_rigidbody.linearVelocity.x, 0f, m_rigidbody.linearVelocity.z).sqrMagnitude > 0.01f;
 
+        m_animator.SetBool(m_isFloatingHash, IsFloating);
 
-        isMovingHash = Animator.StringToHash(isMovingParameter);
-        isJumpingHash = Animator.StringToHash(isJumpingParameter);
-        isGroundedHash = Animator.StringToHash(isGroundedParameter);
-        moveSpeedHash = Animator.StringToHash(moveSpeedParameter);
-        isFallingHash = Animator.StringToHash(isFalingParameter);
-        isRollingHash = Animator.StringToHash(isRollingParameter);
-        cantPerformActionHash = Animator.StringToHash(cantPerformActionParameter);
-        hasInputHash = Animator.StringToHash(hasInputParameter);
-        isGrabbedHash = Animator.StringToHash(isGrabbedParameter);
-        isFloatingHash = Animator.StringToHash(isFloatingParameter);
-
-        if (animator == null)
-        {
-            Debug.Log("Animator component not found on " + gameObject.name + ", trying on children...");
-            animator = GetComponentInChildren<Animator>();
-        }
-
-        if (animator == null)
-        {
-            Debug.LogError("Animator component not found in children of " + gameObject.name);
-        }
-        else
-        {
-            Debug.Log("Animator controller found.");
-        }
-    }
-
-    void Update()
-    {
-        bool RigidbodyJumping = rigidbody.linearVelocity.y > 0f;
-        bool RigidbodyMoving = new Vector3(rigidbody.linearVelocity.x, 0f, rigidbody.linearVelocity.z).sqrMagnitude > 0.01f;
-        bool RigidbodyInput = characterMovementController.SideInput != 0 || characterMovementController.ForwardInput != 0;
-
-
-        animator.SetBool(isFloatingHash, IsFloating);
         if (IsGrounded)
         {
-            animator.SetBool(isGroundedHash, true);
-            animator.SetBool(isJumpingHash, false);
-            animator.SetBool(isFallingHash, false);
-            animator.SetBool(isRollingHash, IsRolling);
-            animator.SetBool(isMovingHash, RigidbodyMoving);   
+            m_animator.SetBool(m_isGroundedHash, true);
+            m_animator.SetBool(m_isJumpingHash, false);
+            m_animator.SetBool(m_isFallingHash, false);
+            m_animator.SetBool(m_isRollingHash, IsRolling);
+            m_animator.SetBool(m_isMovingHash, isRigidbodyMoving);
+            m_animator.SetBool(m_isGrabbedHash, false);
+            m_animator.SetBool(m_hasInputHash, false);
         }
         else
         {
-            animator.SetBool(isGrabbedHash, IsGrabbed);
-            animator.SetBool(isGroundedHash, false);
-            animator.SetBool(isJumpingHash, RigidbodyJumping);
-            animator.SetBool(isFallingHash, !RigidbodyJumping);
-            animator.SetBool(hasInputHash,RigidbodyInput);
-            animator.SetBool(isMovingHash, RigidbodyMoving);
+            m_animator.SetBool(m_isGroundedHash, false);
+            m_animator.SetBool(m_isJumpingHash, isRigidbodyJumping);
+            m_animator.SetBool(m_isFallingHash, !isRigidbodyJumping);
+            m_animator.SetBool(m_isMovingHash, isRigidbodyMoving);
+            m_animator.SetBool(m_isGrabbedHash, IsGrabbed);
+            m_animator.SetBool(m_hasInputHash, m_characterState.HasMovementInput);
+            m_animator.SetBool(m_isRollingHash, false);
         }
-    }       
-
+    }
 
     private void SetCantPerformAction(GameObject sender)
     {
         CharacterStateController player = sender.GetComponent<CharacterStateController>();
-        if(player != null)
+        if (player != null && player.CharacterId == m_characterState.CharacterId)
         {
-            if(player.characterId == GetComponent<CharacterStateController>().characterId)
-            {
-                animator.SetTrigger(cantPerformActionHash);
-            }
+            m_animator.SetTrigger(m_cantPerformActionHash);
         }
     }
 }

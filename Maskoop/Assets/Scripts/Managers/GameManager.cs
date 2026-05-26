@@ -363,8 +363,8 @@ public class GameManager : MonoBehaviour
         p2Input.transform.localPosition = Vector3.zero;
 
         // --- SETUP EXTRAS ---
-        player1Instance.GetComponentInChildren<CharacterStateController>().characterId = 0;
-        player2Instance.GetComponentInChildren<CharacterStateController>().characterId = 1;
+        player1Instance.GetComponentInChildren<CharacterStateController>().CharacterId = 0;
+        player2Instance.GetComponentInChildren<CharacterStateController>().CharacterId = 1;
 
         // --- DYNAMIC SPLIT SCREEN ---
         // DynamicSplitManager splitManager = GetComponent<DynamicSplitManager>();

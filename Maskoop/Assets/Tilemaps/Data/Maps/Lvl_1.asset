@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7af0084b07551354b917972dd5c99105, type: 3}
-  m_Name: Lvl1
+  m_Name: Lvl_1
   m_EditorClassIdentifier: Assembly-CSharp-Editor::MapDataSO
   m_width: 50
   m_height: 8

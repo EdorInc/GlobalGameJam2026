@@ -180,7 +180,7 @@ public class WaterMask : BaseMask
         characteMovement =
             player.GetComponent<CharacterMovementController>();
 
-        characterState.DelayDrop();
+        characterState.ReleaseHeldObject();
 
         characteMovement.SetSpeedMultiplier(multiplier);
     }

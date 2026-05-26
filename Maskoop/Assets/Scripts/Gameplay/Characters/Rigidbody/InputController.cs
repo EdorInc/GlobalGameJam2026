@@ -66,7 +66,7 @@ public class InputController : MonoBehaviour
     {
         if (ctx.started)
         {
-            playerController.ApplyRoll();
+            playerController.ApplyDash();
         }
     }
 

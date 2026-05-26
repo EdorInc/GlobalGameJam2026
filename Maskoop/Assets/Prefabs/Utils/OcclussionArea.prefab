@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 677352464384264891}
   - component: {fileID: 7977519644661402607}
   m_Layer: 7
-  m_Name: Occlussion Area
+  m_Name: OcclussionArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

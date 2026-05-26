@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9205548229947433482}
   - component: {fileID: 2524479191340715344}
   m_Layer: 0
-  m_Name: Tutorial Video Trigger
+  m_Name: TutorialVideoTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

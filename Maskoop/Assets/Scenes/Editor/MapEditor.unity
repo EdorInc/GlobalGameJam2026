@@ -403,6 +403,10 @@ PrefabInstance:
       propertyPath: m_DynamicOccludee
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1921654301161953500, guid: b036b5ee73e19dc4ca535e905233e3f0, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 13c84fc1fdde62a4bbb6206cfaa83a08, type: 2}
     - target: {fileID: 3262211109562382756, guid: b036b5ee73e19dc4ca535e905233e3f0, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -421,15 +425,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5072702950061690503, guid: b036b5ee73e19dc4ca535e905233e3f0, type: 3}
       propertyPath: m_LocalScale.x
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5072702950061690503, guid: b036b5ee73e19dc4ca535e905233e3f0, type: 3}
       propertyPath: m_LocalScale.y
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5072702950061690503, guid: b036b5ee73e19dc4ca535e905233e3f0, type: 3}
       propertyPath: m_LocalScale.z
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5072702950061690503, guid: b036b5ee73e19dc4ca535e905233e3f0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -493,7 +497,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8496860514743634661, guid: b036b5ee73e19dc4ca535e905233e3f0, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

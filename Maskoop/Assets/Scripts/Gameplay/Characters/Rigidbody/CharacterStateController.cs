@@ -1,28 +1,62 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterStateController : MonoBehaviour
 {
     [Header("Player Info")]
     [Tooltip("Id of the player")]
-    public int characterId = -1;
+    [SerializeField] private int m_characterId = -1;
 
-    public bool IsHoldingObject => heldObject != null;
+    /// <summary>
+    /// Numeric identifier for this character instance. Can be changed at runtime to reassign ownership.
+    /// </summary>
+    public int CharacterId
+    {
+        get => m_characterId;
+        set => m_characterId = value;
+    }
+
+    [SerializeField] private Renderer m_bodyRenderer;
+    [SerializeField] private Renderer m_eyesRenderer;
+
+    internal Renderer GetBodyRenderer() => m_bodyRenderer;
+
+    // Ground state, owned here but sourced from GroundDetector
+    public bool IsGrounded => m_groundDetector.IsGrounded;
+    public GameObject MovingPlatform => m_groundDetector.MovingPlatform;
+
+    // Movement state
+    public bool IsRolling { get; private set; }
+    public bool HasMovementInput { get; private set; }
+    public bool CanMove() => !IsBeingGrabbed;
+
+    // Grab state
+    public bool IsHoldingObject => m_heldObject != null;
     public bool IsBeingGrabbed { get; private set; }
+
+    // Elemental state
+    public bool HasMaskEquipped => m_currentMask != null;
     public bool IsFloating { get; set; }
+    public bool IsOnFire { get; private set; }
 
-    public Renderer BodyRenderer;
-    public Renderer EyesRenderer;
+    // Throw state
+    public bool IsChargingThrow => m_throwComponent.charging;
+    
+    public Grabbable GetHeldObject() => m_heldObject;
+    public BaseMask GetCurrentMask() => m_currentMask;
 
-    public bool IsOnFire { get; set; }
+    private Grabbable m_heldObject;
+    private BaseMask m_currentMask;
+    private Throw m_throwComponent;
+    private Grab m_grabComponent;
+    private GroundDetector m_groundDetector;
+
+    public void SetBeingGrabbed(bool value) { IsBeingGrabbed = value; }
+    public void SetHeldObject(Grabbable grabbedObject) { m_heldObject = grabbedObject; }
     public void SetOnFire(bool value) { IsOnFire = value; }
-    public bool IsChargingThrow => throwComponent.charging;
-    public bool HasMaskEquipped => currentMask != null;
-
-    private Grabbable heldObject;
-    private BaseMask currentMask;
-    private Throw throwComponent;
-    private Grab grabComponent;
+    public void SetRolling(bool value) { IsRolling = value; }
+    public void SetHasMovementInput(bool value) { HasMovementInput = value; }
 
     private void OnEnable()
     {
@@ -33,99 +67,74 @@ public class CharacterStateController : MonoBehaviour
     {
         EventManager.OnRespawn -= OnRespawn;
     }
+    private void Awake()
+    {
+        m_groundDetector = GetComponent<GroundDetector>();
+    }
+
     private void Start()
     {
-        throwComponent = GetComponent<Throw>();
-        grabComponent = GetComponent<Grab>();
+        m_throwComponent = GetComponent<Throw>() ?? GetComponentInChildren<Throw>() ?? GetComponentInParent<Throw>();
+        if (m_throwComponent == null)
+        {
+            Debug.LogWarning("Throw component not found. Throwing functionality will be disabled.");
+        }
+
+        m_grabComponent = GetComponent<Grab>() ?? GetComponentInChildren<Grab>() ?? GetComponentInParent<Grab>();
+        if (m_grabComponent == null)
+        {
+            Debug.LogWarning("Grab component not found. Grabbing functionality will be disabled.");
+        }
     }
+
     private void Update()
     {
-        currentMask?.UpdateLogic();
+        m_currentMask?.UpdateLogic();
     }
 
     private void FixedUpdate()
     {
-        currentMask?.FixedUpdateLogic();
+        m_currentMask?.FixedUpdateLogic();
     }
 
     private void OnRespawn(GameObject player)
     {
-        if (IsMyPlayer(player))
+        // Fast-fail when not our player or nothing held
+        if (!IsMyPlayer(player) || !IsHoldingObject)
         {
-            if (IsHoldingObject)
-            {
-                if (IsChargingThrow)
-                {
-                    throwComponent.CancelThrow();
-                }
-                grabComponent.DropObject();
-            }
-        } 
+            return;
+        }
+
+        // Cancel any in-progress throw (if present) then drop the held object.
+        m_throwComponent?.CancelThrow();
+        m_grabComponent?.DropObject();
     }
+
+    // TODO Change this when we have a different model.
+
     public void DisableRender()
     {
-        BodyRenderer.enabled = false;
-        EyesRenderer.enabled = false;
-
+        m_bodyRenderer.enabled = false;
+        m_eyesRenderer.enabled = false;
     }
 
     public void EnableRenderer()
     {
-        BodyRenderer.enabled = true;
-        EyesRenderer.enabled = true;
-    }
-
-    public void SetHeldObject(Grabbable obj)
-    {
-        heldObject = obj;
-    }
-
-    public Grabbable GetHeldObject()
-    {
-        return heldObject;
-    }
-
-    internal Renderer GetBodyRenderer()
-    {
-        return BodyRenderer;
-    }
-
-    public void SetBeingGrabbed(bool value)
-    {
-        IsBeingGrabbed = value;
+        m_bodyRenderer.enabled = true;
+        m_eyesRenderer.enabled = true;
     }
 
     public void EquipMask(BaseMask mask)
     {
-        if (currentMask != null)
-        {
-            currentMask.OnUnequip();
-        }
-
-        currentMask = mask;
-
-        if (currentMask != null)
-        {
-            currentMask.OnEquip(this);
-        }
+        m_currentMask?.OnUnequip();
+        m_currentMask = mask;
+        m_currentMask?.OnEquip(this);
     }
 
     public void UnequipMask()
     {
-        if (currentMask == null) return;
-
-        currentMask.OnUnequip();
-        currentMask = null;
-    }
-
-    public BaseMask GetCurrentMask()
-    {
-        return currentMask;
-    }
-
-    public bool CanMove()
-    {
-        return !IsBeingGrabbed;
+        m_currentMask?.OnUnequip();
+        m_currentMask = null;
     }
 
     public bool IsMyPlayer(GameObject player)
@@ -136,29 +145,38 @@ public class CharacterStateController : MonoBehaviour
         {
             return false;
         }
-        return otherplayer.characterId == this.characterId;
+
+        return otherplayer.CharacterId == this.CharacterId;
     }
 
-    public void ReciveDamage(float hitTime)
+    public void ReceiveDamage(float hitTime)
     {
         if (IsHoldingObject)
         {
-            Invoke(nameof(DelayDrop), 0);
+            // Just in case it is called multiple times, we don't want to queue up multiple releases.
+            CancelInvoke(nameof(ReleaseHeldObject));
+            Invoke(nameof(ReleaseHeldObject), hitTime);
         }
     }
 
-    public void DelayDrop()
+    /// <summary>
+    /// Releases the currently held object.
+    /// Cancels an in-progress throw if the player is charging a throw; otherwise drops the object.
+    /// </summary>
+    public void ReleaseHeldObject()
     {
-        if (IsHoldingObject)
+        if (!IsHoldingObject)
         {
-            if (IsChargingThrow)
-            {
-                throwComponent.CancelThrow();
-            }
-            else
-            {
-                grabComponent.DropObject();
-            }
+            return;
+        }
+
+        if (IsChargingThrow) 
+        {
+            m_throwComponent?.CancelThrow();
+        }
+        else
+        {
+            m_grabComponent?.DropObject();
         }
     }
 }
