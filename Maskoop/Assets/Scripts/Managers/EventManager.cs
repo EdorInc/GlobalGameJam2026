@@ -64,13 +64,13 @@ public static class EventManager
     /// Invoked when a collider enters an air current.
     /// Parameters: collider, entry position.
     /// </summary>
-    public static Action<Collider, Vector3,bool> OnAirCurrentEnter;
+    public static Action<Collider, Vector3> OnAirCurrentEnter;
 
     /// <summary>
     /// Invoked when a collider exits an air current.
     /// Parameter: collider.
     /// </summary>
-    public static Action<Collider,bool> OnAirCurrentExit;
+    public static Action<Collider> OnAirCurrentExit;
 
     /// <summary>
     /// Invoked when a collider enters a fire.

@@ -3,26 +3,25 @@ using UnityEngine;
 public class AirMask : BaseMask
 {
     [Header("Flutter Settings")]
-    [Tooltip("Amount of resistance of the air (The bigger the less icy)")]
+    [Tooltip("Amount of resistance of the air, the bigger the less icy.")]
     [SerializeField] private float flutterDrag = 0;
-    [Tooltip("Time the player remains in the flutter state")]
+    [Tooltip("Time the player remains in the flutter state.")]
     [SerializeField] private float flutterTime = 2;
-    [Tooltip("Reduction of max speed while fluttering")]
+    [Tooltip("Reduction of max speed while fluttering.")]
     [SerializeField] private float flutterSpeedReduction = 0.75f;
 
     [Header("Visual Settings")]
     [SerializeField] private GameObject windParticlesPrefab;
+    private GameObject windParticlesObject;
 
-    private bool IsFluttering = false;
     private Rigidbody playerRigidBody;
 
+    private bool isFluttering = false;
+
     private float currentFloatTime = 0;
+
     private Vector3 lastSpeed = Vector3.zero;
-
-    private GameObject windParticlesObject;
     private Vector3 currentSpeed = Vector3.zero;
-
-    private bool isVerticalCurrent = false;
 
     public override void OnUnequip()
     {
@@ -31,13 +30,12 @@ public class AirMask : BaseMask
         EventManager.OnAirCurrentEnter -= AirCurrentEnter;
         EventManager.OnAirCurrentExit -= AirCurrentExit;
         EventManager.OnTryingToMove -= StartFlutter;
-        ResetFlutter();
-        Destroy(windParticlesObject);
-        base.OnUnequip();
-    }
 
-    public override void UpdateLogic()
-    {
+        StopFlutter();
+
+        Destroy(windParticlesObject);
+
+        base.OnUnequip();
     }
 
     public override void OnEquip(CharacterStateController characterState)
@@ -51,18 +49,99 @@ public class AirMask : BaseMask
         EventManager.OnTryingToMove += StartFlutter;
     }
 
+    public override void UpdateLogic()
+    {
+
+    }
+
+    public override void FixedUpdateLogic()
+    {
+        if (playerRigidBody == null)
+        {
+            return;
+        }
+
+        // Compute world-space decomposition of the current if present
+        const float kVerticalThreshold = 0.01f;
+        float verticalAlongWorld = 0f;
+
+        Vector3 horizontal = Vector3.zero;
+
+        if (currentSpeed != Vector3.zero)
+        {
+            verticalAlongWorld = Vector3.Dot(currentSpeed, Vector3.up);
+            horizontal = currentSpeed - Vector3.up * verticalAlongWorld;
+        }
+
+        bool hasHorizontalCurrent = horizontal.sqrMagnitude > 0f;
+        bool hasVerticalCurrent = Mathf.Abs(verticalAlongWorld) > kVerticalThreshold;
+
+        if (isFluttering)
+        {
+            // When an air current is present and purely horizontal preserve the flutter.
+            if (!(hasHorizontalCurrent && !hasVerticalCurrent))
+            {
+                // Modify the player speed to create a fluttering effect, reducing speed and adding drag.
+                Vector3 targetSpeed = playerRigidBody.linearVelocity * flutterSpeedReduction;
+                targetSpeed = Vector3.MoveTowards(lastSpeed, targetSpeed, Time.deltaTime * flutterDrag);
+                playerRigidBody.linearVelocity = targetSpeed;
+
+                lastSpeed = playerRigidBody.linearVelocity;
+
+                // Count the time spent fluttering.
+                currentFloatTime += Time.deltaTime;
+            }
+            else
+            {
+                // Still update lastSpeed to the reduced velocity so transitions remain smooth.
+                Vector3 targetSpeed = playerRigidBody.linearVelocity * flutterSpeedReduction;
+                lastSpeed = Vector3.MoveTowards(lastSpeed, targetSpeed, Time.deltaTime * flutterDrag);
+            }
+        }
+
+        if (currentSpeed != Vector3.zero)
+        {
+            // Apply horizontal push without ending flutter so the player does not start falling.
+            if (hasHorizontalCurrent)
+            {
+                playerRigidBody.AddForce(horizontal);
+            }
+
+            // Only apply vertical component (and stop flutter) if it is significant.
+            if (hasVerticalCurrent)
+            {
+                playerRigidBody.AddForce(Vector3.up * verticalAlongWorld);
+
+                // If there is a meaningful vertical influence, stop flutter so normal vertical physics resumes.
+                if (isFluttering)
+                {
+                    StopFlutter();
+                }
+            }
+        }
+
+        if (currentFloatTime > flutterTime)
+        {
+            StopFlutter();
+        }
+    }
+
+
     public void StartFlutter(GameObject target)
     {
         if (characterState.IsMyPlayer(target))
         {
             EventManager.OnThrow?.Invoke(target, false,gameObject);
-            playerRigidBody = target.GetComponent<Rigidbody>();
-            IsFluttering = true;
-            playerRigidBody.constraints = RigidbodyConstraints.FreezePositionY;
+
+            isFluttering = true;
             characterState.IsFloating = true;
+
+            playerRigidBody = target.GetComponent<Rigidbody>();
+            playerRigidBody.constraints = RigidbodyConstraints.FreezePositionY;
+            
             lastSpeed = playerRigidBody.linearVelocity;
 
-            if(windParticlesObject != null)
+            if (windParticlesObject != null)
             {
                 windParticlesObject.SetActive(true);
             }
@@ -91,19 +170,21 @@ public class AirMask : BaseMask
     {
         if (characterState.IsMyPlayer(target))
         {
-            ResetFlutter();
+            StopFlutter();
             playerRigidBody = null;
         }
     }
 
-    private void ResetFlutter()
+    private void StopFlutter()
     {
-        IsFluttering = false;
+        isFluttering = false;
         currentFloatTime = 0;
+
         if(playerRigidBody != null)
         {
             playerRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
         }
+
         characterState.IsFloating = false;
         lastSpeed = Vector3.zero;
 
@@ -113,55 +194,26 @@ public class AirMask : BaseMask
         }
     }
 
-    public override void FixedUpdateLogic()
+    public void AirCurrentEnter(Collider collider, Vector3 force)
     {
-        if (IsFluttering)
-        {
-            Vector3 targetSpeed = playerRigidBody.linearVelocity * flutterSpeedReduction;
-
-            targetSpeed = Vector3.MoveTowards(lastSpeed, targetSpeed, Time.deltaTime * flutterDrag);
-
-            playerRigidBody.linearVelocity = targetSpeed;
-            currentFloatTime += Time.deltaTime;
-            lastSpeed = playerRigidBody.linearVelocity;
-        }
-        if(currentSpeed != Vector3.zero)
-        {
-            playerRigidBody?.AddForce(currentSpeed);
-            if (IsFluttering && isVerticalCurrent)
-            {
-                ResetFlutter();
-            }
-        }
-        if (currentFloatTime > flutterTime)
-        {
-            ResetFlutter();
-        }
-
-    }
-
-    public void AirCurrentEnter(Collider collider, Vector3 force, bool isVertical)
-    {
-        isVerticalCurrent = isVertical;
         if (characterState.IsMyPlayer(collider.gameObject))
         {
-            if (IsFluttering && isVertical)
-            {
-                ResetFlutter();
-            }
+            // if (isFluttering)
+            // {
+            //     StopFlutter();
+            // }
+
             playerRigidBody = collider.attachedRigidbody;
             currentSpeed = force;
-            Debug.Log("ENTRADO");
         } 
     }
 
-    public void AirCurrentExit(Collider collider, bool isVertical)
+    public void AirCurrentExit(Collider collider)
     {
         if (characterState.IsMyPlayer(collider.gameObject))
         {
             currentSpeed = Vector3.zero;
             StartFlutter(collider.gameObject);
-            Debug.Log("SALIDO");
         }
     }
 }
