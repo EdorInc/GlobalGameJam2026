@@ -10,4 +10,5 @@ public class SoundLibrary : ScriptableObject
     public SoundDefinition throwRelease;
     public SoundDefinition falling;
     public SoundDefinition fallImpact;
+    public SoundDefinition hurtSound;
 }

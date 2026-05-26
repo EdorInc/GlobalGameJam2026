@@ -19,3 +19,4 @@ MonoBehaviour:
   throwRelease: {fileID: 11400000, guid: 7202e7fd5af1e414d9b9b9bd8458e4ef, type: 2}
   falling: {fileID: 11400000, guid: 17d6f3c2d14601f4c85482d0dffeda3d, type: 2}
   fallImpact: {fileID: 11400000, guid: aa35d11d28eb5ff498d80a266bccdc1f, type: 2}
+  hurtSound: {fileID: 11400000, guid: 45842fb56f6e68a449648ceeb16fec6b, type: 2}

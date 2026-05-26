@@ -12,6 +12,7 @@ public class ContactDamage : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             EventManager.OnDamageRecived?.Invoke(collision.gameObject, collision.contacts[0].point);
+            AudioSystem.PlaySFX(AudioSystem.SoundLibrary.hurtSound, collision.gameObject.transform.position);
         }
     }
 }
