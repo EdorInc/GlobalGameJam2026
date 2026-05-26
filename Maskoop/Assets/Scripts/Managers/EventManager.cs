@@ -107,7 +107,7 @@ public static class EventManager
     /// Invoked when a collider is lit on fire.
     /// Parameter: collider.
     /// </summary>
-    public static Action<Collider> OnLitOnFire;
+    public static Action<Collider, Collision> OnLitOnFire;
 
     /// <summary>
     /// Invoked when a victory condition is met.

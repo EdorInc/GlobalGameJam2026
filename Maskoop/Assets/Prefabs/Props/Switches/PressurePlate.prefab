@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 806114925009333865}
   - component: {fileID: 85776289468284398}
   - component: {fileID: -1156351442273747856}
+  - component: {fileID: -8309570884266829290}
   m_Layer: 0
   m_Name: PressurePlate
   m_TagString: Untagged
@@ -159,10 +160,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PressurePlate
   channel: 1
   keepActivated: 0
-  playerExclusive: 1
+  isPlayerExclusive: 1
   includedLayersInCheck:
     serializedVersion: 2
     m_Bits: 1
   activatedMaterial: {fileID: 2100000, guid: 4a73b30bee4c0b24e8bff9d5f01ae37b, type: 2}
   activatedWidth: 0.01
   debugObjectsOnPlate: []
+--- !u!114 &-8309570884266829290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7814919379879521700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7243c78de3bb543815409ef8d8126a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnFire
+  IsOnFire: 0
