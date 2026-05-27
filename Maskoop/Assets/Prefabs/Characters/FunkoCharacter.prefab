@@ -471,7 +471,7 @@ MonoBehaviour:
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 8
-  groundCheckDistance: 0.1
+  groundCheckDistance: 0.3
 --- !u!114 &380607342465091367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -513,7 +513,6 @@ MonoBehaviour:
   airControlMultiplier: 1
   rollSpeed: 400
   rollTime: 0.3
-  isRolling: 0
   throwingMoveSpeed: 1
   throwingTurnSpeed: 3
   hitKnockBackForce: 5
@@ -534,9 +533,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 933c403a7ecb81e48a873c0cfae4d8c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterStateController
-  characterId: 1
-  BodyRenderer: {fileID: 0}
-  EyesRenderer: {fileID: 0}
+  m_characterId: -1
+  m_bodyRenderer: {fileID: 0}
+  m_eyesRenderer: {fileID: 0}
 --- !u!114 &3889285676591165311
 MonoBehaviour:
   m_ObjectHideFlags: 0

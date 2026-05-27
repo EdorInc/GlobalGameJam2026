@@ -144,14 +144,15 @@ public class CharacterMovementController : MonoBehaviour
         // Detect landing — fires exactly once on the frame the player touches the ground
         if (!m_wasGrounded && IsGrounded)
         {
+            Debug.Log("Land.");
             EventManager.OnFallEnded?.Invoke(gameObject);
             m_isBeingThrown = false;
             m_stunCounter = 0;
         }
-
         // Detect leaving the ground — skip when an enemy lifts the player
-        if (m_wasGrounded && !IsGrounded && !IsGrabbed)
+        else if (m_wasGrounded && !IsGrounded && !IsGrabbed) 
         {
+            Debug.Log("Falling...");
             EventManager.OnFallStarted?.Invoke(gameObject);
         }
 

@@ -129,40 +129,42 @@ public class AirMask : BaseMask
 
     public void StartFlutter(GameObject target)
     {
-        if (characterState.IsMyPlayer(target))
+        if (!characterState.IsMyPlayer(target) || characterState.IsGrounded)
         {
-            EventManager.OnThrow?.Invoke(target, false,gameObject);
+            return;
+        }
 
-            isFluttering = true;
-            characterState.IsFloating = true;
+        EventManager.OnThrow?.Invoke(target, false, gameObject);
 
-            playerRigidBody = target.GetComponent<Rigidbody>();
-            playerRigidBody.constraints = RigidbodyConstraints.FreezePositionY;
-            
-            lastSpeed = playerRigidBody.linearVelocity;
+        isFluttering = true;
+        characterState.IsFloating = true;
 
-            if (windParticlesObject != null)
-            {
-                windParticlesObject.SetActive(true);
-            }
-            else
-            {
-                Collider collider = target.GetComponent<Collider>();
+        playerRigidBody = target.GetComponent<Rigidbody>();
+        playerRigidBody.constraints = RigidbodyConstraints.FreezePositionY;
 
-                Vector3 feetPosition = new Vector3(
-                    target.transform.position.x,
-                    collider.bounds.min.y,
-                    target.transform.position.z
-                );
+        lastSpeed = playerRigidBody.linearVelocity;
 
-                Quaternion rotation = Quaternion.Euler(90f, 0f, 0f);
-                windParticlesObject = Instantiate(
-                    windParticlesPrefab,
-                    feetPosition,
-                    rotation,
-                    target.transform
-                );
-            }
+        if (windParticlesObject != null)
+        {
+            windParticlesObject.SetActive(true);
+        }
+        else
+        {
+            Collider collider = target.GetComponent<Collider>();
+
+            Vector3 feetPosition = new Vector3(
+                target.transform.position.x,
+                collider.bounds.min.y,
+                target.transform.position.z
+            );
+
+            Quaternion rotation = Quaternion.Euler(90f, 0f, 0f);
+            windParticlesObject = Instantiate(
+                windParticlesPrefab,
+                feetPosition,
+                rotation,
+                target.transform
+            );
         }
     }
 
