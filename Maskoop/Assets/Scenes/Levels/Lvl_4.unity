@@ -469,9 +469,17 @@ PrefabInstance:
       propertyPath: isPlayerExclusive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1490894776977243058, guid: 55dc95a95e2a2a6419d53bfb97325519, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.36
+      objectReference: {fileID: 0}
     - target: {fileID: 1654131294086087847, guid: 55dc95a95e2a2a6419d53bfb97325519, type: 3}
       propertyPath: keepActivatedOnCompletion
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2138886193193015192, guid: 55dc95a95e2a2a6419d53bfb97325519, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.36
       objectReference: {fileID: 0}
     - target: {fileID: 2632870395602302919, guid: 55dc95a95e2a2a6419d53bfb97325519, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -521,6 +529,10 @@ PrefabInstance:
       propertyPath: isPlayerExclusive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4398906163753834183, guid: 55dc95a95e2a2a6419d53bfb97325519, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.36
+      objectReference: {fileID: 0}
     - target: {fileID: 4514462724549332154, guid: 55dc95a95e2a2a6419d53bfb97325519, type: 3}
       propertyPath: isPlayerExclusive
       value: 0
@@ -528,6 +540,10 @@ PrefabInstance:
     - target: {fileID: 7397632728446747245, guid: 55dc95a95e2a2a6419d53bfb97325519, type: 3}
       propertyPath: m_Name
       value: Lvl_4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8478634476561283558, guid: 55dc95a95e2a2a6419d53bfb97325519, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.36
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -596,6 +612,10 @@ PrefabInstance:
     - target: {fileID: 1044184537648854281, guid: ae4f38b685d9d9449ab9c7f5e9fb2495, type: 3}
       propertyPath: orthographic
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1044184537648854281, guid: ae4f38b685d9d9449ab9c7f5e9fb2495, type: 3}
+      propertyPath: near clip plane
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1044184537648854281, guid: ae4f38b685d9d9449ab9c7f5e9fb2495, type: 3}
       propertyPath: orthographic size
