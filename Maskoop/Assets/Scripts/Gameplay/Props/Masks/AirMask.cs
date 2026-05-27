@@ -16,7 +16,8 @@ public class AirMask : BaseMask
 
     private Rigidbody playerRigidBody;
 
-    private bool isFluttering = false;
+    private bool m_isFluttering = false;
+    private bool m_wasVerticalCurrent = false;
 
     private float currentFloatTime = 0;
 
@@ -65,58 +66,49 @@ public class AirMask : BaseMask
         const float kVerticalThreshold = 0.01f;
         float verticalAlongWorld = 0f;
 
+        Vector3 vertical = Vector3.zero;
         Vector3 horizontal = Vector3.zero;
 
         if (currentSpeed != Vector3.zero)
         {
             verticalAlongWorld = Vector3.Dot(currentSpeed, Vector3.up);
+
+            vertical = Vector3.Project(currentSpeed, Vector3.up);
             horizontal = currentSpeed - Vector3.up * verticalAlongWorld;
         }
 
         bool hasHorizontalCurrent = horizontal.sqrMagnitude > 0f;
         bool hasVerticalCurrent = Mathf.Abs(verticalAlongWorld) > kVerticalThreshold;
 
-        if (isFluttering)
+        if (m_isFluttering)
         {
-            // When an air current is present and purely horizontal preserve the flutter.
-            if (!(hasHorizontalCurrent && !hasVerticalCurrent))
+            // When an air current is present preserve the flutter.
+            if (hasHorizontalCurrent || hasVerticalCurrent)
             {
-                // Modify the player speed to create a fluttering effect, reducing speed and adding drag.
                 Vector3 targetSpeed = playerRigidBody.linearVelocity * flutterSpeedReduction;
-                targetSpeed = Vector3.MoveTowards(lastSpeed, targetSpeed, Time.deltaTime * flutterDrag);
-                playerRigidBody.linearVelocity = targetSpeed;
-
-                lastSpeed = playerRigidBody.linearVelocity;
-
-                // Count the time spent fluttering.
-                currentFloatTime += Time.deltaTime;
+                lastSpeed = Vector3.MoveTowards(lastSpeed, targetSpeed, Time.deltaTime * flutterDrag);
             }
             else
             {
-                // Still update lastSpeed to the reduced velocity so transitions remain smooth.
                 Vector3 targetSpeed = playerRigidBody.linearVelocity * flutterSpeedReduction;
-                lastSpeed = Vector3.MoveTowards(lastSpeed, targetSpeed, Time.deltaTime * flutterDrag);
+                targetSpeed = Vector3.MoveTowards(lastSpeed, targetSpeed, Time.deltaTime * flutterDrag);
+                playerRigidBody.linearVelocity = targetSpeed;
+                lastSpeed = playerRigidBody.linearVelocity;
+                currentFloatTime += Time.deltaTime;
             }
         }
 
         if (currentSpeed != Vector3.zero)
         {
-            // Apply horizontal push without ending flutter so the player does not start falling.
             if (hasHorizontalCurrent)
             {
                 playerRigidBody.AddForce(horizontal);
             }
 
-            // Only apply vertical component (and stop flutter) if it is significant.
             if (hasVerticalCurrent)
             {
-                playerRigidBody.AddForce(Vector3.up * verticalAlongWorld);
-
-                // If there is a meaningful vertical influence, stop flutter so normal vertical physics resumes.
-                if (isFluttering)
-                {
-                    StopFlutter();
-                }
+                playerRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
+                playerRigidBody.AddForce(vertical);
             }
         }
 
@@ -126,24 +118,8 @@ public class AirMask : BaseMask
         }
     }
 
-
-    public void StartFlutter(GameObject target)
+    private void ShowFlutterVisuals(GameObject target)
     {
-        if (!characterState.IsMyPlayer(target) || characterState.IsGrounded)
-        {
-            return;
-        }
-
-        EventManager.OnThrow?.Invoke(target, false, gameObject);
-
-        isFluttering = true;
-        characterState.IsFloating = true;
-
-        playerRigidBody = target.GetComponent<Rigidbody>();
-        playerRigidBody.constraints = RigidbodyConstraints.FreezePositionY;
-
-        lastSpeed = playerRigidBody.linearVelocity;
-
         if (windParticlesObject != null)
         {
             windParticlesObject.SetActive(true);
@@ -151,21 +127,32 @@ public class AirMask : BaseMask
         else
         {
             Collider collider = target.GetComponent<Collider>();
-
             Vector3 feetPosition = new Vector3(
                 target.transform.position.x,
                 collider.bounds.min.y,
                 target.transform.position.z
             );
-
-            Quaternion rotation = Quaternion.Euler(90f, 0f, 0f);
             windParticlesObject = Instantiate(
                 windParticlesPrefab,
                 feetPosition,
-                rotation,
+                Quaternion.Euler(90f, 0f, 0f),
                 target.transform
             );
         }
+    }
+
+    public void StartFlutter(GameObject target)
+    {
+        if (!characterState.IsMyPlayer(target) || characterState.IsGrounded)
+            return;
+
+        m_isFluttering = true;
+        characterState.IsFloating = true;
+        playerRigidBody = target.GetComponent<Rigidbody>();
+        playerRigidBody.constraints = RigidbodyConstraints.FreezePositionY;
+        lastSpeed = playerRigidBody.linearVelocity;
+
+        ShowFlutterVisuals(target);
     }
 
     public void EndFlutter(GameObject target)
@@ -179,7 +166,7 @@ public class AirMask : BaseMask
 
     private void StopFlutter()
     {
-        isFluttering = false;
+        m_isFluttering = false;
         currentFloatTime = 0;
 
         if(playerRigidBody != null)
@@ -195,19 +182,15 @@ public class AirMask : BaseMask
             windParticlesObject.SetActive(false);
         }
     }
-
     public void AirCurrentEnter(Collider collider, Vector3 force)
     {
         if (characterState.IsMyPlayer(collider.gameObject))
         {
-            // if (isFluttering)
-            // {
-            //     StopFlutter();
-            // }
-
             playerRigidBody = collider.attachedRigidbody;
             currentSpeed = force;
-        } 
+
+            StartFlutter(collider.gameObject);
+        }
     }
 
     public void AirCurrentExit(Collider collider)
@@ -215,7 +198,18 @@ public class AirMask : BaseMask
         if (characterState.IsMyPlayer(collider.gameObject))
         {
             currentSpeed = Vector3.zero;
+
+            if (m_wasVerticalCurrent && playerRigidBody != null)
+            {
+                playerRigidBody.linearVelocity = new Vector3(
+                    playerRigidBody.linearVelocity.x,
+                    0f,
+                    playerRigidBody.linearVelocity.z
+                );
+            }
+
             StartFlutter(collider.gameObject);
+            m_wasVerticalCurrent = false;
         }
     }
 }

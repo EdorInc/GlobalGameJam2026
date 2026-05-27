@@ -5,11 +5,13 @@ using UnityEngine.UIElements;
 public class AirCurrents : MonoBehaviour
 {
     [Header("Force Settings")]
+    [Tooltip("Force applied by the air current.")]
+    [Min(10f)]
     [SerializeField] private float force = 50.0f;
 
     [Header("Particle Settings")]
-    private BoxCollider trigger;
     [SerializeField] private ParticleSystem particles;
+    private BoxCollider trigger;
 
     private float m_length = 1.0f;
     private float m_headSize = 0.2f;
