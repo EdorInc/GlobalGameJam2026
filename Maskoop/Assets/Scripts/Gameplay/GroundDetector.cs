@@ -13,6 +13,19 @@ public class GroundDetector : MonoBehaviour
     [Tooltip("Distance below the collider to check for ground contact.")]
     private float groundCheckDistance = 0.1f;
 
+    [Header("Shadow Projection")]
+    [SerializeField]
+    [Tooltip("Prefab used as a projected shadow when the character is airborne. Can be null to disable.")]
+    private GameObject shadowPrefab;
+    [SerializeField]
+    [Tooltip("Maximum distance below the character to search for ground to place the shadow.")]
+    private float shadowMaxDistance = 20f;
+    [SerializeField]
+    [Tooltip("Small offset above the ground to avoid Z-fighting.")]
+    private float shadowGroundOffset = 0.02f;
+
+    private GameObject shadowInstance;
+
     public bool IsGrounded { get; private set; }
     public GameObject MovingPlatform { get; private set; }
 
@@ -73,6 +86,83 @@ public class GroundDetector : MonoBehaviour
         {
             IsGrounded = true;
             MovingPlatform = hit.collider.CompareTag("MovingPlatform") ? hit.collider.gameObject : null;
+        }
+
+        UpdateShadowProjection();
+    }
+
+    private void UpdateShadowProjection()
+    {
+        // If no shadow prefab configured, ensure any existing instance is disabled and return.
+        if (shadowPrefab == null)
+        {
+            if (shadowInstance != null)
+            {
+                shadowInstance.SetActive(false);
+            }
+            return;
+        }
+
+        // Only project a shadow while airborne
+        if (IsGrounded)
+        {
+            if (shadowInstance != null)
+            {
+                shadowInstance.SetActive(false);
+            }
+            return;
+        }
+
+        // Cast downward from the character's position to find ground further below
+        Vector3 rayOrigin = transform.position;
+        if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit shadowHit, shadowMaxDistance, groundLayerMask))
+        {
+            if (shadowInstance == null)
+            {
+                shadowInstance = Instantiate(shadowPrefab);
+                shadowInstance.transform.SetParent(null);
+            }
+
+            shadowInstance.transform.position = shadowHit.point + shadowHit.normal * shadowGroundOffset;
+
+            // Orient the shadow to be flush with the ground normal.
+            Vector3 projectedForward = Vector3.ProjectOnPlane(transform.forward, shadowHit.normal);
+            if (projectedForward.sqrMagnitude <= 0.001f)
+            {
+                // Fallback forward if projection is degenerate
+                projectedForward = Vector3.ProjectOnPlane(transform.up, shadowHit.normal);
+            }
+            shadowInstance.transform.rotation = Quaternion.LookRotation(projectedForward.normalized, shadowHit.normal);
+
+            // Make sure the instance is active
+            if (!shadowInstance.activeSelf)
+            {
+                shadowInstance.SetActive(true);
+            }
+        }
+        else
+        {
+            // Nothing hit in range -> hide shadow
+            if (shadowInstance != null && shadowInstance.activeSelf)
+            {
+                shadowInstance.SetActive(false);
+            }
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (shadowInstance != null)
+        {
+            shadowInstance.SetActive(false);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (shadowInstance != null)
+        {
+            Destroy(shadowInstance);
         }
     }
 }

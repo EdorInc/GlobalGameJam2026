@@ -77,7 +77,7 @@ public class AirCurrents : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Vector3 forceVector = transform.up * force;
-            EventManager.OnAirCurrentEnter?.Invoke(other, forceVector);
+            EventManager.OnAirCurrentEnter?.Invoke(other, trigger, forceVector);
         }
     }
 
@@ -85,7 +85,7 @@ public class AirCurrents : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            EventManager.OnAirCurrentExit?.Invoke(other);
+            EventManager.OnAirCurrentExit?.Invoke(other, trigger);
         }
     }
 }

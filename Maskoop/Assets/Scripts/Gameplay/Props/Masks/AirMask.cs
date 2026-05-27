@@ -15,6 +15,7 @@ public class AirMask : BaseMask
     private GameObject windParticlesObject;
 
     private Rigidbody playerRigidBody;
+    private Collider m_activeCurrent;
 
     private bool m_isFluttering = false;
     private bool m_wasVerticalCurrent = false;
@@ -182,31 +183,37 @@ public class AirMask : BaseMask
             windParticlesObject.SetActive(false);
         }
     }
-    public void AirCurrentEnter(Collider collider, Vector3 force)
+    public void AirCurrentEnter(Collider collider, Collider current, Vector3 force)
     {
         if (characterState.IsMyPlayer(collider.gameObject))
         {
             playerRigidBody = collider.attachedRigidbody;
+
+            m_activeCurrent = current;
             currentSpeed = force;
 
             StartFlutter(collider.gameObject);
         }
     }
 
-    public void AirCurrentExit(Collider collider)
+    public void AirCurrentExit(Collider collider, Collider current)
     {
         if (characterState.IsMyPlayer(collider.gameObject))
         {
-            currentSpeed = Vector3.zero;
-
-            if (m_wasVerticalCurrent && playerRigidBody != null)
+            if (current == m_activeCurrent)
             {
-                playerRigidBody.linearVelocity = new Vector3(
-                    playerRigidBody.linearVelocity.x,
-                    0f,
-                    playerRigidBody.linearVelocity.z
-                );
+                m_activeCurrent = null;
+                currentSpeed = Vector3.zero;
             }
+
+            // if (m_wasVerticalCurrent && playerRigidBody != null)
+            // {
+            //     playerRigidBody.linearVelocity = new Vector3(
+            //         playerRigidBody.linearVelocity.x,
+            //         0f,
+            //         playerRigidBody.linearVelocity.z
+            //     );
+            // }
 
             StartFlutter(collider.gameObject);
             m_wasVerticalCurrent = false;
