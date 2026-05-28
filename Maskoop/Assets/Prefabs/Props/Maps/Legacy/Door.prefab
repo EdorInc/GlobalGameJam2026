@@ -157,9 +157,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Door
   channel: 1
+  keepActivatedOnCompletion: 0
+  keepActivatedOnSimultaneousPress: 0
   activatorsNeeded: 1
+  activatorsLeft: 1
   openPosition: {fileID: 4203571517308636194}
-  speed: 2
+  speed: 3
 --- !u!1 &3296574170664333059
 GameObject:
   m_ObjectHideFlags: 0
