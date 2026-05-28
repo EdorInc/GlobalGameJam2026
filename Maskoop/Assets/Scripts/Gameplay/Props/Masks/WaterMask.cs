@@ -2,54 +2,94 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Splines;
 
+[DefaultExecutionOrder(300)]
 public class WaterMask : BaseMask
 {
     [Header("Material Settings")]
     public Material waterMaterial;
     public Renderer maskRenderer;
     public GameObject playerInPipePrefab;
-    public float speed = 20;
+    public float speed = 20f;
 
     private Material previousMaterial;
     private GameObject playerInTubeObject;
-
-    private SplineContainer currentSpline;
-
     private List<Vector3> tubePositions;
 
-    private bool movingInPipe = false;
-    private int tubeIndex = 0;
-    private Rigidbody playerRb;
-    private CharacterMovementController characteMovement;
-    private List<Collider> ignoredWalls = new();
-    private float previousSpeedMultiplier = 1f;
+    private bool movingInPipe;
+    private bool exitingPipe;
+
+    private int tubeIndex;
 
     private bool directMovement = true;
+
+    private Rigidbody playerRb;
+    private CharacterMovementController characterMovement;
+
+    private Vector3 lastValidDirection;
+    private Vector3 exitDirection;
+    private Vector3 exitTarget;
+
+    [SerializeField] private float exitOffset = 2f;
+
     public override void OnEquip(CharacterStateController characterState)
     {
         base.OnEquip(characterState);
 
-        previousMaterial = characterState.GetBodyRenderer().material;
-        characterState.GetBodyRenderer().material = waterMaterial;
-
-        EventManager.OnWaterWallEnter += EnterWaterWall;
-        EventManager.OnWaterWallExit += ExitWaterWall;
-
-        EventManager.OnPipeEntryPoint += PipeEntered;
-
+        SetupMaterial();
+        SubscribeEvents();
         IgnoreAllWaterWalls(true);
     }
 
     public override void OnUnequip()
     {
+        RestoreMaterial();
+        UnsubscribeEvents();
+        IgnoreAllWaterWalls(false);
+    }
+
+    public override void UpdateLogic()
+    {
+    }
+
+    public override void FixedUpdateLogic()
+    {
+        if (exitingPipe)
+        {
+            UpdateExitMovement();
+            return;
+        }
+
+        if (movingInPipe == false)
+        {
+            return;
+        }
+
+        UpdatePipeMovement();
+    }
+
+    private void SetupMaterial()
+    {
+        previousMaterial = characterState.GetBodyRenderer().material;
+        characterState.GetBodyRenderer().material = waterMaterial;
+    }
+
+    private void RestoreMaterial()
+    {
         characterState.GetBodyRenderer().material = previousMaterial;
+    }
 
-        EventManager.OnPipeEntryPoint -= PipeEntered;
+    private void SubscribeEvents()
+    {
+        EventManager.OnWaterWallEnter += EnterWaterWall;
+        EventManager.OnWaterWallExit += ExitWaterWall;
+        EventManager.OnPipeEntryPoint += PipeEntered;
+    }
 
+    private void UnsubscribeEvents()
+    {
         EventManager.OnWaterWallEnter -= EnterWaterWall;
         EventManager.OnWaterWallExit -= ExitWaterWall;
-
-        IgnoreAllWaterWalls(false);
+        EventManager.OnPipeEntryPoint -= PipeEntered;
     }
 
     private void IgnoreAllWaterWalls(bool ignore)
@@ -58,140 +98,218 @@ public class WaterMask : BaseMask
 
         WaterWall[] walls = FindObjectsByType<WaterWall>(FindObjectsSortMode.InstanceID);
 
-        foreach (WaterWall wall in walls)
+        for (int i = 0; i < walls.Length; i++)
         {
-            Collider wallCollider = wall.GetComponent<Collider>();
-
+            Collider wallCollider = walls[i].GetComponent<Collider>();
             Physics.IgnoreCollision(playerCollider, wallCollider, ignore);
         }
     }
 
-    public override void UpdateLogic()
+    private void UpdatePipeMovement()
     {
-
-    }
-
-    public override void FixedUpdateLogic()
-    {
-        if (!movingInPipe || currentSpline == null) return;
-
-        Vector3 actualPosition = playerRb.position;
-
-        if (directMovement)
+        if (HasReachedPipeEnd())
         {
-            if (tubeIndex > tubePositions.Count - 1)
-            {
-                ExitPipe();
-                return;
-            }
+            StartExit();
+            return;
+        }
 
-            
+        Vector3 targetPosition = tubePositions[tubeIndex];
 
-            actualPosition = Vector3.MoveTowards(actualPosition, tubePositions[tubeIndex], Time.deltaTime * speed);
+        Vector3 direction = (targetPosition - playerRb.position);
 
-            if(Vector3.Distance(actualPosition, tubePositions[tubeIndex]) < 0.1f)
-            {
-                tubeIndex++;
-            }
+        if (direction.sqrMagnitude > 0.0001f)
+        {
+            direction = direction.normalized;
+            lastValidDirection = direction;
         }
         else
         {
-            if (tubeIndex < 0)
-            {
-                ExitPipe();
-                return;
-            }
-
-            actualPosition = Vector3.MoveTowards(actualPosition, tubePositions[tubeIndex], Time.deltaTime * speed);
-
-            if (Vector3.Distance(actualPosition, tubePositions[tubeIndex]) < 0.1f)
-            {
-                tubeIndex--;
-            }
+            direction = lastValidDirection;
         }
 
-        playerRb.MovePosition(actualPosition);
+        MovePlayer(direction);
+
+        UpdateVisuals(direction);
+
+        CheckAdvanceNode(targetPosition);
+
     }
 
-    private void PipeEntered(Collider player, TubeSpawner spline,bool entry)
+    private void UpdateExitMovement()
     {
-        if (characterState.IsMyPlayer(player.gameObject))
+        Vector3 direction = (exitTarget - playerRb.position).normalized;
+
+        MovePlayer(direction);
+
+        UpdateVisuals(direction);
+
+        if (Vector3.Distance(playerRb.position, exitTarget) < 0.2f)
         {
-            if (!currentSpline && !movingInPipe)
-            {
-                EnterPipe(player, spline);
-                directMovement = entry;
-                if (!directMovement)
-                {
-                    tubeIndex = tubePositions.Count - 1;
-                }
-                else
-                {
-                    
-                    tubeIndex = 0;
-                }
-                
-                playerRb.position = tubePositions[tubeIndex];
-                Quaternion rot = Quaternion.Euler(new Vector3(0, 0, 180));
-                playerInTubeObject = Instantiate(playerInPipePrefab, playerRb.position + Vector3.up, rot, playerRb.gameObject.transform);
-            }
+            FinishExit();
         }
     }
 
-    private void ExitPipe()
+    private bool HasReachedPipeEnd()
     {
+        if (directMovement == true)
+        {
+            return tubeIndex >= tubePositions.Count;
+        }
+
+        return tubeIndex < 0;
+    }
+
+    private void MovePlayer(Vector3 direction)
+    {
+        playerRb.linearVelocity = direction * speed;
+    }
+
+    private void UpdateVisuals(Vector3 direction)
+    {
+        playerInTubeObject.transform.position = playerRb.position;
+
+        if (direction.sqrMagnitude > 0.001f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+            playerInTubeObject.transform.rotation =
+                Quaternion.Slerp(
+                    playerInTubeObject.transform.rotation,
+                    targetRotation,
+                    Time.fixedDeltaTime * 15f
+                );
+        }
+    }
+
+    private void CheckAdvanceNode(Vector3 targetPosition)
+    {
+        float distance = Vector3.Distance(playerRb.position, targetPosition);
+
+        if (distance > 0.1f)
+        {
+            return;
+        }
+
+        if (directMovement == true)
+        {
+            tubeIndex++;
+            return;
+        }
+
+        tubeIndex--;
+    }
+
+    private void StartExit()
+    {
+        if (exitingPipe == true)
+        {
+            return;
+        }
+
+        exitingPipe = true;
+
+        Vector3 safeDirection = lastValidDirection;
+
+        if (safeDirection.sqrMagnitude < 0.001f)
+        {
+            safeDirection = Vector3.forward;
+        }
+
+        exitTarget = playerRb.position + safeDirection * exitOffset;
+    }
+
+    private void FinishExit()
+    {
+        exitingPipe = false;
         movingInPipe = false;
-        currentSpline = null;   
-        characteMovement.enabled = true;
-        playerRb.isKinematic = false;
+
+        characterMovement.enabled = true;
+
         playerRb.interpolation = RigidbodyInterpolation.Interpolate;
         playerRb.useGravity = true;
-        playerRb = null;
+
+        playerRb.gameObject.GetComponent<CapsuleCollider>().enabled = true;
+
         characterState.EnableRenderer();
         maskRenderer.enabled = true;
-        
 
         Destroy(playerInTubeObject);
+
+        playerRb = null;
+        characterMovement = null;
     }
 
-    private void EnterPipe(Collider player, TubeSpawner spline)
+    private void PipeEntered(Collider player, List<Vector3> pipe, bool entry)
+    {
+        if (characterState.IsMyPlayer(player.gameObject) == false)
+        {
+            return;
+        }
+
+        if (movingInPipe == true)
+        {
+            return;
+        }
+
+        EnterPipe(player, pipe, entry);
+    }
+
+    private void EnterPipe(Collider player, List<Vector3> pipe, bool entry)
     {
         movingInPipe = true;
-        currentSpline = spline.spline;
-        playerRb = player.gameObject.GetComponent<Rigidbody>();
-        characteMovement = player.gameObject.GetComponent<CharacterMovementController>();
-        characteMovement.enabled = false;
-        playerRb.isKinematic = true;
-        playerRb.interpolation = RigidbodyInterpolation.None;
-        characterState.DisableRender();
-        maskRenderer.enabled = false;
-        playerRb.useGravity = false;
-        tubePositions = spline.positionList;
-        
-        
-    }
 
+        directMovement = entry;
+
+        tubePositions = pipe;
+
+        tubeIndex = directMovement ? 0 : tubePositions.Count - 1;
+
+        playerRb = player.gameObject.GetComponent<Rigidbody>();
+        characterMovement = player.gameObject.GetComponent<CharacterMovementController>();
+
+        characterMovement.enabled = false;
+
+        playerRb.linearVelocity = Vector3.zero;
+        playerRb.angularVelocity = Vector3.zero;
+
+        playerRb.interpolation = RigidbodyInterpolation.None;
+        playerRb.useGravity = false;
+
+        player.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+
+        characterState.ReleaseHeldObject();
+        characterState.DisableRender();
+
+        maskRenderer.enabled = false;
+
+        playerRb.position = tubePositions[tubeIndex];
+
+        playerInTubeObject =
+            Instantiate(playerInPipePrefab, playerRb.position, Quaternion.identity);
+    }
 
     private void EnterWaterWall(Collider player, float multiplier)
     {
-        if (!characterState.IsMyPlayer(player.gameObject))
+        if (characterState.IsMyPlayer(player.gameObject) == false)
+        {
             return;
+        }
 
-        characteMovement =
-            player.GetComponent<CharacterMovementController>();
+        characterMovement = player.GetComponent<CharacterMovementController>();
 
         characterState.ReleaseHeldObject();
 
-        characteMovement.SetSpeedMultiplier(multiplier);
+        characterMovement.SetSpeedMultiplier(multiplier);
     }
 
     private void ExitWaterWall(Collider player)
     {
-        if (!characterState.IsMyPlayer(player.gameObject))
+        if (characterState.IsMyPlayer(player.gameObject) == false)
+        {
             return;
+        }
 
-        characteMovement.SetSpeedMultiplier(1f);
-        characteMovement = null;
+        characterMovement.SetSpeedMultiplier(1f);
+        characterMovement = null;
     }
-
 }

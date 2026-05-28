@@ -4,7 +4,7 @@ using UnityEngine.Splines;
 
 public class PipeEntryPoint : MonoBehaviour
 {
-    public TubeSpawner spline;
+    public PipeSystem pipe;
 
     private float timeFromLast = 0;
 
@@ -13,7 +13,7 @@ public class PipeEntryPoint : MonoBehaviour
     {
         if (other.CompareTag("Player") && timeFromLast > 1)
         {
-            EventManager.OnPipeEntryPoint?.Invoke(other,spline, isEntry);
+            EventManager.OnPipeEntryPoint?.Invoke(other,pipe.GetWorldPositions(), isEntry);
             timeFromLast = 0;
         }
     }

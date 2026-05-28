@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using UnityEngine.Video;
 using UnityEngine.Splines;
+using System.Collections.Generic;
 
 /// <summary>
 /// Centralized static event manager for game-wide events.
@@ -88,7 +89,7 @@ public static class EventManager
     /// Invoked when a collider enters a pipe entry.
     /// Parameter: collider, spline.
     /// </summary>
-    public static Action<Collider, TubeSpawner, bool> OnPipeEntryPoint;
+    public static Action<Collider, List<Vector3>, bool> OnPipeEntryPoint;
 
 
     /// <summary>

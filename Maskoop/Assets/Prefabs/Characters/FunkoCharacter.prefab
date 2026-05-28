@@ -537,8 +537,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterStateController
   m_characterId: -1
-  m_bodyRenderer: {fileID: 0}
-  m_eyesRenderer: {fileID: 0}
+  m_bodyRenderer: {fileID: 4968761913887501472}
+  m_eyesRenderer: {fileID: 668609052309525497}
 --- !u!114 &3889285676591165311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1028,6 +1028,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 8699320962177305736}
   m_SourcePrefab: {fileID: 100100000, guid: 159555cce75cac946a226a59162e9b6d, type: 3}
+--- !u!137 &668609052309525497 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -5028815728566405330, guid: 159555cce75cac946a226a59162e9b6d, type: 3}
+  m_PrefabInstance: {fileID: 3706865847015564503}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2419637300062318023 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7861831855079945968, guid: 159555cce75cac946a226a59162e9b6d, type: 3}
@@ -1083,3 +1088,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   fallSFXVelocity: -3
   impactCooldown: 0.2
+--- !u!137 &4968761913887501472 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -610808964931467145, guid: 159555cce75cac946a226a59162e9b6d, type: 3}
+  m_PrefabInstance: {fileID: 3706865847015564503}
+  m_PrefabAsset: {fileID: 0}
