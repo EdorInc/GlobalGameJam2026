@@ -101,6 +101,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   groundCheckDistance: 0.1
+  shadowPrefab: {fileID: 0}
+  shadowMaxDistance: 20
+  shadowGroundOffset: 0.02
   holdOffset: {x: 0, y: 0, z: 0}
   holdRotation: {x: 0, y: 0, z: 0, w: 1}
   resetRotationInAir: 0
