@@ -156,8 +156,9 @@ GameObject:
   - component: {fileID: 6885308075491525930}
   - component: {fileID: 4714285465860657251}
   - component: {fileID: 4031961618772163604}
+  - component: {fileID: 4761801768972767739}
   m_Layer: 0
-  m_Name: Rock
+  m_Name: RockFire
   m_TagString: Rock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -301,6 +302,19 @@ MonoBehaviour:
   showDebugRays: 1
   createVisualRespawnPosition: 0
   respawnRotation: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4761801768972767739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836515063631740824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7243c78de3bb543815409ef8d8126a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnFire
+  IsOnFire: 1
 --- !u!1 &1886966554693307612
 GameObject:
   m_ObjectHideFlags: 0

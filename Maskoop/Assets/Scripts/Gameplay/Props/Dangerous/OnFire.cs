@@ -27,7 +27,7 @@ public class OnFire : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && IsOnFire)
         {
             CharacterStateController state = collision.gameObject.GetComponent<CharacterStateController>();
 
@@ -43,5 +43,10 @@ public class OnFire : MonoBehaviour
                 }
             }
         }
+    }
+
+    public bool IsBurning()
+    {
+        return IsOnFire;
     }
 }

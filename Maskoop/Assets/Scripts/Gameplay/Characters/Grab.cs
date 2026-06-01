@@ -81,6 +81,13 @@ public class Grab : MonoBehaviour
     {
         if (grabbedObject != null)
         {
+            OnFire fire = grabbedObject.GetComponent<OnFire>();
+            if (fire != null && fire.IsBurning())
+            {
+                DropObject();
+                return;
+            }
+
             Grabbable grabbable = grabbedObject.GetComponent<Grabbable>();
 
             // Move smoothly to the hold position
