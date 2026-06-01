@@ -24,7 +24,7 @@ namespace Gameplay.Cameras
 
         [Header("Widen (Position/Rotation)")]
         [Tooltip("If true, widen by moving/rotating the camera toward the max pose.")]
-        [SerializeField] private bool usePositionRotationWiden = true;
+        [SerializeField] private bool usePositionRotationWiden;
         [Tooltip("Maximum camera position when fully widened.")]
         [SerializeField] private Vector3 widenedCameraPosition;
         [Tooltip("Maximum camera rotation (Euler) when fully widened.")]
@@ -54,9 +54,6 @@ namespace Gameplay.Cameras
         private bool initialized;
         private float lastDistance;
         private Vector3 positionVelocity;
-        private GroundDetector ground1;
-        private GroundDetector ground2;
-        private bool heightUnlocked;
 
         private void Awake()
         {
@@ -81,7 +78,6 @@ namespace Gameplay.Cameras
             float effectiveSmoothTime = Mathf.Max(0.01f, smoothTime / dynamicSpeed);
 
             Vector3 desiredPosition = midpoint + defaultOffset;
-            desiredPosition.y = defaultPosition.y;
             Quaternion desiredRotation = defaultRotation;
 
             if (usePositionRotationWiden)
@@ -91,22 +87,7 @@ namespace Gameplay.Cameras
                 desiredRotation = Quaternion.Slerp(defaultRotation, Quaternion.Euler(widenedCameraEuler), widenT);
             }
             
-            bool bothGrounded = ground1 != null && ground2 != null && ground1.IsGrounded && ground2.IsGrounded;
-            if (!heightUnlocked && bothGrounded)
-            {
-                heightUnlocked = true;
-            }
-            
-            if (!heightUnlocked) 
-            {
-                // Mientras no estén grounded, mantener la altura inicial
-                desiredPosition.y = defaultPosition.y;
-            }
-            else
-            {
-                // Una vez grounded, seguir el midpoint pero con tope de altura
-                desiredPosition.y = Mathf.Min(desiredPosition.y, maxCameraHeight);
-            }
+            desiredPosition.y = Mathf.Clamp(midpoint.y + defaultOffset.y, defaultPosition.y, maxCameraHeight);
 
             transform.position = Vector3.SmoothDamp(
                 transform.position,
@@ -155,10 +136,6 @@ namespace Gameplay.Cameras
                 seeThrough.SetPlayers(target, otherTarget);
             }
             
-            ground1 = target.GetComponentInParent<GroundDetector>() ?? target.GetComponentInChildren<GroundDetector>();
-            ground2 = otherTarget.GetComponentInParent<GroundDetector>() ?? otherTarget.GetComponentInChildren<GroundDetector>();
-            heightUnlocked = false;
-
             InitializeDefaults();
         }
 
