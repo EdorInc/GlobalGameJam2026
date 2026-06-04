@@ -168,7 +168,7 @@ public class CharacterMovementController : MonoBehaviour
                 // Rapid wiggling fills the escape meter faster than slow inputs
                 if (horizontalInput.magnitude > 0f)
                 {
-                    m_currentMovement += horizontalInput.magnitude;
+                    m_currentMovement += horizontalInput.magnitude * Time.fixedDeltaTime;
 
                     if (m_currentMovement > movementToBeFree)
                     {

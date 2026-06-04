@@ -68,13 +68,17 @@ public class NavMeshManager : MonoBehaviour
         Vector3 p = worldPosition;
 
         return new Vector2(
-            Mathf.Floor(p.x),
-            Mathf.Floor(p.z)
+            Mathf.RoundToInt(p.x),
+            Mathf.RoundToInt(p.z)
         );
     }
 
     public List<Vector3> FindPath(Vector2 start, Vector2 goal)
     {
+        if (!mapDictionary.ContainsKey(goal))
+        {
+            return null;
+        }
         TileData startData = mapDictionary[start];
         TileData endData = mapDictionary[goal];
 
@@ -94,7 +98,7 @@ public class NavMeshManager : MonoBehaviour
             if (current == endData)
                 return ReconstructPath(cameFrom, current);
 
-            foreach (TileData neighbor in GetNeighbors(current))
+            foreach (TileData neighbor in GetNeighbors(current,endData))
             {
                 float tentativeG = gScore[current] + 1;
 
@@ -182,21 +186,23 @@ public class NavMeshManager : MonoBehaviour
         new Vector3(-1,0,-1),
         new Vector3(1,0,-1),
     };
-    private List<TileData> GetNeighbors(TileData current)
+    private List<TileData> GetNeighbors(TileData current, TileData goal)
     {
         var neighbors = new List<TileData>();
+
         foreach (Vector3 dir in directions)
         {
             Vector3 neighborPos = current.position + dir;
 
             if (mapDictionary.TryGetValue(WorldToTile(neighborPos), out TileData neighbor))
             {
-                if(neighbor.tileType == TileType.Ground)
+                if (neighbor.tileType == TileType.Ground || neighbor == goal)
                 {
                     neighbors.Add(neighbor);
                 }
             }
         }
+
         return neighbors;
     }
 
@@ -208,16 +214,18 @@ public class NavMeshManager : MonoBehaviour
 
     List<Vector3> ReconstructPath(Dictionary<TileData, TileData> cameFrom, TileData current)
     {
-        var path = new List<TileData> { current };
-        List<Vector3> positionList = new List<Vector3>();
+        List<Vector3> path = new();
+
+        path.Add(current.position);
+
         while (cameFrom.ContainsKey(current))
         {
             current = cameFrom[current];
-            path.Add(current);
-            positionList.Add(current.position);
+            path.Add(current.position);
         }
-        positionList.Reverse();
-        return positionList;
+
+        path.Reverse();
+        return path;
     }
 
     //Dinamic tyles

@@ -15,12 +15,11 @@ public class EnemyBehaviour : MonoBehaviour
 
     private int currentPoint = 0;
     private bool waiting = false;
+    private int currentPatrolIndex = 0;
+    private bool wasChasingPlayer = false;
 
-
-    [Header("Patrol Area")]
-    public Transform patrolCenter;
-    public float patrolRadius;
-    public float minDistance = 3f; 
+    [Header("Patrol")]
+    public List<Transform> patrolPoints;
     public float waitTime = 1.5f;
     [Header("ThrowParameters")]
     public float timeToThrow = 1;
@@ -36,15 +35,28 @@ public class EnemyBehaviour : MonoBehaviour
     private float lastPathRecalculationTime = -Mathf.Infinity;
     private Vector3 finalDestination;
     private float ignorePlayerUntil = 0f;
-    private CharacterStateController stateController; 
+    private CharacterStateController stateController;
+    private string currentDebugState = "";
+    private bool switchingToPath = false;
     private void Start()
     {
         enemyInput = GetComponent<EnemyInputController>();
         enemyDetection = GetComponent<EnemyDetection>();
         stateController = GetComponent<CharacterStateController>();
         targetPosition = transform.position;
+        if (patrolPoints != null && patrolPoints.Count > 0)
+        {
+            ReturnToClosestPatrolPoint();
+        }
     }
+    private void SetDebugState(string newState)
+    {
+        if (currentDebugState == newState)
+            return;
 
+        currentDebugState = newState;
+        Debug.Log($"[Enemy] {gameObject.name} -> {newState}");
+    }
     private void OnEnable()
     {
         EventManager.OnNavMeshUpdate += UpdateNavMeshPath;
@@ -64,15 +76,17 @@ public class EnemyBehaviour : MonoBehaviour
         
         if (waiting)
         {
+            SetDebugState("Waiting");
             GoToPosition(transform.position);
             return;
         }
 
         if(stateController.GetHeldObject() != null)
         {
-            
-            if (Vector3.Distance(targetPosition, transform.position) < 0.1)
+            SetDebugState("Carrying Player");
+            if (HorizontalDistanceSqr(targetPosition, transform.position) < 0.1)
             {
+                SetDebugState("Throwing");
                 enemyInput.OnThrow(true);
                 ignorePlayerUntil = Time.time + ignorePlayerTimeAfterThrow;
                 GoToPosition(transform.position);
@@ -86,14 +100,20 @@ public class EnemyBehaviour : MonoBehaviour
         }
         else if (enemyDetection.playerInSight && Time.time > ignorePlayerUntil)
         {
+            SetDebugState("Chasing Player");
+
+            if (!wasChasingPlayer)
+            {
+                finalDestination = Vector3.zero;
+            }
+
             waiting = false;
-
+            wasChasingPlayer = true;
             float distanceToPlayer = Vector3.Distance(transform.position, enemyDetection.GetPlayerLocation());
-
-            Debug.Log("Distance = " + distanceToPlayer);
 
             if (distanceToPlayer < distanceToGrab)
             {
+                SetDebugState("Grabbing Player");
                 targetPosition = NavMeshManager.FindNearestEdge(transform.position);
                 enemyInput.OnGrab();
                 GoToPosition(transform.position);
@@ -101,12 +121,16 @@ public class EnemyBehaviour : MonoBehaviour
             }
             else if (distanceToPlayer < distanceToChase)
             {
+                SetDebugState("Direct Chase");
+                switchingToPath = true;
                 GoToPosition(enemyDetection.GetPlayerLocation());               
                 return;
             }
 
-            if (finalDestination == Vector3.zero)
+            if (finalDestination == Vector3.zero || switchingToPath)
             {
+                switchingToPath = false;
+                SetDebugState("Calculating Chase Path");
                 lastPathRecalculationTime = Time.time;
 
                 finalDestination = enemyDetection.GetPlayerLocation();
@@ -119,13 +143,26 @@ public class EnemyBehaviour : MonoBehaviour
                 if (currentPath != null && currentPath.Count > 0)
                 {
                     currentPoint = 0;
+                    Vector3 dirToFirst = (currentPath[0] - transform.position).normalized;
+                    Vector3 dirToPlayer = (enemyDetection.GetPlayerLocation() - transform.position).normalized;
+
+                    if (Vector3.Dot(dirToFirst, dirToPlayer) < 0)
+                    {
+                        if (currentPath.Count > 1)
+                            currentPoint = 1;
+                    }
+
                     targetPosition = currentPath[currentPoint];
+                }
+                else
+                {
+                    finalDestination = Vector3.zero;
                 }
 
                 return;
             }
 
-            float distanceFromTarget = Vector3.Distance(finalDestination, enemyDetection.GetPlayerLocation());
+            float distanceFromTarget = HorizontalDistanceSqr(finalDestination, enemyDetection.GetPlayerLocation());
 
 
             if (distanceFromTarget > distanceToRecalculate && Time.time > lastPathRecalculationTime + pathRecalculationCooldown)
@@ -145,16 +182,20 @@ public class EnemyBehaviour : MonoBehaviour
                     targetPosition = currentPath[currentPoint];
                 }
             }
-
-
-
         }
         else
         {
+            if (wasChasingPlayer)
+            {
+                SetDebugState("Returning To Patrol");
+                ReturnToClosestPatrolPoint();
+                wasChasingPlayer = false;
+            }
+
             finalDestination = Vector3.zero;
         }
 
-        if (Vector3.Distance(targetPosition, transform.position) < 0.1)
+        if (HorizontalDistanceSqr(targetPosition, transform.position) < 0.1)
         {
             if ((currentPath == null || currentPoint >= currentPath.Count) && !enemyDetection.playerInSight)
             {
@@ -164,84 +205,92 @@ public class EnemyBehaviour : MonoBehaviour
             }
             else
             {
-                targetPosition = currentPath[currentPoint];
-                currentPoint++;
+                if (currentPoint < currentPath.Count)
+                {
+                    targetPosition = currentPath[currentPoint];
+                    currentPoint++;
+                }
             }
 
         }
         GoToPosition(targetPosition);
+        if (!enemyDetection.playerInSight && stateController.GetHeldObject() == null && !waiting)
+        {
+            SetDebugState($"Patrolling -> Point {currentPatrolIndex}");
+        }
+    }
 
+    private float HorizontalDistanceSqr(Vector3 a, Vector3 b)
+    {
+        float dx = a.x - b.x;
+        float dz = a.z - b.z;
+        return dx * dx + dz * dz;
     }
 
     void ChooseNextPatrolPoint()
     {
-        Vector3 newTarget = GetRandomPatrolPoint();
+        if (patrolPoints == null || patrolPoints.Count == 0)
+        {
+            waiting = false;
+            return;
+        }
 
-        // recalcular path
+        currentPatrolIndex++;
+
+        if (currentPatrolIndex >= patrolPoints.Count)
+            currentPatrolIndex = 0;
+
         currentPath = NavMeshManager.FindPath(
             NavMeshManager.WorldToTile(transform.position),
-            NavMeshManager.WorldToTile(newTarget));
+            NavMeshManager.WorldToTile(patrolPoints[currentPatrolIndex].position)
+        );
 
         if (currentPath != null && currentPath.Count > 0)
         {
             currentPoint = 0;
             targetPosition = currentPath[currentPoint];
         }
-        else
-        {
-            targetPosition = transform.position;
-        }
+
         waiting = false;
     }
 
-    Vector3 GetRandomPatrolPoint()
+    private void ReturnToClosestPatrolPoint()
     {
-        Vector3 point;
-        int tries = 0;
-        do
+        if (patrolPoints == null || patrolPoints.Count == 0)
+            return;
+
+        float closestDistance = float.MaxValue;
+        int closestIndex = 0;
+
+        for (int i = 0; i < patrolPoints.Count; i++)
         {
-            point = RandomPointInCircle();
-            tries++;
+            float distance = Vector3.Distance(
+                transform.position,
+                patrolPoints[i].position);
+
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestIndex = i;
+            }
         }
-        while ((Vector3.Distance(point, transform.position) < minDistance) && tries < 20);
 
-        // asegurarse que sea tile caminable
-        Vector2 tile = NavMeshManager.WorldToTile(point);
-        if (!NavMeshManager.IsTileWalkable(tile))
-            return transform.position;
+        currentPatrolIndex = closestIndex;
 
-        return point;
-    }
+        currentPath = NavMeshManager.FindPath(
+            NavMeshManager.WorldToTile(transform.position),
+            NavMeshManager.WorldToTile(patrolPoints[currentPatrolIndex].position)
+        );
 
-    private Vector3 RandomPointInCircle()
-    {
-        float randomRadius = Random.value * patrolRadius;
-        float theta = 2 * Mathf.PI * Random.value;
-
-        Vector3 position = patrolCenter.position + randomRadius * new Vector3(Mathf.Cos(theta), 0, Mathf.Sin(theta));
-
-        return position;
+        if (currentPath != null && currentPath.Count > 0)
+        {
+            currentPoint = 0;
+            targetPosition = currentPath[currentPoint];
+        }
     }
 
     void UpdateNavMeshPath(NavMeshManager manager)
     {
-        /*
-        if(manager == NavMeshManager)
-        {
-            if (currentPath != null && currentPath.Count > 0)
-            {
-                Vector3 goal = currentPath[currentPath.Count - 1];
-
-                currentPath = NavMeshManager.FindPath(
-                    NavMeshManager.WorldToTile(transform.position),
-                    NavMeshManager.WorldToTile(goal)
-                );
-
-                currentPoint = 0;
-                Debug.Log("CAMBIANDO EL PATH");
-            }
-        }
-        */
     }
     void GoToPosition(Vector3 worldPosition)
     {
@@ -271,12 +320,44 @@ public class EnemyBehaviour : MonoBehaviour
                 Gizmos.DrawLine(currentPath[i], currentPath[i + 1]);
             }
         }
+
+#if UNITY_EDITOR
+        UnityEditor.Handles.Label(
+            transform.position + Vector3.up * 2f,
+            currentDebugState);
+#endif
     }
 
     void OnDrawGizmosSelected()
     {
+        if (patrolPoints == null || patrolPoints.Count == 0)
+            return;
+
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(patrolCenter.position, patrolRadius);
+
+        for (int i = 0; i < patrolPoints.Count; i++)
+        {
+            if (patrolPoints[i] == null)
+                continue;
+
+            Gizmos.DrawSphere(patrolPoints[i].position, 0.3f);
+
+            if (i < patrolPoints.Count - 1 && patrolPoints[i + 1] != null)
+            {
+                Gizmos.DrawLine(
+                    patrolPoints[i].position,
+                    patrolPoints[i + 1].position);
+            }
+        }
+
+        if (patrolPoints.Count > 1 &&
+            patrolPoints[0] != null &&
+            patrolPoints[patrolPoints.Count - 1] != null)
+        {
+            Gizmos.DrawLine(
+                patrolPoints[patrolPoints.Count - 1].position,
+                patrolPoints[0].position);
+        }
     }
 
 }
