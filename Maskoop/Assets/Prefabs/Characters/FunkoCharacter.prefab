@@ -521,9 +521,9 @@ MonoBehaviour:
   hitKnockBackForce: 5
   hitKnockBackUpwardsForce: 6
   hitStunTime: 0.5
-  movementToBeFree: 1
-  onFireTime: 1.5
-  onFireSpeed: 6
+  movementToBeFree: -1
+  onFireTime: 2
+  onFireSpeed: 8
 --- !u!114 &8747963092238407169
 MonoBehaviour:
   m_ObjectHideFlags: 0
