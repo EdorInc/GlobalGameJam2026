@@ -11,7 +11,7 @@ public abstract class BaseSwitch : MonoBehaviour
 
     [Header("Connection Settings")]
     [Tooltip("Channel to use to connect to activables. Activables need to have the same channel be send a message")]
-    [SerializeField] protected int channel = 1;
+    [SerializeField] public int channel = 1;
 
     [Tooltip("Whether the pressure plate remains activated after the player leaves.")]
     [SerializeField] protected bool keepActivated = false;

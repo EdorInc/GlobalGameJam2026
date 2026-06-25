@@ -15,7 +15,7 @@ public abstract class BaseActivable : MonoBehaviour
     [Header("Conection Settings")]
     [SerializeField]
     [Tooltip("Channel to use to connect to buttons. Buttons need to have the same channel to activate this object")]
-    protected int channel = 1;
+    public int channel = 1;
     [SerializeField]
     [Tooltip("Whether the activable will remain active after completing the animation")]
     protected bool keepActivatedOnCompletion = false;
@@ -38,6 +38,7 @@ public abstract class BaseActivable : MonoBehaviour
     protected void Start()
     {
         activatorsLeft = activatorsNeeded;
+        EventManager.PairDoor?.Invoke(this.transform, channel);
     }
 
     private void OnEnable()

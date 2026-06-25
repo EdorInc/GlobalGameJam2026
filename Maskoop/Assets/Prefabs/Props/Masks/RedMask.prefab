@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 3777751225703217900}
   m_Layer: 0
   m_Name: RedMask
-  m_TagString: Untagged
+  m_TagString: Mask
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -104,6 +104,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   groundCheckDistance: 0.1
+  shadowPrefab: {fileID: 0}
+  shadowMaxDistance: 20
+  shadowGroundOffset: 0.02
   holdOffset: {x: 0, y: 0, z: 0}
   holdRotation: {x: 0.70710677, y: 0, z: 0, w: -0.70710677}
   resetRotationInAir: 1
@@ -183,6 +186,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   groundCheckDistance: 0.1
+  shadowPrefab: {fileID: 0}
+  shadowMaxDistance: 20
+  shadowGroundOffset: 0.02
 --- !u!1 &7561135809734292149
 GameObject:
   m_ObjectHideFlags: 0

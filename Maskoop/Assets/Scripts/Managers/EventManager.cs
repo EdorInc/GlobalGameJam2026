@@ -26,6 +26,11 @@ public static class EventManager
     /// </summary>
     public static Action<int> OnButtonLock;
 
+    /// <summary>
+    /// Invoke for pairing door locaions. Parameter: door transform, ID.
+    /// </summary>
+    public static Action<Transform,int> PairDoor;
+
     // -------------------- Player Events --------------------
 
     /// <summary>
