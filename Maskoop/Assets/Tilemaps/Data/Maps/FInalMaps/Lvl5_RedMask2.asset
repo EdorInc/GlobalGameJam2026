@@ -3352,8 +3352,8 @@ MonoBehaviour:
     IsEmpty: 1
   - BlockId: 
     IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
+  - BlockId: stone wall
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 1
   - BlockId: 
@@ -5752,325 +5752,7 @@ MonoBehaviour:
     IsEmpty: 1
   - BlockId: 
     IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: grass ground
-    IsEmpty: 0
-  - BlockId: grass ground
-    IsEmpty: 0
-  - BlockId: grass ground
-    IsEmpty: 0
-  - BlockId: grass ground
-    IsEmpty: 0
-  - BlockId: grass ground
+  - BlockId: stone wall
     IsEmpty: 0
   - BlockId: 
     IsEmpty: 1
@@ -6372,6 +6054,24 @@ MonoBehaviour:
     IsEmpty: 1
   - BlockId: 
     IsEmpty: 1
+  - BlockId: stone wall
+    IsEmpty: 0
+  - BlockId: stone wall
+    IsEmpty: 0
+  - BlockId: stone wall
+    IsEmpty: 0
+  - BlockId: stone wall
+    IsEmpty: 0
+  - BlockId: grass ground
+    IsEmpty: 0
+  - BlockId: grass ground
+    IsEmpty: 0
+  - BlockId: grass ground
+    IsEmpty: 0
+  - BlockId: grass ground
+    IsEmpty: 0
+  - BlockId: grass ground
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 1
   - BlockId: 
@@ -6454,6 +6154,14 @@ MonoBehaviour:
     IsEmpty: 1
   - BlockId: 
     IsEmpty: 1
+  - BlockId: stone wall
+    IsEmpty: 0
+  - BlockId: stone wall
+    IsEmpty: 0
+  - BlockId: stone wall
+    IsEmpty: 0
+  - BlockId: stone wall
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 1
   - BlockId: 
@@ -6544,6 +6252,16 @@ MonoBehaviour:
     IsEmpty: 1
   - BlockId: 
     IsEmpty: 1
+  - BlockId: stone wall
+    IsEmpty: 0
+  - BlockId: stone wall
+    IsEmpty: 0
+  - BlockId: stone wall
+    IsEmpty: 0
+  - BlockId: stone wall
+    IsEmpty: 0
+  - BlockId: stone wall
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 1
   - BlockId: 
@@ -6634,6 +6352,16 @@ MonoBehaviour:
     IsEmpty: 1
   - BlockId: 
     IsEmpty: 1
+  - BlockId: stone wall
+    IsEmpty: 0
+  - BlockId: stone wall
+    IsEmpty: 0
+  - BlockId: stone wall
+    IsEmpty: 0
+  - BlockId: stone wall
+    IsEmpty: 0
+  - BlockId: stone wall
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 1
   - BlockId: 
@@ -6724,8 +6452,14 @@ MonoBehaviour:
     IsEmpty: 1
   - BlockId: 
     IsEmpty: 1
+  - BlockId: stone wall
+    IsEmpty: 0
+  - BlockId: stone wall
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 1
+  - BlockId: stone wall
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 1
   - BlockId: 
@@ -9284,6 +9018,272 @@ MonoBehaviour:
     IsEmpty: 1
   - BlockId: 
     IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: 
+    IsEmpty: 1
+  - BlockId: stone wall
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 1
   - BlockId: 
@@ -12056,8 +12056,8 @@ MonoBehaviour:
     IsEmpty: 1
   - BlockId: 
     IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
+  - BlockId: stone wall
+    IsEmpty: 0
   - BlockId: grass ground
     IsEmpty: 0
   - BlockId: grass ground
@@ -12076,12 +12076,6 @@ MonoBehaviour:
     IsEmpty: 0
   - BlockId: grass ground
     IsEmpty: 0
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
   - BlockId: 
     IsEmpty: 1
   - BlockId: 
@@ -12162,8 +12156,8 @@ MonoBehaviour:
     IsEmpty: 1
   - BlockId: 
     IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
+  - BlockId: stone wall
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 1
   - BlockId: 
@@ -12664,6 +12658,10 @@ MonoBehaviour:
     IsEmpty: 1
   - BlockId: 
     IsEmpty: 1
+  - BlockId: stone wall
+    IsEmpty: 0
+  - BlockId: stone wall
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 1
   - BlockId: 
@@ -12760,6 +12758,8 @@ MonoBehaviour:
     IsEmpty: 1
   - BlockId: 
     IsEmpty: 1
+  - BlockId: stone wall
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 1
   - BlockId: 
@@ -21078,10 +21078,8 @@ MonoBehaviour:
     IsEmpty: 0
   - BlockId: grass ground
     IsEmpty: 0
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
+  - BlockId: stone wall
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 1
   - BlockId: 
@@ -21180,6 +21178,8 @@ MonoBehaviour:
     IsEmpty: 1
   - BlockId: 
     IsEmpty: 1
+  - BlockId: stone wall
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 1
   - BlockId: 
@@ -21676,10 +21676,8 @@ MonoBehaviour:
     IsEmpty: 0
   - BlockId: grass ground
     IsEmpty: 0
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
+  - BlockId: stone wall
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 1
   - BlockId: 
@@ -21778,6 +21776,8 @@ MonoBehaviour:
     IsEmpty: 1
   - BlockId: 
     IsEmpty: 1
+  - BlockId: stone wall
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 1
   - BlockId: 
@@ -22270,18 +22270,12 @@ MonoBehaviour:
     IsEmpty: 0
   - BlockId: grass ground
     IsEmpty: 0
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
   - BlockId: 
     IsEmpty: 1
+  - BlockId: stone wall
+    IsEmpty: 0
+  - BlockId: stone wall
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 1
   - BlockId: 
@@ -22378,6 +22372,10 @@ MonoBehaviour:
     IsEmpty: 1
   - BlockId: 
     IsEmpty: 1
+  - BlockId: stone wall
+    IsEmpty: 0
+  - BlockId: stone wall
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 1
   - BlockId: 
@@ -22476,6 +22474,8 @@ MonoBehaviour:
     IsEmpty: 1
   - BlockId: 
     IsEmpty: 1
+  - BlockId: stone wall
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 1
   - BlockId: 
@@ -25274,10 +25274,6 @@ MonoBehaviour:
     IsEmpty: 0
   - BlockId: grass ground
     IsEmpty: 0
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
   - BlockId: 
     IsEmpty: 1
   - BlockId: 
@@ -25364,6 +25360,8 @@ MonoBehaviour:
     IsEmpty: 1
   - BlockId: 
     IsEmpty: 1
+  - BlockId: stone wall
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 1
   - BlockId: 
@@ -25374,6 +25372,8 @@ MonoBehaviour:
     IsEmpty: 1
   - BlockId: 
     IsEmpty: 1
+  - BlockId: stone wall
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 1
   - BlockId: 
@@ -25872,14 +25872,6 @@ MonoBehaviour:
     IsEmpty: 0
   - BlockId: grass ground
     IsEmpty: 0
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
   - BlockId: 
     IsEmpty: 1
   - BlockId: 
@@ -25970,16 +25962,16 @@ MonoBehaviour:
     IsEmpty: 1
   - BlockId: 
     IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
-  - BlockId: 
-    IsEmpty: 1
+  - BlockId: stone wall
+    IsEmpty: 0
+  - BlockId: stone wall
+    IsEmpty: 0
+  - BlockId: stone wall
+    IsEmpty: 0
+  - BlockId: stone wall
+    IsEmpty: 0
+  - BlockId: stone wall
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 1
   - BlockId: 
@@ -26072,6 +26064,14 @@ MonoBehaviour:
     IsEmpty: 1
   - BlockId: 
     IsEmpty: 1
+  - BlockId: stone wall
+    IsEmpty: 0
+  - BlockId: stone wall
+    IsEmpty: 0
+  - BlockId: stone wall
+    IsEmpty: 0
+  - BlockId: stone wall
+    IsEmpty: 0
   - BlockId: 
     IsEmpty: 1
   - BlockId: 
