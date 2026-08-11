@@ -12,6 +12,10 @@ public class CharacterMovementController : MonoBehaviour
     public float turnSpeed = 10f;
     [Tooltip("Multiplier for horizontal control while in the air.")]
     public float airControlMultiplier = 0.5f;
+    [Tooltip("How fast to reach max speed")]
+    public float acceleration = 40f;
+    [Tooltip("How fast to reach 0 speed")]
+    public float deceleration = 60f;
 
     [Header("Dash Settings")]
     [Tooltip("Foward speed to apply when rolling.")]
@@ -234,7 +238,9 @@ public class CharacterMovementController : MonoBehaviour
                 }
 
                 // Directly setting velocity is safe on the ground; would kill vertical velocity in the air
-                m_rigidbody.linearVelocity = movementVector;
+                float currentAccel = horizontalInput.magnitude > 0f ? acceleration : deceleration;
+                Vector3 targetVelocity = new Vector3(movementVector.x, m_rigidbody.linearVelocity.y, movementVector.z);
+                m_rigidbody.linearVelocity = Vector3.MoveTowards(m_rigidbody.linearVelocity, targetVelocity, currentAccel * Time.fixedDeltaTime);
             }
         }
         else
@@ -244,8 +250,9 @@ public class CharacterMovementController : MonoBehaviour
             Turn(airMovementVector, airControlMultiplier);
 
             // Preserve vertical velocity so jumps and gravity are unaffected
-            airMovementVector.y = m_rigidbody.linearVelocity.y;
-            m_rigidbody.linearVelocity = airMovementVector;
+            float currentAirAccel = (horizontalInput.magnitude > 0f ? acceleration : deceleration) * airControlMultiplier;
+            Vector3 targetAirVelocity = new Vector3(airMovementVector.x, m_rigidbody.linearVelocity.y, airMovementVector.z);
+            m_rigidbody.linearVelocity = Vector3.MoveTowards(m_rigidbody.linearVelocity, targetAirVelocity, currentAirAccel * Time.fixedDeltaTime);
         }
 
         // Fire adds a forced forward push on top of normal movement to simulate loss of control

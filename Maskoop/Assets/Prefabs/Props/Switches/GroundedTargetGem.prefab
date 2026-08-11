@@ -70,7 +70,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GroundedTargetSwitch
   channel: 2
   keepActivated: 0
-  provisionalActivatedMaterial: {fileID: -6922793697723135513, guid: b684cc597cdcfa34ea715e63362ccc6c, type: 3}
+  meshRenderer: {fileID: 3445991852236263358}
+  provisionalActivatedMaterial: {fileID: 2100000, guid: 885ba1af08e32b04c96bec78d5ff5c1d, type: 2}
   activeDuration: 4
   overtimeDuration: 2
   blinkIntervals: 0.2
@@ -141,6 +142,18 @@ PrefabInstance:
     - target: {fileID: 4751317709431274, guid: 7eba0f49c0673d348a4dcad8d9eb4e17, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 23723811179046422, guid: 7eba0f49c0673d348a4dcad8d9eb4e17, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5d84c2ba2c1d4408ca682be990685e67, type: 2}
+    - target: {fileID: 205751593087641642, guid: 7eba0f49c0673d348a4dcad8d9eb4e17, type: 3}
+      propertyPath: m_LODs.Array.data[0].screenRelativeHeight
+      value: 0.1880359
+      objectReference: {fileID: 0}
+    - target: {fileID: 205751593087641642, guid: 7eba0f49c0673d348a4dcad8d9eb4e17, type: 3}
+      propertyPath: m_LODs.Array.data[1].screenRelativeHeight
+      value: 0.05225444
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -303,6 +316,11 @@ LineRenderer:
 --- !u!4 &3427578110800244018 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4751317709431274, guid: 7eba0f49c0673d348a4dcad8d9eb4e17, type: 3}
+  m_PrefabInstance: {fileID: 3423251859839519960}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &3445991852236263358 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 23444032025838438, guid: 7eba0f49c0673d348a4dcad8d9eb4e17, type: 3}
   m_PrefabInstance: {fileID: 3423251859839519960}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4004253285198681608

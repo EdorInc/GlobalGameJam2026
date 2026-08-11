@@ -18,11 +18,14 @@ public abstract class BaseSwitch : MonoBehaviour
 
     protected SwitchState currentState = SwitchState.Inactive;
 
-    protected MeshRenderer meshRenderer;
+    public MeshRenderer meshRenderer;
 
     protected void Awake()
     {
-        meshRenderer = GetComponentInChildren<MeshRenderer>();
+        if(meshRenderer == null)
+        {
+            meshRenderer = GetComponentInChildren<MeshRenderer>();
+        }
     }
 
     protected void OnEnable()
