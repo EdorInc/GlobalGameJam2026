@@ -84,12 +84,14 @@ public class PlateSwitch : BaseSwitch
         if (objectsOnPlate.Count == 0 && currentState == SwitchState.Active)
         {
             Debug.Log("Deactivating plate switch due to no objects detected on plate.");
+            AudioSystem.PlaySFX(AudioSystem.SoundLibrary.pressurePlateOff   , transform.position);
             Deactivate();
         }
 
         if(objectsOnPlate.Count > 0 && currentState != SwitchState.Active)
         {
             Debug.Log("Activating plate switch due to objects detected on plate.");
+            AudioSystem.PlaySFX(AudioSystem.SoundLibrary.pressurePlateOn, transform.position);
             Activate();
         }
     }

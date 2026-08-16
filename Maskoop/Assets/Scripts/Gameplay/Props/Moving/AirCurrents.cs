@@ -21,6 +21,7 @@ public class AirCurrents : MonoBehaviour
     private void Start()
     {
         trigger = GetComponent<BoxCollider>();
+        AudioSystem.PlayDynamicSFX(AudioSystem.SoundLibrary.windCurrent, transform.position,GetInstanceID());
     }
 
     void OnDrawGizmos()
@@ -55,6 +56,11 @@ public class AirCurrents : MonoBehaviour
         {
             particlesShape = particles.shape;
         }
+    }
+
+    private void OnDisable()
+    {
+        AudioSystem.StopDynamicSFX(AudioSystem.SoundLibrary.windCurrent, GetInstanceID());
     }
 
     private void Update()

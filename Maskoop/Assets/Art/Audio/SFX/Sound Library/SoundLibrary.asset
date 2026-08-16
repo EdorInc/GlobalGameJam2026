@@ -20,3 +20,10 @@ MonoBehaviour:
   falling: {fileID: 11400000, guid: 17d6f3c2d14601f4c85482d0dffeda3d, type: 2}
   fallImpact: {fileID: 11400000, guid: aa35d11d28eb5ff498d80a266bccdc1f, type: 2}
   hurtSound: {fileID: 11400000, guid: 45842fb56f6e68a449648ceeb16fec6b, type: 2}
+  slidingDoorOpen: {fileID: 11400000, guid: 4ac644436c949124082e829452616b94, type: 2}
+  slidingDoorClose: {fileID: 11400000, guid: 3a0e0154afda5024094b79aa7800915f, type: 2}
+  slidingDoorClack: {fileID: 11400000, guid: 93a52814c121c4b43808c19cea31cacf, type: 2}
+  slidingDoorEngage: {fileID: 11400000, guid: 64b17f59316a3594d84ff5e87792cad9, type: 2}
+  windCurrent: {fileID: 11400000, guid: 494d465ad3dc1ff46a3a69a4e359e4e4, type: 2}
+  pressurePlateOn: {fileID: 11400000, guid: 575fa6773caa3df46932bf031da564df, type: 2}
+  pressurePlateOff: {fileID: 11400000, guid: b318cbf612a588e4994faae776b6e1aa, type: 2}

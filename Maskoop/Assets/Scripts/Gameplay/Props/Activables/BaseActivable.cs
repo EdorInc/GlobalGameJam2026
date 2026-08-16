@@ -68,6 +68,7 @@ public abstract class BaseActivable : MonoBehaviour
                 }
                 break;
             case ActivableState.Deactivating:
+                OnDeactivation();
                 DeactivateAnimation();
                 if (StopCondition())
                 {
@@ -89,12 +90,17 @@ public abstract class BaseActivable : MonoBehaviour
         }
     }
 
-    public void OnActivation()
+    public virtual void OnActivation()
     {
         if (keepActivatedOnCompletion)
         {
             Lock();
         }
+    }
+
+    public virtual void OnDeactivation()
+    {
+
     }
 
     public void OnActivatorRecived(int channel)

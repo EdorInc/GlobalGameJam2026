@@ -12,6 +12,9 @@ public class SlidingActivable : BaseActivable
     [Tooltip("Speed to open the game object.")]
     private float speed = 2;
 
+    private bool sfxPlaying = false;
+    private bool onDeactivationSfx = false;
+
     protected Vector3 closedPosition;
 
     protected new void Start()
@@ -37,10 +40,16 @@ public class SlidingActivable : BaseActivable
             if (currentState == ActivableState.Activating)
             {
                 Debug.Log(gameObject.name + " is at open position.");
+                sfxPlaying = false;
+                AudioSystem.StopDynamicSFX(AudioSystem.SoundLibrary.slidingDoorOpen, GetInstanceID());
+                AudioSystem.PlaySFX(AudioSystem.SoundLibrary.slidingDoorClack, transform.position);
             }
             else if (currentState == ActivableState.Deactivating)
             {
                 Debug.Log(gameObject.name + " is at closed position.");
+                sfxPlaying = false;
+                onDeactivationSfx = false;
+                AudioSystem.StopDynamicSFX(AudioSystem.SoundLibrary.slidingDoorClose, GetInstanceID());
             }
         }
 
@@ -51,12 +60,33 @@ public class SlidingActivable : BaseActivable
     {
         // Debug.Log("Moving " + gameObject.name + " towards open position...");
         transform.position = Vector3.MoveTowards(transform.position, openPosition.position, Time.deltaTime * speed);
+        if (!sfxPlaying)
+        {
+            sfxPlaying = true;
+            AudioSystem.PlayDynamicSFX(AudioSystem.SoundLibrary.slidingDoorOpen, transform.position,GetInstanceID());
+        }
     }
 
     protected override void DeactivateAnimation()
     {
         // Debug.Log("Moving " + gameObject.name + " towards closed position...");
         transform.position = Vector3.MoveTowards(transform.position, closedPosition, Time.deltaTime * speed);
+        if (!sfxPlaying)
+        {
+            sfxPlaying = true;
+            AudioSystem.PlayDynamicSFX(AudioSystem.SoundLibrary.slidingDoorClose, transform.position, GetInstanceID());
+        }
     }
+
+    public override void OnDeactivation()
+    {
+        base.OnDeactivation();
+        if (!onDeactivationSfx)
+        {
+            onDeactivationSfx = true;
+            AudioSystem.PlaySFX(AudioSystem.SoundLibrary.slidingDoorEngage, transform.position);
+        }
+    }
+
 
 }
