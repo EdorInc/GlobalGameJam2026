@@ -84,8 +84,15 @@ public class Grab : MonoBehaviour
             OnFire fire = grabbedObject.GetComponent<OnFire>();
             if (fire != null && fire.IsBurning())
             {
-                DropObject();
-                return;
+                BaseMask currentMask = characterState.GetCurrentMask();
+
+                bool hasFireMask = currentMask is FireMask;
+
+                if (!hasFireMask)
+                {
+                    DropObject();
+                    return;
+                }
             }
 
             Grabbable grabbable = grabbedObject.GetComponent<Grabbable>();
