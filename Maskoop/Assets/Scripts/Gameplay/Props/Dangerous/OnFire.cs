@@ -20,6 +20,8 @@ public class OnFire : MonoBehaviour
                 if (!hasFireMask)
                 {
                     EventManager.OnLitOnFire?.Invoke(other, null);
+                    Grab grab = other.GetComponent<Grab>();
+                    grab.DropObject();
                 }
             }
         }
