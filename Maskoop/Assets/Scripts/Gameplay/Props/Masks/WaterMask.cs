@@ -11,7 +11,7 @@ public class WaterMask : BaseMask
     public GameObject playerInPipePrefab;
     public float speed = 20f;
 
-    private Material previousMaterial;
+    private Material[] previousMaterials;
     private GameObject playerInTubeObject;
     private List<Vector3> tubePositions;
 
@@ -69,13 +69,24 @@ public class WaterMask : BaseMask
 
     private void SetupMaterial()
     {
-        previousMaterial = characterState.GetBodyRenderer().material;
-        characterState.GetBodyRenderer().material = waterMaterial;
+        Renderer[] renderers = characterState.GetBodyRenderers();
+        previousMaterials = new Material[renderers.Length];
+
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            previousMaterials[i] = renderers[i].material;
+            renderers[i].material = waterMaterial;
+        }
     }
 
     private void RestoreMaterial()
     {
-        characterState.GetBodyRenderer().material = previousMaterial;
+        Renderer[] renderers = characterState.GetBodyRenderers();
+
+        for (int i = 0; i < renderers.Length && i < previousMaterials.Length; i++)
+        {
+            renderers[i].material = previousMaterials[i];
+        }
     }
 
     private void SubscribeEvents()

@@ -143,6 +143,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 6967141828263318232}
   m_SourcePrefab: {fileID: 100100000, guid: b7429e06f345c4f99afd3300b882afe9, type: 3}
+--- !u!205 &1180444568801657193 stripped
+LODGroup:
+  m_CorrespondingSourceObject: {fileID: 4742473837712756890, guid: b7429e06f345c4f99afd3300b882afe9, type: 3}
+  m_PrefabInstance: {fileID: 5886607962705072627}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5641669913574129746 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2304244481032835489, guid: b7429e06f345c4f99afd3300b882afe9, type: 3}
@@ -398,6 +403,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8747963092238407169, guid: befe075e024e9144996dd0d6d51798e4, type: 3}
+      propertyPath: m_bodyLodGroup
+      value: 
+      objectReference: {fileID: 1180444568801657193}
     - target: {fileID: 8747963092238407169, guid: befe075e024e9144996dd0d6d51798e4, type: 3}
       propertyPath: m_bodyRenderer
       value: 

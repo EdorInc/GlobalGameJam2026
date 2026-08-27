@@ -194,6 +194,11 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!205 &8594390871051848149 stripped
+LODGroup:
+  m_CorrespondingSourceObject: {fileID: 4742473837712756890, guid: 40b122ee967734278abb660d840b1f08, type: 3}
+  m_PrefabInstance: {fileID: 3933276496958069071}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6443275350886094355
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -394,6 +399,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8747963092238407169, guid: befe075e024e9144996dd0d6d51798e4, type: 3}
+      propertyPath: m_bodyLodGroup
+      value: 
+      objectReference: {fileID: 8594390871051848149}
     - target: {fileID: 8747963092238407169, guid: befe075e024e9144996dd0d6d51798e4, type: 3}
       propertyPath: m_bodyRenderer
       value: 

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,10 +18,13 @@ public class CharacterStateController : MonoBehaviour
         set => m_characterId = value;
     }
 
-    [SerializeField] private Renderer m_bodyRenderer;
-    [SerializeField] private Renderer m_eyesRenderer;
+    [SerializeField] private LODGroup m_bodyLodGroup;
+    [SerializeField] private LODGroup m_eyesLodGroup;
 
-    internal Renderer GetBodyRenderer() => m_bodyRenderer;
+    private Renderer[] m_bodyRenderers;
+    private Renderer[] m_eyesRenderers;
+
+    internal Renderer[] GetBodyRenderers() => m_bodyRenderers;
 
     // Ground state, owned here but sourced from GroundDetector
     public bool IsGrounded => m_groundDetector.IsGrounded;
@@ -70,6 +74,9 @@ public class CharacterStateController : MonoBehaviour
     private void Awake()
     {
         m_groundDetector = GetComponent<GroundDetector>();
+
+        m_bodyRenderers = GetRenderersFromLodGroup(m_bodyLodGroup);
+        m_eyesRenderers = GetRenderersFromLodGroup(m_eyesLodGroup);
     }
 
     private void Start()
@@ -97,6 +104,15 @@ public class CharacterStateController : MonoBehaviour
         m_currentMask?.FixedUpdateLogic();
     }
 
+    private Renderer[] GetRenderersFromLodGroup(LODGroup lodGroup)
+    {
+        if (lodGroup == null) return Array.Empty<Renderer>();
+
+        LOD[] lods = lodGroup.GetLODs();
+        
+        return lods.SelectMany(lod => lod.renderers).Where(r => r != null).ToArray();
+    }
+
     private void OnRespawn(GameObject player)
     {
         // Fast-fail when not our player or nothing held
@@ -114,14 +130,30 @@ public class CharacterStateController : MonoBehaviour
 
     public void DisableRender()
     {
-        m_bodyRenderer.enabled = false;
-        m_eyesRenderer.enabled = false;
+        SetRenderersEnabled(m_bodyRenderers, false);
+        SetRenderersEnabled(m_eyesRenderers, false);
     }
 
     public void EnableRenderer()
     {
-        m_bodyRenderer.enabled = true;
-        m_eyesRenderer.enabled = true;
+        SetRenderersEnabled(m_bodyRenderers, true);
+        SetRenderersEnabled(m_eyesRenderers, true);
+    }
+
+    private void SetRenderersEnabled(Renderer[] renderers, bool enabled)
+    {
+        foreach (var r in renderers)
+        {
+            r.enabled = enabled;
+        }
+    }
+
+    public void SetBodyMaterial(Material mat)
+    {
+        foreach (var r in m_bodyRenderers)
+        {
+            r.material = mat;
+        }
     }
 
     public void EquipMask(BaseMask mask)
