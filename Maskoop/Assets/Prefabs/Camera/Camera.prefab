@@ -182,11 +182,12 @@ MonoBehaviour:
   smoothTime: 0.1
   maxPlayerDistance: 6
   maxWidenDistance: 18
-  maxCameraHeight: 16
+  maxCameraHeight: 100
   usePositionRotationWiden: 0
   widenedCameraPosition: {x: 0, y: 0, z: 0}
   widenedCameraEuler: {x: 0, y: 0, z: 0}
   useFovWiden: 1
   maxFov: 70
+  maxOrthoSize: 12
   zoomMinSpeed: 1
   zoomMaxSpeed: 6
