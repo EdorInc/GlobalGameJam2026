@@ -1528,6 +1528,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 486713927}
     m_Modifications:
+    - target: {fileID: 2251888142169713379, guid: 4d5b066b6eb869f499089a848151a560, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.00000001738469
+      objectReference: {fileID: 0}
+    - target: {fileID: 2251888142169713379, guid: 4d5b066b6eb869f499089a848151a560, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.33333313
+      objectReference: {fileID: 0}
     - target: {fileID: 3593203627893538802, guid: 4d5b066b6eb869f499089a848151a560, type: 3}
       propertyPath: m_Name
       value: BridgeRoot
