@@ -565,10 +565,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbf472e978aee1f439ca4911263e3f9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TitleScreen
+  title_speed: 12
   images:
   - {fileID: 2800000, guid: 2f5af73dde79cb24f8d7873327e8b785, type: 3}
   - {fileID: 2800000, guid: 57639f4fe4aa59846859e6acda5c7ff5, type: 3}
   - {fileID: 2800000, guid: b8278dc099ea29445ac5807585027ad8, type: 3}
+  press_active_time: 1.2
+  press_unactive_time: 0.12
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
