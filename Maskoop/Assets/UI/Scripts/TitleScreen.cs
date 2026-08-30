@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 public class TitleScreen : MonoBehaviour
 {
+    public InputActionReference anyButton;
+
     //Pa mover el título al principio --------------------------------------------
     private const float INITIAL_TITLE_OFFSET = -50;
     private const float FINAL_TITLE_OFFSET = -5;
@@ -27,8 +30,14 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] private float press_active_time = 1.2f;
 
     [SerializeField] private float press_unactive_time = 0.12f;
-    
+
     private float actualTime = 0;
+
+    //Para desplegar el menú y hacerlo funcional -----------------------------------------------
+
+    private bool menu_displayed = false;
+    
+    
     
     //-----------------------------------------------------------
     // Devuelve una de las n imagenes que puedan ser la imagen de fondo de la pantalla del título
@@ -63,6 +72,16 @@ public class TitleScreen : MonoBehaviour
 
         //Iniciar el movimiento del titulo
         title_movement = true;
+
+        //Suscribirme al evento del botón
+        anyButton.action.Enable();
+        anyButton.action.performed += OnAnyButtonPressed;
+    }
+
+    private void OnDisable()
+    {
+        anyButton.action.performed -= OnAnyButtonPressed;
+        anyButton.action.Disable();
     }
 
     //-----------------------------------------------------------------
@@ -143,6 +162,15 @@ public class TitleScreen : MonoBehaviour
 
         //Hacer parpadear el otro textito
         PressButtonFlicker();
+    }
+
+    private void OnAnyButtonPressed(InputAction.CallbackContext context)
+    {
+        if (title_movement) //si está haciendo lo de moverse el título que se skipee lo de moverse el título
+        {
+            SkipTitleMovement();
+        }
+        else if()
     }
 
 }
