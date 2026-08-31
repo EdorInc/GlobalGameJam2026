@@ -38,7 +38,6 @@ public class TitleScreen : MonoBehaviour
     private bool menu_displayed = false;
     
     
-    
     //-----------------------------------------------------------
     // Devuelve una de las n imagenes que puedan ser la imagen de fondo de la pantalla del título
     //-----------------------------------------------------------
@@ -170,7 +169,6 @@ public class TitleScreen : MonoBehaviour
         {
             SkipTitleMovement();
         }
-        else if()
     }
 
 }
