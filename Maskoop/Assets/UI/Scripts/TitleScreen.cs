@@ -36,8 +36,24 @@ public class TitleScreen : MonoBehaviour
     //Para desplegar el menú y hacerlo funcional -----------------------------------------------
 
     private bool menu_displayed = false;
-    
-    
+    private bool menu_moving = false;
+
+    [SerializeField] private float menu_speed = 30; //en porcentaje por segundo, quiero que vaya muy rápido
+    private const int INITIAL_MENU_OFFSET = -70; //en porcentaje
+
+    [SerializeField] private float menuDelay1 = 0.1f; //delay entre las piezas del menu para que no salgan todas en bloque sino que salgan en escalera
+    [SerializeField] private float menuDelay2 = 0.2f; //
+
+    private float actualMenuOffset1 = INITIAL_MENU_OFFSET;
+    private float actualMenuOffset2 = INITIAL_MENU_OFFSET;
+    private float actualMenuOffset3 = INITIAL_MENU_OFFSET;
+
+
+    //Los botones
+    private Button newGameButton;
+    private Button selectButton;
+    private Button exitButton;
+
     //-----------------------------------------------------------
     // Devuelve una de las n imagenes que puedan ser la imagen de fondo de la pantalla del título
     //-----------------------------------------------------------
@@ -49,10 +65,46 @@ public class TitleScreen : MonoBehaviour
         {
             int rIndex = Random.Range(0, images.Length);
             t = images[rIndex];
-            
+
         }
 
         return t;
+    }
+
+    //-----------------------------------------------------------
+    // Función para activar los botones
+    //-----------------------------------------------------------
+    private void ActivateButtons()
+    {
+        if (rootElement == null)
+            return;
+
+        newGameButton = rootElement.Q<Button>("NewGame");
+
+        if (newGameButton == null)
+        {
+            Debug.LogError("No new game button");
+            return;
+        }
+
+        exitButton = rootElement.Q<Button>("Exit");
+
+        if (exitButton == null)
+        {
+            Debug.LogError("No exit button");
+            return;
+        }
+
+        selectButton = rootElement.Q<Button>("LvlSel");
+
+        if (selectButton == null)
+        {
+            Debug.LogError("No select button");
+            return;
+        }
+
+        newGameButton.clicked += () => GameEvents.StartRequested();
+        exitButton.clicked += () => GameManager.Instance.QuitGame();
     }
 
     private void OnEnable()
@@ -63,6 +115,8 @@ public class TitleScreen : MonoBehaviour
         var background = rootElement.Q<VisualElement>("background-image");
 
         var s = GetRandomScreen();
+
+        ActivateButtons();
 
         if (s)
         {
@@ -75,6 +129,8 @@ public class TitleScreen : MonoBehaviour
         //Suscribirme al evento del botón
         anyButton.action.Enable();
         anyButton.action.performed += OnAnyButtonPressed;
+
+        //Activar el onclick de los botones
     }
 
     private void OnDisable()
@@ -124,6 +180,106 @@ public class TitleScreen : MonoBehaviour
 
     }
 
+    //-------------------------------------------------------------------
+    //Que empiece a moverse el menú
+    //-------------------------------------------------------------------
+    private void ActivateMenuMovement()
+    {
+        var text = rootElement.Q<Label>("pressbuton");
+        text.style.visibility = Visibility.Hidden;
+
+        press_visibility = false;
+        menu_moving = true;
+    }
+
+    //---------------------------------------------------------------
+    // Mover el menú en cada tick si le toca moverse
+    //---------------------------------------------------------------
+    private void MoveMenu()
+    {
+        if (menu_moving == true)
+        {
+            var b1 = rootElement.Q<Button>("NewGame");
+            var b2 = rootElement.Q<Button>("LvlSel");
+            var b3 = rootElement.Q<Button>("Exit");
+
+            if (actualMenuOffset1 < 0)
+            {
+                actualMenuOffset1 = Mathf.Min(Time.deltaTime * menu_speed + actualMenuOffset1, 0);
+
+                b1.style.right = Length.Percent(actualMenuOffset1);
+            }
+
+            if (actualMenuOffset2 < 0 && menuDelay1 <= 0) //Si no se ha terminado de mover y el delay no ha 
+            {
+                actualMenuOffset2 = Mathf.Min(Time.deltaTime * menu_speed + actualMenuOffset2, 0);
+
+                
+                b2.style.right = Length.Percent(actualMenuOffset2);
+            }
+            else if(menuDelay1 > 0)
+            {
+                menuDelay1 -= Time.deltaTime;
+            }
+
+            if (actualMenuOffset3 < 0 && menuDelay2 <= 0) //Si no se ha terminado de mover y el delay no ha 
+            {
+                actualMenuOffset3 = Mathf.Min(Time.deltaTime * menu_speed + actualMenuOffset3, 0);
+
+                
+                b3.style.right = Length.Percent(actualMenuOffset3);
+            }
+            else if (menuDelay2 > 0)
+            {
+                menuDelay2 -= Time.deltaTime;
+            }
+
+            if (actualMenuOffset1 >= 0 && actualMenuOffset2 >= 0 && actualMenuOffset3 >= 0)
+            {
+                menu_moving = false;
+                menu_displayed = true;
+
+                //Desactivar el anybutton para que no se salte más
+                anyButton.action.performed -= OnAnyButtonPressed;
+                anyButton.action.Disable();
+
+                b1.Focus();
+
+            }
+
+        }
+    }
+
+    //---------------------------------------------------------------
+    // Saltarse el movimiento del menú
+    //---------------------------------------------------------------
+    private void SkipMenuMovement()
+    {
+        if (rootElement != null)
+        {
+            var b1 = rootElement.Q<Button>("NewGame");
+            var b2 = rootElement.Q<Button>("LvlSel");
+            var b3 = rootElement.Q<Button>("Exit");
+            actualMenuOffset1 = 0;
+            actualMenuOffset2 = 0;
+            actualMenuOffset3 = 0;
+
+            b1.style.right = Length.Percent(actualMenuOffset1);
+            b2.style.right = Length.Percent(actualMenuOffset2);
+            b3.style.right = Length.Percent(actualMenuOffset3);
+
+            menu_moving = false;
+            menu_displayed = true;
+
+            //Desactivar el anybutton para que no se salte más
+            anyButton.action.performed -= OnAnyButtonPressed;
+            anyButton.action.Disable();
+
+            b1.Focus();
+
+        }
+    }
+
     //-----------------------------------------------------------------
     // Hace parpadear el texto que dice "press any button"
     //-----------------------------------------------------------------
@@ -161,13 +317,25 @@ public class TitleScreen : MonoBehaviour
 
         //Hacer parpadear el otro textito
         PressButtonFlicker();
+
+        MoveMenu();
     }
 
     private void OnAnyButtonPressed(InputAction.CallbackContext context)
     {
+        Debug.Log("Boton");
+
         if (title_movement) //si está haciendo lo de moverse el título que se skipee lo de moverse el título
         {
             SkipTitleMovement();
+        }
+        else if (press_visibility)
+        {
+            ActivateMenuMovement();
+        }
+        else if (menu_moving)
+        {
+            SkipMenuMovement();
         }
     }
 
