@@ -1,0 +1,11 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Themes/DefaultTheme.uss?fileID=7433441132597879392&amp;guid=abd6d9976d619a646a1faab02692b347&amp;type=3#DefaultTheme"/>
+    <ui:VisualElement name="background-image" class="image-background" style="background-image: url(&quot;project://database/Assets/UI/Images/LevelScreem.png?fileID=2800000&amp;guid=f1566e555a301794da8c570ec1d4b8de&amp;type=3#LevelScreem&quot;); -unity-background-image-tint-color: rgb(255, 255, 255); background-size: 100% 100%; -unity-slice-type: sliced; height: 100%; -unity-background-scale-mode: scale-and-crop; background-position-x: center; background-color: rgb(0, 0, 0); align-items: center; justify-content: space-around; align-self: center; align-content: stretch;">
+        <ui:VisualElement name="level-container" style="flex-grow: 1; flex-direction: row; width: 100%; height: 80%; aspect-ratio: auto; justify-content: space-between;">
+            <ui:Button text="&lt;" name="left-button" class="main-button" style="align-self: auto; align-content: auto; width: 20%; top: auto; right: auto; font-size: 100px;"/>
+            <ui:ScrollView name="level-scroll" style="width: 60%;"/>
+            <ui:Button text="&gt;" name="right-button" class="main-button" style="width: 20%; top: 0; right: 0%; font-size: 100px; align-self: auto; align-content: auto;"/>
+        </ui:VisualElement>
+        <ui:Button text="Back" name="back-button" class="main-button" style="top: 0; right: 0%; height: 20%;"/>
+    </ui:VisualElement>
+</ui:UXML>
