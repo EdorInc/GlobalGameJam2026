@@ -237,6 +237,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5982940905548081965, guid: bb0f3f8347d73574ba1fe8b29ca30198, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 5982940905548081965, guid: bb0f3f8347d73574ba1fe8b29ca30198, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5982940905548081965, guid: bb0f3f8347d73574ba1fe8b29ca30198, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
+      objectReference: {fileID: 0}
     - target: {fileID: 6480411232729398540, guid: bb0f3f8347d73574ba1fe8b29ca30198, type: 3}
       propertyPath: m_Name
       value: TubeObject
@@ -8849,6 +8861,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2247915306053724998, guid: bb0f3f8347d73574ba1fe8b29ca30198, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5982940905548081965, guid: bb0f3f8347d73574ba1fe8b29ca30198, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.386
+      objectReference: {fileID: 0}
+    - target: {fileID: 5982940905548081965, guid: bb0f3f8347d73574ba1fe8b29ca30198, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 5982940905548081965, guid: bb0f3f8347d73574ba1fe8b29ca30198, type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6480411232729398540, guid: bb0f3f8347d73574ba1fe8b29ca30198, type: 3}
