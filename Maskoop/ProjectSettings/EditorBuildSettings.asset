@@ -9,17 +9,41 @@ EditorBuildSettings:
     path: Assets/Scenes/Development/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/Scenes/TitleScene.unity
-    guid: a7aeded0e0f9c7642be21ca6c28263bc
+    path: Assets/Scenes/Menus/TitleScene.unity
+    guid: 0f1b0ddcda2df534c9ff4e1a3643c82a
   - enabled: 1
-    path: Assets/Scenes/LevelSelectionScene.unity
-    guid: eceb59b4daf14b5448306769f145ad4e
+    path: Assets/Scenes/Menus/LevelSelectionScene.unity
+    guid: c1dde519daac8304e8f81a71662a6846
   - enabled: 1
-    path: Assets/Scenes/Levels/Lvl_1_Old.unity
-    guid: 3842cf25c7cd65742adfa026494fc469
+    path: Assets/Scenes/Levels/DefinitiveLevels/Lvl_1.unity
+    guid: a14dae8bcbded5c43950be53b79433fa
   - enabled: 1
-    path: Assets/Scenes/Levels/Lvl_2_Old.unity
-    guid: ff578fd253e4f1e40901598c3fbe3a53
+    path: Assets/Scenes/Levels/DefinitiveLevels/Lvl_2.unity
+    guid: 4fdc95229366786438a2a3b22ca2f39d
+  - enabled: 1
+    path: Assets/Scenes/Levels/DefinitiveLevels/Lvl_3_Definitive.unity
+    guid: e64146c2fcb5a7e4a9e8bacf8612e111
+  - enabled: 1
+    path: Assets/Scenes/Levels/DefinitiveLevels/Lvl_4_FireMask.unity
+    guid: 1c78a3c4a57e310448d2d7f760d7265c
+  - enabled: 1
+    path: Assets/Scenes/Levels/DefinitiveLevels/Lvl_5_FireMask2.unity
+    guid: a4a4bd9844e6ea641bfacb758da18e36
+  - enabled: 1
+    path: Assets/Scenes/Levels/DefinitiveLevels/Lvl_6_Spikes.unity
+    guid: 2cafa1ec272b64749be07b79003e5d6c
+  - enabled: 1
+    path: Assets/Scenes/Levels/DefinitiveLevels/Lvl_7_BlueMask1.unity
+    guid: a997095d2dd05ce4cbab9c8c486e31eb
+  - enabled: 1
+    path: Assets/Scenes/Levels/DefinitiveLevels/Lvl_8_BlueMask2.unity
+    guid: 633b3bf869d4f664f9f3b7d0ab0fbc94
+  - enabled: 1
+    path: Assets/Scenes/Levels/DefinitiveLevels/Lvl_14_WindMask.unity
+    guid: 65b19c99f42ea85408d31c9eda41e30e
+  - enabled: 1
+    path: Assets/Scenes/Levels/DefinitiveLevels/Lvl_15_WindMask.unity
+    guid: 575b22bb5d1c27b468cfa3a6dc1729ad
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: e9a560ddee7630943b333aae5354760b, type: 3}
   m_UseUCBPForAssetBundles: 0

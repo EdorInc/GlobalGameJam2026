@@ -1,5 +1,6 @@
-using System;
+using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 [System.Serializable]
@@ -7,6 +8,7 @@ public struct TLevelData
 {
     public string label;
     public Texture2D image;
+    public string sceneName;
 };
 
 public class SelectionScreen : MonoBehaviour
@@ -17,13 +19,26 @@ public class SelectionScreen : MonoBehaviour
     private VisualElement root = null;
     private uint actualIndex = 0;
 
+    public InputActionReference LevelSelectionDown;
+    public InputActionReference LevelSelectionUp;
+    public InputActionReference LevelSelectionLeft;
+    public InputActionReference LevelSelectionRight;
+    public InputActionReference LevelSelectionAccept;
+
+    private Button backButton;
+    private Button leftArrow;
+    private Button rightArrow;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         root = GetComponent<UIDocument>().rootVisualElement;
         var levelScroll = root.Q<ScrollView>("level-scroll");
-        var leftArrow = root.Q<Button>("left-button");
-        var rightArrow = root.Q<Button>("right-button");
+        leftArrow = root.Q<Button>("left-button");
+        rightArrow = root.Q<Button>("right-button");
+
+        backButton = root.Q<Button>("back-button");
+        backButton.focusable = false;
 
         leftArrow.SetEnabled(false);
         leftArrow.visible = false;
@@ -52,6 +67,22 @@ public class SelectionScreen : MonoBehaviour
         rightArrow.clicked += MoveRight;
 
         levelScroll.scrollOffset += new Vector2(0,0);
+
+        //Suscribirme a los eventos de los botones
+        LevelSelectionLeft.action.Enable();
+        LevelSelectionLeft.action.performed += OnLeftPressed;
+
+        LevelSelectionRight.action.Enable();
+        LevelSelectionRight.action.performed += OnRightPressed;
+
+        LevelSelectionDown.action.Enable();
+        LevelSelectionDown.action.performed += OnDownPressed;
+
+        LevelSelectionUp.action.Enable();
+        LevelSelectionUp.action.performed += OnUpPressed;
+
+        LevelSelectionAccept.action.Enable();
+        LevelSelectionAccept.action.performed += OnAccept;
     }
 
     private void MoveLeft()
@@ -121,4 +152,70 @@ public class SelectionScreen : MonoBehaviour
     {
         
     }
+
+    private void OnLeftPressed(InputAction.CallbackContext context)
+    {
+        MoveLeft();
+        backButton.focusable = false;
+        backButton.Blur();
+        leftArrow.Blur();
+        rightArrow.Blur();
+    }
+
+    private void OnRightPressed(InputAction.CallbackContext context)
+    {
+        MoveRight();
+        backButton.focusable = false;
+        backButton.Blur();
+        leftArrow.Blur();
+        rightArrow.Blur();
+    }
+
+    private void OnDownPressed(InputAction.CallbackContext context)
+    {
+        backButton.focusable = true;
+        backButton.Focus();
+    }
+    private void OnUpPressed(InputAction.CallbackContext context)
+    {
+        Debug.Log("arriba");
+        backButton.focusable = false;
+        backButton.Blur();
+        leftArrow.Blur();
+        rightArrow.Blur();
+    }
+
+    private void OnAccept(InputAction.CallbackContext context)
+    {
+        if (backButton.focusable)
+        {
+            SceneManager.LoadScene("TitleScene");
+        }
+        else
+        {
+            SceneManager.LoadScene(levels[actualIndex].sceneName);
+        }
+    }
+
+    public void OnDisable()
+    {
+        //Suscribirme a los eventos de los botones
+        LevelSelectionLeft.action.performed -= OnLeftPressed;
+        LevelSelectionLeft.action.Disable();
+
+        LevelSelectionRight.action.performed -= OnRightPressed;
+        LevelSelectionRight.action.Disable();
+
+        
+        LevelSelectionDown.action.performed -= OnDownPressed;
+        LevelSelectionDown.action.Disable();
+
+        LevelSelectionUp.action.performed -= OnUpPressed;
+        LevelSelectionUp.action.Disable();
+
+        LevelSelectionAccept.action.performed -= OnAccept;
+        LevelSelectionAccept.action.Disable();
+    }
+
+
 }

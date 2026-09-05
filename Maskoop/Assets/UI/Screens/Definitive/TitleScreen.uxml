@@ -6,7 +6,7 @@
             <ui:VisualElement name="button-container" class="container-button-vertical" style="height: auto; flex-grow: 1.5; flex-shrink: 0; justify-content: flex-start; align-self: stretch; align-items: stretch;">
                 <ui:Label text="- Press any button -" name="pressbuton" enabled="true" style="align-self: center; -unity-text-align: middle-center; font-size: 30px; -unity-font-definition: url(&quot;project://database/Assets/UI/Fonts/rocks-serif/gomarice_rocks_serif.ttf?fileID=12800000&amp;guid=fbc97c39081110c4fbb781eb4f13a1b6&amp;type=3#gomarice_rocks_serif&quot;); color: rgb(255, 255, 255); white-space: nowrap; visibility: hidden;"/>
                 <ui:Button text="New Game" name="NewGame" enabled="true" focusable="true" class="main-button"/>
-                <ui:Button text="Select Level" name="LvlSel" enabled="false" focusable="true" class="main-button"/>
+                <ui:Button text="Select Level" name="LvlSel" enabled="true" focusable="true" class="main-button"/>
                 <ui:Button text="Exit" name="Exit" enabled="true" focusable="true" class="main-button"/>
             </ui:VisualElement>
         </ui:VisualElement>

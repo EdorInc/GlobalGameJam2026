@@ -584,16 +584,27 @@ MonoBehaviour:
   levels:
   - label: Level 1 - First Steps
     image: {fileID: 2800000, guid: f1566e555a301794da8c570ec1d4b8de, type: 3}
+    sceneName: Lvl_1
   - label: Level 2 - Test level
     image: {fileID: 2800000, guid: 53c3a990fde9ec14c8f16cfefcef1fb5, type: 3}
+    sceneName: Lvl_2
   - label: Level 3 - Test Level
     image: {fileID: 2800000, guid: 53c3a990fde9ec14c8f16cfefcef1fb5, type: 3}
+    sceneName: Lvl_3_Definitive
   - label: Level 4 - Test Level
     image: {fileID: 2800000, guid: 53c3a990fde9ec14c8f16cfefcef1fb5, type: 3}
+    sceneName: Lvl_4_FireMask
   - label: Level 5 - Test Level
     image: {fileID: 2800000, guid: 53c3a990fde9ec14c8f16cfefcef1fb5, type: 3}
+    sceneName: Lvl_5_Firemask2
   - label: Level 6 - Test Level
     image: {fileID: 2800000, guid: 53c3a990fde9ec14c8f16cfefcef1fb5, type: 3}
+    sceneName: Lvl_6_Spikes
+  LevelSelectionDown: {fileID: -1890613773990650660, guid: e9a560ddee7630943b333aae5354760b, type: 3}
+  LevelSelectionUp: {fileID: -2538106319024608258, guid: e9a560ddee7630943b333aae5354760b, type: 3}
+  LevelSelectionLeft: {fileID: 1384790612495706566, guid: e9a560ddee7630943b333aae5354760b, type: 3}
+  LevelSelectionRight: {fileID: -8485858556916199835, guid: e9a560ddee7630943b333aae5354760b, type: 3}
+  LevelSelectionAccept: {fileID: -1963797530887622909, guid: e9a560ddee7630943b333aae5354760b, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -1615,6 +1615,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Mask
       objectReference: {fileID: 0}
+    - target: {fileID: 2023493075470968920, guid: 0ce019c82e9fb9f4ab0fa7f72b9cfe1c, type: 3}
+      propertyPath: channel
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 2524282285279397089, guid: 0ce019c82e9fb9f4ab0fa7f72b9cfe1c, type: 3}
       propertyPath: channel
       value: 2
@@ -1650,6 +1654,10 @@ PrefabInstance:
     - target: {fileID: 6246011478484162386, guid: 0ce019c82e9fb9f4ab0fa7f72b9cfe1c, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6482947969232427343, guid: 0ce019c82e9fb9f4ab0fa7f72b9cfe1c, type: 3}
+      propertyPath: channel
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 6767262102404887744, guid: 0ce019c82e9fb9f4ab0fa7f72b9cfe1c, type: 3}
       propertyPath: channel

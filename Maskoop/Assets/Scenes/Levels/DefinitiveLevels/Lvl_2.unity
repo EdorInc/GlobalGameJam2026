@@ -2663,6 +2663,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 543387172}
     m_Modifications:
+    - target: {fileID: 4337341240327116762, guid: 3d36eb59605316844846b25eff9679af, type: 3}
+      propertyPath: channel
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 6274345291150320649, guid: 3d36eb59605316844846b25eff9679af, type: 3}
       propertyPath: m_LocalPosition.x
       value: 22
@@ -2706,6 +2710,10 @@ PrefabInstance:
     - target: {fileID: 8115473925464077268, guid: 3d36eb59605316844846b25eff9679af, type: 3}
       propertyPath: m_Name
       value: Chest
+      objectReference: {fileID: 0}
+    - target: {fileID: 8781383824249530061, guid: 3d36eb59605316844846b25eff9679af, type: 3}
+      propertyPath: channel
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

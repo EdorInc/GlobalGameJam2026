@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class TitleScreen : MonoBehaviour
 {
@@ -103,7 +104,8 @@ public class TitleScreen : MonoBehaviour
             return;
         }
 
-        newGameButton.clicked += () => GameEvents.StartRequested();
+        newGameButton.clicked += () => SceneManager.LoadScene("Lvl_1");
+        selectButton.clicked += () => SceneManager.LoadScene("LevelSelectionScene");
         exitButton.clicked += () => GameManager.Instance.QuitGame();
     }
 
