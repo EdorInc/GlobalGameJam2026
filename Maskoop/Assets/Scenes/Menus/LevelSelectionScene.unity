@@ -426,6 +426,7 @@ GameObject:
   - component: {fileID: 1844041628}
   - component: {fileID: 1844041632}
   - component: {fileID: 1844041635}
+  - component: {fileID: 1844041636}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -568,6 +569,31 @@ MonoBehaviour:
   m_DefaultActionMap: UI
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1844041636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844041627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87b0e403478f9d3489d04d9030549587, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SelectionScreen
+  levels:
+  - label: Level 1 - First Steps
+    image: {fileID: 2800000, guid: f1566e555a301794da8c570ec1d4b8de, type: 3}
+  - label: Level 2 - Test level
+    image: {fileID: 2800000, guid: 53c3a990fde9ec14c8f16cfefcef1fb5, type: 3}
+  - label: Level 3 - Test Level
+    image: {fileID: 2800000, guid: 53c3a990fde9ec14c8f16cfefcef1fb5, type: 3}
+  - label: Level 4 - Test Level
+    image: {fileID: 2800000, guid: 53c3a990fde9ec14c8f16cfefcef1fb5, type: 3}
+  - label: Level 5 - Test Level
+    image: {fileID: 2800000, guid: 53c3a990fde9ec14c8f16cfefcef1fb5, type: 3}
+  - label: Level 6 - Test Level
+    image: {fileID: 2800000, guid: 53c3a990fde9ec14c8f16cfefcef1fb5, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

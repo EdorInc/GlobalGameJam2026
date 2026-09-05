@@ -259,3 +259,46 @@
     color: rgb(255, 216, 0);
     scale: 1.2 1.2 1.2;
 }
+
+.level-container {
+    width: 760px;
+    height: auto;
+    opacity: 1;
+    padding-top: 2%;
+    padding-right: 2%;
+    padding-bottom: 2%;
+    padding-left: 2%;
+    margin-left: 0%;
+    margin-top: 0%;
+    align-self: center;
+    align-items: center;
+}
+
+
+
+.level-image {
+    align-items: auto;
+    height: auto;
+    width: 100%;
+    align-self: center;
+}
+
+.level-label {
+    -unity-font-definition: url("project://database/Assets/UI/Fonts/rocks-serif/gomarice_rocks_serif.ttf?fileID=12800000&guid=fbc97c39081110c4fbb781eb4f13a1b6&type=3#gomarice_rocks_serif");
+    font-size: 35px;
+    background-color: rgba(207, 201, 201, 0);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    -unity-text-outline-width: 2px;
+    color: rgb(255, 255, 255);
+    -unity-text-outline-color: rgb(59, 59, 59);
+    text-shadow: 5px 0 0 rgb(0, 0, 0);
+    align-items: auto;
+    align-self: center;
+    -unity-text-align: upper-center;
+    width: auto;
+    height: auto;
+    padding-left: 0;
+}

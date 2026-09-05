@@ -107,7 +107,7 @@ public class TitleScreen : MonoBehaviour
         exitButton.clicked += () => GameManager.Instance.QuitGame();
     }
 
-    private void OnEnable()
+    private void Start()
     {
         rootElement = GetComponent<UIDocument>().rootVisualElement;
 
