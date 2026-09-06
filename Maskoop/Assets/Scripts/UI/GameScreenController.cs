@@ -122,10 +122,22 @@ public class GameScreenController : MonoBehaviour
         // This needs to be updated using the new Input System, but for now this is fine for testing.
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
-            if (currentState == UIState.Gameplay)
+            if (currentState == UIState.Gameplay) //Si, esto lo ha modificado jorge y sabe que es una marranada, pero esta desesperado
+            {
                 SetState(UIState.Paused);
+                
+                var resButton = pauseScreen.Q<Button>("resume-button");
+                if(resButton != null)
+                {
+                    resButton.Focus();
+                }
+
+            }
             else if (currentState == UIState.Paused)
+            {
                 SetState(UIState.Gameplay);
+            }
+                
         }
 
         if (currentState == UIState.Gameplay)
