@@ -48,8 +48,16 @@ MonoBehaviour:
   titleScene: TitleScene
   levelSelectionScene: LevelSelectionScene
   levelScenes:
-  - Level1
-  - Level2
+  - Lvl_1
+  - Lvl_2
+  - Lvl_3_Definitive
+  - Lvl_4_FireMask
+  - Lvl_5_Firemask2
+  - Lvl_6_Spikes
+  - Lvl_7_BlueMask1
+  - Lvl_8_BlueMask2
+  - Lvl_14_WindMask
+  - Lvl_15_WindMask
   currentLevelScene: 
   playerPrefabOne: {fileID: 2365696635727678705, guid: 740b32566cef9304bbd9ebf96d621259, type: 3}
   playerPrefabTwo: {fileID: 2365696635727678705, guid: 3c43eb48f1cf0474c965533e25d007cc, type: 3}

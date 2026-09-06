@@ -53,6 +53,8 @@ public class GameScreenController : MonoBehaviour
 
     private UIState currentState = UIState.Gameplay;
 
+    public InputActionReference pauseButton;
+
     private enum UIState
     {
         Gameplay,
@@ -64,11 +66,19 @@ public class GameScreenController : MonoBehaviour
     private void OnEnable()
     {
         EventManager.OnVictory += HasWon;
+
+        //Suscribirme al evento del botón
+        pauseButton.action.Enable();
+        pauseButton.action.performed += OnPausePressed;
     }
 
     private void OnDisable()
     {
         EventManager.OnVictory -= HasWon;
+
+        //Desuscribirme al evento del botón
+        pauseButton.action.performed -= OnPausePressed;
+        pauseButton.action.Disable();
     }
 
     private void Awake()
@@ -262,4 +272,24 @@ public class GameScreenController : MonoBehaviour
         if(!IsValidButton(loseMenuButtonName, loseMenuButton)) return;
         loseMenuButton.clicked += () => GameEvents.GoToMenuRequested();
     }
+
+    private void OnPausePressed(InputAction.CallbackContext context)
+    {
+        if (currentState == UIState.Gameplay) //Si, esto lo ha modificado jorge y sabe que es una marranada, pero esta desesperado
+        {
+            SetState(UIState.Paused);
+
+            var resButton = pauseScreen.Q<Button>("resume-button");
+            if (resButton != null)
+            {
+                resButton.Focus();
+            }
+
+        }
+        else if (currentState == UIState.Paused)
+        {
+            SetState(UIState.Gameplay);
+        }
+    }
+
 }

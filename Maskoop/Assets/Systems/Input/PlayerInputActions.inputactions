@@ -478,39 +478,6 @@
                 },
                 {
                     "name": "",
-                    "id": "9378d187-9423-4262-accd-4830b3f1f461",
-                    "path": "<Keyboard>/leftAlt",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard1",
-                    "action": "Roll",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "cc339eef-3254-4435-a6c7-2f8a0807ba5f",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Roll",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "89fb68a1-8961-4237-ac8e-0e210d116745",
-                    "path": "<Keyboard>/rightAlt",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard2",
-                    "action": "Roll",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "27731109-90d0-4c48-b7b2-2d29eff5bbba",
                     "path": "<Keyboard>/leftCtrl",
                     "interactions": "",

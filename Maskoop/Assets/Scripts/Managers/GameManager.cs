@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     [Tooltip("Provisional name of the scene to load for the level selection.")]
     [SerializeField] private string levelSelectionScene = "LevelSelectionScene";
     [Tooltip("Names of the scenes to load for each level.")]
-    [SerializeField] private string[] levelScenes = { "Level1", "Level2", "Level3" };
+    [SerializeField] private string[] levelScenes = { "Lvl_1", "Lvl_2", "Lvl_3_Definitive", "Lvl_4_FireMask", "Lvl_5_FireMask2", "Lvl_6_Spikes", "Lvl_7_BlueMask1", "Lvl_8_BlueMask2", "Lvl_14_WindMask" };
 
     [Header("Level Settings")]
     [SerializeField] private string currentLevelScene;

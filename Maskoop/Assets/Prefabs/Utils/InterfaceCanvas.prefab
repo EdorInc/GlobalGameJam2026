@@ -154,6 +154,7 @@ MonoBehaviour:
   loseRestartButtonName: restart-button
   loseMenuButtonName: quit-button
   initialState: 0
+  pauseButton: {fileID: 4816070003634609646, guid: e9a560ddee7630943b333aae5354760b, type: 3}
 --- !u!114 &8433255206702515674
 MonoBehaviour:
   m_ObjectHideFlags: 0

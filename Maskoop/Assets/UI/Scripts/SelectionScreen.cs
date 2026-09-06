@@ -193,7 +193,7 @@ public class SelectionScreen : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene(levels[actualIndex].sceneName);
+            GameEvents.LevelSelectedRequested((int)actualIndex);
         }
     }
 

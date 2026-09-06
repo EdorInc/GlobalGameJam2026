@@ -104,7 +104,7 @@ public class TitleScreen : MonoBehaviour
             return;
         }
 
-        newGameButton.clicked += () => SceneManager.LoadScene("Lvl_1");
+        newGameButton.clicked += () => GameEvents.LevelSelectedRequested(0);
         selectButton.clicked += () => SceneManager.LoadScene("LevelSelectionScene");
         exitButton.clicked += () => GameManager.Instance.QuitGame();
     }

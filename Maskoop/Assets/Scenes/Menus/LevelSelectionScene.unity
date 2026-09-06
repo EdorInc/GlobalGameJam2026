@@ -335,83 +335,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!1001 &635412737
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 228944724330065337, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
-      propertyPath: m_Name
-      value: GameManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 1767527281953958782, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
-      propertyPath: levelScenes.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1767527281953958782, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
-      propertyPath: 'levelScenes.Array.data[0]'
-      value: Lvl_1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1767527281953958782, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
-      propertyPath: 'levelScenes.Array.data[1]'
-      value: Lvl_2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1767527281953958782, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
-      propertyPath: 'levelScenes.Array.data[2]'
-      value: Lvl_1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1767527281953958782, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
-      propertyPath: 'levelScenes.Array.data[3]'
-      value: Lvl_1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8551949795751813073, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8551949795751813073, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8551949795751813073, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8551949795751813073, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8551949795751813073, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8551949795751813073, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8551949795751813073, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8551949795751813073, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8551949795751813073, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8551949795751813073, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
 --- !u!1 &1844041627
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,33 +506,167 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SelectionScreen
   levels:
   - label: Level 1 - First Steps
-    image: {fileID: 2800000, guid: f1566e555a301794da8c570ec1d4b8de, type: 3}
+    image: {fileID: 2800000, guid: 53c3a990fde9ec14c8f16cfefcef1fb5, type: 3}
     sceneName: Lvl_1
-  - label: Level 2 - Test level
-    image: {fileID: 2800000, guid: 53c3a990fde9ec14c8f16cfefcef1fb5, type: 3}
+  - label: Level 2 - Taking the rithm
+    image: {fileID: 2800000, guid: f4394025c4b2dfe499cc5c5b11e9fb7b, type: 3}
     sceneName: Lvl_2
-  - label: Level 3 - Test Level
-    image: {fileID: 2800000, guid: 53c3a990fde9ec14c8f16cfefcef1fb5, type: 3}
+  - label: Level 3 - Getting harder
+    image: {fileID: 2800000, guid: a31bbba33b3e2504aa2f7cc77b894496, type: 3}
     sceneName: Lvl_3_Definitive
-  - label: Level 4 - Test Level
-    image: {fileID: 2800000, guid: 53c3a990fde9ec14c8f16cfefcef1fb5, type: 3}
+  - label: Level 4 - The power of flames
+    image: {fileID: 2800000, guid: fa2c120b59b8303458878025e74990b0, type: 3}
     sceneName: Lvl_4_FireMask
-  - label: Level 5 - Test Level
-    image: {fileID: 2800000, guid: 53c3a990fde9ec14c8f16cfefcef1fb5, type: 3}
+  - label: Level 5 - Never enouhg fire
+    image: {fileID: 2800000, guid: 0e98cbc5999b271448a74c56ed717c27, type: 3}
     sceneName: Lvl_5_Firemask2
-  - label: Level 6 - Test Level
-    image: {fileID: 2800000, guid: 53c3a990fde9ec14c8f16cfefcef1fb5, type: 3}
+  - label: Level 6 - Ouch, that hurts
+    image: {fileID: 2800000, guid: 069c72781d186124280edbc32a577e07, type: 3}
+    sceneName: Lvl_6_Spikes
+  - label: Level 7 - Flowing like a river
+    image: {fileID: 2800000, guid: 0da6dcadc8be95c40823254b19ee364a, type: 3}
+    sceneName: Lvl_6_Spikes
+  - label: 'Level 8 - Infiltration '
+    image: {fileID: 2800000, guid: fe964eb9ecf9b8b42adc67710fb6797a, type: 3}
+    sceneName: Lvl_6_Spikes
+  - label: 'Level 9 - Light as a feather '
+    image: {fileID: 2800000, guid: 294bbef76e91f954ca08e80948ba3c6c, type: 3}
+    sceneName: Lvl_6_Spikes
+  - label: 'Level 10 - Going up '
+    image: {fileID: 2800000, guid: fdd7a65946b01b64ba66656ab2b514c7, type: 3}
     sceneName: Lvl_6_Spikes
   LevelSelectionDown: {fileID: -1890613773990650660, guid: e9a560ddee7630943b333aae5354760b, type: 3}
   LevelSelectionUp: {fileID: -2538106319024608258, guid: e9a560ddee7630943b333aae5354760b, type: 3}
   LevelSelectionLeft: {fileID: 1384790612495706566, guid: e9a560ddee7630943b333aae5354760b, type: 3}
   LevelSelectionRight: {fileID: -8485858556916199835, guid: e9a560ddee7630943b333aae5354760b, type: 3}
   LevelSelectionAccept: {fileID: -1963797530887622909, guid: e9a560ddee7630943b333aae5354760b, type: 3}
+--- !u!1001 &1963099630
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 228944724330065337, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: m_Name
+      value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767527281953958782, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: gameScene
+      value: Lvl_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767527281953958782, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: playerPrefabOne
+      value: 
+      objectReference: {fileID: 2365696635727678705, guid: b51a6c292581c3f49bcf0185668d394e, type: 3}
+    - target: {fileID: 1767527281953958782, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: playerPrefabTwo
+      value: 
+      objectReference: {fileID: 2365696635727678705, guid: 5a4d34e03f8472f43b1ef3524d3da26e, type: 3}
+    - target: {fileID: 1767527281953958782, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: spawnPosition1.x
+      value: -9.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767527281953958782, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: spawnPosition1.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767527281953958782, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: spawnPosition2.x
+      value: 9.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767527281953958782, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: spawnPosition2.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767527281953958782, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: 'levelScenes.Array.data[0]'
+      value: Lvl_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2781072783592629310, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -9.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2781072783592629310, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2781072783592629310, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4073580171776634626, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: splitDistance
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4073580171776634626, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: gameUIDocument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8551949795751813073, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8551949795751813073, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8551949795751813073, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8551949795751813073, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8551949795751813073, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8551949795751813073, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8551949795751813073, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8551949795751813073, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8551949795751813073, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8551949795751813073, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8620514679059036682, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8620514679059036682, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8620514679059036682, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 4073580171776634626, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 13967cce14341ff4aa22eca3ea828caf, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 635412737}
   - {fileID: 548371052}
   - {fileID: 1844041631}
   - {fileID: 545235228}
+  - {fileID: 1963099630}
