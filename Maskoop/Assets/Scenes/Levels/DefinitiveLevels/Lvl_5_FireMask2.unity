@@ -2239,6 +2239,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 17
       objectReference: {fileID: 0}
+    - target: {fileID: 3008246747109468806, guid: d0fea2954c10ac24098496b102528b72, type: 3}
+      propertyPath: channel
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 4030717259833821990, guid: d0fea2954c10ac24098496b102528b72, type: 3}
       propertyPath: m_LocalPosition.x
       value: 14.999999
@@ -2278,6 +2282,10 @@ PrefabInstance:
     - target: {fileID: 6786832694649153340, guid: d0fea2954c10ac24098496b102528b72, type: 3}
       propertyPath: m_Name
       value: Lvl5_RedMask2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7805752544536796049, guid: d0fea2954c10ac24098496b102528b72, type: 3}
+      propertyPath: channel
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 8261141275418522261, guid: d0fea2954c10ac24098496b102528b72, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2674,7 +2682,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3786213304136787908, guid: bd2f8c3367f2067459d94a8464309205, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
