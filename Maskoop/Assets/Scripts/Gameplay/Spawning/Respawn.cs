@@ -119,6 +119,7 @@ public class Respawn : MonoBehaviour
             rigidBody.rotation = respawnRotation;
             rigidBody.linearVelocity = Vector3.zero;
         }
+        spawner.DestroyObject();
         EventManager.OnRespawn?.Invoke(this.gameObject);
     }
 
