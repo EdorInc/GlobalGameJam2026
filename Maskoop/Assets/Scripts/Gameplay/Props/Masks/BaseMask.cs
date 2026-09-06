@@ -27,6 +27,8 @@ public abstract class BaseMask : MonoBehaviour
     private Renderer[] maskRenderers;
     private GroundDetector groundDetector;
 
+    private BaseSpawner spawner;
+
     private void Start()
     {
         respawnComponent = GetComponent<Respawn>();
@@ -64,6 +66,11 @@ public abstract class BaseMask : MonoBehaviour
         }
     }
 
+
+    public void SetSpawner(BaseSpawner spawner)
+    {
+        this.spawner = spawner;
+    }
     public abstract void UpdateLogic();
 
     public abstract void FixedUpdateLogic();
@@ -73,6 +80,7 @@ public abstract class BaseMask : MonoBehaviour
         this.characterState = characterState;
         currentRespawnTime = 0;
         isFlickering = false;
+        spawner?.OnMaskTaken();
     }
 
     public virtual void OnUnequip()

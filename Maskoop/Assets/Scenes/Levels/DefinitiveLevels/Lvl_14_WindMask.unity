@@ -1584,6 +1584,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 65700044}
     m_Modifications:
+    - target: {fileID: -8518749577954694042, guid: 3b302b1cd98e2824bbef1494217f68a9, type: 3}
+      propertyPath: isMaskSpawner
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2808657674286783061, guid: 3b302b1cd98e2824bbef1494217f68a9, type: 3}
       propertyPath: m_Name
       value: GreenMaskSpawner (1)
@@ -1715,6 +1719,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 65700044}
     m_Modifications:
+    - target: {fileID: -8518749577954694042, guid: 3b302b1cd98e2824bbef1494217f68a9, type: 3}
+      propertyPath: isMaskSpawner
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2808657674286783061, guid: 3b302b1cd98e2824bbef1494217f68a9, type: 3}
       propertyPath: m_Name
       value: GreenMaskSpawner
