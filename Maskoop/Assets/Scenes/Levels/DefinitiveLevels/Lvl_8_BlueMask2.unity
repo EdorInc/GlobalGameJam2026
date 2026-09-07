@@ -8859,6 +8859,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6415103007661705766, guid: c4c6b0e63d8a1f748b065733c796c145, type: 3}
+      propertyPath: isMaskSpawner
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2808657674286783061, guid: c4c6b0e63d8a1f748b065733c796c145, type: 3}
       propertyPath: m_Name
       value: BlueMaskSpawner
@@ -14365,6 +14369,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6415103007661705766, guid: c4c6b0e63d8a1f748b065733c796c145, type: 3}
+      propertyPath: isMaskSpawner
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2808657674286783061, guid: c4c6b0e63d8a1f748b065733c796c145, type: 3}
       propertyPath: m_Name
       value: BlueMaskSpawner (2)
@@ -19963,6 +19971,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6415103007661705766, guid: c4c6b0e63d8a1f748b065733c796c145, type: 3}
+      propertyPath: isMaskSpawner
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2808657674286783061, guid: c4c6b0e63d8a1f748b065733c796c145, type: 3}
       propertyPath: m_Name
       value: BlueMaskSpawner (1)
@@ -21923,6 +21935,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6415103007661705766, guid: c4c6b0e63d8a1f748b065733c796c145, type: 3}
+      propertyPath: isMaskSpawner
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2808657674286783061, guid: c4c6b0e63d8a1f748b065733c796c145, type: 3}
       propertyPath: m_Name
       value: BlueMaskSpawner (3)

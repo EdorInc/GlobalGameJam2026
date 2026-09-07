@@ -510,6 +510,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 631575148373874387, guid: 2180c8c34dcbeae43926b3016a0e089d, type: 3}
+      propertyPath: isMaskSpawner
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2808657674286783061, guid: 2180c8c34dcbeae43926b3016a0e089d, type: 3}
       propertyPath: m_Name
       value: RedMaskSpawner
