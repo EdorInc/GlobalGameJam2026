@@ -161,6 +161,7 @@ public class CharacterStateController : MonoBehaviour
         m_currentMask?.OnUnequip();
         m_currentMask = mask;
         m_currentMask?.OnEquip(this);
+
     }
 
     public void UnequipMask()

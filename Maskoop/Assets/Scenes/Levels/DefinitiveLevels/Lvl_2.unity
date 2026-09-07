@@ -245,6 +245,10 @@ PrefabInstance:
       propertyPath: channel
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4351819057482017313, guid: d19de389a703ad44f8b21a4ccb91706b, type: 3}
+      propertyPath: keepActivatedOnCompletion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4200,6 +4204,30 @@ PrefabInstance:
     - target: {fileID: -1156351442273747856, guid: a51fd6da4fb6cbe4c90535a58ad95813, type: 3}
       propertyPath: isPlayerExclusive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 85776289468284398, guid: a51fd6da4fb6cbe4c90535a58ad95813, type: 3}
+      propertyPath: m_Size.x
+      value: 1.2170672
+      objectReference: {fileID: 0}
+    - target: {fileID: 85776289468284398, guid: a51fd6da4fb6cbe4c90535a58ad95813, type: 3}
+      propertyPath: m_Size.y
+      value: 7.3373485
+      objectReference: {fileID: 0}
+    - target: {fileID: 85776289468284398, guid: a51fd6da4fb6cbe4c90535a58ad95813, type: 3}
+      propertyPath: m_Size.z
+      value: 1.3945435
+      objectReference: {fileID: 0}
+    - target: {fileID: 85776289468284398, guid: a51fd6da4fb6cbe4c90535a58ad95813, type: 3}
+      propertyPath: m_Center.x
+      value: -0.045974787
+      objectReference: {fileID: 0}
+    - target: {fileID: 85776289468284398, guid: a51fd6da4fb6cbe4c90535a58ad95813, type: 3}
+      propertyPath: m_Center.y
+      value: 3.6686552
+      objectReference: {fileID: 0}
+    - target: {fileID: 85776289468284398, guid: a51fd6da4fb6cbe4c90535a58ad95813, type: 3}
+      propertyPath: m_Center.z
+      value: 0.016661821
       objectReference: {fileID: 0}
     - target: {fileID: 806114925009333865, guid: a51fd6da4fb6cbe4c90535a58ad95813, type: 3}
       propertyPath: m_LocalPosition.x

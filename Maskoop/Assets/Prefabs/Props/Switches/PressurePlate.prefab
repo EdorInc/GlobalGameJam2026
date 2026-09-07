@@ -146,8 +146,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.9, y: 4, z: 0.9}
-  m_Center: {x: 0, y: 2, z: 0}
+  m_Size: {x: 0.8784696, y: 5.780121, z: 0.8443854}
+  m_Center: {x: 0.0040963283, y: 2.8900428, z: -0.008893504}
 --- !u!114 &-1156351442273747856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,6 +162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PressurePlate
   channel: 1
   keepActivated: 0
+  meshRenderer: {fileID: 0}
   isPlayerExclusive: 1
   includedLayersInCheck:
     serializedVersion: 2
