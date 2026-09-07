@@ -9,9 +9,11 @@ using UnityEngine.InputSystem;
 public static class GameEvents
 {
     public static event Action OnGoToMenuRequested;
+    public static event Action OnGoToLevelSelection;
 
     // TODO Provisional event to start a level from the level selection screen
     public static event Action<int> OnLevelSelectedRequested;
+    public static event Action OnLNextLevelRequested;
 
     public static event Action OnStartRequested;
     public static event Action OnRestartRequested;
@@ -20,9 +22,14 @@ public static class GameEvents
     public static event Action OnPauseRequested;
     public static event Action OnResumeRequested;
 
+
     public static void GoToMenuRequested() => OnGoToMenuRequested?.Invoke();
 
+    public static void GoToLevelSelection() => OnGoToLevelSelection?.Invoke();
+
     public static void LevelSelectedRequested(int levelIndex) => OnLevelSelectedRequested?.Invoke(levelIndex);
+
+    public static void NextLevelRequested() => OnLNextLevelRequested?.Invoke();
 
     public static void StartRequested() => OnStartRequested?.Invoke();
     public static void RestartRequested() => OnRestartRequested?.Invoke();
@@ -83,10 +90,12 @@ public class GameManager : MonoBehaviour
         if (Instance != this) return;
 
         GameEvents.OnGoToMenuRequested += LoadTitle;
+        GameEvents.OnGoToLevelSelection += LoadLevelSelection;
 
         // TODO Provisional bind to start game
         GameEvents.OnStartRequested += LoadLevelSelection;
         GameEvents.OnLevelSelectedRequested += LoadLevel;
+        GameEvents.OnLNextLevelRequested += LoadNextLevel;
 
         GameEvents.OnRestartRequested += RestartGame;
         GameEvents.OnPauseRequested += PauseGame;
@@ -101,10 +110,12 @@ public class GameManager : MonoBehaviour
         if (Instance != this) return;
 
         GameEvents.OnGoToMenuRequested -= LoadTitle;
+        GameEvents.OnGoToLevelSelection -= LoadLevelSelection;
 
         // TODO Provisional bind to start game
         GameEvents.OnStartRequested -= LoadLevelSelection;
         GameEvents.OnLevelSelectedRequested -= LoadLevel;
+        GameEvents.OnLNextLevelRequested -= LoadNextLevel;
 
         GameEvents.OnRestartRequested -= RestartGame;
         GameEvents.OnPauseRequested -= PauseGame;

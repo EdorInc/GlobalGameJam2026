@@ -48,6 +48,7 @@ public class GameScreenController : MonoBehaviour
     private Button menuButton;
     private Button winRestartButton;
     private Button winMenuButton;
+    private Button winNextButton;
     private Button loseRestartButton;
     private Button loseMenuButton;
 
@@ -185,6 +186,16 @@ public class GameScreenController : MonoBehaviour
             return;
 
         SetState(UIState.Win);
+        var wnButton = winScreen.Q<Button>("next-button");
+        if (wnButton != null)
+        {
+            Debug.Log("existe el boton");
+            winNextButton.Focus();
+        }
+        else
+        {
+            Debug.Log("No existe el botón");
+        }
     }
 
     private void SetState(UIState newState)
@@ -202,11 +213,13 @@ public class GameScreenController : MonoBehaviour
                 break;
 
             case UIState.Paused:
+                Debug.Log("Pausa");
                 GameEvents.PauseRequested();
                 pauseScreen.style.display = DisplayStyle.Flex;
                 break;
 
             case UIState.Win:
+                Debug.Log("Ganando");
                 GameEvents.PauseRequested();
                 winScreen.style.display = DisplayStyle.Flex;
                 break;
@@ -220,7 +233,22 @@ public class GameScreenController : MonoBehaviour
 
     public void ShowWin()
     {
+
+        Debug.Log("Estan llamando al show win");
         SetState(UIState.Win);
+
+        var wnButton = winScreen.Q<Button>("next-button");
+        if(wnButton != null)
+        {
+            Debug.Log("existe el boton");
+            winNextButton.Focus();
+        }
+        else
+        {
+            Debug.Log("No existe el botón");
+        }
+        
+
     }
 
     public void ShowLose()
@@ -261,7 +289,11 @@ public class GameScreenController : MonoBehaviour
 
         winMenuButton = winScreen.Q<Button>(winMenuButtonName);
         if(!IsValidButton(winMenuButtonName, winMenuButton)) return;
-        winMenuButton.clicked += () => GameEvents.GoToMenuRequested();
+        winMenuButton.clicked += () => GameEvents.GoToLevelSelection();
+
+        winNextButton = winScreen.Q<Button>("next-button");
+        if (!IsValidButton("next-button", winNextButton)) return;
+        winNextButton.clicked += () => GameEvents.NextLevelRequested();
 
         // Lose
         loseRestartButton = loseScreen.Q<Button>(loseRestartButtonName);
