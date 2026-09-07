@@ -993,7 +993,7 @@ PrefabInstance:
       objectReference: {fileID: 32900000, guid: 7f615ef0eb8f1cf44b0fd2b16b85b58d, type: 3}
     - target: {fileID: 9205548229947433482, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
       propertyPath: tutorialText
-      value: Grab & Throw Objects
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1803,7 +1803,7 @@ PrefabInstance:
       objectReference: {fileID: 32900000, guid: 7f615ef0eb8f1cf44b0fd2b16b85b58d, type: 3}
     - target: {fileID: 9205548229947433482, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
       propertyPath: tutorialText
-      value: Grab & Throw Objects
+      value: Hold Y to aim and release to throw
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
