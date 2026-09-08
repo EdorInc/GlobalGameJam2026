@@ -1,11 +1,11 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Themes/DefaultTheme.uss?fileID=7433441132597879392&amp;guid=abd6d9976d619a646a1faab02692b347&amp;type=3#DefaultTheme"/>
-    <ui:VisualElement name="background-image" class="image-background" style="flex-grow: 1;">
+    <ui:VisualElement name="background-image" class="image-background" style="flex-grow: 1; background-color: rgba(149, 149, 149, 0); background-image: url(&quot;project://database/Assets/UI/Images/MarcoWinLoose.png?fileID=2800000&amp;guid=2e93a7d06efb4844eaf8f8ee71297166&amp;type=3#MarcoWinLoose&quot;); -unity-background-scale-mode: scale-and-crop;">
         <ui:VisualElement name="menu-container" class="container-menu" style="flex-grow: 1; align-content: center; justify-content: space-evenly;">
-            <ui:Label text="You Lose" name="screen-label" class="text-title" style="align-self: center; flex-grow: 1; text-shadow: 0 10px 2px rgba(0, 0, 0, 0.39);"/>
+            <ui:Label text="You Lose" name="screen-label" class="text-title" style="align-self: center; flex-grow: 1; text-shadow: 0 10px 2px rgba(0, 0, 0, 0.39); width: 350px; color: rgb(255, 255, 255); margin-top: 60px;"/>
             <ui:VisualElement name="button-container" class="container-button-vertical" style="flex-grow: 1; justify-content: flex-start; align-self: stretch; flex-shrink: 0; align-items: stretch; align-content: flex-start;">
-                <ui:Button text="RETRY" name="restart-button" class="button-hexagon" style="padding-top: 14px; padding-right: 14px; padding-bottom: 14px; padding-left: 14px;"/>
-                <ui:Button text="MENU" name="quit-button" class="button-hexagon" style="padding-top: 14px; padding-right: 14px; padding-bottom: 14px; padding-left: 14px;"/>
+                <ui:Button text="RETRY" name="restart-button" class="main-button" style="padding-top: 14px; padding-right: 14px; padding-bottom: 14px; padding-left: 14px; top: auto; right: auto;"/>
+                <ui:Button text="MENU" name="quit-button" class="main-button" style="padding-top: 14px; padding-right: 14px; padding-bottom: 14px; padding-left: 14px; top: auto; right: auto;"/>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

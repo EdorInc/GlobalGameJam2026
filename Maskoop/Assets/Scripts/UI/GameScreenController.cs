@@ -162,6 +162,7 @@ public class GameScreenController : MonoBehaviour
                     currentTime = 0;
                     UpdateTimer();
                     SetState(UIState.Lose);
+                    loseRestartButton.Focus();
                     return;
                 }
 
