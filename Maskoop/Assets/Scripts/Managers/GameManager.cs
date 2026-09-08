@@ -170,7 +170,7 @@ public class GameManager : MonoBehaviour
 
             SpawnPlayers();
 
-           // AudioSystem.PlayMusic(AudioSystem.MusicLibrary?.level2);
+            // AudioSystem.PlayMusic(AudioSystem.MusicLibrary?.level2);
         }
     }
 
@@ -191,6 +191,15 @@ public class GameManager : MonoBehaviour
 
     public void LoadCurrentLevel()
     {
+        // Se resetea aquí de forma centralizada, en vez de confiar en que cada método
+        // de carga (o el Awake de la UI del nivel siguiente) se acuerde de hacerlo.
+        // Antes, LoadNextLevel/LoadPreviousLevel no reseteaban timeScale, así que si
+        // ganabas un nivel (timeScale = 0 por PauseGame) y el Awake() de la UI del
+        // nivel siguiente fallaba a medias (p.ej. no encontraba algún elemento de la
+        // UI y hacía "return" antes de llamar a SetState/ResumeRequested), el juego
+        // se quedaba congelado con timeScale = 0 para siempre.
+        Time.timeScale = 1f;
+
         if (levelScenes != null && levelScenes.Length > 0 && currentLevelIndex >= 0 && currentLevelIndex < levelScenes.Length)
         {
             SceneManager.LoadScene(levelScenes[currentLevelIndex]);
@@ -387,7 +396,7 @@ public class GameManager : MonoBehaviour
         // {
         //     Debug.LogError("SplitManager missing");
         // }
-        
+
         // --- NON SPLIT CAMERA ---
         // Buscamos la cámara en la escena para coger su followScript y asignarle ambos jugadores como target.
         NonSplitCameraController cameraController = FindAnyObjectByType<NonSplitCameraController>();
