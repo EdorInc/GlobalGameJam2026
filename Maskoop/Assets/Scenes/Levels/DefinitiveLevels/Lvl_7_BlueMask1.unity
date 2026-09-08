@@ -6314,6 +6314,83 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1562500726}
   m_Mesh: {fileID: 4300004, guid: f75365d39ce92a94d8245ba4828c509c, type: 3}
+--- !u!1001 &1591616981
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 678325565574132148, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_Name
+      value: TutorialVideoTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 56.19942
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 16.874197
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.92387956
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.38268343
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9205548229947433482, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: videoClip
+      value: 
+      objectReference: {fileID: 32900000, guid: afb3841feac3e2948968042bd8c0a651, type: 3}
+    - target: {fileID: 9205548229947433482, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: buttonSprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9205548229947433482, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: tutorialText
+      value: Blue mask lets you pass through blue walls
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
 --- !u!1 &1604409559
 GameObject:
   m_ObjectHideFlags: 0
@@ -6646,6 +6723,83 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1649327097}
   m_Mesh: {fileID: 4300000, guid: 9f8da7d9be6a95c4eabbf908785cd815, type: 3}
+--- !u!1001 &1685251122
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 678325565574132148, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_Name
+      value: TutorialVideoTrigger (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 60.795616
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 21.47039
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.92387956
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.38268343
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9205548229947433482, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: videoClip
+      value: 
+      objectReference: {fileID: 32900000, guid: 3491849b3d955e24f8c7e5db0ae39491, type: 3}
+    - target: {fileID: 9205548229947433482, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: buttonSprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9205548229947433482, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: tutorialText
+      value: Blue mask lets you go through tubes
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
 --- !u!1 &1693482442
 GameObject:
   m_ObjectHideFlags: 0
@@ -9144,3 +9298,5 @@ SceneRoots:
   - {fileID: 301794905}
   - {fileID: 723916280}
   - {fileID: 1532306755}
+  - {fileID: 1591616981}
+  - {fileID: 1685251122}

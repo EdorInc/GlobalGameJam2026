@@ -5603,6 +5603,83 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1600805824019372234, guid: aa3dfc258adab7341aaafbe35bb4128c, type: 3}
   m_PrefabInstance: {fileID: 1723063320}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1777142859
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 678325565574132148, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_Name
+      value: TutorialVideoTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4.91
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 4.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 23.317474
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.68999
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -9.75836
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.92387956
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.38268343
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840313743629552136, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9205548229947433482, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: videoClip
+      value: 
+      objectReference: {fileID: 32900000, guid: f2a344cf3a363844f8abea4c7e452e16, type: 3}
+    - target: {fileID: 9205548229947433482, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: buttonSprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9205548229947433482, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
+      propertyPath: tutorialText
+      value: Spikes make you drop stuff
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c6b673922abc7a34796c046e39b133e8, type: 3}
 --- !u!1001 &1793022554
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6478,3 +6555,4 @@ SceneRoots:
   - {fileID: 1079570921}
   - {fileID: 1190525932}
   - {fileID: 909119501}
+  - {fileID: 1777142859}
