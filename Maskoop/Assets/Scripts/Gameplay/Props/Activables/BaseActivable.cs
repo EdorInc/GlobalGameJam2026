@@ -130,7 +130,7 @@ public abstract class BaseActivable : MonoBehaviour
         {
             ActivatorOff();
 
-            if (activatorsLeft > 0)
+            if (activatorsLeft > 0 && !areButtonsLocked)
             {
                 currentState = ActivableState.Deactivating;
                 // Debug.Log("Deactivating channel " + channel + " on object " + gameObject.name);
